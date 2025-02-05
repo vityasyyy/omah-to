@@ -6,11 +6,27 @@ OmahTI Tryout Website for prospective students preparing for SNBT 2025.
 
 ## Table of Contents
 
+- [Commit Message Convention](#commit-message-convention)
 - [Installation](#installation)
 - [Usage](#usage)
-- [Commit Message Convention](#commit-message-convention)
 - [Contributors](#contributors)
 - [Contact](#contact)
+
+---
+
+## Commit Message Convention
+
+We follow a structured commit message format:
+
+```
+<feat || fix || init || build>(<additional info>): <commit_message>
+```
+
+### Examples:
+- `feat(auth): add JWT authentication`
+- `fix(ui): resolve navbar overlapping issue`
+- `init(project): setup Next.js with TypeScript`
+- `build(deps): update Dockerfile to use Node 18`
 
 ---
 
@@ -49,22 +65,6 @@ To start the development server:
   ```bash
   docker compose down && docker compose up --build
   ```
-
----
-
-## Commit Message Convention
-
-We follow a structured commit message format:
-
-```
-<feat || fix || init || build>(<additional info>): <commit_message>
-```
-
-### Examples:
-- `feat(auth): add JWT authentication`
-- `fix(ui): resolve navbar overlapping issue`
-- `init(project): setup Next.js with TypeScript`
-- `build(deps): update Dockerfile to use Node 18`
 
 ---
 
