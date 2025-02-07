@@ -11,6 +11,7 @@ import (
 type AuthRepo interface {
 	CreateUser(user *models.User) error
 	GetUserByUsername(username string) (*models.User, error)
+	GetUserByID(userID int) (*models.User, error)
 }
 
 type authRepo struct {
@@ -50,5 +51,17 @@ func (r *authRepo) GetUserByUsername(username string) (*models.User, error) {
 		return nil, err
 	}
 	logger.LogDebug("User retrieved", map[string]interface{}{"layer": "repository", "operation": "GetUserByUsername"})
+	return &user, nil
+}
+
+func (r *authRepo) GetUserByID(userID int) (*models.User, error) {
+	var user models.User
+	query := "SELECT user_id, nama_user, asal_sekolah FROM users WHERE user_id = $1"
+	err := r.db.Get(&user, query, userID)
+	if err != nil {
+		logger.LogError(err, "Failed to get user", map[string]interface{}{"layer": "repository", "operation": "GetUserByID"})
+		return nil, err
+	}
+	logger.LogDebug("User retrieved", map[string]interface{}{"layer": "repository", "operation": "GetUserByID"})
 	return &user, nil
 }
