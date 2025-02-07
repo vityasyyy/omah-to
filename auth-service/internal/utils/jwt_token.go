@@ -13,14 +13,14 @@ import (
 var jwtSecretKey = []byte(os.Getenv("JWT_SECRET_KEY"))
 
 type AccessTokenClaims struct {
-	UserID      string `json:"user_id"`
+	UserID      int    `json:"user_id"`
 	NamaUser    string `json:"nama_user"`
 	AsalSekolah string `json:"asal_sekolah"`
 	jwt.RegisteredClaims
 }
 
 // Create AccessToken for the user to later be sent via cookies to the frontend (used for authentication and authorization)
-func CreateAccessToken(userID, namaUser, asalSekolah string) (string, error) {
+func CreateAccessToken(userID int, namaUser, asalSekolah string) (string, error) {
 	expirationTime := time.Now().Add(15 * time.Minute)
 	claims := AccessTokenClaims{
 		UserID:      userID,
