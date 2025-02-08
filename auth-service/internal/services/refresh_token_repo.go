@@ -11,6 +11,7 @@ import (
 type RefreshTokenService interface {
 	GenerateAccessRefreshTokenPair(userID int) (string, string, error)
 	ValidateRefreshToken(refreshToken string) (string, string, error)
+	BlacklistRefreshToken(refreshToken string) error
 }
 
 type refreshTokenService struct {
@@ -84,4 +85,21 @@ func (s *refreshTokenService) ValidateRefreshToken(refreshTokenString string) (s
 
 	return newAccessToken, newRefreshToken, nil
 
+}
+
+// sole purpose is for the logout handler to blacklist the refresh token
+func (s *refreshTokenService) BlacklistRefreshToken(refreshTokenString string) error {
+	// make sure the token is valid
+	refreshToken, err := s.refreshTokenRepo.FindValidRefreshToken(refreshTokenString)
+	if err != nil {
+		logger.LogError(err, "Failed to find valid refresh token", map[string]interface{}{"layer": "service", "operation": "ValidateRefreshToken"})
+		return err
+	}
+
+	// revoke the token
+	if err := s.refreshTokenRepo.RevokeRefreshToken(refreshToken.RefreshTokenValue); err != nil {
+		logger.LogError(err, "Failed to blacklist refresh token", map[string]interface{}{"layer": "service", "operation": "BlacklistRefreshToken"})
+		return err
+	}
+	return nil
 }
