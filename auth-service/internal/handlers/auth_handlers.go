@@ -21,6 +21,12 @@ func NewUserHandler(authService services.AuthService, tokenService services.Refr
 func (h *UserHandler) RegisterUserHandler(c *gin.Context) {
 	var userStructThatWantsToRegister models.User
 
+	// check if the password is more than 72 characters (bcrypt limitation)
+	if len(userStructThatWantsToRegister.Password) > 72 {
+		c.JSON(http.StatusBadRequest, gin.H{"message": "Password maximum length is 72 characters"})
+		return
+	}
+
 	// bind the json input to the user struct so that it matches the user models
 	if err := c.ShouldBindJSON(&userStructThatWantsToRegister); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"message": "Invalid input", "error": err.Error()})
@@ -40,7 +46,7 @@ func (h *UserHandler) RegisterUserHandler(c *gin.Context) {
 func (h *UserHandler) LoginUserHandler(c *gin.Context) {
 	// create a struct to hold the login request that will be sent by the client
 	var loginRequestStruct struct {
-		Username string `json:"username" binding:"required"`
+		NamaUser string `json:"nama_user" binding:"required"`
 		Password string `json:"password" binding:"required"`
 	}
 
@@ -51,7 +57,7 @@ func (h *UserHandler) LoginUserHandler(c *gin.Context) {
 	}
 
 	// call the login user function from the auth service
-	accessToken, refreshToken, err := h.authService.LoginUser(loginRequestStruct.Username, loginRequestStruct.Password)
+	accessToken, refreshToken, err := h.authService.LoginUser(loginRequestStruct.NamaUser, loginRequestStruct.Password)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"message": "Failed to login", "error": err.Error()})
 		return
