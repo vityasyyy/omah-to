@@ -4,7 +4,7 @@ services:
   auth-service-db:
     image: postgres:17.2-alpine
     env_file:
-      - ./auth-service/.env
+      - auth-service/.env
     volumes:
       - ./auth-service/db/init.sql:/docker-entrypoint-initdb.d/init.sql # init script
       - auth-data:/var/lib/postgresql/data
@@ -18,11 +18,9 @@ services:
 
   # API for the auth service
   auth-service-api:
-    build: 
-      context: ./auth-service
-      dockerfile: Dockerfile
+    build: ./auth-service
     env_file:
-      - ./auth-service/.env
+      - auth-service/.env
       - .env
     depends_on:
       auth-service-db:
