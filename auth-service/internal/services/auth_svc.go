@@ -25,13 +25,10 @@ func NewAuthService(authRepo repositories.AuthRepo, tokenService RefreshTokenSer
 
 func (s *authService) RegisterUser(userFromHandlers *models.User) error {
 	// check if a user with that username exists, returns nil if no user is found and okay to proceed
-	existingUser, err := s.authRepo.GetUserByUsername(userFromHandlers.NamaUser)
-	if err != nil {
-		logger.LogError(err, "Failed to get user", map[string]interface{}{"layer": "service", "operation": "RegisterUser"})
-		return err
-	}
+	existingUser, _ := s.authRepo.GetUserByUsername(userFromHandlers.NamaUser)
+
 	if existingUser != nil {
-		logger.LogError(err, "User exists", map[string]interface{}{"layer": "service", "operation": "RegisterUser"})
+		logger.LogError(errors.New("user exists"), "User exists", map[string]interface{}{"layer": "service", "operation": "RegisterUser"})
 		return errors.New("user with that username already exists")
 	}
 
@@ -58,13 +55,13 @@ func (s *authService) LoginUser(username, password string) (string, string, erro
 	userThatWantsToLogin, err := s.authRepo.GetUserByUsername(username)
 	if err != nil {
 		logger.LogError(err, "Failed to login", map[string]interface{}{"layer": "service", "operation": "LoginUser"})
-		return "", "", errors.New("invalid email or password")
+		return "", "", errors.New("invalid username or password")
 	}
 
 	// check the password that the user entered with the password in the database (check hash)
-	if validPassword := utils.CheckPasswordHash(password, userThatWantsToLogin.Password); !validPassword {
+	if !utils.CheckPasswordHash(password, userThatWantsToLogin.Password) {
 		logger.LogError(err, "Failed to login", map[string]interface{}{"layer": "service", "operation": "LoginUser"})
-		return "", "", errors.New("invalid email or password")
+		return "", "", errors.New("invalid username or password")
 	}
 
 	// if all is okay then generate the token pair and return it to the handler to be sent to the client
