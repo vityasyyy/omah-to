@@ -46,7 +46,7 @@ func (h *UserHandler) RegisterUserHandler(c *gin.Context) {
 func (h *UserHandler) LoginUserHandler(c *gin.Context) {
 	// create a struct to hold the login request that will be sent by the client
 	var loginRequestStruct struct {
-		NamaUser string `json:"nama_user" binding:"required"`
+		Email    string `json:"email" binding:"required"`
 		Password string `json:"password" binding:"required"`
 	}
 
@@ -57,7 +57,7 @@ func (h *UserHandler) LoginUserHandler(c *gin.Context) {
 	}
 
 	// call the login user function from the auth service
-	accessToken, refreshToken, err := h.authService.LoginUser(loginRequestStruct.NamaUser, loginRequestStruct.Password)
+	accessToken, refreshToken, err := h.authService.LoginUser(loginRequestStruct.Email, loginRequestStruct.Password)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"message": "Failed to login", "error": err.Error()})
 		return
@@ -127,21 +127,11 @@ func (h *UserHandler) RefreshTokenHandler(c *gin.Context) {
 
 func (h *UserHandler) ValidateUserAndGetInfoHandler(c *gin.Context) {
 	// get the user info from the context middleware
-	userID, exists := c.Get("user_id")
-	if !exists {
-		c.JSON(http.StatusUnauthorized, gin.H{"message": "Failed to get user ID from context middleware"})
-		return
-	}
-	username, exists := c.Get("nama_user")
-	if !exists {
-		c.JSON(http.StatusUnauthorized, gin.H{"message": "Failed to get username from context middleware"})
-		return
-	}
-	asalSekolah, exists := c.Get("asal_sekolah")
-	if !exists {
-		c.JSON(http.StatusUnauthorized, gin.H{"message": "Failed to get asal sekolah from context middleware"})
-		return
-	}
+	userID, _ := c.Get("user_id")
+	email, _ := c.Get("email")
+	username, _ := c.Get("nama_user")
+	asalSekolah, _ := c.Get("asal_sekolah")
+
 	// return the user info and status code 200
-	c.JSON(http.StatusOK, gin.H{"message": "Authorized and okay to proceed", "user_id": userID, "username": username, "asal_sekolah": asalSekolah})
+	c.JSON(http.StatusOK, gin.H{"message": "Authorized and okay to proceed", "email": email, "user_id": userID, "username": username, "asal_sekolah": asalSekolah})
 }

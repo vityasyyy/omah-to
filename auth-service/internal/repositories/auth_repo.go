@@ -10,7 +10,7 @@ import (
 // Must implement all methods in the interface
 type AuthRepo interface {
 	CreateUser(user *models.User) error
-	GetUserByUsername(username string) (*models.User, error)
+	GetUserByEmail(email string) (*models.User, error)
 	GetUserByID(userID int) (*models.User, error)
 }
 
@@ -27,9 +27,9 @@ func NewAuthRepo(db *sqlx.DB) AuthRepo {
 // This function implements the CreateUser method from the AuthRepo interface, it creates a new user in the database, accepts the user models as the params, and returns an error if the query fails
 func (r *authRepo) CreateUser(user *models.User) error {
 	// Define the query to insert a new user
-	query := "INSERT INTO users (nama_user, password, asal_sekolah) VALUES ($1, $2, $3) RETURNING user_id"
+	query := "INSERT INTO users (email, nama_user, password, asal_sekolah) VALUES ($1, $2, $3, $4) RETURNING user_id"
 	// Execute the query and scan the result into the user struct
-	err := r.db.QueryRow(query, user.NamaUser, user.Password, user.AsalSekolah).Scan(&user.UserID)
+	err := r.db.QueryRow(query, user.Email, user.NamaUser, user.Password, user.AsalSekolah).Scan(&user.UserID)
 	if err != nil {
 		// Log the error if the query fails
 		logger.LogError(err, "Failed to create user", map[string]interface{}{"layer": "repository", "operation": "CreateUser"})
@@ -40,23 +40,23 @@ func (r *authRepo) CreateUser(user *models.User) error {
 	return nil
 }
 
-func (r *authRepo) GetUserByUsername(username string) (*models.User, error) {
+func (r *authRepo) GetUserByEmail(email string) (*models.User, error) {
 	// Create a new user struct to store the result
 	var user models.User
-	query := "SELECT user_id, nama_user, asal_sekolah, password FROM users WHERE nama_user = $1"
+	query := "SELECT user_id, email, nama_user, asal_sekolah, password FROM users WHERE nama_user = $1"
 	// Get the user struct from the database using the query and the username
-	err := r.db.Get(&user, query, username)
+	err := r.db.Get(&user, query, email)
 	if err != nil {
-		logger.LogError(err, "Failed to get user", map[string]interface{}{"layer": "repository", "operation": "GetUserByUsername"})
+		logger.LogError(err, "Failed to get user", map[string]interface{}{"layer": "repository", "operation": "GetUserByEmail"})
 		return nil, err
 	}
-	logger.LogDebug("User retrieved", map[string]interface{}{"layer": "repository", "operation": "GetUserByUsername"})
+	logger.LogDebug("User retrieved", map[string]interface{}{"layer": "repository", "operation": "GetUserByEmail"})
 	return &user, nil
 }
 
 func (r *authRepo) GetUserByID(userID int) (*models.User, error) {
 	var user models.User
-	query := "SELECT user_id, nama_user, asal_sekolah, password FROM users WHERE user_id = $1"
+	query := "SELECT user_id, email, nama_user, asal_sekolah, password FROM users WHERE user_id = $1"
 	err := r.db.Get(&user, query, userID)
 	if err != nil {
 		logger.LogError(err, "Failed to get user", map[string]interface{}{"layer": "repository", "operation": "GetUserByID"})
