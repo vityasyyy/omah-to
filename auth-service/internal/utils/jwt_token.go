@@ -14,16 +14,18 @@ var jwtSecretKey = []byte(os.Getenv("JWT_SECRET"))
 
 type AccessTokenClaims struct {
 	UserID      int    `json:"user_id"`
+	Email       string `json:"email"`
 	NamaUser    string `json:"nama_user"`
 	AsalSekolah string `json:"asal_sekolah"`
 	jwt.RegisteredClaims
 }
 
 // Create AccessToken for the user to later be sent via cookies to the frontend (used for authentication and authorization)
-func CreateAccessToken(userID int, namaUser, asalSekolah string) (string, error) {
+func CreateAccessToken(userID int, namaUser, asalSekolah, email string) (string, error) {
 	expirationTime := time.Now().Add(15 * time.Minute)
 	claims := AccessTokenClaims{
 		UserID:      userID,
+		Email:       email,
 		NamaUser:    namaUser,
 		AsalSekolah: asalSekolah,
 		// RegisteredClaims is a struct that contains the standard claims (exp, iat, nbf, iss, aud, sub, jti)
@@ -70,4 +72,13 @@ func ValidateAccessToken(accessToken string) (*AccessTokenClaims, error) {
 
 	// If the token is invalid, return nil and an error
 	return nil, jwt.ErrTokenInvalidClaims
+}
+
+func CreateResetToken() (string, time.Time, error) {
+	resetToken, err := CreateRefreshToken()
+	if err != nil {
+		return "", time.Time{}, err
+	}
+	resetTokenExpiredAt := time.Now().Add(30 * time.Minute)
+	return resetToken, resetTokenExpiredAt, nil
 }
