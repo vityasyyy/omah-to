@@ -135,3 +135,48 @@ func (h *UserHandler) ValidateUserAndGetInfoHandler(c *gin.Context) {
 	// return the user info and status code 200
 	c.JSON(http.StatusOK, gin.H{"message": "Authorized and okay to proceed", "email": email, "user_id": userID, "username": username, "asal_sekolah": asalSekolah})
 }
+
+func (h *UserHandler) RequestPasswordResetHandler(c *gin.Context) {
+	// create a struct to hold the email that will be sent by the client
+	var emailStruct struct {
+		Email string `json:"email" binding:"required"`
+	}
+
+	// bind the json input to the email struct
+	if err := c.ShouldBindJSON(&emailStruct); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"message": "Invalid input", "error": err.Error()})
+		return
+	}
+
+	// call the request password reset function from the auth service
+	if err := h.authService.RequestPasswordReset(emailStruct.Email); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"message": "Failed to request password reset", "error": err.Error()})
+		return
+	}
+
+	// return a success message and status code 200
+	c.JSON(http.StatusOK, gin.H{"message": "Password reset requested"})
+}
+
+func (h *UserHandler) ResetPasswordHandler(c *gin.Context) {
+	// create a struct to hold the reset token and the new password that will be sent by the client
+	var resetPasswordStruct struct {
+		ResetToken  string `json:"reset_token" binding:"required"`
+		NewPassword string `json:"new_password" binding:"required"`
+	}
+
+	// bind the json input to the reset password struct
+	if err := c.ShouldBindJSON(&resetPasswordStruct); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"message": "Invalid input", "error": err.Error()})
+		return
+	}
+
+	// call the reset password function from the auth service
+	if err := h.authService.ResetPassword(resetPasswordStruct.ResetToken, resetPasswordStruct.NewPassword); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"message": "Failed to reset password", "error": err.Error()})
+		return
+	}
+
+	// return a success message and status code 200
+	c.JSON(http.StatusOK, gin.H{"message": "Password reset successful"})
+}
