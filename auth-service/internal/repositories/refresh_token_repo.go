@@ -11,6 +11,7 @@ type RefreshTokenRepo interface {
 	StoreRefreshToken(refreshTokenStruct *models.RefreshToken) error
 	RevokeRefreshToken(refreshTokenString string) error
 	FindValidRefreshToken(refreshTokenString string) (*models.RefreshToken, error)
+	RevokeBasedOnUserID(userID int) error
 }
 
 type refreshTokenRepo struct {
@@ -53,4 +54,16 @@ func (r *refreshTokenRepo) FindValidRefreshToken(refreshTokenString string) (*mo
 	}
 	logger.LogDebug("Refresh token found", map[string]interface{}{"layer": "repository", "operation": "FindValidRefreshToken"})
 	return &refreshToken, nil
+}
+
+// RevokeBasedOnUserID(userUD int) error query := UPDATE refresh_tokens SET revoked = true WHERE user_id = $1 AND revoked = false AND expired_at > CURRENT_TIMESTAMP
+func (r *refreshTokenRepo) RevokeBasedOnUserID(userID int) error {
+	query := "UPDATE refresh_tokens SET revoked = true WHERE user_id = $1 AND revoked = false AND expired_at > CURRENT_TIMESTAMP"
+	_, err := r.db.Exec(query, userID)
+	if err != nil {
+		logger.LogError(err, "Failed to revoke refresh token", map[string]interface{}{"layer": "repository", "operation": "RevokeBasedOnUserID"})
+		return err
+	}
+	logger.LogDebug("Refresh token revoked", map[string]interface{}{"layer": "repository", "operation": "RevokeBasedOnUserID"})
+	return nil
 }
