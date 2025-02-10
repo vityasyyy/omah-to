@@ -12,6 +12,8 @@ import (
 type AuthService interface {
 	RegisterUser(user *models.User) error
 	LoginUser(email, password string) (string, string, error)
+	RequestPasswordReset(email string) error
+	ResetPassword(resetToken, newPassword string) error
 }
 
 type authService struct {
@@ -72,4 +74,54 @@ func (s *authService) LoginUser(email, password string) (string, string, error) 
 	}
 
 	return accessToken, refreshToken, nil
+}
+
+func (s *authService) RequestPasswordReset(email string) error {
+	// get the user using the email that is passed from the handler
+	user, err := s.authRepo.GetUserByEmail(email)
+	if err != nil {
+		logger.LogError(err, "Failed to request password reset", map[string]interface{}{"layer": "service", "operation": "RequestPasswordReset"})
+		return errors.New("invalid email")
+	}
+
+	// generate a reset token and set the expired time to 24 hours from now
+	resetToken, resetTokenExpiredAt, err := utils.CreateResetToken()
+	if err != nil {
+		logger.LogError(err, "Failed to generate reset token", map[string]interface{}{"layer": "service", "operation": "RequestPasswordReset"})
+		return errors.New("failed to generate reset token")
+	}
+
+	// email the user the reset link, using utils later on
+
+	// blacklist the token that is associated with the email, so that when user is requesting password reset, the token is blacklisted
+	if err := s.tokenService.BlacklistTokenOnEmail(email); err != nil {
+		logger.LogError(err, "Failed to blacklist token on email", map[string]interface{}{"layer": "service", "operation": "RequestPasswordReset"})
+		return errors.New("failed to blacklist token on email")
+	}
+
+	// call the repo and store the reset token in the database
+	err = s.authRepo.RequestingPasswordReset(user.Email, resetToken, resetTokenExpiredAt)
+	if err != nil {
+		logger.LogError(err, "Failed to request password reset", map[string]interface{}{"layer": "service", "operation": "RequestPasswordReset"})
+		return errors.New("failed to request password reset")
+	}
+
+	return nil
+}
+
+func (s *authService) ResetPassword(resetToken, newPassword string) error {
+	newHashedPassword, err := utils.HashPassword(newPassword)
+	if err != nil {
+		logger.LogError(err, "Failed to hash password", map[string]interface{}{"layer": "service", "operation": "ResetPassword"})
+		return errors.New("failed to hash password")
+	}
+
+	// call the repo and reset the password using the reset token and the new password
+	err = s.authRepo.ResetPassword(newHashedPassword, resetToken)
+	if err != nil {
+		logger.LogError(err, "Failed to reset password", map[string]interface{}{"layer": "service", "operation": "ResetPassword"})
+		return errors.New("failed to reset password")
+	}
+
+	return nil
 }

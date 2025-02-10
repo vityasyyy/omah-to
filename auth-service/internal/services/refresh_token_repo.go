@@ -12,6 +12,7 @@ type RefreshTokenService interface {
 	GenerateAccessRefreshTokenPair(userID int) (string, string, error)
 	ValidateRefreshToken(refreshToken string) (string, string, error)
 	BlacklistRefreshToken(refreshToken string) error
+	BlacklistTokenOnEmail(email string) error
 }
 
 type refreshTokenService struct {
@@ -32,7 +33,7 @@ func (s *refreshTokenService) GenerateAccessRefreshTokenPair(userID int) (string
 	}
 
 	// generate access token using the user that we fetched
-	accessToken, err := utils.CreateAccessToken(user.UserID, user.NamaUser, user.AsalSekolah)
+	accessToken, err := utils.CreateAccessToken(user.UserID, user.NamaUser, user.AsalSekolah, user.Email)
 	if err != nil {
 		logger.LogError(err, "Failed to generate access token", map[string]interface{}{"layer": "service", "operation": "GenerateAccessRefreshTokenPair"})
 		return "", "", err
@@ -99,6 +100,22 @@ func (s *refreshTokenService) BlacklistRefreshToken(refreshTokenString string) e
 	// revoke the token
 	if err := s.refreshTokenRepo.RevokeRefreshToken(refreshToken.RefreshTokenValue); err != nil {
 		logger.LogError(err, "Failed to blacklist refresh token", map[string]interface{}{"layer": "service", "operation": "BlacklistRefreshToken"})
+		return err
+	}
+	return nil
+}
+
+// used when user is requesting password reset
+func (s *refreshTokenService) BlacklistTokenOnEmail(email string) error {
+	// get the user using the email to get the user id
+	user, err := s.authRepo.GetUserByEmail(email)
+	if err != nil {
+		logger.LogError(err, "Failed to get user for token pair generation", map[string]interface{}{"layer": "service", "operation": "BlacklistTokenOnEmail"})
+	}
+
+	// revoke all the refresh tokens of the user
+	if err := s.refreshTokenRepo.RevokeBasedOnUserID(user.UserID); err != nil {
+		logger.LogError(err, "Failed to blacklist refresh token", map[string]interface{}{"layer": "service", "operation": "BlacklistTokenOnEmail"})
 		return err
 	}
 	return nil
