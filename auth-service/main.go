@@ -7,6 +7,7 @@ import (
 	"auth-service/internal/routes"
 	"auth-service/internal/services"
 	"auth-service/internal/utils"
+	"context"
 	"os"
 	"time"
 
@@ -35,13 +36,16 @@ func main() {
 
 	userHandler := handlers.NewUserHandler(authService, tokenService)
 
+	if os.Getenv("ENVIRONMENT") == "production" {
+		gin.SetMode(gin.ReleaseMode)
+	}
 	r := gin.Default()
 	r.Use(utils.ReqLoggingMiddleware()) // Request logging middleware
 	r.Use(securityHeadersMiddleware())  // Security headers middleware
 
 	// CORS middleware
 	r.Use(cors.New(cors.Config{
-		//AllowOrigins:     []string{"http://localhost:3000", "https://auth.omahtryout.web.id", "http://tryout-service-api:8082", "h"},
+		//AllowOrigins:     []string{"http://localhost:3000", "https://auth.omahtryout.web.id", "http://tryout-service-api:8082", "h"}, //enable this in production
 		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE"},
 		AllowHeaders:     []string{"Content-Type", "Authorization"},
 		ExposeHeaders:    []string{"Content-Length", "Authorization", "Content-Type"},
@@ -49,7 +53,9 @@ func main() {
 		MaxAge:           12 * time.Hour,
 	}))
 
-	r.Use(rateLimiterMiddleware()) // Rate limiter middleware
+	r.Use(rateLimiterMiddleware())             // Rate limiter middleware
+	r.Use(requestSizeLimitMiddleware(2 << 20)) // Request size limit middleware (2MB)
+	r.Use(timeoutMiddleware(20 * time.Second)) // Timeout middleware
 
 	routes.InitializeRoutes(r, userHandler)
 	port := os.Getenv("PORT")
@@ -89,6 +95,26 @@ func rateLimiterMiddleware() gin.HandlerFunc {
 		// If an error occurred or the limit is reached, abort the request
 		if err != nil || ctx.Reached {
 			c.AbortWithStatusJSON(429, gin.H{"error": "Too many requests"})
+			return
+		}
+		c.Next()
+	}
+}
+
+func timeoutMiddleware(timeout time.Duration) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		ctx, cancel := context.WithTimeout(c.Request.Context(), timeout)
+		defer cancel()
+
+		c.Request = c.Request.WithContext(ctx)
+		c.Next()
+	}
+}
+
+func requestSizeLimitMiddleware(maxSize int64) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		if c.Request.ContentLength > maxSize {
+			c.AbortWithStatusJSON(413, gin.H{"error": "Payload too large"})
 			return
 		}
 		c.Next()
