@@ -7,6 +7,8 @@ import (
 	"auth-service/internal/models"
 	"auth-service/internal/repositories"
 	"auth-service/internal/utils"
+
+	"golang.org/x/sync/errgroup"
 )
 
 type AuthService interface {
@@ -77,33 +79,46 @@ func (s *authService) LoginUser(email, password string) (string, string, error) 
 }
 
 func (s *authService) RequestPasswordReset(email string) error {
-	// get the user using the email that is passed from the handler
-	user, err := s.authRepo.GetUserByEmail(email)
-	if err != nil {
-		logger.LogError(err, "Failed to request password reset", map[string]interface{}{"layer": "service", "operation": "RequestPasswordReset"})
-		return errors.New("invalid email")
-	}
+	// create a new errgroup to run multiple goroutines concurrently
+	var g errgroup.Group
 
-	// generate a reset token and set the expired time to 24 hours from now
+	// create the reset token and expirtion time using the utils
 	resetToken, resetTokenExpiredAt, err := utils.CreateResetToken()
 	if err != nil {
-		logger.LogError(err, "Failed to generate reset token", map[string]interface{}{"layer": "service", "operation": "RequestPasswordReset"})
-		return errors.New("failed to generate reset token")
+		logger.LogError(err, "Failed to generate reset tokens", map[string]interface{}{"layer": "service", "operation": "RequestPasswordReset"})
+		return errors.New("failed to generate reset tokens")
 	}
 
-	// email the user the reset link, using utils later on
-
+	// run the goroutines concurrently
 	// blacklist the token that is associated with the email, so that when user is requesting password reset, the token is blacklisted
-	if err := s.tokenService.BlacklistTokenOnEmail(email); err != nil {
-		logger.LogError(err, "Failed to blacklist token on email", map[string]interface{}{"layer": "service", "operation": "RequestPasswordReset"})
-		return errors.New("failed to blacklist token on email")
-	}
+	g.Go(func() error {
+		if err := s.tokenService.BlacklistTokenOnEmail(email); err != nil {
+			logger.LogError(err, "Failed to blacklist token on email", map[string]interface{}{"layer": "service", "operation": "RequestPasswordReset"})
+			return errors.New("failed to blacklist token on email")
+		}
+		return nil
+	})
 
 	// call the repo and store the reset token in the database
-	err = s.authRepo.RequestingPasswordReset(user.Email, resetToken, resetTokenExpiredAt)
-	if err != nil {
-		logger.LogError(err, "Failed to request password reset", map[string]interface{}{"layer": "service", "operation": "RequestPasswordReset"})
-		return errors.New("failed to request password reset")
+	g.Go(func() error {
+		if err := s.authRepo.RequestingPasswordReset(email, resetToken, resetTokenExpiredAt); err != nil {
+			logger.LogError(err, "Failed to request password reset", map[string]interface{}{"layer": "service", "operation": "RequestPasswordReset"})
+			return errors.New("failed to request password reset")
+		}
+		return nil
+	})
+
+	// email the user the reset link, using the email utils
+	g.Go(func() error {
+		if err := utils.SendPasswordResetEmail(email, resetToken); err != nil {
+			logger.LogError(err, "Failed to send password reset email", map[string]interface{}{"layer": "service", "operation": "RequestPasswordReset"})
+			return errors.New("failed to send password reset email")
+		}
+		return nil
+	})
+	// wait for the goroutines to finish, if there is an error return the error, if not return nil
+	if err := g.Wait(); err != nil {
+		return err
 	}
 
 	return nil

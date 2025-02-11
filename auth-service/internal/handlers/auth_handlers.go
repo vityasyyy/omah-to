@@ -155,7 +155,7 @@ func (h *UserHandler) RequestPasswordResetHandler(c *gin.Context) {
 	}
 
 	// return a success message and status code 200
-	c.JSON(http.StatusOK, gin.H{"message": "Password reset requested"})
+	c.JSON(http.StatusOK, gin.H{"message": "Password reset requested, check your spam folder if you receive nothing"})
 }
 
 func (h *UserHandler) ResetPasswordHandler(c *gin.Context) {
