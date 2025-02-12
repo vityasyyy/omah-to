@@ -1,18 +1,82 @@
-import type { Config } from "tailwindcss";
+import type { Config } from 'tailwindcss'
 
 export default {
+  darkMode: ['class'],
   content: [
-    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/components/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/app/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/modules/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
     extend: {
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        background: 'var(--background)',
+        foreground: 'var(--foreground)',
+        neutral: {
+          25: '#FCFCFD',
+          50: '#F8FAFC',
+          100: '#EEF2F6',
+          200: '#E3E8EF',
+          300: '#CDD5DF',
+          400: '#9AAAB2',
+          500: '#697586',
+          600: '#4B5565',
+          700: '#364152',
+          800: '#202939',
+          900: '#121926',
+        },
+        primary: {
+          DEFAULT: '#212152',
+          25: '#F5F8FF',
+          50: '#EEF4FF',
+          100: '#D1E0FF',
+          200: '#B2CCFF',
+          300: '#84ADFF',
+          400: '#528BFF',
+          500: '#2970FF',
+          600: '#155EEF',
+          700: '#004EEB',
+          800: '#0040C1',
+          900: '#00359E',
+        },
+        secondary: {
+          DEFAULT: '#BE4A00'
+        },
+        success: {
+          25: '#F6FEF9',
+          50: '#EDFDF2',
+          100: '#D3FBDF',
+          200: '#AAFOC4',
+          300: '#73E2A3',
+          400: '#3ECF8E',
+          500: '#16B364',
+          600: '#099250',
+          700: '#087443',
+          800: '#095C37',
+          900: '#064C2E',
+        },
+        error: {
+          25: '#FFFBFA',
+          50: '#FEF3F2',
+          100: '#FEE4E2',
+          200: '#FECDCA',
+          300: '#FDA29B',
+          400: '#F97066',
+          500: '#F04438',
+          600: '#D92D20',
+          700: '#B42318',
+          800: '#912018',
+          900: '#7A271A',
+        },
+      },
+      borderRadius: {
+        lg: 'var(--radius)',
+        md: 'calc(var(--radius) - 2px)',
+        sm: 'calc(var(--radius) - 4px)',
       },
     },
   },
-  plugins: [],
-} satisfies Config;
+  plugins: [require('tailwindcss-animate')],
+} satisfies Config
