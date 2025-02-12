@@ -45,7 +45,7 @@ func main() {
 
 	// CORS middleware
 	r.Use(cors.New(cors.Config{
-		//AllowOrigins:     []string{"http://localhost:3000", "https://auth.omahtryout.web.id", "http://tryout-service-api:8082", "h"}, //enable this in production
+		AllowOrigins:     []string{"*"}, // change to a specific origin later
 		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE"},
 		AllowHeaders:     []string{"Content-Type", "Authorization"},
 		ExposeHeaders:    []string{"Content-Length", "Authorization", "Content-Type"},
