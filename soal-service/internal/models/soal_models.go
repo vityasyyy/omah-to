@@ -1,0 +1,59 @@
+package models
+
+type PaketSoal struct {
+	PaketSoalID string `json:"paket_soal_id" db:"paket_soal_id" binding:"required"`
+	NamaPaket   string `json:"nama_paket" db:"nama_paket" binding:"required"`
+}
+
+type Soal struct {
+	KodeSoal       string `json:"kode_soal" db:"kode_soal" binding:"required"`
+	PaketSoalID    string `json:"paket_soal_id" db:"paket_soal_id" binding:"required"`
+	Subtest        string `json:"subtest" db:"subtest" binding:"required"`
+	TipeSoal       string `json:"tipe_soal" db:"tipe_soal" binding:"required"`
+	TextSoal       string `json:"text_soal" db:"text_soal" binding:"required"`
+	PathGambarSoal string `json:"path_gambar_soal" db:"path_gambar_soal"`
+	BobotSoal      int    `json:"bobot_soal" db:"bobot_soal" binding:"required"`
+	Pembahasan     string `json:"pembahasan" db:"pembahasan" binding:"required"`
+}
+
+type PilihanPilihanGanda struct {
+	PilihanPilihanGandaID string `json:"soal_pilihan_ganda_id" db:"soal_pilihan_ganda_id" binding:"required"`
+	KodeSoal              string `json:"kode_soal" db:"kode_soal" binding:"required"`
+	Pilihan               string `json:"pilihan" db:"pilihan" binding:"required"`
+	IsCorrect             bool   `json:"is_correct" db:"is_correct" binding:"required"`
+}
+
+type PilihanTrueFalse struct {
+	PilihanTrueFalseID string `json:"soal_true_false_id" db:"soal_true_false_id" binding:"required"`
+	KodeSoal           string `json:"kode_soal" db:"kode_soal" binding:"required"`
+	PilihanTf          string `json:"pilihan_tf" db:"pilihan_tf" binding:"required"`
+	Jawaban            bool   `json:"jawaban" db:"jawaban" binding:"required"`
+}
+
+type Uraian struct {
+	UraianID string `json:"soal_uraian_id" db:"soal_uraian_id" binding:"required"`
+	KodeSoal string `json:"kode_soal" db:"kode_soal" binding:"required"`
+	Jawaban  string `json:"jawaban" db:"jawaban" binding:"required"`
+}
+
+type SoalGabungan struct {
+	Soal
+	PilihanGanda []PilihanPilihanGanda `json:"pilihan_ganda,omitempty"`
+	TrueFalse    []PilihanTrueFalse    `json:"true_false,omitempty"`
+	Uraian       *Uraian               `json:"uraian,omitempty"`
+}
+
+type AnswerKeys struct {
+	PilihanGandaAnswers map[string]struct {
+		IsCorrect bool
+		Bobot     int
+	} `json:"pilihan_ganda,omitempty"`
+	TrueFalseAnswers map[string]struct {
+		IsCorrect bool
+		Bobot     int
+	} `json:"true_false,omitempty"`
+	UraianAnswers map[string]struct {
+		Jawaban string
+		Bobot   int
+	} `json:"uraian,omitempty"`
+}
