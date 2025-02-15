@@ -27,23 +27,25 @@ const NAV_ITEMS = [
 const Navbar = () => {
   return (
     <>
-      <Container className='fixed inset-x-0 top-0 z-50 flex-row items-center justify-between gap-8 bg-white/60 backdrop-blur-md'>
-        <section className='flex items-center gap-4'>
-          <div className='relative aspect-square h-7'>
-            <Image
-              src='/placeholder.png'
-              alt='logo'
-              fill
-              sizes='100%'
-              className='object-cover'
-            />
-          </div>
-          <h1 className='font-bold text-primary'>Website</h1>
-        </section>
+      <main className='fixed inset-x-0 top-0 z-50 bg-white/60 backdrop-blur-md'>
+        <Container className='flex-row items-center justify-between gap-8'>
+          <section className='flex items-center gap-4'>
+            <div className='relative aspect-square h-7'>
+              <Image
+                src='/placeholder.png'
+                alt='logo'
+                fill
+                sizes='100%'
+                className='object-cover'
+              />
+            </div>
+            <h1 className='font-bold text-primary'>Website</h1>
+          </section>
 
-        <DesktopNavigation />
-        <MobileNavigation />
-      </Container>
+          <DesktopNavigation />
+          <MobileNavigation />
+        </Container>
+      </main>
 
       {/* navbar resolver kudus */}
       <Spacer />
@@ -52,7 +54,7 @@ const Navbar = () => {
 }
 
 const DesktopNavigation = () => (
-  <main className='hidden gap-8 sm:flex'>
+  <main className='hidden gap-8 md:flex'>
     {NAV_ITEMS.map((nav, i) => (
       <Link href={nav.href} key={i}>
         <Button variant={`link`} className='px-0 font-bold'>
@@ -62,7 +64,7 @@ const DesktopNavigation = () => (
     ))}
 
     <Link href={`/login`}>
-      <Button variant={`secondary`} className='px-8'>
+      <Button variant={`default`} className='px-8'>
         Login
       </Button>
     </Link>
@@ -70,7 +72,7 @@ const DesktopNavigation = () => (
 )
 
 const MobileNavigation = () => (
-  <main className='flex sm:hidden'>
+  <main className='flex md:hidden'>
     <Sheet>
       <SheetTrigger asChild>
         <Button variant={`ghost`}>
@@ -94,10 +96,20 @@ const MobileNavigation = () => (
           </section>
           <section className='flex flex-col gap-2'>
             <SheetClose asChild>
-              <Link href={`/login`} className={buttonVariants({ variant: 'secondary'})} >Daftar</Link>
+              <Link
+                href={`/login`}
+                className={buttonVariants({ variant: 'default' })}
+              >
+                Daftar
+              </Link>
             </SheetClose>
             <SheetClose asChild>
-              <Link href={'/signup'} className={buttonVariants({ variant: 'outline'})}>Masuk</Link>
+              <Link
+                href={'/signup'}
+                className={buttonVariants({ variant: 'outline' })}
+              >
+                Masuk
+              </Link>
             </SheetClose>
           </section>
         </main>

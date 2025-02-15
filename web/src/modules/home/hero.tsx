@@ -19,13 +19,11 @@ const CARD_ITEMS = [
 
 const Hero = () => {
   return (
-    <Container>
-      <main className='flex flex-col items-center text-center md:text-start gap-4 rounded-2xl bg-primary p-6 text-white md:flex-row md:p-8'>
-        <section className='flex max-w-xl flex-col gap-2 py-16 md:py-0'>
+    <main className='relative bg-primary-500'>
+      <Container className='flex flex-col items-center gap-4 py-8 text-center text-white md:flex-row md:items-end md:py-10 md:text-start'>
+        <section className='z-10 flex w-full flex-col gap-2 pb-4 pt-10 md:py-0'>
           <h1 className='text-3xl font-bold'>
-            Waktunya <span className='text-secondary'> Uji Kemampuan </span> &
-            Temukan <span className='text-secondary'> Bidang yang Cocok </span>
-            Untukmu
+            Waktunya Uji Kemampuan & Temukan Bidang yang Cocok Untukmu
           </h1>
           <p className='font-light'>
             Jelajahi Karir Impian di Dunia Computer Science dan Taklukkan UTBK
@@ -33,13 +31,23 @@ const Hero = () => {
           </p>
         </section>
 
-        <section className='flex w-full flex-col gap-4 md:flex-row'>
+        <section className='relative z-10 grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8'>
           {CARD_ITEMS.map((card, i) => (
             <Card key={i} {...card} />
           ))}
         </section>
-      </main>
-    </Container>
+
+        {/* background image + overlay */}
+        <Image
+          src={`/hero.jpg`}
+          alt='hero image isi lagi nanti'
+          fill
+          sizes='80%'
+          className='z-0 object-cover'
+        />
+        <div className='bg-primary-new-500/50 absolute inset-0 z-0' />
+      </Container>
+    </main>
   )
 }
 
@@ -53,7 +61,7 @@ const Card = ({
   href: string
 }) => (
   <main
-    className='relative flex w-full flex-col gap-2 overflow-hidden rounded-xl border-t-[2px] bg-white/20 p-6 shadow-lg *:text-start md:*:text-center md:justify-between md:py-10'
+    className='relative flex flex-col gap-2 overflow-hidden rounded-xl border-t-[2px] bg-white/20 p-6 shadow-lg backdrop-blur-lg *:text-start md:justify-between md:*:text-center'
     style={{ boxShadow: 'inset 0 0 20px rgba(255,255,255,0.5)' }}
   >
     <section className='flex w-full flex-row items-center gap-4 md:flex-col md:items-center'>
@@ -65,12 +73,12 @@ const Card = ({
       {/* text and cta */}
       <div className='flex flex-col gap-2 md:mt-auto'>
         <h1 className='text-2xl font-bold md:mt-auto'>{name}</h1>
-        <p className='mb-4 text-sm font-light md:text-base'>{description}</p>
+        <p className='mb-4 text-sm font-light'>{description}</p>
       </div>
     </section>
     <Link href={href}>
-      <Button variant={`secondary`} className='w-full'>
-        CTA
+      <Button variant={`default`} className='w-full'>
+        {name}
       </Button>
     </Link>
   </main>
