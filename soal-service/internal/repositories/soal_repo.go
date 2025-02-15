@@ -1,6 +1,7 @@
 package repositories
 
 import (
+	"soal-service/internal/logger"
 	"soal-service/internal/models"
 
 	"github.com/jmoiron/sqlx"
@@ -28,7 +29,7 @@ func (r *soalRepo) GetSoalByPaketAndSubtest(paketSoal, subtest string) ([]models
 			s.kode_soal, s.paket_soal_id, s.subtest, s.text_soal, s.path_gambar_soal, 
 			ppg.pilihan_pilihan_ganda_id, ppg.pilihan,
 			ptf.pilihan_true_false_id, ptf.pilihan_tf,
-			u.uraian_id,
+			u.uraian_id
 		FROM soal s
 		LEFT JOIN pilihan_pilihan_ganda ppg ON s.kode_soal = ppg.kode_soal
 		LEFT JOIN pilihan_true_false ptf ON s.kode_soal = ptf.kode_soal
@@ -84,7 +85,7 @@ func (r *soalRepo) GetSoalByPaketAndSubtest(paketSoal, subtest string) ([]models
 	for _, soal := range mappedSoal {
 		listSoal = (append(listSoal, *soal))
 	}
-
+	logger.LogDebug("User retrieved", map[string]interface{}{"layer": "repository", "operation": "GetUserByEmail", "paket_soal": paketSoal, "subtest": subtest})
 	return listSoal, nil
 }
 
@@ -182,6 +183,6 @@ func (r *soalRepo) GetAnswerKeyByPaketAndSubtest(paketSoal, subtest string) (*mo
 			Bobot   int
 		}{Jawaban: jawaban, Bobot: bobot}
 	}
-
+	logger.LogDebug("answer retrieved", map[string]interface{}{"layer": "repository", "operation": "GetAnswerByPaketAndSubtest", "paket_soal": paketSoal, "subtest": subtest})
 	return answers, nil
 }
