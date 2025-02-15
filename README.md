@@ -68,6 +68,28 @@ To start the development server:
 
 ---
 
+## Front End Development Usage
+
+to start developing the front-end, follow these instructions:
+
+- **using npm**:
+
+```bash
+git pull --rebase origin main
+cd web
+npm install
+npm run dev
+```
+
+- **using pnpm**:
+
+```bash
+git pull --rebase origin main
+cd web
+pnpm install
+pnpm dev
+```
+
 ## Contributors
 
 [List of contributors here.]
