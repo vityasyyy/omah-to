@@ -30,10 +30,40 @@ services:
     ports:
       - ${AUTH_SERVICE_PORT}:${AUTH_SERVICE_PORT}
 
+  # Soal service
+  # Database for the soal service
+  soal-service-db:
+    image: postgres:17.2-alpine
+    env_file:
+      - soal-service/.env
+    volumes:
+      - ./soal-service/db/init.sql:/docker-entrypoint-initdb.d/init.sql # init script
+      - soal-data:/var/lib/postgresql/data
+    networks:
+      - omahtryout-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U omahTryOut -d soal_service_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
+  # API for the soal service
+  soal-service-api:
+    build: ./soal-service
+    env_file:
+      - soal-service/.env
+      - .env
+    depends_on:
+      soal-service-db:
+        condition: service_healthy  # Ensure DB is ready
+    networks:
+      - omahtryout-network
+    ports:
+      - ${SOAL_SERVICE_PORT}:${SOAL_SERVICE_PORT}
 networks:
   omahtryout-network:
 
 # volumes for persistent data
 volumes:
   auth-data:
+  soal-data:
