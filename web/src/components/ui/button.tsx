@@ -5,21 +5,21 @@ import { cva, type VariantProps } from 'class-variance-authority'
 import { cn } from '@/lib/utils'
 
 const buttonVariants = cva(
-  'inline-flex items-center font-bold justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-neutral-950 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 dark:focus-visible:ring-neutral-300',
+  'inline-flex items-center font-bold justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-neutral-950 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 neutral-300',
   {
     variants: {
       variant: {
         default:
-          'bg-primary-new-500 text-white shadow hover:bg-primary-new-500/90 dark:bg-neutral-50 dark:text-neutral-900 dark:hover:bg-neutral-50/90',
+          'bg-primary-new-500 text-white shadow hover:bg-primary-new-500/90',
         destructive:
-          'bg-transparent text-error-600 shadow-sm border-2 border-error-400 hover:text-white hover:bg-red-400/90 dark:bg-red-900 dark:text-neutral-50 dark:hover:bg-red-900/90',
+          'bg-white text-error-600 shadow-sm border-2 border-error-400 hover:text-white hover:bg-red-400',
         outline:
-          'border-2 text-primary-new-500 border-primary-new-500 bg-transparent shadow-sm hover:bg-secondary-500/10 hover:text-secondary/90 dark:border-neutral-800 dark:bg-neutral-950 dark:hover:bg-neutral-800 dark:hover:text-neutral-50',
+          'border-2 text-primary-new-500 border-primary-new-500 bg-transparent shadow-sm hover:bg-secondary-500/10 hover:text-secondary/90 ',
         secondary:
-          'bg-primary-500 text-white shadow-sm hover:bg-primary-500/80 dark:bg-neutral-800 dark:text-neutral-50 dark:hover:bg-neutral-800/80',
-        ghost:
-          'hover:bg-neutral-100 hover:text-neutral-900 dark:hover:bg-neutral-800 dark:hover:text-neutral-50',
-        link: 'text-primary underline-offset-8 hover:underline dark:text-neutral-50',
+          'bg-primary-500 text-white shadow-sm hover:bg-primary-500/80 ark:text-neutral-50 800/80',
+        ghost: 'hover:bg-neutral-100 hover:text-neutral-900',
+        link: 'text-primary underline-offset-8 hover:underline',
+        card: 'bg-white text-black border-neutral-200 border'
       },
       size: {
         default: 'h-9 px-4 py-2',

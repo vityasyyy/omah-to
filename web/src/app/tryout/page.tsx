@@ -11,7 +11,7 @@ const TryOutPage = () => {
       <Container>
         <TopBar />
 
-        <section className='grid gap-4 grid-cols-1 md:grid-cols-4'>
+        <section className='flex flex-col-reverse gap-4 md:grid md:grid-cols-4'>
           <StartCard />
           <ProfileCard />
         </section>

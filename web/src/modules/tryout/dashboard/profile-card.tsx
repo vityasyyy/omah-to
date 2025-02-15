@@ -8,9 +8,9 @@ const DUMMY_PROFILE = {
 
 const ProfileCard = () => {
   return (
-    <StyledCard title='Profile' className='text-center'>
-      <main className='flex flex-col gap-1 items-center'>
-        <section className='relative mx-auto mb-3 aspect-[10/11] w-full overflow-hidden rounded-xl bg-neutral-400 md:rounded-2xl'>
+    <StyledCard title='Profile' className=''>
+      <main className='flex h-full items-center gap-4 md:flex-col md:justify-center md:text-center'>
+        <section className='relative aspect-square w-10 overflow-hidden rounded-sm bg-neutral-400 md:mx-auto md:aspect-[10/11] md:w-full md:rounded-2xl'>
           <Image
             src={`/azhari.jpg`}
             alt='Azhari'
@@ -20,8 +20,10 @@ const ProfileCard = () => {
           />
         </section>
 
-        <h1 className='text-2xl text-black'>{DUMMY_PROFILE.name}</h1>
-        <h2>{DUMMY_PROFILE.school}</h2>
+        <section className='flex flex-col gap-1'>
+          <h1 className='text-[19px] text-black'>{DUMMY_PROFILE.name}</h1>
+          <h2 className='text-sm'>{DUMMY_PROFILE.school}</h2>
+        </section>
       </main>
     </StyledCard>
   )

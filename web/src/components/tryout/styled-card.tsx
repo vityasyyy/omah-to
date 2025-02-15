@@ -19,7 +19,7 @@ const StyledCard = (props: StyledCardProps) => {
       </header>
 
       {/* content goes here */}
-      <div className='mb-2 text-sm font-bold text-neutral-600 md:text-base'>
+      <div className='mb-2 text-sm h-full font-bold text-neutral-600 md:text-base'>
         {props.children}
       </div>
     </main>
