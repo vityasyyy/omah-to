@@ -9,6 +9,7 @@ OmahTI Tryout Website for prospective students preparing for SNBT 2025.
 - [Commit Message Convention](#commit-message-convention)
 - [Installation](#installation)
 - [Usage](#usage)
+- [Front End Development Setup](#front-end-development-setup) --> frontend devs must read
 - [Contributors](#contributors)
 - [Contact](#contact)
 
@@ -68,7 +69,7 @@ To start the development server:
 
 ---
 
-## Front End Development Usage
+## Front End Development Setup
 
 to start developing the front-end, follow these instructions:
 
@@ -89,6 +90,8 @@ cd web
 pnpm install
 pnpm dev
 ```
+
+---
 
 ## Contributors
 
