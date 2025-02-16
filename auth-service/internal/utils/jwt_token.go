@@ -36,7 +36,7 @@ func CreateAccessToken(userID int, namaUser, asalSekolah, email string) (string,
 	}
 
 	// Create a new token with the claims and the signing method
-	token := jwt.NewWithClaims(jwt.SigningMethodRS256, claims)
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 
 	// Sign the token with the secret key
 	return token.SignedString(jwtSecretKey)
