@@ -13,13 +13,18 @@ const buttonVariants = cva(
           'bg-primary-new-500 text-white shadow hover:bg-primary-new-500/90',
         destructive:
           'bg-white text-error-600 shadow-sm border-2 border-error-400 hover:text-white hover:bg-red-400',
+        destructiveGhost:
+        'text-error-600 hover:bg-error-400 hover:text-white',
         outline:
-          'border-2 text-primary-new-500 border-primary-new-500 bg-transparent shadow-sm hover:bg-secondary-500/10 hover:text-secondary/90 ',
+          'border-2 text-primary-new-500 border-primary-new-500 bg-transparent shadow-sm hover:bg-primary-new-500/10 hover:text-primary-new-500/90 ',
         secondary:
           'bg-primary-500 text-white shadow-sm hover:bg-primary-500/80 ark:text-neutral-50 800/80',
+        secondaryOutline:
+          'border-2 text-primary-500 border-primary-500 bg-transparent shadow-sm hover:bg-primary-new-500/10 hover:text-primary-new/90 ',
         ghost: 'hover:bg-neutral-100 hover:text-neutral-900',
         link: 'text-primary underline-offset-8 hover:underline',
-        card: 'bg-white text-black border-neutral-200 border'
+        card: 'bg-white text-black border-neutral-200 border hover:bg-neutral-100',
+        white: 'bg-white text-black hover:bg-neutral-100'
       },
       size: {
         default: 'h-9 px-4 py-2',

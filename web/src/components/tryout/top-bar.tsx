@@ -13,26 +13,36 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
 
-const TopBar = () => {
+type TopBarProps = {
+  variant?: 'default' | 'ghost'
+}
+
+const TopBar = ({ variant = 'default' }: TopBarProps) => {
   return (
     <main className='flex flex-row justify-between gap-8'>
       <BackLink>
-        <Button variant={`card`}>
+        <Button variant={variant === 'ghost' ? 'ghost' : 'card'} className={variant === 'ghost' ? 'text-white' : ''}>
           <ArrowLeft className='h-4 w-4' />
           Kembali
         </Button>
       </BackLink>
 
-      <LogOutButton />
+      <LogOutButton variant={variant} />
     </main>
   )
 }
 
-const LogOutButton = () => {
+type LogOutButtonProps = {
+  variant?: 'default' | 'ghost'
+}
+
+const LogOutButton = ({ variant = 'default' }: LogOutButtonProps) => {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant={`destructive`}>Logout</Button>
+        <Button variant={variant === 'ghost' ? 'destructiveGhost' : 'destructive'}>
+          Logout
+        </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
@@ -53,7 +63,9 @@ const LogOutButton = () => {
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
           <AlertDialogAction asChild className='text-error-600'>
-            <Button variant={`destructive`}>Logout</Button>
+            <Button variant={'destructive'}>
+              Logout
+            </Button>
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

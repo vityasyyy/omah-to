@@ -1,3 +1,4 @@
+'use client'
 import StyledCard from '@/components/tryout/styled-card'
 import { Button } from '@/components/ui/button'
 import { Layers, X } from 'lucide-react'
@@ -13,6 +14,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
+import { useRouter } from 'next/navigation'
 
 const POINTS = [
   {
@@ -42,6 +44,12 @@ const POINTS = [
 ]
 
 const StartCard = () => {
+  const router = useRouter()
+
+  const handleStart = () => {
+    router.push('/tryout/intro')
+  }
+
   return (
     <StyledCard title='TryOut' className='col-span-3'>
       <main className='flex h-full flex-col gap-6 md:flex-row'>
@@ -77,6 +85,12 @@ const StartCard = () => {
 }
 
 const StartButton = () => {
+  const router = useRouter()
+
+  function handleStart() {
+    router.push('/tryout/intro')
+  }
+
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
@@ -101,7 +115,7 @@ const StartButton = () => {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Kembali</AlertDialogCancel>
-          <AlertDialogAction>
+          <AlertDialogAction onClick={() => handleStart()}>
             Mulai Tryout
           </AlertDialogAction>
         </AlertDialogFooter>
