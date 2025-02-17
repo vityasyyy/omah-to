@@ -20,11 +20,11 @@ const NumberCarousel = () => {
       <Carousel className='mx-auto w-full'>
         <section className='flex items-center gap-2'>
           <CarouselPrevious className='relative shrink-0' />
-          <CarouselContent className='w-full'>
+          <CarouselContent className='-ml-2 w-full'>
             {Array.from({ length: 40 }).map((_, index) => (
               <CarouselItem
                 key={index}
-                className='basis-1/7 sm:basis-[10%] md:basis-[9%] lg:basis-[6%] xl:basis-[5%]'
+                className='basis-[33%] pl-2 min-[400px]:basis-[25%] sm:basis-[11%] md:basis-[9%] lg:basis-[6%] xl:basis-[5%]'
               >
                 <Link
                   href={`/tryout/${index + 1}`}

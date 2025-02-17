@@ -23,7 +23,7 @@ const TopBar = ({ variant = 'default' }: TopBarProps) => {
       <BackLink>
         <Button
           variant={variant === 'ghost' ? 'ghost' : 'card'}
-          className={variant === 'ghost' ? 'text-white' : ''}
+          className={`hover:cursor-pointer ${variant === 'ghost' ? 'text-white' : ''}`}
         >
           <ArrowLeft className='h-4 w-4' />
           Kembali
@@ -67,8 +67,13 @@ const LogOutButton = ({ variant = 'default' }: LogOutButtonProps) => {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction asChild className='text-error-600'>
-            <Button variant={'destructive'}>Logout</Button>
+          <AlertDialogAction asChild>
+            <Button
+              variant={'destructive'}
+              className='text-error-600! hover:bg-error-400! hover:cursor-pointer hover:text-white!'
+            >
+              Logout
+            </Button>
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

@@ -1,3 +1,4 @@
+import BlurCard from '@/components/blur-card'
 import Container from '@/components/container'
 import { Button } from '@/components/ui/button'
 import Image from 'next/image'
@@ -21,8 +22,8 @@ const Hero = () => {
   return (
     <main className='bg-primary-500 relative'>
       <Container className='flex flex-col items-center gap-4 py-8 text-center text-white md:flex-row md:items-end md:py-10 md:text-start'>
-        <section className='z-10 flex w-full flex-col gap-2 pt-10 pb-4 md:py-0'>
-          <h1 className='text-3xl font-bold'>
+        <section className='z-10 flex w-full flex-col gap-2 pt-16 pb-4 md:py-0'>
+          <h1 className='text-2xl font-bold md:text-3xl'>
             Waktunya Uji Kemampuan & Temukan Bidang yang Cocok Untukmu
           </h1>
           <p className='font-light'>
@@ -42,6 +43,7 @@ const Hero = () => {
           src={`/hero.jpg`}
           alt='hero image isi lagi nanti'
           fill
+          priority
           sizes='80%'
           className='z-0 object-cover'
         />
@@ -60,10 +62,7 @@ const Card = ({
   description: string
   href: string
 }) => (
-  <main
-    className='relative flex flex-col gap-2 overflow-hidden rounded-xl border-t-[2px] bg-white/20 p-6 shadow-lg backdrop-blur-lg *:text-start md:justify-between md:*:text-center'
-    style={{ boxShadow: 'inset 0 0 20px rgba(255,255,255,0.5)' }}
-  >
+  <BlurCard>
     <section className='flex w-full flex-row items-center gap-4 md:flex-col md:items-center'>
       {/* image */}
       <div className='relative aspect-square h-16 md:h-40 lg:h-48'>
@@ -77,11 +76,11 @@ const Card = ({
       </div>
     </section>
     <Link href={href}>
-      <Button variant={`default`} className='w-full'>
+      <Button variant={`default`} className='w-full hover:cursor-pointer'>
         {name}
       </Button>
     </Link>
-  </main>
+  </BlurCard>
 )
 
 export default Hero

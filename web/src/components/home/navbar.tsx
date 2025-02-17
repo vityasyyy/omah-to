@@ -29,7 +29,7 @@ const Navbar = () => {
     <>
       <main className='fixed inset-x-0 top-0 z-50 bg-white/60 backdrop-blur-md'>
         <Container className='flex-row items-center justify-between gap-8'>
-          <section className='flex items-center gap-4'>
+          <Link href={`/`} className='flex items-center gap-4'>
             <div className='relative aspect-square h-7'>
               <Image
                 src='/placeholder.png'
@@ -39,8 +39,8 @@ const Navbar = () => {
                 className='object-cover'
               />
             </div>
-            <h1 className='text-primary font-bold'>Website</h1>
-          </section>
+            <h1 className='text-primary font-bold'>omah-to</h1>
+          </Link>
 
           <DesktopNavigation />
           <MobileNavigation />
@@ -64,7 +64,7 @@ const DesktopNavigation = () => (
     ))}
 
     <Link href={`/login`}>
-      <Button variant={`default`} className='px-8'>
+      <Button variant={`default`} className='px-8 hover:cursor-pointer'>
         Login
       </Button>
     </Link>

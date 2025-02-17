@@ -5,14 +5,14 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-[color,box-shadow] disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 [&_svg]:shrink-0 ring-neutral-950/10 dark:ring-neutral-950/20 dark:outline-ring/40 outline-ring/50 focus-visible:ring-4 focus-visible:outline-1 aria-invalid:focus-visible:ring-0 dark:ring-neutral-300/10 dark:dark:ring-neutral-300/20",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-[color,box-shadow] disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 [&_svg]:shrink-0 ring-neutral-950/10 outline-ring/50 focus-visible:ring-4 focus-visible:outline-1 aria-invalid:focus-visible:ring-0 transition-colors",
   {
     variants: {
       variant: {
         default:
           "bg-primary-new-500 text-neutral-50 shadow-sm hover:bg-primary-new-500/90",
         destructive:
-          "bg-white text-error-600 shadow-xs hover:bg-error-400 border-2",
+          "bg-white text-error-600 border-error-400 shadow-xs hover:bg-error-400 hover:text-white border-2",
         destructiveGhost:
         'text-error-600 hover:bg-error-400 hover:text-white',
         outline:
@@ -22,7 +22,7 @@ const buttonVariants = cva(
         secondaryOutline:
           'border-2 text-primary-500 border-primary-500 bg-transparent shadow-xs hover:bg-primary-new-500/10 hover:text-primary-new/90 ',
         ghost: 'hover:bg-neutral-100 hover:text-neutral-900',
-        link: 'text-primary underline-offset-8 hover:underline',
+        link: 'text-primary underline-offset-8 hover:underline hover:cursor-pointer',
         card: 'bg-white text-black border-neutral-200 border hover:bg-neutral-100',
         white: 'bg-white text-black hover:bg-neutral-100'
       },
