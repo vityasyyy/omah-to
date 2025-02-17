@@ -39,7 +39,7 @@ const Navbar = () => {
                 className='object-cover'
               />
             </div>
-            <h1 className='font-bold text-primary'>Website</h1>
+            <h1 className='text-primary font-bold'>Website</h1>
           </section>
 
           <DesktopNavigation />
@@ -79,7 +79,7 @@ const MobileNavigation = () => (
           <Menu className='text-primary' />
         </Button>
       </SheetTrigger>
-      <SheetContent className='flex flex-col items-start justify-between pb-[10vh] pt-[15vh] *:text-start'>
+      <SheetContent className='flex flex-col items-start justify-between pt-[15vh] pb-[10vh] *:text-start'>
         <SheetHeader>
           <SheetTitle className='sr-only'>Sidebar</SheetTitle>
           <SheetDescription className='sr-only'>

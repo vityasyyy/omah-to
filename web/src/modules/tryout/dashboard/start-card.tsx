@@ -53,7 +53,7 @@ const StartCard = () => {
   return (
     <StyledCard title='TryOut' className='col-span-3'>
       <main className='flex h-full flex-col gap-6 md:flex-row'>
-        <section className='relative h-24 w-full overflow-hidden rounded-xl md:aspect-[6/7] md:h-auto md:max-w-[22rem]'>
+        <section className='relative h-24 w-full overflow-hidden rounded-xl md:aspect-6/7 md:h-auto md:max-w-[22rem]'>
           <Image
             src={`/hero.jpg`}
             alt='LeBron James'
@@ -64,7 +64,7 @@ const StartCard = () => {
         </section>
 
         <section className='flex w-full flex-col gap-2 md:pt-2'>
-          <h1 className='mb-1 text-xl font-bold text-primary-900 md:text-2xl'>
+          <h1 className='text-primary-900 mb-1 text-xl font-bold md:text-2xl'>
             Lakukan Tryout Sekarang
           </h1>
           {POINTS.map((point, i) => (
@@ -76,9 +76,8 @@ const StartCard = () => {
               <span>{point.title}</span>
             </div>
           ))}
-        <StartButton />
+          <StartButton />
         </section>
-
       </main>
     </StyledCard>
   )
@@ -94,9 +93,9 @@ const StartButton = () => {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-          <Button variant={`secondary`} className='mt-auto self-end px-6'>
-            Lakukan TryOut Sekarang
-          </Button>
+        <Button variant={`secondary`} className='mt-auto self-end px-6'>
+          Lakukan TryOut Sekarang
+        </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
@@ -110,7 +109,8 @@ const StartButton = () => {
             </AlertDialogCancel>
           </AlertDialogTitle>
           <AlertDialogDescription>
-            Tryout akan dimulai tanpa jeda untuk 7 subtest dengan jangka waktu selama 195 menit, semoga berhasil! 
+            Tryout akan dimulai tanpa jeda untuk 7 subtest dengan jangka waktu
+            selama 195 menit, semoga berhasil!
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>

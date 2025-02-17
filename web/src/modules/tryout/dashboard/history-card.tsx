@@ -49,7 +49,9 @@ const HistoryCard = () => {
       <ScrollArea className='h-[300px] w-full overflow-hidden rounded-xl border border-neutral-200'>
         <Table>
           {DUMMY_DATA.length === 0 && (
-            <TableCaption className='font-bold text-lg mt-12 text-black'>Kamu belum melakukan tes.</TableCaption>
+            <TableCaption className='mt-12 text-lg font-bold text-black'>
+              Kamu belum melakukan tes.
+            </TableCaption>
           )}
           <TableHeader>
             <TableRow>

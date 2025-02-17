@@ -40,7 +40,7 @@ const AnswerCard = ({ variant = 'choice' }: { variant?: Variant }) => {
 
   return (
     <StyledCard title='Jawaban' className='gap-1'>
-      <main className='flex flex-col h-full'>
+      <main className='flex h-full flex-col'>
         {/* multiple choice */}
         {variant === 'choice' ? (
           <MultipleChoice />
@@ -73,7 +73,7 @@ const AnswerCard = ({ variant = 'choice' }: { variant?: Variant }) => {
 }
 
 const MultipleChoice = () => {
-  const [selectedAnswer, setSelectedAnswer] = useState<Number | null>(null)
+  const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null)
 
   return (
     <>
@@ -132,7 +132,9 @@ const TrueFalse = () => {
               className='relative hover:bg-transparent'
             >
               {answers[item.id] === true ? <SquareCheckBig /> : <Square />}
-              <h6 className='absolute -top-1.5 font-light text-xs !text-neutral-800'>Benar</h6>
+              <h6 className='absolute -top-1.5 text-xs font-light text-neutral-800!'>
+                Benar
+              </h6>
             </Button>
             <Button
               onClick={() => handleAnswer(item.id, false)}
@@ -140,13 +142,10 @@ const TrueFalse = () => {
               size={`icon`}
               className='relative hover:bg-transparent'
             >
-              {answers[item.id] === false ? (
-                <SquareCheckBig />
-              ) : (
-                <Square />
-              )}
-              <h6 className='absolute font-light -top-1.5 text-xs !text-neutral-800'>Salah</h6>
-
+              {answers[item.id] === false ? <SquareCheckBig /> : <Square />}
+              <h6 className='absolute -top-1.5 text-xs font-light text-neutral-800!'>
+                Salah
+              </h6>
             </Button>
           </div>
         </div>

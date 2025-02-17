@@ -21,7 +21,10 @@ const TopBar = ({ variant = 'default' }: TopBarProps) => {
   return (
     <main className='flex flex-row justify-between gap-8'>
       <BackLink>
-        <Button variant={variant === 'ghost' ? 'ghost' : 'card'} className={variant === 'ghost' ? 'text-white' : ''}>
+        <Button
+          variant={variant === 'ghost' ? 'ghost' : 'card'}
+          className={variant === 'ghost' ? 'text-white' : ''}
+        >
           <ArrowLeft className='h-4 w-4' />
           Kembali
         </Button>
@@ -40,7 +43,9 @@ const LogOutButton = ({ variant = 'default' }: LogOutButtonProps) => {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant={variant === 'ghost' ? 'destructiveGhost' : 'destructive'}>
+        <Button
+          variant={variant === 'ghost' ? 'destructiveGhost' : 'destructive'}
+        >
           Logout
         </Button>
       </AlertDialogTrigger>
@@ -63,9 +68,7 @@ const LogOutButton = ({ variant = 'default' }: LogOutButtonProps) => {
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
           <AlertDialogAction asChild className='text-error-600'>
-            <Button variant={'destructive'}>
-              Logout
-            </Button>
+            <Button variant={'destructive'}>Logout</Button>
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

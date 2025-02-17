@@ -19,9 +19,9 @@ const CARD_ITEMS = [
 
 const Hero = () => {
   return (
-    <main className='relative bg-primary-500'>
+    <main className='bg-primary-500 relative'>
       <Container className='flex flex-col items-center gap-4 py-8 text-center text-white md:flex-row md:items-end md:py-10 md:text-start'>
-        <section className='z-10 flex w-full flex-col gap-2 pb-4 pt-10 md:py-0'>
+        <section className='z-10 flex w-full flex-col gap-2 pt-10 pb-4 md:py-0'>
           <h1 className='text-3xl font-bold'>
             Waktunya Uji Kemampuan & Temukan Bidang yang Cocok Untukmu
           </h1>
@@ -31,7 +31,7 @@ const Hero = () => {
           </p>
         </section>
 
-        <section className='relative z-10 grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8'>
+        <section className='relative z-10 grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-8'>
           {CARD_ITEMS.map((card, i) => (
             <Card key={i} {...card} />
           ))}

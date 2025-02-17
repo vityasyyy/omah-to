@@ -20,7 +20,7 @@ const IntroPage = (props: IntroPageProps) => {
           <RemainingTime className='md:px-6 md:py-3' />
         </section>
 
-        <section className='mb-[10vh] mt-auto flex w-full max-w-screen-md flex-col gap-4 *:font-bold *:text-white'>
+        <section className='mt-auto mb-[10vh] flex w-full max-w-(--breakpoint-md) flex-col gap-4 *:font-bold *:text-white'>
           <h3 className='text-sm md:text-base'>Subtest {props.id || '1'}</h3>
           <h1 className='text-4xl font-bold md:text-5xl'>
             {props.title || 'LeBron James'}
@@ -33,7 +33,7 @@ const IntroPage = (props: IntroPageProps) => {
           <Link href='/tryout/1'>
             <Button
               variant={`white`}
-              className='mt-2 w-fit !font-medium !text-black'
+              className='mt-2 w-fit font-medium! text-black!'
             >
               Mulai Subtest
             </Button>
@@ -49,7 +49,7 @@ const IntroPage = (props: IntroPageProps) => {
         sizes='90%'
         className='z-0 object-cover'
       />
-      <div className='absolute inset-0 z-0 bg-primary-new-300/50' />
+      <div className='bg-primary-new-300/50 absolute inset-0 z-0' />
     </main>
   )
 }

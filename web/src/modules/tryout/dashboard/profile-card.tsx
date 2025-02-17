@@ -10,7 +10,7 @@ const ProfileCard = () => {
   return (
     <StyledCard title='Profile' className=''>
       <main className='flex h-full items-center gap-4 md:flex-col md:justify-center md:text-center'>
-        <section className='relative aspect-square w-10 overflow-hidden rounded-sm bg-neutral-400 md:mx-auto md:aspect-[10/11] md:w-full md:rounded-2xl'>
+        <section className='relative aspect-square w-10 overflow-hidden rounded-sm bg-neutral-400 md:mx-auto md:aspect-10/11 md:w-full md:rounded-2xl'>
           <Image
             src={`/azhari.jpg`}
             alt='Azhari'

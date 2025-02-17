@@ -10,7 +10,7 @@ const StyledCard = (props: StyledCardProps) => {
   return (
     <main
       className={cn(
-        'flex flex-col gap-5 overflow-hidden rounded-2xl border border-neutral-200 bg-white px-4 py-4 shadow-sm',
+        'flex flex-col gap-5 overflow-hidden rounded-2xl border border-neutral-200 bg-white px-4 py-4 shadow-xs',
         props.className
       )}
     >
