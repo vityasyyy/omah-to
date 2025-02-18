@@ -24,7 +24,8 @@ const buttonVariants = cva(
         ghost: 'hover:bg-neutral-100 hover:text-neutral-900',
         link: 'text-primary underline-offset-8 hover:underline hover:cursor-pointer',
         card: 'bg-white text-black border-neutral-200 border hover:bg-neutral-100',
-        white: 'bg-white text-black hover:bg-neutral-100'
+        white: 'bg-white text-black hover:bg-neutral-100',
+        pembahasan: 'bg-[#0479CE] font-lato text-white text-medium'
       },
       size: {
         default: "h-9 px-4 py-2 has-[>svg]:px-3",
