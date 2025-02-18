@@ -1,6 +1,7 @@
 import * as motion from 'motion/react-client'
 import BoldUnderline from '@/components/bold-underline'
 import Container from '@/components/container'
+import { VariantProps } from 'class-variance-authority'
 
 type sideType = 'left' | 'right'
 const CARD_CONTENT = [
@@ -81,7 +82,6 @@ const CHAT_CONTENT = [
   },
 ]
 
-// Add variants for staggered animation
 const containerVariants = {
   hidden: {},
   visible: {
@@ -170,7 +170,7 @@ const Card = () => {
         visualDuration: 0.5,
       }}
       viewport={{ once: true, amount: 0.5 }}
-      className='border-primary-new-500 shadow-primary-new-200 mx-8 flex w-[75vw] max-w-sm rotate-x-15 rotate-y-15 -rotate-z-10 flex-col gap-4 rounded-xl border-4 p-8 shadow-2xl lg:ml-8'
+      className='border-primary-new-500 shadow-primary-new-200 mx-8 flex w-[75vw] max-w-sm flex-col gap-4 rounded-xl border-4 p-8 shadow-2xl lg:ml-8'
     >
       {CARD_CONTENT.map((content, i) => (
         <div key={i} className='w-fit'>

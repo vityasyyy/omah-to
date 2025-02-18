@@ -28,7 +28,7 @@ const Navbar = () => {
   return (
     <>
       <main className='fixed inset-x-0 top-0 z-50 bg-white/60 backdrop-blur-md'>
-        <Container className='flex-row items-center justify-between gap-8'>
+        <Container className='flex-row h-16 items-center justify-between gap-8'>
           <Link href={`/`} className='flex items-center gap-4'>
             <div className='relative aspect-square h-7'>
               <Image
