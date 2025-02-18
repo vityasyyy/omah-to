@@ -178,13 +178,13 @@ const BUTTON_CONTENT = [
 
                 {/* Subject List */}
                 <div
-                  className={`overflow-hidden transition-all duration-700 ease-in-out ${
+                  className={`overflow-hidden shadow-md border-[#304A91] transition-all duration-700 ease-in-out ${
                     openSemester === index ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"
                   }`}
                 >
-                  <div className="rounded-md p-4 mt-2 bg-gray-100 shadow-md">
+                  <div className="rounded-md p-4 mt-2 border-[#304A91] border-2 shadow-md">
                     <table className="w-full">
-                      <thead className="border-b-2 border-b-black text-black">
+                      <thead className="border-b-2 border-b-[#304A91] text-[#304A91]">
                         <tr>
                           <th className="w-[10%] px-4 py-3 text-center">No</th>
                           <th className="w-[60%] px-4 py-3 text-center">Mata Kuliah</th>
@@ -193,7 +193,7 @@ const BUTTON_CONTENT = [
                       </thead>
                       <tbody>
                         {item.subjects.map((subject, idx) => (
-                          <tr key={idx} className="hover:bg-gray-200 transition">
+                          <tr key={idx} className="hover:bg-gray-200 text-[#304A91] transition">
                             <td className="px-4 py-3 text-center">{subject.code}</td>
                             <td className="px-4 py-3 text-center">{subject.subject}</td>
                             <td className="px-4 py-3 text-center">{subject.sks}</td>
