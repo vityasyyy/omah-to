@@ -156,9 +156,9 @@ const BUTTON_CONTENT = [
             <section className="flex flex-col gap-6">
                 <h1 className="text-2xl font-bold lg:text-3xl">
                     Mata Kuliah yang Akan Membentuk Masa Depanmu di
-                    <span className="text-primary-500"> Computer Science </span>
+                    <span className="text-primary-500"> Computer Science</span>!
                 </h1>
-                <h3 className="text-1xl font-bold lg:text-3xl">
+                <h3 className="text-xl font-bold">
                     Universitas Gadjah Mada
                 </h3>
 
@@ -168,47 +168,47 @@ const BUTTON_CONTENT = [
               <div key={index} className="w-full">
                 <button
                   onClick={() => toggleSemester(index)}
-                  className="flex items-center justify-between w-full rounded-md bg-[#304A91] text-white font-bold py-3 px-5 text-left shadow-md hover:bg-[#2b3e75] transition-all"
+                  className="ease-in flex items-center justify-between w-full rounded-md bg-[#304A91] text-white font-bold py-3 px-5 text-left shadow-md hover:bg-[#2b3e75] transition-all"
                 >
                   <span className="text-lg">{item.label}</span>
                   <span className="material-symbols-outlined text-xl">
                     {openSemester === index ? "keyboard_arrow_up" : "keyboard_arrow_down"}
                   </span>
                 </button>
-  
+
                 {/* Subject List */}
-                {openSemester === index && (
-                    <div className="rounded-md p-4 mt-2 bg-gray-100 shadow-md">
-                        <table className="w-full">
-                        <thead className="border-b-2 border-b-black text-black">
-                            <tr>
-                            <th className="w-[10%] px-4 py-3 text-center">No</th>
-                            <th className="w-[60%] px-4 py-3 text-center">Mata Kuliah</th>
-                            <th className="w-[30%] px-4 py-3 text-center">SKS</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {item.subjects.map((subject, idx) => (
-                            <tr
-                                key={idx}
-                                className="hover:bg-gray-200 transition"
-                            >
-                                <td className="px-4 py-3 text-center">{subject.code}</td>
-                                <td className="px-4 py-3 text-center">{subject.subject}</td>
-                                <td className="px-4 py-3 text-center">{subject.sks}</td>
-                            </tr>
-                            ))}
-                        </tbody>
-                        </table>
-                    </div>
-                    )}
+                <div
+                  className={`overflow-hidden transition-all duration-700 ease-in-out ${
+                    openSemester === index ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"
+                  }`}
+                >
+                  <div className="rounded-md p-4 mt-2 bg-gray-100 shadow-md">
+                    <table className="w-full">
+                      <thead className="border-b-2 border-b-black text-black">
+                        <tr>
+                          <th className="w-[10%] px-4 py-3 text-center">No</th>
+                          <th className="w-[60%] px-4 py-3 text-center">Mata Kuliah</th>
+                          <th className="w-[30%] px-4 py-3 text-center">SKS</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {item.subjects.map((subject, idx) => (
+                          <tr key={idx} className="hover:bg-gray-200 transition">
+                            <td className="px-4 py-3 text-center">{subject.code}</td>
+                            <td className="px-4 py-3 text-center">{subject.subject}</td>
+                            <td className="px-4 py-3 text-center">{subject.sks}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
+              </div>
             ))}
-            </div>
+          </div>
         </section>
         </div>
     );
   };
   
-
 export default SubjectSemester;
