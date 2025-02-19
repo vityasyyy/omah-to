@@ -1,1 +1,262 @@
-package internal
+package repositories
+
+import (
+	"fmt"
+	"strings"
+	"time"
+	"tryout-service/internal/logger"
+	"tryout-service/internal/models"
+
+	"github.com/jmoiron/sqlx"
+)
+
+type TryoutRepo interface {
+	CreateTryoutAttempt(attempt *models.TryoutAttempt) error       // Create a new tryout attempt
+	GetTryoutAttempt(attemptID int) (*models.TryoutAttempt, error) // Get a tryout attempt by its ID, including the user's answers based on the current subtest also
+	GetAnswerFromCurrentAttemptAndSubtest(attemptID int, subtest string) ([]models.UserAnswer, error)
+	GetSubtestTime(attemptID int, subtest string) (time.Time, error) // Get the remaining time for a subtest
+	SaveAnswers(answers []models.UserAnswer) error                   // Save user's answers to the database
+	ProgressTryout(attemptID int, subtest string) error              // End a subtest attempt, marking the end time
+	EndTryOut(attemptID int) error                                   // End a tryout attempt, marking the end time
+	DeleteAttempt(attemptID int) error
+}
+
+type tryoutRepo struct {
+	db *sqlx.DB
+}
+
+func NewTryoutRepo(db *sqlx.DB) TryoutRepo {
+	return &tryoutRepo{db: db}
+}
+
+func (r *tryoutRepo) CreateTryoutAttempt(attempt *models.TryoutAttempt) error {
+	tx, err := r.db.Beginx()
+	if err != nil {
+		logger.LogError(err, "Failed to start transaction", map[string]interface{}{"layer": "repository", "operation": "CreateTryoutAttempt"})
+		return err
+	}
+
+	// Insert into tryout_attempt and get attempt_id
+	query := `INSERT INTO tryout_attempt (user_id, start_time, subtest_sekarang) VALUES ($1, $2, $3) RETURNING attempt_id`
+	startTime := time.Now()
+	err = tx.QueryRowx(query, attempt.UserID, startTime, "subtest_pu").Scan(&attempt.TryoutAttemptID)
+	if err != nil {
+		tx.Rollback()
+		logger.LogError(err, "Failed to create tryout attempt", map[string]interface{}{"layer": "repository", "operation": "CreateTryoutAttempt"})
+		return err
+	}
+
+	// Define subtests and their time limits
+	subtests := []struct {
+		Subtest   string
+		TimeLimit time.Duration // Time in minutes
+	}{
+		{"subtest_pu", 30 * time.Minute},
+		{"subtest_ppu", 40 * time.Minute},
+		{"subtest_pbm", 45 * time.Minute},
+		{"subtest_pk", 30 * time.Minute},
+		{"subtest_lbi", 30 * time.Minute},
+		{"subtest_lbe", 30 * time.Minute},
+		{"subtest_pm", 30 * time.Minute},
+	}
+
+	// Construct the query for batch insertion
+	var values []string
+	var args []interface{}
+	currentTime := startTime
+	for i, sub := range subtests {
+		startTime := currentTime
+		endTime := startTime.Add(sub.TimeLimit) // Calculate end time
+
+		values = append(values, fmt.Sprintf("($%d, $%d, $%d)", i*3+1, i*3+2, i*3+3))
+		args = append(args, attempt.TryoutAttemptID, sub.Subtest, endTime)
+		currentTime = endTime
+	}
+
+	timeQuery := fmt.Sprintf(`INSERT INTO time_limit (attempt_id, subtest, time_limit) VALUES %s`, strings.Join(values, ", "))
+	_, err = tx.Exec(timeQuery, args...)
+	if err != nil {
+		tx.Rollback()
+		logger.LogError(err, "Failed to insert time limits", map[string]interface{}{"layer": "repository", "operation": "CreateTryoutAttempt"})
+		return err
+	}
+
+	// Commit transaction
+	err = tx.Commit()
+	if err != nil {
+		logger.LogError(err, "Failed to commit transaction", map[string]interface{}{"layer": "repository", "operation": "CreateTryoutAttempt"})
+		return err
+	}
+
+	logger.LogDebug("Tryout attempt and time limits inserted", map[string]interface{}{
+		"layer":     "repository",
+		"operation": "CreateTryoutAttempt",
+		"attemptID": attempt.TryoutAttemptID,
+	})
+
+	return nil
+}
+
+func (r *tryoutRepo) GetTryoutAttempt(attemptID int) (*models.TryoutAttempt, error) {
+	var attempt models.TryoutAttempt
+
+	// Fetch the tryout attempt details
+	query := `SELECT * FROM tryout_attempt WHERE attempt_id = $1`
+	err := r.db.Get(&attempt, query, attemptID)
+	if err != nil {
+		logger.LogError(err, "Failed to get tryout attempt", map[string]interface{}{
+			"layer": "repository", "operation": "GetTryoutAttempt",
+		})
+		return nil, err
+	}
+
+	logger.LogDebug("Tryout attempt retrieved", map[string]interface{}{
+		"layer": "repository", "operation": "GetTryoutAttempt",
+	})
+	return &attempt, nil
+}
+
+func (r *tryoutRepo) GetAnswerFromCurrentAttemptAndSubtest(attemptID int, subtest string) ([]models.UserAnswer, error) {
+	var answers []models.UserAnswer
+
+	query := `SELECT attempt_id, subtest, kode_soal, jawaban FROM user_answers WHERE attempt_id = $1 AND subtest = $2`
+	err := r.db.Select(&answers, query, attemptID, subtest)
+	if err != nil {
+		logger.LogError(err, "Failed to get user answers", map[string]interface{}{"layer": "repository", "operation": "GetAnswerFromCurrentAttemptAndSubtest"})
+		return nil, err
+	}
+
+	logger.LogDebug("User answers retrieved", map[string]interface{}{"layer": "repository", "operation": "GetAnswerFromCurrentAttemptAndSubtest"})
+	return answers, nil
+}
+
+func (r *tryoutRepo) GetSubtestTime(attemptID int, subtest string) (time.Time, error) {
+	var timeLimit time.Time
+
+	query := `SELECT time_limit FROM time_limit WHERE attempt_id = $1 AND subtest = $2`
+	err := r.db.Get(&timeLimit, query, attemptID, subtest)
+	if err != nil {
+		logger.LogError(err, "Failed to get time limit", map[string]interface{}{"layer": "repository", "operation": "GetRemainingSubtestTime"})
+		return time.Time{}, err
+	}
+
+	logger.LogDebug("Time limit retrieved", map[string]interface{}{"layer": "repository", "operation": "GetRemainingSubtestTime"})
+	return timeLimit, nil
+}
+
+func (r *tryoutRepo) SaveAnswers(answers []models.UserAnswer) error {
+	if len(answers) == 0 {
+		return nil // No data to insert
+	}
+
+	query := `INSERT INTO user_answers (attempt_id, kode_soal, jawaban) VALUES `
+
+	// Constructing bulk insert placeholders
+	var values []interface{}
+	var placeholders []string
+	for i, answer := range answers {
+		placeholders = append(placeholders, fmt.Sprintf("($%d, $%d, $%d)", i*3+1, i*3+2, i*3+3))
+		values = append(values, answer.TryoutAttemptID, answer.KodeSoal, answer.Jawaban)
+	}
+
+	// Joining placeholders to form the full query
+	query += strings.Join(placeholders, ",")
+
+	_, err := r.db.Exec(query, values...)
+	if err != nil {
+		logger.LogError(err, "Failed to save user answers", map[string]interface{}{"layer": "repository", "operation": "SaveAnswers"})
+		return err
+	}
+
+	logger.LogDebug("User answers saved", map[string]interface{}{"layer": "repository", "operation": "SaveAnswers"})
+	return nil
+}
+
+func (r *tryoutRepo) ProgressTryout(attemptID int, subtest string) error {
+	// tx, err := r.db.Beginx()
+	// if err != nil {
+	// 	logger.LogError(err, "Failed to start transaction", map[string]interface{}{
+	// 		"layer": "repository", "operation": "EndAttempt",
+	// 	})
+	// 	return err
+	// }
+
+	// // Fetch current subtest
+	// var currentSubtest string
+	// query := `SELECT subtest_sekarang FROM tryout_attempt WHERE attempt_id = $1`
+	// err = tx.Get(&currentSubtest, query, attemptID)
+	// if err != nil {
+	// 	tx.Rollback()
+	// 	logger.LogError(err, "Failed to fetch current subtest", map[string]interface{}{
+	// 		"layer": "repository", "operation": "EndAttempt",
+	// 	})
+	// 	return err
+	// }
+
+	// Define subtest sequence
+	// subtests := []string{"subtest_pu", "subtest_ppu", "subtest_pbm", "subtest_pk", "subtest_lbi", "subtest_lbe", "subtest_pm"}
+	// var nextSubtest *string
+
+	// // Find the next subtest
+	// for i, sub := range subtests {
+	// 	if sub == currentSubtest && i < len(subtests)-1 {
+	// 		nextSubtest = &subtests[i+1]
+	// 		break
+	// 	}
+	// }
+
+	// Update the tryout attempt with end_time and next subtest (or NULL if last subtest)
+	updateQuery := `UPDATE tryout_attempt SET subtest_sekarang = $1 WHERE attempt_id = $2`
+	_, err := r.db.Exec(updateQuery, subtest, attemptID)
+	if err != nil {
+		logger.LogError(err, "Failed to update tryout attempt", map[string]interface{}{
+			"layer": "repository", "operation": "EndAttempt",
+		})
+		return err
+	}
+
+	// err = tx.Commit()
+	// if err != nil {
+	// 	logger.LogError(err, "Failed to commit transaction", map[string]interface{}{
+	// 		"layer": "repository", "operation": "EndAttempt",
+	// 	})
+	// 	return err
+	// }
+
+	logger.LogDebug("Tryout attempt progressed", map[string]interface{}{
+		"layer": "repository", "operation": "EndAttempt",
+		"next": subtest,
+	})
+
+	return nil
+}
+
+func (r *tryoutRepo) EndTryOut(attemptID int) error {
+	query := `UPDATE tryout_attempt SET end_time = $1 WHERE attempt_id = $2`
+	_, err := r.db.Exec(query, time.Now(), attemptID)
+	if err != nil {
+		logger.LogError(err, "Failed to end tryout attempt", map[string]interface{}{
+			"layer": "repository", "operation": "EndTryOut",
+		})
+		return err
+	}
+	logger.LogDebug("Tryout attempt ended", map[string]interface{}{
+		"layer": "repository", "operation": "EndTryOut",
+	})
+	return nil
+}
+
+func (r *tryoutRepo) DeleteAttempt(attemptID int) error {
+	query := `DELETE FROM tryout_attempt WHERE attempt_id = $1`
+	_, err := r.db.Exec(query, attemptID)
+	if err != nil {
+		logger.LogError(err, "Failed to delete tryout attempt", map[string]interface{}{
+			"layer": "repository", "operation": "DeleteAttempt",
+		})
+		return err
+	}
+	logger.LogDebug("Tryout attempt deleted", map[string]interface{}{
+		"layer": "repository", "operation": "DeleteAttempt",
+	})
+	return nil
+}
