@@ -13,6 +13,7 @@ type RefreshTokenService interface {
 	ValidateRefreshToken(refreshToken string) (string, string, error)
 	BlacklistRefreshToken(refreshToken string) error
 	BlacklistTokenOnEmail(email string) error
+	GenerateTryoutToken(userID int, attemptID int) (string, error)
 }
 
 type refreshTokenService struct {
@@ -119,4 +120,14 @@ func (s *refreshTokenService) BlacklistTokenOnEmail(email string) error {
 		return err
 	}
 	return nil
+}
+
+func (s *refreshTokenService) GenerateTryoutToken(userID int, attemptID int) (string, error) {
+	// generate tryout token
+	tryoutToken, err := utils.CreateTryoutToken(userID, attemptID)
+	if err != nil {
+		logger.LogError(err, "Failed to generate tryout token", map[string]interface{}{"layer": "service", "operation": "GenerateTryoutToken"})
+		return "", err
+	}
+	return tryoutToken, nil
 }
