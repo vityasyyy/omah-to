@@ -23,6 +23,11 @@ func SetAccessAndRefresh(c *gin.Context, accessToken, refreshToken string) error
 	return nil
 }
 
+func SetTryoutToken(c *gin.Context, tryoutToken string) error {
+	SetCookie(c, "tryout_token", tryoutToken, 200*60, "/", "", true, true) // tryout token, 200 mins
+	return nil
+}
+
 func GetCookie(c *gin.Context, name string) (string, error) {
 	cookie, err := c.Cookie(name)
 	if err != nil {

@@ -38,3 +38,35 @@ func ValidateAccessTokenMiddleware() gin.HandlerFunc {
 		c.Next()
 	}
 }
+
+func ValidateTryoutTokenMiddleware() gin.HandlerFunc {
+	return func(c *gin.Context) {
+
+		// get the access token from the context cookie sent by the client
+		tryoutToken, err := c.Cookie("tryout_token")
+		if err != nil {
+			c.JSON(http.StatusUnauthorized, gin.H{"error": "Failed to get access token"})
+			c.Abort()
+			return
+		}
+		if tryoutToken == "" {
+			c.JSON(http.StatusUnauthorized, gin.H{"error": "Access token is required"})
+			c.Abort()
+			return
+		}
+
+		// validate the access token using the ValidatetryoutToken function in the same utils package
+		tryoutTokenClaims, err := ValidateTryoutToken(tryoutToken)
+		if err != nil {
+			c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid access token"})
+			c.Abort()
+			return
+		}
+
+		// set the user information to the context
+		c.Set("user_id", tryoutTokenClaims.UserID)
+		c.Set("attempt_id", tryoutTokenClaims.AttemptID)
+		// proceed the request further
+		c.Next()
+	}
+}

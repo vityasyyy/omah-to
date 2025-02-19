@@ -20,6 +20,13 @@ type AccessTokenClaims struct {
 	jwt.RegisteredClaims
 }
 
+// for tryout service
+type TryoutTokenClaims struct {
+	UserID    int `json:"user_id"`
+	AttemptID int `json:"attempt_id"`
+	jwt.RegisteredClaims
+}
+
 // Create AccessToken for the user to later be sent via cookies to the frontend (used for authentication and authorization)
 func CreateAccessToken(userID int, namaUser, asalSekolah, email string) (string, error) {
 	expirationTime := time.Now().Add(15 * time.Minute)
@@ -81,4 +88,36 @@ func CreateResetToken() (string, time.Time, error) {
 	}
 	resetTokenExpiredAt := time.Now().Add(30 * time.Minute)
 	return resetToken, resetTokenExpiredAt, nil
+}
+
+func CreateTryoutToken(userID, attemptID int) (string, error) {
+	expirationTime := time.Now().Add(200 * time.Minute)
+	// Create a new token with the claims and the signing method
+	claims := TryoutTokenClaims{
+		UserID:    userID,
+		AttemptID: attemptID,
+		RegisteredClaims: jwt.RegisteredClaims{
+			ExpiresAt: jwt.NewNumericDate(expirationTime),
+			IssuedAt:  jwt.NewNumericDate(time.Now()),
+		},
+	}
+
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+	return token.SignedString(jwtSecretKey)
+}
+
+func ValidateTryoutToken(tryoutToken string) (*TryoutTokenClaims, error) {
+	token, err := jwt.ParseWithClaims(tryoutToken, &TryoutTokenClaims{}, func(token *jwt.Token) (interface{}, error) {
+		return jwtSecretKey, nil
+	})
+
+	if err != nil {
+		return nil, err
+	}
+
+	if claims, ok := token.Claims.(*TryoutTokenClaims); ok && token.Valid {
+		return claims, nil
+	}
+
+	return nil, jwt.ErrTokenInvalidClaims
 }
