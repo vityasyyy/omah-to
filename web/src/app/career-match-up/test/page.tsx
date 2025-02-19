@@ -1,4 +1,4 @@
-import CareerQuestion from '@/modules/carrer-match-up/career-question'
+import CareerQuestion from '@/modules/career-match-up/career-question'
 import React from 'react'
 
 function page() {

@@ -25,6 +25,7 @@ const questions: Question[] = [
         id: 'a4',
         text: 'Bagaimana aplikasi bisa memberikan rekomendasi yang tepat',
       },
+      //tinggal tambah properti image
     ],
   },
   {
@@ -76,7 +77,7 @@ const AnswerCard = ({ answer, selected, onSelect }: AnswerCardProps) => (
     <button
       onClick={() => onSelect(answer.id)}
       className={cn(
-        'w-full flex justify-start items-center gap-2 overflow-hidden rounded-xl border-t-[2px] bg-white/20 p-6 shadow-lg backdrop-blur-lg text-start md:justify-between cursor-pointer',
+        'h-40 md:h-52 w-full flex justify-start items-center gap-2 overflow-hidden rounded-xl border-t-[2px] bg-white/20 p-6 shadow-lg backdrop-blur-lg text-start md:justify-between cursor-pointer',
         selected && 'ring-2 ring-white bg-secondary-new-50'
       )}
       style={{ boxShadow: 'inset 0 0 20px rgba(255,255,255,0.5)' }}
@@ -86,9 +87,9 @@ const AnswerCard = ({ answer, selected, onSelect }: AnswerCardProps) => (
         alt=''
         width={96}
         height={96}
-        className='h-24 w-24 rounded-lg object-cover'
+        className='h-24 w-24 md:w-32 md:h-32 rounded-lg object-cover'
       />
-      <span className='text-white text-start'>{answer.text}</span>
+      <span className='text-white text-start md:text-lg'>{answer.text}</span>
     </button>
 )
 
@@ -109,27 +110,26 @@ const CareerQuestion = () => {
     }
   }
 
-  const handlePrev = () => {
-    if(currentQuestion > 0){
-      setCurrentQuestion((prev) => prev - 1)
+  const handleSubmit = () => {
+    if(currentQuestion === questions.length - 1){
+      alert("Submitted!!!")
     }
   }
-
 
   const question = questions[currentQuestion]
 
   return (
-    <div className='mx-auto flex w-full max-w-2xl flex-col items-center gap-6 px-4 py-8'>
-      <h1 className='text-center text-2xl font-medium text-white'>
+    <div className='mx-auto flex w-full max-w-3xl md:max-w-5xl flex-col items-center gap-6 px-4 py-8'>
+      <h1 className='text-center text-2xl font-medium text-white md:text-3xl'>
         {question.text}
       </h1>
       <div className='w-full space-y-2'>
         <ProgressBar current={currentQuestion + 1} total={questions.length} />
-        <p className='text-center text-sm text-white/80'>
+        <p className='text-center text-sm text-white/80 md:text-base'>
           Pertanyaan {currentQuestion + 1} dari {questions.length}
         </p>
       </div>
-      <div className='grid w-full grid-cols-1 gap-4 md:grid-cols-2'>
+      <div className='grid w-full grid-cols-1 gap-4 md:gap-8 md:grid-cols-2'>
         {question.answers.map((answer) => (
           <AnswerCard
             key={answer.id}
@@ -140,20 +140,19 @@ const CareerQuestion = () => {
         ))}
       </div>
       <div className='flex w-full justify-between mt-4'>
-        {currentQuestion > 0 && (
-          <button
-            onClick={handlePrev}
-            className='px-4 py-2 bg-white text-blue-500 rounded-lg'
-          >
-            Prev
-          </button>
-        )}
-        {currentQuestion < questions.length - 1 && (
+        {currentQuestion < questions.length - 1 ? (
           <button
             onClick={handleNext}
-            className='ml-auto px-4 py-2 bg-blue-500 text-white rounded-lg'
+            className='cursor-pointer ml-auto px-4 py-2 bg-blue-500 text-white rounded-lg'
           >
             Next
+          </button>
+        ) : (
+          <button
+            onClick={handleSubmit}
+            className='cursor-pointer ml-auto px-4 py-2 bg-blue-500 text-white rounded-lg'
+          >
+            Submit
           </button>
         )}
       </div>
