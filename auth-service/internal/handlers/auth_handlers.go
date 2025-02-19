@@ -180,3 +180,39 @@ func (h *UserHandler) ResetPasswordHandler(c *gin.Context) {
 	// return a success message and status code 200
 	c.JSON(http.StatusOK, gin.H{"message": "Password reset successful"})
 }
+
+func (h *UserHandler) IssueTryOutTokenHandler(c *gin.Context) {
+	var IssueTryOutTokenRequest struct {
+		UserID    int `json:"user_id" binding:"required"`
+		AttemptID int `json:"attempt_id" binding:"required"`
+	}
+	// bind the json input to the IssueTryOutTokenRequest struct
+	if err := c.ShouldBindJSON(&IssueTryOutTokenRequest); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"message": "Invalid input", "error": err.Error()})
+		return
+	}
+
+	// generate the tryout token using the token service
+	tryoutToken, err := h.tokenService.GenerateTryoutToken(IssueTryOutTokenRequest.UserID, IssueTryOutTokenRequest.AttemptID)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"message": "Failed to generate tryout token", "error": err.Error()})
+		return
+	}
+
+	// set the tryout token in the cookie
+	if err := utils.SetTryoutToken(c, tryoutToken); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"message": "Failed to set tryout token", "error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"message": "Tryout token generated", "tryout_token": tryoutToken})
+}
+
+func (h *UserHandler) ValidateTryoutTokenHandler(c *gin.Context) {
+	// get the user info from the context middleware
+	userID, _ := c.Get("user_id")
+	attemptID, _ := c.Get("attempt_id")
+
+	// return the user info and status code 200
+	c.JSON(http.StatusOK, gin.H{"message": "Authorized and okay to proceed", "user_id": userID, "attempt_id": attemptID})
+}

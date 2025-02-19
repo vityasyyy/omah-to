@@ -17,6 +17,7 @@ func InitializeRoutes(r *gin.Engine, userHandler *handlers.UserHandler) {
 		})
 	}
 
+	// public routes
 	public := r.Group("/user")
 	{
 		public.POST("/register", userHandler.RegisterUserHandler)
@@ -26,10 +27,19 @@ func InitializeRoutes(r *gin.Engine, userHandler *handlers.UserHandler) {
 		public.POST("/request-password-reset", userHandler.RequestPasswordResetHandler)
 	}
 
+	// authorized routes for access token validation
 	authorized := r.Group("/auth")
 	authorized.Use(utils.ValidateAccessTokenMiddleware())
 	{
 		authorized.GET("/validateprofile", userHandler.ValidateUserAndGetInfoHandler)
+		authorized.POST("/issue-token", userHandler.IssueTryOutTokenHandler)
 		authorized.POST("/logout", userHandler.LogoutUserHandler)
+	}
+
+	// tryout routes for tryout token validation
+	tryout := r.Group("/tryout")
+	tryout.Use(utils.ValidateTryoutTokenMiddleware())
+	{
+		tryout.POST("/validatetryout", userHandler.ValidateTryoutTokenHandler)
 	}
 }
