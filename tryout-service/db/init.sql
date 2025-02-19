@@ -1,15 +1,33 @@
 CREATE TABLE IF NOT EXISTS tryout_attempt (
-    tryout_attempt_id SERIAL PRIMARY KEY,
+    attempt_id SERIAL PRIMARY KEY,
     user_id INT NOT NULL,
     start_time TIMESTAMP NOT NULL,
     end_time TIMESTAMP,
-    tryout_score DOUBLE PRECISION DEFAULT NULL
+    tryout_score DOUBLE PRECISION DEFAULT NULL,
+    subtest_sekarang VARCHAR(36) CHECK (subtest_sekarang IN ('subtest_pu', 'subtest_ppu', 'subtest_pbm', 'subtest_pk', 'subtest_lbi', 'subtest_lbe', 'subtest_pm'))
 );
 
 CREATE TABLE IF NOT EXISTS user_answers (
-    tryout_attempt_id INT NOT NULL,
+    attempt_id INT NOT NULL,
     kode_soal VARCHAR(36) NOT NULL,
     jawaban TEXT NOT NULL,
-    PRIMARY KEY(tryout_attempt_id, kode_soal),
-    FOREIGN KEY (tryout_attempt_id) REFERENCES tryout_attempt(tryout_attempt_id) ON DELETE CASCADE
-)
+    PRIMARY KEY(attempt_id, kode_soal),
+    FOREIGN KEY (attempt_id) REFERENCES tryout_attempt(attempt_id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS user_scores (
+    user_id INT NOT NULL,
+    attempt_id INT NOT NULL,
+    subtest VARCHAR(36) NOT NULL,
+    score DOUBLE PRECISION NOT NULL,
+    PRIMARY KEY(user_id, attempt_id, subtest),
+    FOREIGN KEY (attempt_id) REFERENCES tryout_attempt(attempt_id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS time_limit (
+    time_limit_id SERIAL PRIMARY KEY,
+    attempt_id INT NOT NULL,
+    subtest VARCHAR(36) NOT NULL,
+    time_limit TIMESTAMP NOT NULL,
+    FOREIGN KEY (attempt_id) REFERENCES tryout_attempt(attempt_id) ON DELETE CASCADE
+);
