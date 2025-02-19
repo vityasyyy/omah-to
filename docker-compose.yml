@@ -60,6 +60,37 @@ services:
       - omahtryout-network
     ports:
       - ${SOAL_SERVICE_PORT}:${SOAL_SERVICE_PORT}
+
+  # Tryout service
+  # Database for the tryout service
+  tryout-service-db:
+    image: postgres:17.2-alpine
+    env_file:
+      - tryout-service/.env
+    volumes:
+      - ./tryout-service/db/init.sql:/docker-entrypoint-initdb.d/init.sql # init script
+      - tryout-data:/var/lib/postgresql/data
+    networks:
+      - omahtryout-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U omahTryOut -d tryout_service_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    
+    # API for the tryout service
+  tryout-service-api:
+    build: ./tryout-service
+    env_file:
+      - tryout-service/.env
+      - .env
+    depends_on:
+      tryout-service-db:
+        condition: service_healthy  # Ensure DB is ready
+    networks:
+      - omahtryout-network
+    ports:
+      - ${TRYOUT_SERVICE_PORT}:${TRYOUT_SERVICE_PORT}
 networks:
   omahtryout-network:
 
@@ -67,3 +98,4 @@ networks:
 volumes:
   auth-data:
   soal-data:
+  tryout-data:
