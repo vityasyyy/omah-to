@@ -2,6 +2,7 @@
 import React, { useState } from 'react'
 import { cn } from '@/lib/utils'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 interface Answer {
   id: string
   text: string
@@ -18,11 +19,11 @@ const questions: Question[] = [
     id: 1,
     text: 'Ketika menggunakan aplikasi atau website, apa yang paling sering menarik perhatian Anda?',
     answers: [
-      { id: 'a1', text: 'Tampilan dan desainnya yang menarik' },
-      { id: 'a2', text: 'Cara aplikasi bekerja di belakang layar' },
-      { id: 'a3', text: 'Keamanan dan privasi saat menggunakan aplikasi' },
+      { id: 'UI-UX', text: 'Tampilan dan desainnya yang menarik' },
+      { id: 'BE', text: 'Cara aplikasi bekerja di belakang layar' },
+      { id: 'CYSEC', text: 'Keamanan dan privasi saat menggunakan aplikasi' },
       {
-        id: 'a4',
+        id: 'DATSCI',
         text: 'Bagaimana aplikasi bisa memberikan rekomendasi yang tepat',
       },
       //tinggal tambah properti image
@@ -32,21 +33,21 @@ const questions: Question[] = [
     id: 2,
     text: 'Kamu suka makan atau minum apa saja?',
     answers: [
-      { id: 'a1', text: 'Ayam Goreng + Es teh + Mendoan' },
-      { id: 'a2', text: 'Kembung Goreng + Es kopi + Perkedel' },
-      { id: 'a3', text: 'Salad Bumbu Kacang + Air putih + Tempe Goreng' },
-      { id: 'a4', text: 'Es Krim Mixue + Wedank Ronde' },
+      { id: 'UI-UX', text: 'Ayam Goreng + Es teh + Mendoan' },
+      { id: 'BE', text: 'Kembung Goreng + Es kopi + Perkedel' },
+      { id: 'CYSEC', text: 'Salad Bumbu Kacang + Air putih + Tempe Goreng' },
+      { id: 'DATSCI', text: 'Es Krim Mixue + Wedank Ronde' },
     ],
   },
   {
     id: 3,
     text: 'Ketika menggunakan aplikasi atau website, apa yang paling sering menarik perhatian Anda?',
     answers: [
-      { id: 'a1', text: 'Tampilan dan desainnya yang menarik' },
-      { id: 'a2', text: 'Cara aplikasi bekerja di belakang layar' },
-      { id: 'a3', text: 'Keamanan dan privasi saat menggunakan aplikasi' },
+      { id: 'UI-UX', text: 'Tampilan dan desainnya yang menarik' },
+      { id: 'BE', text: 'Cara aplikasi bekerja di belakang layar' },
+      { id: 'CYSEC', text: 'Keamanan dan privasi saat menggunakan aplikasi' },
       {
-        id: 'a4',
+        id: 'DATSCI',
         text: 'Bagaimana aplikasi bisa memberikan rekomendasi yang tepat',
       },
     ],
@@ -77,7 +78,7 @@ const AnswerCard = ({ answer, selected, onSelect }: AnswerCardProps) => (
     <button
       onClick={() => onSelect(answer.id)}
       className={cn(
-        'h-40 md:h-52 w-full flex justify-start items-center gap-2 overflow-hidden rounded-xl border-t-[2px] bg-white/20 p-6 shadow-lg backdrop-blur-lg text-start md:justify-between cursor-pointer',
+        'md:h-40 w-full flex justify-start items-center gap-2 overflow-hidden rounded-xl border-t-[2px] bg-white/20 p-6 shadow-lg backdrop-blur-lg text-start cursor-pointer',
         selected && 'ring-2 ring-white bg-secondary-new-50'
       )}
       style={{ boxShadow: 'inset 0 0 20px rgba(255,255,255,0.5)' }}
@@ -87,32 +88,41 @@ const AnswerCard = ({ answer, selected, onSelect }: AnswerCardProps) => (
         alt=''
         width={96}
         height={96}
-        className='h-24 w-24 md:w-32 md:h-32 rounded-lg object-cover'
+        className='h-24 w-24 md:w-28 md:h-28 rounded-lg object-cover'
       />
-      <span className='text-white text-start md:text-lg'>{answer.text}</span>
+      <span className='text-white text-start text-sm md:text-md'>{answer.text}</span>
     </button>
 )
 
 const CareerQuestion = () => {
   const [currentQuestion, setCurrentQuestion] = useState(0)
   const [answers, setAnswers] = useState<Record<number, string>>({})
+  const router = useRouter();
 
   const handleAnswer = (answerId: string) => {
     setAnswers((prev) => ({
       ...prev,
       [questions[currentQuestion].id]: answerId,
     }))
-  }
 
-  const handleNext = () => {
     if(currentQuestion < questions.length - 1){
       setCurrentQuestion((prev) => prev + 1)
-    }
-  }
+    } else {
+      const allAnswers = {
+        ...answers,
+        [questions[currentQuestion].id]: answerId,
+      }
 
-  const handleSubmit = () => {
-    if(currentQuestion === questions.length - 1){
-      alert("Submitted!!!")
+      const answerCounts = Object.values(allAnswers).reduce((acc, curr) => {
+        acc[curr] = (acc[curr] || 0) + 1;
+        return acc;
+      }, {} as Record<string, number>)
+
+      const dominantCareer = Object.entries(answerCounts).reduce((a, b) =>
+        a[1] > b[1] ? a : b
+      )[0]
+
+      router.push(`/career-match-up/result?career=${dominantCareer}`)
     }
   }
 
@@ -138,23 +148,6 @@ const CareerQuestion = () => {
             onSelect={handleAnswer}
           />
         ))}
-      </div>
-      <div className='flex w-full justify-between mt-4'>
-        {currentQuestion < questions.length - 1 ? (
-          <button
-            onClick={handleNext}
-            className='cursor-pointer ml-auto px-4 py-2 bg-blue-500 text-white rounded-lg'
-          >
-            Next
-          </button>
-        ) : (
-          <button
-            onClick={handleSubmit}
-            className='cursor-pointer ml-auto px-4 py-2 bg-blue-500 text-white rounded-lg'
-          >
-            Submit
-          </button>
-        )}
       </div>
     </div>
   )
