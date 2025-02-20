@@ -162,7 +162,7 @@ const SubjectSemester = () => {
         </h1>
         <h3 className="text-xl font-bold">Universitas Gadjah Mada</h3>
 
-        <div className="grid grid-cols-2 sm:grid-cols-2 gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-2 gap-6">ghjjhhj
           {BUTTON_CONTENT.map((item, index) => {
             const isOpen = openSemesters.includes(index);
             return (
