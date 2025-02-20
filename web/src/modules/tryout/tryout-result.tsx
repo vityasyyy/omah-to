@@ -1,6 +1,6 @@
 import React from 'react'
 import Image from 'next/image'
-import { X } from 'lucide-react'
+import {ArrowUpRight, X} from 'lucide-react'
 import Container from '@/components/container'
 import { Button } from '@/components/ui/button'
 import StyledCard from '@/components/tryout/styled-card'
@@ -156,7 +156,7 @@ const Pembahasan = ({
             <>
               <TableHeader>
                 <TableRow>
-                  <TableHead className='text-nowrap'>No. Soal</TableHead>
+                  <TableHead className='text-nowrap'>No.</TableHead>
                   <TableHead>Jawaban kamu</TableHead>
                   <TableHead className='text-center'>Pembahasan</TableHead>
                 </TableRow>
@@ -194,14 +194,19 @@ const PembahasanButton = ({ data }: { data: QnaType }) => {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant='pembahasan' className='self-center text-white'>
-          Lihat Pembahasan
-        </Button>
+        <span>
+          <Button variant='pembahasan' className='md:block hidden self-center text-white'>
+            Lihat Pembahasan
+          </Button>
+          <Button variant='pembahasan' className='md:hidden self-center text-white'>
+            <ArrowUpRight strokeWidth={3} />
+          </Button>
+        </span>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>
-            Pembahasan Soal No. {data.no}
+            Pembahasan Soal Nomor {data.no}
             <AlertDialogCancel
               asChild
               className='my-auto h-auto border-none p-1'
