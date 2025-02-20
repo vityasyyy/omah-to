@@ -162,7 +162,6 @@ const SubjectSemester = () => {
         </h1>
         <h3 className="text-xl font-bold">Universitas Gadjah Mada</h3>
 
-        {/* Semester Buttons */}
         <div className="grid grid-cols-2 sm:grid-cols-2 gap-6">
           {BUTTON_CONTENT.map((item, index) => {
             const isOpen = openSemesters.includes(index);
@@ -178,7 +177,6 @@ const SubjectSemester = () => {
                   </span>
                 </button>
 
-                {/* Subject List */}
                 <div
                   className={`overflow-hidden shadow-md border-[#304A91] transition-all duration-700 ease-in-out ${
                     isOpen ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"
