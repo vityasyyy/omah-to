@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import { cn } from '@/lib/utils'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
+import { AlertDialog, AlertDialogAction, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog'
 interface Answer {
   id: string
   text: string
@@ -94,9 +95,11 @@ const AnswerCard = ({ answer, selected, onSelect }: AnswerCardProps) => (
     </button>
 )
 
-const CareerQuestion = () => {
+const CareerMatchUpTest = () => {
   const [currentQuestion, setCurrentQuestion] = useState(0)
   const [answers, setAnswers] = useState<Record<number, string>>({})
+  const [showDialog, setShowDialog] = useState(false)
+  const [dominantCareer, setDominantCareer] = useState('')
   const router = useRouter();
 
   const handleAnswer = (answerId: string) => {
@@ -118,14 +121,17 @@ const CareerQuestion = () => {
         return acc;
       }, {} as Record<string, number>)
 
-      const dominantCareer = Object.entries(answerCounts).reduce((a, b) =>
+      const dominant = Object.entries(answerCounts).reduce((a, b) =>
         a[1] > b[1] ? a : b
       )[0]
-
-      router.push(`/career-match-up/result?career=${dominantCareer}`)
+      setDominantCareer(dominant)
+      setShowDialog(true)
     }
   }
 
+  const handleContinue = () => {
+    router.push(`/career-match-up/result?career=${dominantCareer}`)
+  }
   const question = questions[currentQuestion]
 
   return (
@@ -149,8 +155,22 @@ const CareerQuestion = () => {
           />
         ))}
       </div>
+
+      <AlertDialog open={showDialog} onOpenChange={setShowDialog}>
+        <AlertDialogContent className='bg-secondary-new-500/80'>
+          <AlertDialogHeader>
+            <AlertDialogTitle className='text-white'>SELAMAT!</AlertDialogTitle>
+            <AlertDialogDescription className='text-white'>
+              Kamu telah menyelesaikan test Career Match Up
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogAction onClick={handleContinue}>Check Hasil Test</AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   )
 }
 
-export default CareerQuestion
+export default CareerMatchUpTest;
