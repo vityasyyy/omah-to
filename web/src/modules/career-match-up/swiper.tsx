@@ -1,8 +1,14 @@
 'use client'
 
-import { useState } from 'react'
-import { motion } from 'framer-motion'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { useState, useEffect } from 'react'
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from '@/components/ui/carousel'
+import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
 
 const cards = [
@@ -45,73 +51,104 @@ const cards = [
 
 const SwiperWireframe = () => {
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null)
+  const [slidesToShow, setSlidesToShow] = useState(4)
+
+  // ✅ FIX: Update jumlah card berdasarkan lebar layar & force rerender
+  useEffect(() => {
+    const updateSlides = () => {
+      if (window.innerWidth >= 1024)
+        setSlidesToShow(4) // lg
+      else if (window.innerWidth >= 768)
+        setSlidesToShow(2) // md
+      else setSlidesToShow(1) // sm
+    }
+
+    updateSlides()
+    window.addEventListener('resize', updateSlides)
+    return () => window.removeEventListener('resize', updateSlides)
+  }, [])
 
   return (
-    <div className='relative flex items-center justify-center space-x-4 overflow-hidden p-4 pb-0'>
-      {/* Left Button */}
-      <button className='absolute left-0 z-10 rounded-full bg-gray-300 p-2'>
-        <ChevronLeft />
-      </button>
+    <div className='relative mx-auto w-full max-w-7xl px-4'>
+      <Carousel opts={{ align: 'start' }} className='w-full'>
+        <div className='relative'>
+          <CarouselPrevious className='absolute top-26 left-0 z-10 -translate-y-1/2 bg-white/20 transition-colors hover:bg-white/30' />
+          <CarouselNext className='absolute top-26 right-0 z-10 -translate-y-1/2 bg-white/20 transition-colors hover:bg-white/30' />
+        </div>
 
-      {/* Card Container */}
-      <div className='flex space-x-4 overflow-x-auto p-2'>
-        {cards.map((card, index) => (
-          <motion.div
-            key={index}
-            className={`bg-secondary-new-500 relative flex h-auto w-40 cursor-pointer flex-col overflow-hidden rounded-lg ${expandedIndex === index ? 'auto' : ''}`}
-          >
-            {/* Image Container */}
-            <div className='relative h-48 w-auto'>
-              <Image
-                src={card.image}
-                alt={card.name}
-                fill
-                sizes='50%'
-                className='absolute aspect-[307/370] rounded-lg object-cover'
-              />
-              {/* Content Container */}
-              <div className='absolute bottom-0 w-full p-2 text-white'>
-                <h3 className='text-sm font-semibold'>{card.name}</h3>
-                <p className='text-xs'>{card.desc}</p>
-                <p className='text-[10px] opacity-80'>
-                  CS {card.angkatan} | Universitas Gadjah Mada
-                </p>
-              </div>
-            </div>
-
-            <motion.div
-              className='cursor-pointer text-xs'
-              onClick={() =>
-                setExpandedIndex(expandedIndex === index ? null : index)
-              }
-              animate={{
-                height: expandedIndex === index ? 'auto' : '40px', // atau sesuaikan dengan height yang diinginkan
-              }}
-              transition={{ duration: 0.3 }}
+        <CarouselContent className='-ml-1'>
+          {cards.map((card, index) => (
+            <CarouselItem
+              key={index}
+              className={`pl-1 ${
+                slidesToShow === 4
+                  ? 'sm:basis-full md:basis-1/2 lg:basis-1/4'
+                  : slidesToShow === 2
+                    ? 'sm:basis-full md:basis-1/2'
+                    : 'basis-full'
+              }`}
             >
-              {expandedIndex !== index ? (
-                <p className='truncate px-5 pt-2 pb-5 text-white'>
-                  Klik untuk baca lebih lanjut...
-                </p>
-              ) : (
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.7 }}
-                  className='px-5 pt-2 pb-5 text-white'
-                >
-                  {card.what}
-                </motion.div>
-              )}
-            </motion.div>
-          </motion.div>
-        ))}
-      </div>
+              <motion.div className='bg-secondary-new-500 overflow-hidden rounded-lg'>
+                {/* Image and Basic Info */}
+                <div className='relative h-48'>
+                  <Image
+                    src={card.image}
+                    alt={card.name}
+                    fill
+                    sizes='(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw'
+                    className='object-cover'
+                  />
+                  <div className='absolute inset-0 bg-gradient-to-t from-black/60 to-transparent' />
+                  <div className='absolute bottom-0 w-full p-3 text-white'>
+                    <h3 className='font-semibold'>{card.name}</h3>
+                    <p className='text-sm opacity-90'>{card.desc}</p>
+                    <p className='text-xs opacity-75'>
+                      CS {card.angkatan} | Universitas Gadjah Mada
+                    </p>
+                  </div>
+                </div>
 
-      {/* Right Button */}
-      <button className='absolute right-0 z-10 rounded-full bg-gray-300 p-2'>
-        <ChevronRight />
-      </button>
+                {/* Expandable Description */}
+                <motion.div
+                  className='bg-secondary-new-500 relative'
+                  animate={{
+                    height: expandedIndex === index ? 'auto' : '40px',
+                  }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <div
+                    className='absolute inset-0 cursor-pointer'
+                    onClick={() =>
+                      setExpandedIndex(expandedIndex === index ? null : index)
+                    }
+                  />
+                  <AnimatePresence mode='wait'>
+                    {expandedIndex === index ? (
+                      <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className='p-4 text-sm text-white'
+                      >
+                        {card.what}
+                      </motion.div>
+                    ) : (
+                      <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className='p-4 text-sm text-white opacity-60'
+                      >
+                        Klik untuk baca lebih lanjut...
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </motion.div>
+              </motion.div>
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+      </Carousel>
     </div>
   )
 }

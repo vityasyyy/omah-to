@@ -1,6 +1,7 @@
 // app/career-match-up/result/page.tsx
 'use client'
 
+import Result from '@/modules/career-match-up/result'
 import { useSearchParams } from 'next/navigation'
 
 const careerMapping: Record<string, string> = {
@@ -16,12 +17,8 @@ export default function ResultPage() {
   const careerTitle = careerMapping[career] || 'Tidak diketahui'
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 p-8">
-      <h1 className="text-3xl font-bold mb-4">Hasil Career Match Up</h1>
-      <p className="text-xl">
-        Karir yang cocok dengan kamu adalah{' '}
-        <strong>{careerTitle}</strong>
-      </p>
-    </div>
+    <main className='bg-neutral-50 min-h-screen'>
+      <Result title={careerTitle} />
+    </main>
   )
 }
