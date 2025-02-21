@@ -98,7 +98,7 @@ const childVariants = {
 
 const WhyCompsci = () => {
   return (
-    <Container className='my-8 items-center gap-12 md:gap-16 lg:flex-row-reverse lg:items-start'>
+    <Container className='my-12 items-center gap-12 md:gap-16 lg:flex-row-reverse lg:items-start'>
       <section className='flex flex-col gap-8'>
         <h1 className='text-2xl font-bold lg:text-3xl'>
           Kenapa <span className='text-primary-500'> Computer Science </span>

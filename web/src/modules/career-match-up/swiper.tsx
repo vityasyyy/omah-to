@@ -7,7 +7,7 @@ import {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from '@/components/ui/carousel'
+} from '@/components/ui/tryout-carousel'
 import { alumniCards } from '@/lib/career-match-up'
 import { useSlidesToShow } from '@/hooks/useSlidesToShow'
 import AlumniCardItem, { Card } from './alumni-card-item'

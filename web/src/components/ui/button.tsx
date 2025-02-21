@@ -25,6 +25,7 @@ const buttonVariants = cva(
         link: 'text-primary underline-offset-8 hover:underline hover:cursor-pointer',
         card: 'bg-white text-black border-neutral-200 border hover:bg-neutral-100',
         white: 'bg-white text-black hover:bg-neutral-100',
+        blur: 'bg-primary-500/20 shadow-xl backdrop-blur-xl',
         pembahasan: 'bg-[#0479CE] font-lato text-white text-medium'
       },
       size: {
