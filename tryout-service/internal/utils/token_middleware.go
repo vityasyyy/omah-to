@@ -70,7 +70,7 @@ func ValidateToAuthApi() gin.HandlerFunc {
 	}
 }
 
-func IssueTryOutToken(userID, attemptID int, accessToken string) error {
+func IssueTryOutToken(userID, attemptID int, accessToken string) (string, error) {
 	authServiceURL := os.Getenv("AUTH_SERVICE_URL") + "/auth/issue-token"
 	type IssueTokenRequest struct {
 		UserID    int `json:"user_id"`
@@ -82,12 +82,12 @@ func IssueTryOutToken(userID, attemptID int, accessToken string) error {
 	})
 
 	if err != nil {
-		return fmt.Errorf("failed to marshal request body: %v", err)
+		return "", fmt.Errorf("failed to marshal request body: %v", err)
 	}
 
 	req, err := http.NewRequest("POST", authServiceURL, bytes.NewBuffer(reqBody))
 	if err != nil {
-		return fmt.Errorf("failed to create request: %v", err)
+		return "", fmt.Errorf("failed to create request: %v", err)
 	}
 
 	// Set headers
@@ -97,15 +97,31 @@ func IssueTryOutToken(userID, attemptID int, accessToken string) error {
 	client := &http.Client{}
 	resp, err := client.Do(req)
 	if err != nil {
-		return fmt.Errorf("failed to send request: %v", err)
+		return "", fmt.Errorf("failed to send request: %v", err)
 	}
 	defer resp.Body.Close()
 
 	// Check response status
 	if resp.StatusCode != http.StatusOK {
-		return fmt.Errorf("invalid status code: %d", resp.StatusCode)
+		return "", fmt.Errorf("invalid status code: %d", resp.StatusCode)
 	}
 
+	// Read response body
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return "", fmt.Errorf("failed to read response body: %v", err)
+	}
+	var tokenResponse struct {
+		TryoutToken string `json:"tryout_token"`
+	}
+	if err := json.Unmarshal(body, &tokenResponse); err != nil {
+		return "", fmt.Errorf("failed to parse response body: %v", err)
+	}
+	return tokenResponse.TryoutToken, nil
+}
+
+func SetTryoutTokenCookie(c *gin.Context, tryoutToken string) error {
+	c.SetCookie("tryout_token", tryoutToken, 200*60, "/", "", true, true)
 	return nil
 }
 
@@ -147,6 +163,25 @@ func ValidateTryoutToken() gin.HandlerFunc {
 			c.Abort()
 			return
 		}
+		body, err := io.ReadAll(response.Body)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to read response body"})
+			c.Abort()
+			return
+		}
+
+		var tokenResponse struct {
+			UserID    int `json:"user_id"`
+			AttemptID int `json:"attempt_id"`
+		}
+
+		if err := json.Unmarshal(body, &tokenResponse); err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to parse response body"})
+			c.Abort()
+			return
+		}
+		c.Set("user_id", tokenResponse.UserID)
+		c.Set("attempt_id", tokenResponse.AttemptID)
 
 		c.Next()
 	}
