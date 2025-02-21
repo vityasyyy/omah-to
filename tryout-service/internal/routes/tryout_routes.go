@@ -20,7 +20,11 @@ func InitializeRoutes(r *gin.Engine, tryoutHandler *handlers.TryoutHandler) {
 	tryout := r.Group("/tryout")
 	tryout.Use(utils.ValidateToAuthApi())
 	{
-		tryout.POST("/start-attempt", tryoutHandler.StartAttempt)
+		tryout.POST("/start-attempt/:paket", tryoutHandler.StartAttempt)
 	}
 
+	tryout.Use(utils.ValidateTryoutToken())
+	{
+		tryout.POST("/sync", tryoutHandler.SyncHandler)
+	}
 }
