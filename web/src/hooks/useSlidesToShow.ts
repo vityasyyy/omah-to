@@ -5,9 +5,11 @@ export const useSlidesToShow = () => {
 
   useEffect(() => {
     const updateSlides = () => {
-      if (window.innerWidth >= 1024) {
+      if (window.innerWidth >= 1080 ) {
         setSlidesToShow(4)
-      } else if (window.innerWidth >= 768) {
+      } else if (window.innerWidth >= 880 ) {
+        setSlidesToShow(3)
+      } else if (window.innerWidth >= 640) {
         setSlidesToShow(2)
       } else {
         setSlidesToShow(1)
