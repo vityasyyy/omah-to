@@ -40,6 +40,6 @@ func InitializeRoutes(r *gin.Engine, userHandler *handlers.UserHandler) {
 	tryout := r.Group("/tryout")
 	tryout.Use(utils.ValidateTryoutTokenMiddleware())
 	{
-		tryout.POST("/validatetryout", userHandler.ValidateTryoutTokenHandler)
+		tryout.GET("/validatetryout", userHandler.ValidateTryoutTokenHandler)
 	}
 }

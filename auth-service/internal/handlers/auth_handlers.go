@@ -199,12 +199,6 @@ func (h *UserHandler) IssueTryOutTokenHandler(c *gin.Context) {
 		return
 	}
 
-	// set the tryout token in the cookie
-	if err := utils.SetTryoutToken(c, tryoutToken); err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"message": "Failed to set tryout token", "error": err.Error()})
-		return
-	}
-
 	c.JSON(http.StatusOK, gin.H{"message": "Tryout token generated", "tryout_token": tryoutToken})
 }
 
