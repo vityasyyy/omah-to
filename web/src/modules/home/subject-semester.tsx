@@ -176,16 +176,16 @@ const SubjectSemester = () => {
         <h3 className="text-xl font-bold">Universitas Gadjah Mada</h3>
 
         {/* Button Container */}
-        <div className="flex flex-col items-start lg:grid lg:grid-cols-2 gap-6 mt-6 overflow-auto">
+        <div className="flex flex-col items-start lg:grid lg:grid-cols-2 gap-6 w-full overflow-auto">
           {/* Semester Buttons Left*/}
-          <div className="grid gap-6">
+          <div className="grid gap-6 w-full">
             {BUTTON_CONTENT_LEFT.map((item, index) => {
               const isOpen = openSemestersLeft.includes(index);
               return(
                 <div key={index}>
                   <button
                     onClick={() => toggleSemesterLeft(index)}
-                    className="ease-in flex items-center justify-between w-full rounded-md bg-[#304A91] text-white font-bold py-3 px-5 text-left shadow-md hover:bg-[#2b3e75] transition-all"
+                    className="cursor-pointer ease-in flex items-center justify-between w-full rounded-md bg-[#304A91] text-white font-bold py-3 px-5 text-left shadow-md hover:bg-[#2b3e75] transition-all"
                     >
                     <span className="text-lg">{item.label}</span>
                     <span className="material-symbols-outlined text-xl">
@@ -232,14 +232,14 @@ const SubjectSemester = () => {
             })}
           </div>
           {/* Semester Buttons Right*/}
-          <div className="grid gap-6">
+          <div className="grid gap-6 w-full">
             {BUTTON_CONTENT_RIGHT.map((item, index) => {
               const isOpen = openSemestersRight.includes(index);
               return(
                 <div key={index}>
                   <button
                     onClick={() => toggleSemesterRight(index)}
-                    className="ease-in flex items-center justify-between w-full rounded-md bg-[#304A91] text-white font-bold py-3 px-5 text-left shadow-md hover:bg-[#2b3e75] transition-all"
+                    className="cursor-pointer ease-in flex items-center justify-between w-full rounded-md bg-[#304A91] text-white font-bold py-3 px-5 text-left shadow-md hover:bg-[#2b3e75] transition-all"
                     >
                     <span className="text-lg">{item.label}</span>
                     <span className="material-symbols-outlined text-xl">
