@@ -2,13 +2,17 @@ CREATE TABLE IF NOT EXISTS tryout_attempt (
     attempt_id SERIAL PRIMARY KEY,
     user_id INT NOT NULL,
     start_time TIMESTAMP NOT NULL,
+    paket VARCHAR(36) NOT NULL,
+    status VARCHAR(36) DEFAULT 'ongoing' CHECK (status IN ('ongoing', 'finished')),
     end_time TIMESTAMP,
     tryout_score DOUBLE PRECISION DEFAULT NULL,
-    subtest_sekarang VARCHAR(36) CHECK (subtest_sekarang IN ('subtest_pu', 'subtest_ppu', 'subtest_pbm', 'subtest_pk', 'subtest_lbi', 'subtest_lbe', 'subtest_pm'))
+    subtest_sekarang VARCHAR(36) CHECK (subtest_sekarang IN ('subtest_pu', 'subtest_ppu', 'subtest_pbm', 'subtest_pk', 'subtest_lbi', 'subtest_lbe', 'subtest_pm')),
+    UNIQUE(user_id, paket)
 );
 
 CREATE TABLE IF NOT EXISTS user_answers (
     attempt_id INT NOT NULL,
+    subtest VARCHAR(36) NOT NULL,
     kode_soal VARCHAR(36) NOT NULL,
     jawaban TEXT NOT NULL,
     PRIMARY KEY(attempt_id, kode_soal),
