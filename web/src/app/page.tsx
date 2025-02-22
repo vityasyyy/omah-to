@@ -4,6 +4,7 @@ import WhyCompsci from '@/modules/home/why-compsci'
 import SubjectSemester from '@/modules/home/subject-semester'
 import Footer from '@/modules/home/footer'
 import CompsciDivisions from '@/modules/home/compsci-divisions'
+import ReadyPath from '@/modules/home/ready-path'
 // import TryoutResult from '@/modules/tryout/tryout-result'
 
 export default function Home() {
@@ -14,6 +15,7 @@ export default function Home() {
       <WhyCompsci />
       <CompsciDivisions />
       <SubjectSemester />
+      <ReadyPath/>
       {/* <TryoutResult /> ini buat ngetes */}
       <Footer />
     </>
