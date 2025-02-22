@@ -35,7 +35,6 @@ type TimeLimit struct {
 	TimeLimit       int    `db:"time_limit" json:"time_limit" binding:"required"`
 }
 type AnswerPayload struct {
-	KodeSoal string `json:"kode_soal"`
-	Subtest  string `json:"subtest"`
-	Jawaban  string `json:"jawaban"`
+	KodeSoal string `json:"kode_soal" binding:"required"`
+	Jawaban  string `json:"jawaban" binding:"required"`
 }

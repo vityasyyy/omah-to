@@ -44,7 +44,7 @@ func (h *TryoutHandler) SyncHandler(c *gin.Context) {
 	attemptID := c.GetInt("attempt_id")
 	userID := c.GetInt("user_id")
 	var answers struct {
-		Answers []models.AnswerPayload `json:"answers"`
+		Answers []models.AnswerPayload `json:"answers" binding:"required,dive"`
 	}
 
 	if err := c.ShouldBindJSON(&answers); err != nil {
@@ -64,7 +64,7 @@ func (h *TryoutHandler) ProgressTryoutHandler(c *gin.Context) {
 	attemptID := c.GetInt("attempt_id")
 
 	var answers struct {
-		Answers []models.AnswerPayload `json:"answers"`
+		Answers []models.AnswerPayload `json:"answers" binding:"required,dive"`
 	}
 
 	if err := c.ShouldBindJSON(&answers); err != nil {
