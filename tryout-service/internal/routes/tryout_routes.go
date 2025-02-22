@@ -23,8 +23,10 @@ func InitializeRoutes(r *gin.Engine, tryoutHandler *handlers.TryoutHandler) {
 		tryout.POST("/start-attempt/:paket", tryoutHandler.StartAttempt)
 	}
 
-	tryout.Use(utils.ValidateTryoutToken())
+	sync := r.Group("/sync")
+	sync.Use(utils.ValidateTryoutToken())
 	{
-		tryout.POST("/sync", tryoutHandler.SyncHandler)
+		sync.POST("", tryoutHandler.SyncHandler)
+		sync.POST("/progress", tryoutHandler.ProgressTryoutHandler)
 	}
 }

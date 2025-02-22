@@ -59,3 +59,24 @@ func (h *TryoutHandler) SyncHandler(c *gin.Context) {
 
 	c.JSON(http.StatusOK, gin.H{"message": "Successfully synced answers", "data": gin.H{"answers": answersInDB, "time_limit": timeLimit}, "attemptID": attemptID, "userID": userID})
 }
+
+func (h *TryoutHandler) ProgressTryoutHandler(c *gin.Context) {
+	attemptID := c.GetInt("attempt_id")
+
+	var answers struct {
+		Answers []models.AnswerPayload `json:"answers"`
+	}
+
+	if err := c.ShouldBindJSON(&answers); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"message": "Invalid input", "error": err.Error()})
+		return
+	}
+
+	updatedSubtest, err := h.tryoutService.SubmitCurrentSubtest(answers.Answers, attemptID)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"message": "Failed to submit answers", "error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"message": "Successfully get progress", "updated_subtest": updatedSubtest})
+}
