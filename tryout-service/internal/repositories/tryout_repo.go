@@ -13,6 +13,7 @@ import (
 type TryoutRepo interface {
 	BeginTransaction() (*sqlx.Tx, error)
 	CreateTryoutAttemptTx(tx *sqlx.Tx, attempt *models.TryoutAttempt) error       // Create a new tryout attempt
+	GetTryoutAttemptByUserIDTx(tx *sqlx.Tx, userID int) (string, error)           // Get the ongoing tryout attempt for a user
 	GetTryoutAttempt(attemptID int) (*models.TryoutAttempt, error)                // Get a tryout attempt by its ID, including the user's answers based on the current subtest also
 	GetTryoutAttemptTx(tx *sqlx.Tx, attemptID int) (*models.TryoutAttempt, error) // Get a tryout attempt by its ID, including the user's answers based on the current subtest also (for transactinos)
 	GetAnswerFromCurrentAttemptAndSubtest(attemptID int, subtest string) ([]models.UserAnswer, error)
@@ -20,7 +21,7 @@ type TryoutRepo interface {
 	GetSubtestTime(attemptID int, subtest string) (time.Time, error)                                                 // Get the remaining time for a subtest
 	GetSubtestTimeTx(tx *sqlx.Tx, attemptID int, subtest string) (time.Time, error)                                  // Get the remaining time for a subtest (for transactions)
 	SaveAnswersTx(tx *sqlx.Tx, answers []models.UserAnswer) error                                                    // Save user's answers to the database
-	ProgressTryoutTx(tx *sqlx.Tx, attemptID int, subtest string) error                                               // End a subtest attempt, marking the end time
+	ProgressTryoutTx(tx *sqlx.Tx, attemptID int, subtest string) (string, error)                                     // End a subtest attempt, marking the end time
 	EndTryOutTx(tx *sqlx.Tx, attemptID int) error                                                                    // End a tryout attempt, marking the end time
 }
 
@@ -94,6 +95,17 @@ func (r *tryoutRepo) CreateTryoutAttemptTx(tx *sqlx.Tx, attempt *models.TryoutAt
 	})
 
 	return nil
+}
+
+func (r *tryoutRepo) GetTryoutAttemptByUserIDTx(tx *sqlx.Tx, userID int) (string, error) {
+	var status string
+	query := `SELECT status FROM tryout_attempt WHERE user_id = $1 AND status = 'ongoing'`
+	err := tx.Get(&status, query, userID)
+	if err != nil {
+		logger.LogError(err, "Failed to get ongoing tryout attempt", map[string]interface{}{"layer": "repository", "operation": "GetTryoutAttemptByUserID"})
+		return "", err
+	}
+	return status, nil
 }
 
 func (r *tryoutRepo) GetTryoutAttempt(attemptID int) (*models.TryoutAttempt, error) {
@@ -172,15 +184,16 @@ func (r *tryoutRepo) SaveAnswersTx(tx *sqlx.Tx, answers []models.UserAnswer) err
 	return nil
 }
 
-func (r *tryoutRepo) ProgressTryoutTx(tx *sqlx.Tx, attemptID int, subtest string) error {
+func (r *tryoutRepo) ProgressTryoutTx(tx *sqlx.Tx, attemptID int, subtest string) (string, error) {
 	// Update the tryout attempt with end_time and next subtest (or NULL if last subtest)
-	updateQuery := `UPDATE tryout_attempt SET subtest_sekarang = $1 WHERE attempt_id = $2`
-	_, err := tx.Exec(updateQuery, subtest, attemptID)
+	var subtestUpdated string
+	updateQuery := `UPDATE tryout_attempt SET subtest_sekarang = $1 WHERE attempt_id = $2 RETURNING subtest_sekarang`
+	err := tx.QueryRow(updateQuery, subtest, attemptID).Scan(&subtestUpdated)
 	if err != nil {
 		logger.LogError(err, "Failed to update tryout attempt", map[string]interface{}{
 			"layer": "repository", "operation": "EndAttempt",
 		})
-		return err
+		return "", err
 	}
 
 	logger.LogDebug("Tryout attempt progressed", map[string]interface{}{
@@ -188,7 +201,7 @@ func (r *tryoutRepo) ProgressTryoutTx(tx *sqlx.Tx, attemptID int, subtest string
 		"next": subtest,
 	})
 
-	return nil
+	return subtestUpdated, nil
 }
 
 func (r *tryoutRepo) EndTryOutTx(tx *sqlx.Tx, attemptID int) error {
