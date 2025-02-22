@@ -6,14 +6,14 @@ type PaketSoal struct {
 }
 
 type Soal struct {
-	KodeSoal       string `json:"kode_soal" db:"kode_soal" binding:"required"`
-	PaketSoalID    string `json:"paket_soal_id" db:"paket_soal_id" binding:"required"`
-	Subtest        string `json:"subtest" db:"subtest" binding:"required"`
-	TipeSoal       string `json:"tipe_soal" db:"tipe_soal" binding:"required"`
-	TextSoal       string `json:"text_soal" db:"text_soal" binding:"required"`
-	PathGambarSoal string `json:"path_gambar_soal" db:"path_gambar_soal"`
-	BobotSoal      int    `json:"bobot_soal" db:"bobot_soal" binding:"required"`
-	Pembahasan     string `json:"pembahasan" db:"pembahasan" binding:"required"`
+	KodeSoal       string  `json:"kode_soal" db:"kode_soal" binding:"required"`
+	PaketSoalID    string  `json:"paket_soal_id" db:"paket_soal_id" binding:"required"`
+	Subtest        string  `json:"subtest" db:"subtest" binding:"required"`
+	TipeSoal       string  `json:"tipe_soal" db:"tipe_soal" binding:"required"`
+	TextSoal       string  `json:"text_soal" db:"text_soal" binding:"required"`
+	PathGambarSoal *string `json:"path_gambar_soal" db:"path_gambar_soal"`
+	BobotSoal      int     `json:"bobot_soal" db:"bobot_soal" binding:"required"`
+	Pembahasan     string  `json:"pembahasan" db:"pembahasan" binding:"required"`
 }
 
 type PilihanPilihanGanda struct {
