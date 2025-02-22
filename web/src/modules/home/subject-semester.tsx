@@ -1,5 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
+import { ChevronUp, ChevronDown } from 'lucide-react'
+import Container from "@/components/container"
 
 const BUTTON_CONTENT_LEFT = [
   {
@@ -167,7 +169,7 @@ const SubjectSemester = () => {
   };
 
   return (
-    <div className="flex w-full flex-col py-8 px-6 text-right mx-auto">
+    <Container className="flex w-full flex-col py-8 px-6 text-right mx-auto">
       <section className="flex flex-col gap-6">
         <h1 className="text-2xl font-bold lg:text-3xl">
           Mata Kuliah yang Akan Membentuk Masa Depanmu di
@@ -188,9 +190,7 @@ const SubjectSemester = () => {
                     className="cursor-pointer ease-in flex items-center justify-between w-full rounded-md bg-[#304A91] text-white font-bold py-3 px-5 text-left shadow-md hover:bg-[#2b3e75] transition-all"
                     >
                     <span className="text-lg">{item.label}</span>
-                    <span className="material-symbols-outlined text-xl">
-                      {isOpen ? "keyboard_arrow_up" : "keyboard_arrow_down"}
-                    </span>
+                    {isOpen ? <ChevronUp /> : <ChevronDown />}
                   </button>
 
                   {/* Semester List Left */}
@@ -287,7 +287,7 @@ const SubjectSemester = () => {
           </div>
         </div>
       </section>
-    </div>
+    </Container>
   );
 };
 
