@@ -12,13 +12,10 @@ import (
 
 type TryoutRepo interface {
 	BeginTransaction() (*sqlx.Tx, error)
-	CreateTryoutAttemptTx(tx *sqlx.Tx, attempt *models.TryoutAttempt) error       // Create a new tryout attempt
-	GetTryoutAttemptByUserIDTx(tx *sqlx.Tx, userID int) (string, error)           // Get the ongoing tryout attempt for a user
-	GetTryoutAttempt(attemptID int) (*models.TryoutAttempt, error)                // Get a tryout attempt by its ID, including the user's answers based on the current subtest also
-	GetTryoutAttemptTx(tx *sqlx.Tx, attemptID int) (*models.TryoutAttempt, error) // Get a tryout attempt by its ID, including the user's answers based on the current subtest also (for transactinos)
-	GetAnswerFromCurrentAttemptAndSubtest(attemptID int, subtest string) ([]models.UserAnswer, error)
+	CreateTryoutAttemptTx(tx *sqlx.Tx, attempt *models.TryoutAttempt) error                                          // Create a new tryout attempt
+	GetTryoutAttemptByUserIDTx(tx *sqlx.Tx, userID int) (string, error)                                              // Get the ongoing tryout attempt for a user
+	GetTryoutAttemptTx(tx *sqlx.Tx, attemptID int) (*models.TryoutAttempt, error)                                    // Get a tryout attempt by its ID, including the user's answers based on the current subtest also (for transactinos)
 	GetAnswerFromCurrentAttemptAndSubtestTx(tx *sqlx.Tx, attemptID int, subtest string) ([]models.UserAnswer, error) // Get user's answers for the current subtest (for transactions)
-	GetSubtestTime(attemptID int, subtest string) (time.Time, error)                                                 // Get the remaining time for a subtest
 	GetSubtestTimeTx(tx *sqlx.Tx, attemptID int, subtest string) (time.Time, error)                                  // Get the remaining time for a subtest (for transactions)
 	SaveAnswersTx(tx *sqlx.Tx, answers []models.UserAnswer) error                                                    // Save user's answers to the database
 	ProgressTryoutTx(tx *sqlx.Tx, attemptID int, subtest string) (string, error)                                     // End a subtest attempt, marking the end time
@@ -106,53 +103,6 @@ func (r *tryoutRepo) GetTryoutAttemptByUserIDTx(tx *sqlx.Tx, userID int) (string
 		return "", err
 	}
 	return status, nil
-}
-
-func (r *tryoutRepo) GetTryoutAttempt(attemptID int) (*models.TryoutAttempt, error) {
-	var attempt models.TryoutAttempt
-
-	// Fetch the tryout attempt details
-	query := `SELECT * FROM tryout_attempt WHERE attempt_id = $1`
-	err := r.db.Get(&attempt, query, attemptID)
-	if err != nil {
-		logger.LogError(err, "Failed to get tryout attempt", map[string]interface{}{
-			"layer": "repository", "operation": "GetTryoutAttempt",
-		})
-		return nil, err
-	}
-
-	logger.LogDebug("Tryout attempt retrieved", map[string]interface{}{
-		"layer": "repository", "operation": "GetTryoutAttempt",
-	})
-	return &attempt, nil
-}
-
-func (r *tryoutRepo) GetAnswerFromCurrentAttemptAndSubtest(attemptID int, subtest string) ([]models.UserAnswer, error) {
-	var answers []models.UserAnswer
-
-	query := `SELECT attempt_id, subtest, kode_soal, jawaban FROM user_answers WHERE attempt_id = $1 AND subtest = $2`
-	err := r.db.Select(&answers, query, attemptID, subtest)
-	if err != nil {
-		logger.LogError(err, "Failed to get user answers", map[string]interface{}{"layer": "repository", "operation": "GetAnswerFromCurrentAttemptAndSubtest"})
-		return nil, err
-	}
-
-	logger.LogDebug("User answers retrieved", map[string]interface{}{"layer": "repository", "operation": "GetAnswerFromCurrentAttemptAndSubtest"})
-	return answers, nil
-}
-
-func (r *tryoutRepo) GetSubtestTime(attemptID int, subtest string) (time.Time, error) {
-	var timeLimit time.Time
-
-	query := `SELECT time_limit FROM time_limit WHERE attempt_id = $1 AND subtest = $2`
-	err := r.db.Get(&timeLimit, query, attemptID, subtest)
-	if err != nil {
-		logger.LogError(err, "Failed to get time limit", map[string]interface{}{"layer": "repository", "operation": "GetRemainingSubtestTime"})
-		return time.Time{}, err
-	}
-
-	logger.LogDebug("Time limit retrieved", map[string]interface{}{"layer": "repository", "operation": "GetRemainingSubtestTime"})
-	return timeLimit, nil
 }
 
 func (r *tryoutRepo) SaveAnswersTx(tx *sqlx.Tx, answers []models.UserAnswer) error {
