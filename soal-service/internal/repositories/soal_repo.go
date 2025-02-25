@@ -102,13 +102,13 @@ func (r *soalRepo) GetSoalByPaketAndSubtest(paketSoal, subtest string) ([]models
 
 func (r *soalRepo) GetAnswerKeyByPaketAndSubtest(paketSoal, subtest string) (*models.AnswerKeys, error) {
 	answers := &models.AnswerKeys{
-		PilihanGandaAnswers: make(map[string]struct {
+		PilihanGandaAnswers: make(map[string]map[string]struct {
 			IsCorrect bool
 			Bobot     int
 		}),
 		TrueFalseAnswers: make(map[string]struct {
-			IsCorrect bool
-			Bobot     int
+			Jawaban string
+			Bobot   int
 		}),
 		UraianAnswers: make(map[string]struct {
 			Jawaban string
@@ -116,9 +116,9 @@ func (r *soalRepo) GetAnswerKeyByPaketAndSubtest(paketSoal, subtest string) (*mo
 		}),
 	}
 
-	// Pilihan Ganda
+	// 🔹 Pilihan Ganda
 	pgQuery := `
-		SELECT ppg.pilihan_pilihan_ganda_id, ppg.is_correct, s.bobot_soal
+		SELECT ppg.pilihan_pilihan_ganda_id, ppg.is_correct, s.bobot_soal, ppg.kode_soal
 		FROM pilihan_pilihan_ganda ppg
 		JOIN soal s ON ppg.kode_soal = s.kode_soal
 		WHERE s.paket_soal_id = $1 AND s.subtest = $2
@@ -133,20 +133,30 @@ func (r *soalRepo) GetAnswerKeyByPaketAndSubtest(paketSoal, subtest string) (*mo
 		var pilihanGandaID string
 		var isCorrect sql.NullBool
 		var bobot int
+		var kodeSoal string
 
-		if err := pgRows.Scan(&pilihanGandaID, &isCorrect, &bobot); err != nil {
+		if err := pgRows.Scan(&pilihanGandaID, &isCorrect, &bobot, &kodeSoal); err != nil {
 			return nil, err
 		}
 
-		answers.PilihanGandaAnswers[pilihanGandaID] = struct {
+		// If kodeSoal not exists, initialize it
+		if _, exists := answers.PilihanGandaAnswers[kodeSoal]; !exists {
+			answers.PilihanGandaAnswers[kodeSoal] = make(map[string]struct {
+				IsCorrect bool
+				Bobot     int
+			})
+		}
+
+		// Add multiple choice answer inside the corresponding kode_soal
+		answers.PilihanGandaAnswers[kodeSoal][pilihanGandaID] = struct {
 			IsCorrect bool
 			Bobot     int
 		}{IsCorrect: isCorrect.Valid && isCorrect.Bool, Bobot: bobot}
 	}
 
-	// True False
+	// 🔹 True False
 	tfQuery := `
-		SELECT ptf.pilihan_true_false_id, ptf.jawaban, s.bobot_soal
+		SELECT ptf.jawaban, s.bobot_soal, ptf.kode_soal
 		FROM pilihan_true_false ptf
 		JOIN soal s ON ptf.kode_soal = s.kode_soal
 		WHERE s.paket_soal_id = $1 AND s.subtest = $2
@@ -158,23 +168,24 @@ func (r *soalRepo) GetAnswerKeyByPaketAndSubtest(paketSoal, subtest string) (*mo
 	defer tfRows.Close()
 
 	for tfRows.Next() {
-		var pilihanTFID string
-		var jawaban sql.NullBool
+		var jawaban string
 		var bobot int
+		var kodeSoal string
 
-		if err := tfRows.Scan(&pilihanTFID, &jawaban, &bobot); err != nil {
+		if err := tfRows.Scan(&jawaban, &bobot, &kodeSoal); err != nil {
 			return nil, err
 		}
 
-		answers.TrueFalseAnswers[pilihanTFID] = struct {
-			IsCorrect bool
-			Bobot     int
-		}{IsCorrect: jawaban.Valid && jawaban.Bool, Bobot: bobot}
+		// Store by kodeSoal
+		answers.TrueFalseAnswers[kodeSoal] = struct {
+			Jawaban string
+			Bobot   int
+		}{Jawaban: jawaban, Bobot: bobot}
 	}
 
-	// Uraian
+	// 🔹 Uraian
 	uraianQuery := `
-		SELECT u.uraian_id, u.jawaban, s.bobot_soal
+		SELECT u.jawaban, s.bobot_soal, u.kode_soal
 		FROM uraian u
 		JOIN soal s ON u.kode_soal = s.kode_soal
 		WHERE s.paket_soal_id = $1 AND s.subtest = $2
@@ -186,22 +197,25 @@ func (r *soalRepo) GetAnswerKeyByPaketAndSubtest(paketSoal, subtest string) (*mo
 	defer uraianRows.Close()
 
 	for uraianRows.Next() {
-		var uraianID string
 		var jawaban sql.NullString
 		var bobot int
+		var kodeSoal string
 
-		if err := uraianRows.Scan(&uraianID, &jawaban, &bobot); err != nil {
+		if err := uraianRows.Scan(&jawaban, &bobot, &kodeSoal); err != nil {
 			return nil, err
 		}
 
-		answers.UraianAnswers[uraianID] = struct {
+		// Store by kodeSoal
+		answers.UraianAnswers[kodeSoal] = struct {
 			Jawaban string
 			Bobot   int
 		}{Jawaban: jawaban.String, Bobot: bobot}
 	}
 
+	// ✅ Debugging log
 	logger.LogDebug("Answer key retrieved", map[string]interface{}{
 		"layer": "repository", "operation": "GetAnswerKeyByPaketAndSubtest", "paket_soal": paketSoal, "subtest": subtest,
 	})
+
 	return answers, nil
 }
