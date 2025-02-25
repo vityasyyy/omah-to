@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS pilihan_true_false (
     pilihan_true_false_id VARCHAR(36) PRIMARY KEY,
     kode_soal VARCHAR(36) NOT NULL,
     pilihan_tf TEXT NOT NULL,
-    jawaban BOOLEAN NOT NULL,
+    jawaban TEXT NOT NULL,
     FOREIGN KEY (kode_soal) REFERENCES soal(kode_soal) ON DELETE CASCADE
 );
 

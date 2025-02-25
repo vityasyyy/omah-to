@@ -27,7 +27,7 @@ type PilihanTrueFalse struct {
 	PilihanTrueFalseID string `json:"soal_true_false_id" db:"soal_true_false_id" binding:"required"`
 	KodeSoal           string `json:"kode_soal" db:"kode_soal" binding:"required"`
 	PilihanTf          string `json:"pilihan_tf" db:"pilihan_tf" binding:"required"`
-	Jawaban            bool   `json:"jawaban" db:"jawaban" binding:"required"`
+	Jawaban            string `json:"jawaban" db:"jawaban" binding:"required"`
 }
 
 type Uraian struct {
@@ -44,15 +44,17 @@ type SoalGabungan struct {
 }
 
 type AnswerKeys struct {
-	PilihanGandaAnswers map[string]struct {
+	PilihanGandaAnswers map[string]map[string]struct { // Now groups by KodeSoal
 		IsCorrect bool
 		Bobot     int
 	} `json:"pilihan_ganda,omitempty"`
-	TrueFalseAnswers map[string]struct {
-		IsCorrect bool
-		Bobot     int
+
+	TrueFalseAnswers map[string]struct { // Now groups by KodeSoal
+		Jawaban string
+		Bobot   int
 	} `json:"true_false,omitempty"`
-	UraianAnswers map[string]struct {
+
+	UraianAnswers map[string]struct { // Now groups by KodeSoal
 		Jawaban string
 		Bobot   int
 	} `json:"uraian,omitempty"`
