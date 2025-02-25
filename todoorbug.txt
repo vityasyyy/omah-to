@@ -1,10 +1,18 @@
 BUG 25 FEBRUARI 2025 (BACKEND/TRYOUT):
-- JAWABAN BOLEH EMPTY UNTUK TRUE FALSE (FIXED), cara fix kasih aja omitempty ama pointer data type biar bisa null,
-- MASUKIN USER ID KE SCORE SERVICE (BISA), tinggal ngefetch dari konteks gin 
+- JAWABAN BOLEH EMPTY UNTUK TRUE FALSE (FIXED 25-02-2025), cara fix kasih aja omitempty ama pointer data type biar bisa null,
+- MASUKIN USER ID KE SCORE SERVICE (BISA 25-02-2025), tinggal ngefetch dari konteks gin 
 - SESSION PER SUBTEST HARUS ADA CARA DI FRONTEND BUAT NGECHECK KALO TIMES UDAH UP
-- SCORE GABISA (FIXED), fixed nya di end dulu tryout nya dicommit dulu ke db baru read data untuk score calculation, GG
+- SCORE GABISA (FIXED 25-02-2025), fixed nya di end dulu tryout nya dicommit dulu ke db baru read data untuk score calculation, GG
 - MAIN GO harus pake gin.New() nanti pas production instead of gin.Default()
 
 TODO 25 FEBRUARI 2025 (BACKEND/TRYOUT): 
-- ATTACH USERNAME PAS START TRYOUT
+- ATTACH USERNAME PAS START TRYOUT (DONE 25-02-2025)
 - BIKIN FUNCTION UNTUK LEADERBOARD
+
+CONCERN UNTUK FRONTEND:
+- nanti pas sync db, kalo gada answer, kirim answers: []
+- tiap abis start tryout, sync ke db, tiap abis next progress fetch subtest_selanjutnya dr response buat dikirim ke soal service. 
+- setiap open page kalo masih ada tryout token, sync ama db dulu,
+
+TODO PROD:
+    ganti domain cookies, env jadiin secret variable nanti pas cloud, set up cloudinary buat image soal, cloud run 
