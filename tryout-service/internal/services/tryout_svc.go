@@ -13,15 +13,16 @@ import (
 type TryoutService interface {
 	StartAttempt(userID int, paket, accessToken string) (attempt *models.TryoutAttempt, tryoutToken string, retErr error)
 	SyncWithDatabase(answers []models.AnswerPayload, attemptID int) (answersInDB []models.UserAnswer, timeLimit time.Time, err error)
-	SubmitCurrentSubtest(answers []models.AnswerPayload, attemptID int) (updatedSubtest string, retErr error)
+	SubmitCurrentSubtest(answers []models.AnswerPayload, attemptID, userID int, tryoutToken string) (updatedSubtest string, retErr error)
 }
 
 type tryoutService struct {
-	tryoutRepo repositories.TryoutRepo
+	tryoutRepo   repositories.TryoutRepo
+	scoreService ScoreService
 }
 
-func NewTryoutService(tryoutRepo repositories.TryoutRepo) TryoutService {
-	return &tryoutService{tryoutRepo: tryoutRepo}
+func NewTryoutService(tryoutRepo repositories.TryoutRepo, scoreService ScoreService) TryoutService {
+	return &tryoutService{tryoutRepo: tryoutRepo, scoreService: scoreService}
 }
 
 func (s *tryoutService) StartAttempt(userID int, paket, accessToken string) (attempt *models.TryoutAttempt, tryoutToken string, retErr error) {
@@ -180,7 +181,7 @@ func (s *tryoutService) SyncWithDatabase(answers []models.AnswerPayload, attempt
 				TryoutAttemptID: attemptID,
 				Subtest:         attempt.SubtestSekarang,
 				KodeSoal:        answer.KodeSoal,
-				Jawaban:         answer.Jawaban,
+				Jawaban:         *answer.Jawaban,
 			}
 			userAnswers = append(userAnswers, userAnswer)
 		}
@@ -222,7 +223,7 @@ func (s *tryoutService) SyncWithDatabase(answers []models.AnswerPayload, attempt
 	return answersInDB, timeLimit, nil
 }
 
-func (s *tryoutService) SubmitCurrentSubtest(answers []models.AnswerPayload, attemptID int) (updatedSubtest string, retErr error) {
+func (s *tryoutService) SubmitCurrentSubtest(answers []models.AnswerPayload, attemptID, userID int, tryoutToken string) (updatedSubtest string, retErr error) {
 	tx, err := s.tryoutRepo.BeginTransaction()
 	if err != nil {
 		logger.LogError(err, "Failed to start transaction", map[string]interface{}{
@@ -289,7 +290,7 @@ func (s *tryoutService) SubmitCurrentSubtest(answers []models.AnswerPayload, att
 				TryoutAttemptID: attemptID,
 				Subtest:         attempt.SubtestSekarang,
 				KodeSoal:        answer.KodeSoal,
-				Jawaban:         answer.Jawaban,
+				Jawaban:         *answer.Jawaban,
 			}
 			userAnswers = append(userAnswers, userAnswer)
 		}
@@ -310,11 +311,26 @@ func (s *tryoutService) SubmitCurrentSubtest(answers []models.AnswerPayload, att
 	if nextSubtest == nil {
 		err = s.tryoutRepo.EndTryOutTx(tx, attemptID)
 		if err != nil {
+			logger.LogError(err, "Failed to end tryout", map[string]interface{}{
+				"layer":     "service",
+				"operation": "SubmitCurrentSubtest",
+				"attemptID": attemptID,
+			})
 			retErr = fmt.Errorf("failed to finalize tryout: %w", err)
 			return "", retErr
 		}
 		if err := tx.Commit(); err != nil {
 			logger.LogError(err, "Failed to commit transaction", map[string]interface{}{
+				"layer":     "service",
+				"operation": "SubmitCurrentSubtest",
+				"attemptID": attemptID,
+			})
+			retErr = err
+			return "", retErr
+		}
+		err = s.scoreService.CalculateAndStoreScores(attemptID, userID, tryoutToken)
+		if err != nil {
+			logger.LogError(err, "Failed to calculate and store scores", map[string]interface{}{
 				"layer":     "service",
 				"operation": "SubmitCurrentSubtest",
 				"attemptID": attemptID,
