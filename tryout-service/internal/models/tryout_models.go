@@ -35,6 +35,23 @@ type TimeLimit struct {
 	TimeLimit       int    `db:"time_limit" json:"time_limit" binding:"required"`
 }
 type AnswerPayload struct {
-	KodeSoal string `json:"kode_soal" binding:"required"`
-	Jawaban  string `json:"jawaban" binding:"required"`
+	KodeSoal string  `json:"kode_soal" binding:"required"`
+	Jawaban  *string `json:"jawaban" binding:"omitempty"`
+}
+
+type AnswerKeys struct {
+	PilihanGandaAnswers map[string]map[string]struct { // Now groups by KodeSoal
+		IsCorrect bool
+		Bobot     int
+	} `json:"pilihan_ganda,omitempty"`
+
+	TrueFalseAnswers map[string]struct { // Now groups by KodeSoal
+		Jawaban string
+		Bobot   int
+	} `json:"true_false,omitempty"`
+
+	UraianAnswers map[string]struct { // Now groups by KodeSoal
+		Jawaban string
+		Bobot   int
+	} `json:"uraian,omitempty"`
 }
