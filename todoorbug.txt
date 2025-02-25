@@ -1,0 +1,10 @@
+BUG 25 FEBRUARI 2025 (BACKEND/TRYOUT):
+- JAWABAN BOLEH EMPTY UNTUK TRUE FALSE (FIXED), cara fix kasih aja omitempty ama pointer data type biar bisa null,
+- MASUKIN USER ID KE SCORE SERVICE (BISA), tinggal ngefetch dari konteks gin 
+- SESSION PER SUBTEST HARUS ADA CARA DI FRONTEND BUAT NGECHECK KALO TIMES UDAH UP
+- SCORE GABISA (FIXED), fixed nya di end dulu tryout nya dicommit dulu ke db baru read data untuk score calculation, GG
+- MAIN GO harus pake gin.New() nanti pas production instead of gin.Default()
+
+TODO 25 FEBRUARI 2025 (BACKEND/TRYOUT): 
+- ATTACH USERNAME PAS START TRYOUT
+- BIKIN FUNCTION UNTUK LEADERBOARD
