@@ -28,9 +28,13 @@ func main() {
 	}
 	defer db.Close()
 
-	tryoutRepo := repositories.NewTryoutRepo(db)
+	soalServiceURL := os.Getenv("SOAL_SERVICE_URL")
 
-	tryoutService := services.NewTryoutService(tryoutRepo)
+	tryoutRepo := repositories.NewTryoutRepo(db)
+	scoreRepo := repositories.NewScoreRepo(db)
+
+	scoreService := services.NewScoreService(scoreRepo, soalServiceURL)
+	tryoutService := services.NewTryoutService(tryoutRepo, scoreService)
 
 	tryoutHandler := handlers.NewTryoutHandler(tryoutService)
 
@@ -38,6 +42,7 @@ func main() {
 		gin.SetMode(gin.ReleaseMode)
 	}
 	r := gin.Default()
+
 	r.Use(utils.ReqLoggingMiddleware()) // Request logging middleware
 	r.Use(securityHeadersMiddleware())  // Security headers middleware
 
