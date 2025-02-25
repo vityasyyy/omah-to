@@ -5,6 +5,8 @@ import SubjectSemester from '@/modules/home/subject-semester'
 import Footer from '@/modules/home/footer'
 import CompsciDivisions from '@/modules/home/compsci-divisions'
 import ReadyPath from '@/modules/home/ready-path'
+import UtbkPerspective from '@/modules/home/utbk-perspective'
+import Inspiration from '@/modules/home/inspiration'
 // import TryoutResult from '@/modules/tryout/tryout-result'
 
 export default function Home() {
@@ -14,6 +16,8 @@ export default function Home() {
       <Hero />
       <WhyCompsci />
       <CompsciDivisions />
+      <Inspiration />
+      <UtbkPerspective />
       <SubjectSemester />
       <ReadyPath/>
       {/* <TryoutResult /> ini buat ngetes */}

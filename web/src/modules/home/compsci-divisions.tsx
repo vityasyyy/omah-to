@@ -1,3 +1,4 @@
+'use client'
 import Container from '@/components/container'
 import {
   Carousel,
@@ -7,18 +8,28 @@ import {
   CarouselPrevious,
 } from '@/components/ui/carousel'
 import Image from 'next/image'
+import Autoplay from 'embla-carousel-autoplay'
+import { useRef } from 'react'
 
 const CompsciDivisions = () => {
+  const plugin = useRef(Autoplay({ delay: 2000, stopOnInteraction: true }))
+
   return (
     <>
       <Container className='mt-12 mb-4 gap-12 md:gap-16'>
         <h1 className='text-2xl font-bold md:max-w-lg lg:text-3xl'>
           Mau Tahu Beberapa Bidang Kerja Keren di{' '}
-          <span className='text-primary-500'> Computer Science </span>?
+          <span className='text-primary-500'> Computer Science</span>?
         </h1>
       </Container>
 
-      <Carousel  className='w-full max-w-(--breakpoint-2xl) mx-auto'>
+      <Carousel
+        opts={{}}
+        plugins={[plugin.current]}
+        onMouseEnter={plugin.current.stop}
+        onMouseLeave={plugin.current.reset}
+        className='mx-auto w-full max-w-(--breakpoint-2xl)'
+      >
         <CarouselContent className='mb-4'>
           <CarouselItem className='basis-[4%]'></CarouselItem>
           {Array.from({ length: 20 }).map((item, i) => (
@@ -40,7 +51,7 @@ const CompsciDivisions = () => {
 
 const Card = () => {
   return (
-    <main className='flex drop-shadow-lg flex-col items-center justify-between gap-4 rounded-lg bg-[#4759A6] p-6'>
+    <main className='flex flex-col items-center justify-between gap-4 rounded-lg bg-[#4759A6] p-6 drop-shadow-lg'>
       <section className='relative aspect-square h-36'>
         <Image
           src={`/robot.png`}
