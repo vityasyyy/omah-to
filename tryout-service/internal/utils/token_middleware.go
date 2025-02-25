@@ -57,7 +57,8 @@ func ValidateToAuthApi() gin.HandlerFunc {
 		}
 
 		var authResponse struct {
-			UserID int `json:"user_id"`
+			UserID   int    `json:"user_id"`
+			Username string `json:"username"`
 		}
 
 		if err := json.Unmarshal(body, &authResponse); err != nil {
@@ -66,6 +67,7 @@ func ValidateToAuthApi() gin.HandlerFunc {
 			return
 		}
 		c.Set("user_id", authResponse.UserID)
+		c.Set("username", authResponse.Username)
 		c.Next()
 	}
 }

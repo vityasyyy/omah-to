@@ -11,7 +11,7 @@ import (
 )
 
 type TryoutService interface {
-	StartAttempt(userID int, paket, accessToken string) (attempt *models.TryoutAttempt, tryoutToken string, retErr error)
+	StartAttempt(userID int, username, paket, accessToken string) (attempt *models.TryoutAttempt, tryoutToken string, retErr error)
 	SyncWithDatabase(answers []models.AnswerPayload, attemptID int) (answersInDB []models.UserAnswer, timeLimit time.Time, err error)
 	SubmitCurrentSubtest(answers []models.AnswerPayload, attemptID, userID int, tryoutToken string) (updatedSubtest string, retErr error)
 }
@@ -25,7 +25,7 @@ func NewTryoutService(tryoutRepo repositories.TryoutRepo, scoreService ScoreServ
 	return &tryoutService{tryoutRepo: tryoutRepo, scoreService: scoreService}
 }
 
-func (s *tryoutService) StartAttempt(userID int, paket, accessToken string) (attempt *models.TryoutAttempt, tryoutToken string, retErr error) {
+func (s *tryoutService) StartAttempt(userID int, username, paket, accessToken string) (attempt *models.TryoutAttempt, tryoutToken string, retErr error) {
 	// USER WITH ONGOING ATTEMPT CANNOT START ANOTHER ATTEMPT
 	// sstart a transaction to the db
 	startTime := time.Now()
@@ -61,6 +61,7 @@ func (s *tryoutService) StartAttempt(userID int, paket, accessToken string) (att
 	// Create new attempt object to later be saved in the database
 	attempt = &models.TryoutAttempt{
 		UserID:    userID,
+		Username:  username,
 		StartTime: startTime,
 		Paket:     paket,
 	}

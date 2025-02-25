@@ -20,6 +20,7 @@ func NewTryoutHandler(tryoutService services.TryoutService) *TryoutHandler {
 func (h *TryoutHandler) StartAttempt(c *gin.Context) {
 	// retrieve user_id and access token from context
 	userID := c.GetInt("user_id")
+	username := c.GetString("username")
 	paket := c.Param("paket")
 	accessToken, _ := c.Cookie("access_token")
 	if accessToken == "" {
@@ -27,7 +28,7 @@ func (h *TryoutHandler) StartAttempt(c *gin.Context) {
 		return
 	}
 	// start the attempt, making a new record in the database
-	attempt, tryoutToken, err := h.tryoutService.StartAttempt(userID, paket, accessToken)
+	attempt, tryoutToken, err := h.tryoutService.StartAttempt(userID, username, paket, accessToken)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"message": "Failed to start attempt", "error": err.Error()})
 		return

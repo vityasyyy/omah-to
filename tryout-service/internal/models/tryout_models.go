@@ -6,6 +6,7 @@ type TryoutAttempt struct {
 	TryoutAttemptID int          `db:"attempt_id" json:"attempt_id" binding:"required"`
 	Paket           string       `db:"paket" json:"paket" binding:"required"`
 	Status          string       `db:"status" json:"status" binding:"required"`
+	Username        string       `db:"username" json:"username" binding:"required"`
 	UserID          int          `db:"user_id" json:"user_id" binding:"required"`
 	StartTime       time.Time    `db:"start_time" json:"start_time" binding:"required"`
 	EndTime         *time.Time   `db:"end_time" json:"end_time"`

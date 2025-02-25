@@ -43,9 +43,9 @@ func (r *tryoutRepo) BeginTransaction() (*sqlx.Tx, error) {
 
 func (r *tryoutRepo) CreateTryoutAttemptTx(tx *sqlx.Tx, attempt *models.TryoutAttempt) error {
 	// Insert into tryout_attempt and get attempt_id
-	query := `INSERT INTO tryout_attempt (user_id, start_time, subtest_sekarang, paket, status) VALUES ($1, $2, $3, $4, $5) RETURNING attempt_id`
+	query := `INSERT INTO tryout_attempt (user_id, username, start_time, subtest_sekarang, paket, status) VALUES ($1, $2, $3, $4, $5, $6) RETURNING attempt_id`
 	startTime := time.Now()
-	err := tx.QueryRowx(query, attempt.UserID, startTime, "subtest_pu", attempt.Paket, "ongoing").Scan(&attempt.TryoutAttemptID)
+	err := tx.QueryRowx(query, attempt.UserID, attempt.Username, startTime, "subtest_pu", attempt.Paket, "ongoing").Scan(&attempt.TryoutAttemptID)
 	if err != nil {
 		logger.LogError(err, "Failed to create tryout attempt", map[string]interface{}{"layer": "repository", "operation": "CreateTryoutAttempt"})
 		return err

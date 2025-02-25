@@ -1,6 +1,7 @@
 CREATE TABLE IF NOT EXISTS tryout_attempt (
     attempt_id SERIAL PRIMARY KEY,
     user_id INT NOT NULL,
+    username VARCHAR(255) NOT NULL,
     start_time TIMESTAMP NOT NULL,
     paket VARCHAR(36) NOT NULL,
     status VARCHAR(36) DEFAULT 'ongoing' CHECK (status IN ('ongoing', 'finished')),
