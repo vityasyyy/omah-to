@@ -62,7 +62,12 @@ func (h *TryoutHandler) SyncHandler(c *gin.Context) {
 
 func (h *TryoutHandler) ProgressTryoutHandler(c *gin.Context) {
 	attemptID := c.GetInt("attempt_id")
-
+	userID := c.GetInt("user_id")
+	tryoutToken, err := c.Cookie("tryout_token")
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"message": "failed to get tryout token"})
+		return
+	}
 	var answers struct {
 		Answers []models.AnswerPayload `json:"answers" binding:"required,dive"`
 	}
@@ -72,11 +77,10 @@ func (h *TryoutHandler) ProgressTryoutHandler(c *gin.Context) {
 		return
 	}
 
-	updatedSubtest, err := h.tryoutService.SubmitCurrentSubtest(answers.Answers, attemptID)
+	updatedSubtest, err := h.tryoutService.SubmitCurrentSubtest(answers.Answers, attemptID, userID, tryoutToken)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"message": "Failed to submit answers", "error": err.Error()})
 		return
 	}
-
-	c.JSON(http.StatusOK, gin.H{"message": "Successfully get progress", "updated_subtest": updatedSubtest})
+	c.JSON(http.StatusOK, gin.H{"message": "Successfully get progress or submitted scores", "updated_subtest": updatedSubtest})
 }
