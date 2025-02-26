@@ -7,10 +7,12 @@ import (
 	"tryout-service/internal/logger"
 	"tryout-service/internal/models"
 	"tryout-service/internal/repositories"
+
+	"github.com/jmoiron/sqlx"
 )
 
 type ScoreService interface {
-	CalculateAndStoreScores(attemptID, userID int, tryoutToken string) (retErr error)
+	CalculateAndStoreScores(tx *sqlx.Tx, attemptID, userID int, tryoutToken string) error
 	GetAnswerKeyBasedOnSubtestFromSoalService(subtest, tryoutToken string) (*models.AnswerKeys, error)
 	CalculateScore(userAnswers []models.UserAnswer, answerKeys *models.AnswerKeys) (totalScore float64)
 }
@@ -28,27 +30,7 @@ func NewScoreService(scoreRepo repositories.ScoreRepo, soalServiceURL string) Sc
 }
 
 // CalculateAndStoreScores is a function that calculates the score for each subtest and stores it in the database
-func (s *scoreService) CalculateAndStoreScores(attemptID, userID int, tryoutToken string) (retErr error) {
-	// begin transaction
-	tx, err := s.scoreRepo.BeginTransaction()
-	if err != nil {
-		logger.LogError(err, "Failed to begin transaction", map[string]interface{}{"layer": "service", "operation": "CalculateAndStoreScores"})
-		return err
-	}
-
-	// defer rollback if there is an error
-	defer func() {
-		if retErr != nil {
-			if rbErr := tx.Rollback(); rbErr != nil {
-				logger.LogError(rbErr, "Failed to rollback transaction", map[string]interface{}{
-					"layer":     "service",
-					"operation": "SubmitCurrentSubtest",
-					"attemptID": attemptID,
-				})
-			}
-		}
-	}()
-	// get all the subtests that are available for this attempt
+func (s *scoreService) CalculateAndStoreScores(tx *sqlx.Tx, attemptID, userID int, tryoutToken string) error {
 	subtests := []string{"subtest_pu", "subtest_ppu", "subtest_pbm", "subtest_pk", "subtest_lbi", "subtest_lbe", "subtest_pm"}
 
 	// loop through all the subtests and calculate the score for each subtest
@@ -57,16 +39,14 @@ func (s *scoreService) CalculateAndStoreScores(attemptID, userID int, tryoutToke
 		userAnswers, err := s.scoreRepo.GetUserAnswersFromAttemptIDandSubtestTx(tx, attemptID, subtest)
 		if err != nil {
 			logger.LogError(err, "Failed to get user answers from attempt id and subtest", map[string]interface{}{"layer": "service", "operation": "CalculateAndStoreScores"})
-			retErr = err
-			return retErr
+			return err
 		}
 
 		// get the answer key for this subtest, call the soal service api
 		answerKey, err := s.GetAnswerKeyBasedOnSubtestFromSoalService(subtest, tryoutToken)
 		if err != nil {
 			logger.LogError(err, "Failed to get answer key from subtest", map[string]interface{}{"layer": "service", "operation": "CalculateAndStoreScores"})
-			retErr = err
-			return retErr
+			return err
 		}
 
 		// calculate the score for this subtest, apply a calculation logic
@@ -75,14 +55,18 @@ func (s *scoreService) CalculateAndStoreScores(attemptID, userID int, tryoutToke
 		// store the score for this subtest
 		if err := s.scoreRepo.InsertScoreForUserAttemptIDAndSubtestTx(tx, attemptID, userID, subtest, score); err != nil {
 			logger.LogError(err, "Failed to insert score for user attempt id and subtest", map[string]interface{}{"layer": "service", "operation": "CalculateAndStoreScores"})
-			retErr = err
-			return retErr
+			return err
 		}
 	}
 
-	// commit transaction if no error
-	if err := tx.Commit(); err != nil {
-		logger.LogError(err, "Failed to commit transaction", map[string]interface{}{"layer": "service", "operation": "CalculateAndStoreScores"})
+	averageScore, err := s.scoreRepo.CalculateAverageScoreForAttempt(tx, attemptID)
+	if err != nil {
+		logger.LogError(err, "Failed to calculate average score for attempt", map[string]interface{}{"layer": "service", "operation": "CalculateAndStoreScores"})
+		return err
+	}
+
+	if err := s.scoreRepo.UpdateScoreForTryOutAttempt(tx, attemptID, averageScore); err != nil {
+		logger.LogError(err, "Failed to update score for tryout attempt", map[string]interface{}{"layer": "service", "operation": "CalculateAndStoreScores"})
 		return err
 	}
 

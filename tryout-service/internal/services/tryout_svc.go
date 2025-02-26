@@ -235,7 +235,7 @@ func (s *tryoutService) SubmitCurrentSubtest(answers []models.AnswerPayload, att
 		return "", err
 	}
 	defer func() {
-		if retErr != nil {
+		if retErr != nil && tx != nil {
 			if rbErr := tx.Rollback(); rbErr != nil {
 				logger.LogError(rbErr, "Failed to rollback transaction", map[string]interface{}{
 					"layer":     "service",
@@ -243,6 +243,7 @@ func (s *tryoutService) SubmitCurrentSubtest(answers []models.AnswerPayload, att
 					"attemptID": attemptID,
 				})
 			}
+			tx = nil
 		}
 	}()
 
@@ -320,16 +321,7 @@ func (s *tryoutService) SubmitCurrentSubtest(answers []models.AnswerPayload, att
 			retErr = fmt.Errorf("failed to finalize tryout: %w", err)
 			return "", retErr
 		}
-		if err := tx.Commit(); err != nil {
-			logger.LogError(err, "Failed to commit transaction", map[string]interface{}{
-				"layer":     "service",
-				"operation": "SubmitCurrentSubtest",
-				"attemptID": attemptID,
-			})
-			retErr = err
-			return "", retErr
-		}
-		err = s.scoreService.CalculateAndStoreScores(attemptID, userID, tryoutToken)
+		err = s.scoreService.CalculateAndStoreScores(tx, attemptID, userID, tryoutToken)
 		if err != nil {
 			logger.LogError(err, "Failed to calculate and store scores", map[string]interface{}{
 				"layer":     "service",
@@ -339,6 +331,17 @@ func (s *tryoutService) SubmitCurrentSubtest(answers []models.AnswerPayload, att
 			retErr = err
 			return "", retErr
 		}
+		if err := tx.Commit(); err != nil {
+			logger.LogError(err, "Failed to commit transaction", map[string]interface{}{
+				"layer":     "service",
+				"operation": "SubmitCurrentSubtest",
+				"attemptID": attemptID,
+			})
+			retErr = err
+			return "", retErr
+		}
+		tx = nil
+
 		return "final", nil
 	}
 
@@ -364,6 +367,7 @@ func (s *tryoutService) SubmitCurrentSubtest(answers []models.AnswerPayload, att
 		retErr = err
 		return "", retErr
 	}
+	tx = nil
 
 	return updatedSubtest, nil
 }
