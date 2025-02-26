@@ -12,6 +12,8 @@ type ScoreRepo interface {
 	InsertScoreForUserAttemptIDAndSubtestTx(tx *sqlx.Tx, attemptID, userID int, subtest string, score float64) error // Insert a user's score for a subtest, this will be called after calculating
 	GetUserAnswersFromAttemptIDandSubtestTx(tx *sqlx.Tx, attemptID int, subtest string) ([]models.UserAnswer, error) // Get user's answers for a subtest
 	GetUserScoreFromAttemptIDAndSubtestTx(tx *sqlx.Tx, attemptID int, subtest string) (*models.UserScore, error)     // Get user's score for a subtest
+	CalculateAverageScoreForAttempt(tx *sqlx.Tx, attemptID int) (float64, error)
+	UpdateScoreForTryOutAttempt(tx *sqlx.Tx, attemptID int, avgScore float64) error
 }
 
 type scoreRepo struct {
@@ -117,4 +119,17 @@ func (r *scoreRepo) GetUserScoreFromAttemptIDAndSubtestTx(tx *sqlx.Tx, attemptID
 		"score":     userScore.Score,
 	})
 	return &userScore, nil
+}
+
+func (r *scoreRepo) CalculateAverageScoreForAttempt(tx *sqlx.Tx, attemptID int) (float64, error) {
+	var avgScore float64
+	query := `SELECT AVG(score) FROM user_scores WHERE attempt_id = $1`
+	err := tx.Get(&avgScore, query, attemptID)
+	return avgScore, err
+}
+
+func (r *scoreRepo) UpdateScoreForTryOutAttempt(tx *sqlx.Tx, attemptID int, avgScore float64) error {
+	query := `UPDATE tryout_attempt SET tryout_score = $1 WHERE attempt_id = $2`
+	_, err := tx.Exec(query, avgScore, attemptID)
+	return err
 }
