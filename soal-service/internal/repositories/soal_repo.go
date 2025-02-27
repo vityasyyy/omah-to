@@ -103,22 +103,27 @@ func (r *soalRepo) GetSoalByPaketAndSubtest(paketSoal, subtest string) ([]models
 func (r *soalRepo) GetAnswerKeyByPaketAndSubtest(paketSoal, subtest string) (*models.AnswerKeys, error) {
 	answers := &models.AnswerKeys{
 		PilihanGandaAnswers: make(map[string]map[string]struct {
-			IsCorrect bool
-			Bobot     int
+			IsCorrect   bool
+			Bobot       int
+			TextPilihan string
+			Pembahasan  string
 		}),
 		TrueFalseAnswers: make(map[string]struct {
-			Jawaban string
-			Bobot   int
+			Jawaban     string
+			Bobot       int
+			TextPilihan string
+			Pembahasan  string
 		}),
 		UraianAnswers: make(map[string]struct {
-			Jawaban string
-			Bobot   int
+			Jawaban    string
+			Bobot      int
+			Pembahasan string
 		}),
 	}
 
 	// 🔹 Pilihan Ganda
 	pgQuery := `
-		SELECT ppg.pilihan_pilihan_ganda_id, ppg.is_correct, s.bobot_soal, ppg.kode_soal
+		SELECT ppg.pilihan_pilihan_ganda_id, ppg.is_correct, s.bobot_soal, ppg.kode_soal, s.pembahasan, ppg.pilihan
 		FROM pilihan_pilihan_ganda ppg
 		JOIN soal s ON ppg.kode_soal = s.kode_soal
 		WHERE s.paket_soal_id = $1 AND s.subtest = $2
@@ -134,29 +139,34 @@ func (r *soalRepo) GetAnswerKeyByPaketAndSubtest(paketSoal, subtest string) (*mo
 		var isCorrect sql.NullBool
 		var bobot int
 		var kodeSoal string
-
-		if err := pgRows.Scan(&pilihanGandaID, &isCorrect, &bobot, &kodeSoal); err != nil {
+		var textPilihan string
+		var pembahasan string
+		if err := pgRows.Scan(&pilihanGandaID, &isCorrect, &bobot, &kodeSoal, &pembahasan, &textPilihan); err != nil {
 			return nil, err
 		}
 
 		// If kodeSoal not exists, initialize it
 		if _, exists := answers.PilihanGandaAnswers[kodeSoal]; !exists {
 			answers.PilihanGandaAnswers[kodeSoal] = make(map[string]struct {
-				IsCorrect bool
-				Bobot     int
+				IsCorrect   bool
+				Bobot       int
+				TextPilihan string
+				Pembahasan  string
 			})
 		}
 
 		// Add multiple choice answer inside the corresponding kode_soal
 		answers.PilihanGandaAnswers[kodeSoal][pilihanGandaID] = struct {
-			IsCorrect bool
-			Bobot     int
-		}{IsCorrect: isCorrect.Valid && isCorrect.Bool, Bobot: bobot}
+			IsCorrect   bool
+			Bobot       int
+			TextPilihan string
+			Pembahasan  string
+		}{IsCorrect: isCorrect.Valid && isCorrect.Bool, Bobot: bobot, TextPilihan: textPilihan, Pembahasan: pembahasan}
 	}
 
 	// 🔹 True False
 	tfQuery := `
-		SELECT ptf.jawaban, s.bobot_soal, ptf.kode_soal
+		SELECT ptf.jawaban, s.bobot_soal, ptf.kode_soal, s.pembahasan, ptf.pilihan_tf
 		FROM pilihan_true_false ptf
 		JOIN soal s ON ptf.kode_soal = s.kode_soal
 		WHERE s.paket_soal_id = $1 AND s.subtest = $2
@@ -171,21 +181,25 @@ func (r *soalRepo) GetAnswerKeyByPaketAndSubtest(paketSoal, subtest string) (*mo
 		var jawaban string
 		var bobot int
 		var kodeSoal string
+		var textPilihan string
+		var pembahasan string
 
-		if err := tfRows.Scan(&jawaban, &bobot, &kodeSoal); err != nil {
+		if err := tfRows.Scan(&jawaban, &bobot, &kodeSoal, &pembahasan, &textPilihan); err != nil {
 			return nil, err
 		}
 
 		// Store by kodeSoal
 		answers.TrueFalseAnswers[kodeSoal] = struct {
-			Jawaban string
-			Bobot   int
-		}{Jawaban: jawaban, Bobot: bobot}
+			Jawaban     string
+			Bobot       int
+			TextPilihan string
+			Pembahasan  string
+		}{Jawaban: jawaban, Bobot: bobot, TextPilihan: textPilihan, Pembahasan: pembahasan}
 	}
 
 	// 🔹 Uraian
 	uraianQuery := `
-		SELECT u.jawaban, s.bobot_soal, u.kode_soal
+		SELECT u.jawaban, s.bobot_soal, u.kode_soal, s.pembahasan
 		FROM uraian u
 		JOIN soal s ON u.kode_soal = s.kode_soal
 		WHERE s.paket_soal_id = $1 AND s.subtest = $2
@@ -200,16 +214,18 @@ func (r *soalRepo) GetAnswerKeyByPaketAndSubtest(paketSoal, subtest string) (*mo
 		var jawaban sql.NullString
 		var bobot int
 		var kodeSoal string
+		var pembahasan string
 
-		if err := uraianRows.Scan(&jawaban, &bobot, &kodeSoal); err != nil {
+		if err := uraianRows.Scan(&jawaban, &bobot, &kodeSoal, &pembahasan); err != nil {
 			return nil, err
 		}
 
 		// Store by kodeSoal
 		answers.UraianAnswers[kodeSoal] = struct {
-			Jawaban string
-			Bobot   int
-		}{Jawaban: jawaban.String, Bobot: bobot}
+			Jawaban    string
+			Bobot      int
+			Pembahasan string
+		}{Jawaban: jawaban.String, Bobot: bobot, Pembahasan: pembahasan}
 	}
 
 	// ✅ Debugging log

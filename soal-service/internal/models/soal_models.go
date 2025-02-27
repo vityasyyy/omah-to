@@ -45,17 +45,22 @@ type SoalGabungan struct {
 
 type AnswerKeys struct {
 	PilihanGandaAnswers map[string]map[string]struct { // Now groups by KodeSoal
-		IsCorrect bool
-		Bobot     int
+		IsCorrect   bool
+		Bobot       int
+		TextPilihan string
+		Pembahasan  string
 	} `json:"pilihan_ganda,omitempty"`
 
 	TrueFalseAnswers map[string]struct { // Now groups by KodeSoal
-		Jawaban string
-		Bobot   int
+		Jawaban     string
+		Bobot       int
+		TextPilihan string
+		Pembahasan  string
 	} `json:"true_false,omitempty"`
 
 	UraianAnswers map[string]struct { // Now groups by KodeSoal
-		Jawaban string
-		Bobot   int
+		Jawaban    string
+		Bobot      int
+		Pembahasan string
 	} `json:"uraian,omitempty"`
 }
