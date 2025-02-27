@@ -13,7 +13,7 @@ import (
 
 type ScoreService interface {
 	CalculateAndStoreScores(tx *sqlx.Tx, attemptID, userID int, tryoutToken string) error
-	GetAnswerKeyBasedOnSubtestFromSoalService(subtest, tryoutToken string) (*models.AnswerKeys, error)
+	GetAnswerKeyBasedOnSubtestFromSoalService(subtest, token, tokenType string) (*models.AnswerKeys, error)
 	CalculateScore(userAnswers []models.UserAnswer, answerKeys *models.AnswerKeys) (totalScore float64)
 }
 
@@ -43,7 +43,7 @@ func (s *scoreService) CalculateAndStoreScores(tx *sqlx.Tx, attemptID, userID in
 		}
 
 		// get the answer key for this subtest, call the soal service api
-		answerKey, err := s.GetAnswerKeyBasedOnSubtestFromSoalService(subtest, tryoutToken)
+		answerKey, err := s.GetAnswerKeyBasedOnSubtestFromSoalService(subtest, tryoutToken, "tryout")
 		if err != nil {
 			logger.LogError(err, "Failed to get answer key from subtest", map[string]interface{}{"layer": "service", "operation": "CalculateAndStoreScores"})
 			return err
@@ -74,7 +74,7 @@ func (s *scoreService) CalculateAndStoreScores(tx *sqlx.Tx, attemptID, userID in
 }
 
 // make a function that retrieves the answer key from the soal service and the subtest, also distinguish them from the soal type and shit type shit bro
-func (s *scoreService) GetAnswerKeyBasedOnSubtestFromSoalService(subtest string, tryoutToken string) (*models.AnswerKeys, error) {
+func (s *scoreService) GetAnswerKeyBasedOnSubtestFromSoalService(subtest, token, tokenType string) (*models.AnswerKeys, error) {
 	// NANTI PAKETNYA DYNAMIC YAA JANGAN STATIC, FORGOT BRO PLES
 	url := fmt.Sprintf("%s/soal/answer-key/paket1?subtest=%s", s.soalServiceURL, subtest)
 	// make a new request and add cookie to the header
@@ -83,7 +83,18 @@ func (s *scoreService) GetAnswerKeyBasedOnSubtestFromSoalService(subtest string,
 		logger.LogError(err, "Failed to create request for answer key", map[string]interface{}{"layer": "service", "operation": "fetchAnswerKeyFromQuestionsService"})
 		return nil, err
 	}
-	req.Header.Add("Cookie", fmt.Sprintf("tryout_token=%s", tryoutToken))
+	switch tokenType {
+	case "tryout":
+		req.Header.Add("Cookie", fmt.Sprintf("tryout_token=%s", token))
+	case "access":
+		req.Header.Add("Cookie", fmt.Sprintf("access_token=%s", token))
+	default:
+		err := fmt.Errorf("invalid token type: %s", tokenType)
+		logger.LogError(err, "Invalid token type provided", map[string]interface{}{
+			"layer": "service", "operation": "fetchAnswerKeyFromQuestionsService",
+		})
+		return nil, err
+	}
 
 	// Send the request
 	resp, err := s.httpClient.Do(req)
