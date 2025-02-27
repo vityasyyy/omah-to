@@ -5,9 +5,20 @@ BUG 25 FEBRUARI 2025 (BACKEND/TRYOUT):
 - SCORE GABISA (FIXED 25-02-2025), fixed nya di end dulu tryout nya dicommit dulu ke db baru read data untuk score calculation, GG
 - MAIN GO harus pake gin.New() nanti pas production instead of gin.Default()
 
+BUG 26 FEBRUARI 2025(BACKEND/TRYOUT):
+- Gabisa commit dan rollback setelah ada commit / rollback error (FIXED 26-02-2025), tx harus nil setelah rollback biar ga conflict rollback dan start fresh pake tx baru, function calculate score juga gaboleh bikin tx sendiri.
+
+BUG 27 FEBRUARI 2025(BACKEND/TRYOUT):
+- Panic pas ada concurrency error (FIXED 27-02-2025), harus diwait dulu boz
+- Access Token ama Tryout Token sama sama bisa divalidate, wtf? (FIXED 27-02-2025), secret dari access token dan tryout token dibedain, biar ga sign pake signature yg sama
+- Meski udah dicancel, request ttp lanjut (FIXED 27-02-2025), pake errgroup, but even then kalo yang jalan request pembahasan dulu ya tetep aja bakal lanjut (it's okay)
+
+
 TODO 25 FEBRUARI 2025 (BACKEND/TRYOUT): 
 - ATTACH USERNAME PAS START TRYOUT (DONE 25-02-2025)
-- BIKIN FUNCTION UNTUK LEADERBOARD
+- BIKIN FUNCTION UNTUK LEADERBOARD, routes untuk leaderboard
+- Bikin page pembahasan yang kalo difetch, semua di page pembahasan langsung ke frontend
+
 
 CONCERN UNTUK FRONTEND:
 - nanti pas sync db, kalo gada answer, kirim answers: []
@@ -15,4 +26,8 @@ CONCERN UNTUK FRONTEND:
 - setiap open page kalo masih ada tryout token, sync ama db dulu,
 
 TODO PROD:
-    ganti domain cookies, env jadiin secret variable nanti pas cloud, set up cloudinary buat image soal, cloud run 
+    -ganti domain cookies 
+    -env jadiin secret variable nanti pas cloud
+    -set up cloudinary buat image soal
+    -cloud run
+    -rate limiter jangan lupa diganti
