@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"log"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -8,6 +9,11 @@ import (
 
 func ValidateAccessTokenMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
+		if c.Request.URL.Path == "/auth/logout" {
+			log.Println("skip middleware")
+			c.Next()
+			return
+		}
 		// get the access token from the context cookie sent by the client
 		accessToken, err := c.Cookie("access_token")
 		if err != nil {

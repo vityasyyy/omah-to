@@ -84,7 +84,7 @@ func (h *UserHandler) LogoutUserHandler(c *gin.Context) {
 	// blacklist the refresh token, if it's not possible then the token is already invalid
 	err = h.tokenService.BlacklistRefreshToken(refreshToken)
 	if err != nil {
-		c.JSON(http.StatusUnauthorized, gin.H{"message": "Failed to blacklist token, you are already logged out"})
+		c.JSON(http.StatusUnauthorized, gin.H{"message": "You are already logged out"})
 		return
 	}
 
