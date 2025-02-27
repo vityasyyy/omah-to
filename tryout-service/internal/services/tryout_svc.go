@@ -26,7 +26,6 @@ func NewTryoutService(tryoutRepo repositories.TryoutRepo, scoreService ScoreServ
 }
 
 func (s *tryoutService) StartAttempt(userID int, username, paket, accessToken string) (attempt *models.TryoutAttempt, tryoutToken string, retErr error) {
-	// USER WITH ONGOING ATTEMPT CANNOT START ANOTHER ATTEMPT
 	// sstart a transaction to the db
 	startTime := time.Now()
 	tx, err := s.tryoutRepo.BeginTransaction()
@@ -52,6 +51,7 @@ func (s *tryoutService) StartAttempt(userID int, username, paket, accessToken st
 		}
 	}()
 
+	// Check if user already has an ongoing attempt
 	ongoing, _ := s.tryoutRepo.GetTryoutAttemptByUserIDTx(tx, userID)
 	if ongoing != "" {
 		retErr = errors.New("user already has an ongoing attempt")
@@ -169,6 +169,7 @@ func (s *tryoutService) SyncWithDatabase(answers []models.AnswerPayload, attempt
 		return nil, time.Time{}, retErr
 	}
 
+	// exceed time limit
 	if time.Now().After(timeLimit) {
 		retErr = errors.New("time limit has been reached for this subtest")
 		return nil, time.Time{}, retErr
@@ -221,10 +222,12 @@ func (s *tryoutService) SyncWithDatabase(answers []models.AnswerPayload, attempt
 		return nil, timeLimit, retErr
 	}
 
+	// will return answers that are stored in the db (for sync purpose) and the time limit also for the sync purpose
 	return answersInDB, timeLimit, nil
 }
 
 func (s *tryoutService) SubmitCurrentSubtest(answers []models.AnswerPayload, attemptID, userID int, tryoutToken string) (updatedSubtest string, retErr error) {
+	// begin a transaction
 	tx, err := s.tryoutRepo.BeginTransaction()
 	if err != nil {
 		logger.LogError(err, "Failed to start transaction", map[string]interface{}{
@@ -234,6 +237,7 @@ func (s *tryoutService) SubmitCurrentSubtest(answers []models.AnswerPayload, att
 		})
 		return "", err
 	}
+	// if something happened, rollback the transaction
 	defer func() {
 		if retErr != nil && tx != nil {
 			if rbErr := tx.Rollback(); rbErr != nil {
@@ -249,7 +253,6 @@ func (s *tryoutService) SubmitCurrentSubtest(answers []models.AnswerPayload, att
 
 	// Get and validate current attempt
 	attempt, err := s.tryoutRepo.GetTryoutAttemptTx(tx, attemptID)
-
 	if err != nil {
 		logger.LogError(err, "Failed to get tryout attempt", map[string]interface{}{
 			"layer":     "service",
@@ -311,6 +314,7 @@ func (s *tryoutService) SubmitCurrentSubtest(answers []models.AnswerPayload, att
 
 	// if no next subtest, end the tryout
 	if nextSubtest == nil {
+		// end the tryout
 		err = s.tryoutRepo.EndTryOutTx(tx, attemptID)
 		if err != nil {
 			logger.LogError(err, "Failed to end tryout", map[string]interface{}{
@@ -321,6 +325,7 @@ func (s *tryoutService) SubmitCurrentSubtest(answers []models.AnswerPayload, att
 			retErr = fmt.Errorf("failed to finalize tryout: %w", err)
 			return "", retErr
 		}
+		// score the tryout
 		err = s.scoreService.CalculateAndStoreScores(tx, attemptID, userID, tryoutToken)
 		if err != nil {
 			logger.LogError(err, "Failed to calculate and store scores", map[string]interface{}{
@@ -331,6 +336,7 @@ func (s *tryoutService) SubmitCurrentSubtest(answers []models.AnswerPayload, att
 			retErr = err
 			return "", retErr
 		}
+		// commit if nothing's wrong
 		if err := tx.Commit(); err != nil {
 			logger.LogError(err, "Failed to commit transaction", map[string]interface{}{
 				"layer":     "service",
@@ -342,6 +348,7 @@ func (s *tryoutService) SubmitCurrentSubtest(answers []models.AnswerPayload, att
 		}
 		tx = nil
 
+		// return final indicating a final state
 		return "final", nil
 	}
 
@@ -369,5 +376,6 @@ func (s *tryoutService) SubmitCurrentSubtest(answers []models.AnswerPayload, att
 	}
 	tx = nil
 
+	// return updated so later the frontend can fetch the next subtest
 	return updatedSubtest, nil
 }
