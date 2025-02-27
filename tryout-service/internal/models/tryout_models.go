@@ -42,17 +42,33 @@ type AnswerPayload struct {
 
 type AnswerKeys struct {
 	PilihanGandaAnswers map[string]map[string]struct { // Now groups by KodeSoal
-		IsCorrect bool
-		Bobot     int
+		IsCorrect   bool
+		Bobot       int
+		TextPilihan string
+		Pembahasan  string
 	} `json:"pilihan_ganda,omitempty"`
 
 	TrueFalseAnswers map[string]struct { // Now groups by KodeSoal
-		Jawaban string
-		Bobot   int
+		Jawaban     string
+		Bobot       int
+		TextPilihan string
+		Pembahasan  string
 	} `json:"true_false,omitempty"`
 
 	UraianAnswers map[string]struct { // Now groups by KodeSoal
-		Jawaban string
-		Bobot   int
+		Jawaban    string
+		Bobot      int
+		Pembahasan string
 	} `json:"uraian,omitempty"`
+}
+
+type EnrichedUserAnswer struct {
+	AttemptID   int    `json:"attempt_id"`
+	Subtest     string `json:"subtest"`
+	KodeSoal    string `json:"kode_soal"`
+	UserAnswer  string `json:"user_answer"`
+	IsCorrect   bool   `json:"is_correct"`
+	Bobot       int    `json:"bobot"`
+	TextPilihan string `json:"text_pilihan,omitempty"` // Only for MCQ/True-False
+	Pembahasan  string `json:"pembahasan"`
 }
