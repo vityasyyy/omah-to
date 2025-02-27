@@ -10,7 +10,8 @@ import (
 	"github.com/golang-jwt/jwt/v5"
 )
 
-var jwtSecretKey = []byte(os.Getenv("JWT_SECRET"))
+var jwtAccessSecretKey = []byte(os.Getenv("JWT_ACCESS_SECRET"))
+var jwtTryoutSecretKey = []byte(os.Getenv("JWT_TRYOUT_SECRET"))
 
 type AccessTokenClaims struct {
 	UserID      int    `json:"user_id"`
@@ -46,7 +47,7 @@ func CreateAccessToken(userID int, namaUser, asalSekolah, email string) (string,
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 
 	// Sign the token with the secret key
-	return token.SignedString(jwtSecretKey)
+	return token.SignedString(jwtAccessSecretKey)
 }
 
 // Create an opaque refresh token (doesn't contain any credentials, just for refreshing purpose) for the user to later be stored in the database (used for refreshing the access token)
@@ -65,7 +66,7 @@ func ValidateAccessToken(accessToken string) (*AccessTokenClaims, error) {
 
 	// Parse the token, use the accessToken to extract the claims into the AccessTokenClaims struct, and validate the token using the secret key in our .env file
 	token, err := jwt.ParseWithClaims(accessToken, &AccessTokenClaims{}, func(token *jwt.Token) (interface{}, error) {
-		return jwtSecretKey, nil // lookup function to get the secret key
+		return jwtAccessSecretKey, nil // lookup function to get the secret key
 	})
 
 	if err != nil {
@@ -103,12 +104,12 @@ func CreateTryoutToken(userID, attemptID int) (string, error) {
 	}
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	return token.SignedString(jwtSecretKey)
+	return token.SignedString(jwtTryoutSecretKey)
 }
 
 func ValidateTryoutToken(tryoutToken string) (*TryoutTokenClaims, error) {
 	token, err := jwt.ParseWithClaims(tryoutToken, &TryoutTokenClaims{}, func(token *jwt.Token) (interface{}, error) {
-		return jwtSecretKey, nil
+		return jwtTryoutSecretKey, nil
 	})
 
 	if err != nil {
