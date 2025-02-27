@@ -7,7 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func InitializeRoutes(r *gin.Engine, tryoutHandler *handlers.TryoutHandler) {
+func InitializeRoutes(r *gin.Engine, tryoutHandler *handlers.TryoutHandler, pageHandler *handlers.PageHandler) {
 	ping := r.Group("/ping")
 	{
 		ping.GET("/", func(c *gin.Context) {
@@ -21,6 +21,9 @@ func InitializeRoutes(r *gin.Engine, tryoutHandler *handlers.TryoutHandler) {
 	tryout.Use(utils.ValidateToAuthApi())
 	{
 		tryout.POST("/start-attempt/:paket", tryoutHandler.StartAttempt)
+		tryout.GET("/pembahasan", pageHandler.GetPembahasanPageHandler)
+		tryout.GET("/leaderboard", pageHandler.GetLeaderboardHandler)
+		tryout.GET("/subtests-score", pageHandler.GetUserSubtestsScore)
 	}
 
 	sync := r.Group("/sync")
