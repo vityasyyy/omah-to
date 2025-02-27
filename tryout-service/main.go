@@ -32,11 +32,14 @@ func main() {
 
 	tryoutRepo := repositories.NewTryoutRepo(db)
 	scoreRepo := repositories.NewScoreRepo(db)
+	pageRepo := repositories.NewPageRepo(db)
 
 	scoreService := services.NewScoreService(scoreRepo, soalServiceURL)
+	pageService := services.NewPageService(pageRepo, scoreService)
 	tryoutService := services.NewTryoutService(tryoutRepo, scoreService)
 
 	tryoutHandler := handlers.NewTryoutHandler(tryoutService)
+	pageHandler := handlers.NewPageHandler(pageService)
 
 	if os.Getenv("ENVIRONMENT") == "production" {
 		gin.SetMode(gin.ReleaseMode)
@@ -60,7 +63,7 @@ func main() {
 	r.Use(requestSizeLimitMiddleware(2 << 20)) // Request size limit middleware (2MB)
 	r.Use(timeoutMiddleware(20 * time.Second)) // Timeout middleware
 
-	routes.InitializeRoutes(r, tryoutHandler)
+	routes.InitializeRoutes(r, tryoutHandler, pageHandler)
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "8080"
