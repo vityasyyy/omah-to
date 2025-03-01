@@ -38,8 +38,22 @@ CREATE TABLE IF NOT EXISTS uraian (
     FOREIGN KEY (kode_soal) REFERENCES soal(kode_soal) ON DELETE CASCADE
 );
 
+CREATE TABLE IF NOT EXISTS minat_bakat_soal (
+    kode_soal VARCHAR(36) PRIMARY KEY,
+    text_soal TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS minat_bakat_pilihan (
+    pilihan_id VARCHAR(36) PRIMARY KEY,
+    kode_soal VARCHAR(36) NOT NULL,
+    text_pilihan TEXT NOT NULL,
+    divisi VARCHAR(20) CHECK (divisi IN ('frontend', 'backend', 'mobapps', 'uiux', 'dsai', 'cysec', 'gamedev')),
+    FOREIGN KEY (kode_soal) REFERENCES minat_bakat_soal(kode_soal) ON DELETE CASCADE
+);
+
 -- Indexes
 CREATE INDEX idx_paket_soal ON soal (paket_soal_id);
 CREATE INDEX idx_kode_soal_pilihan ON pilihan_pilihan_ganda (kode_soal);
 CREATE INDEX idx_kode_pilihan_true_false ON pilihan_true_false (kode_soal);
 CREATE INDEX idx_kode_uraian ON uraian (kode_soal);
+CREATE INDEX idx_kode_soal_minat_bakat_pilihan ON minat_bakat_pilihan (kode_soal);

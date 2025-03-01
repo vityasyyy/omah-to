@@ -64,3 +64,20 @@ type AnswerKeys struct {
 		Pembahasan string
 	} `json:"uraian,omitempty"`
 }
+
+type MinatBakatSoal struct {
+	KodeSoal string `json:"kode_soal" db:"kode_soal" binding:"required"`
+	TextSoal string `json:"text_soal" db:"text_soal" binding:"required"`
+}
+
+type MinatBakatPilihan struct {
+	PilihanID   string `json:"pilihan_id" db:"pilihan_id" binding:"required"`
+	KodeSoal    string `json:"kode_soal" db:"kode_soal" binding:"required"`
+	TextPilihan string `json:"text_pilihan" db:"text_pilihan" binding:"required"`
+	Divisi      string `json:"divisi" db:"divisi" binding:"required"`
+}
+
+type MinatBakatGabungan struct {
+	MinatBakatSoal
+	Pilihan []MinatBakatPilihan `json:"pilihan,omitempty"`
+}

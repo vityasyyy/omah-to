@@ -9,6 +9,7 @@ import (
 type SoalService interface {
 	GetSoalByPaketAndSubtest(paketSoal, subtest string) ([]models.SoalGabungan, error)
 	GetAnswerKeyByPaketAndSubtest(paketSoal, subtest string) (*models.AnswerKeys, error)
+	GetMinatBakatSoal() ([]models.MinatBakatGabungan, error)
 }
 
 type soalService struct {
@@ -37,4 +38,14 @@ func (s *soalService) GetAnswerKeyByPaketAndSubtest(paketSoal, subtest string) (
 	}
 
 	return answerKeys, nil
+}
+
+func (s *soalService) GetMinatBakatSoal() ([]models.MinatBakatGabungan, error) {
+	minatBakatSoal, err := s.soalRepo.GetMinatBakatSoal()
+	if err != nil {
+		logger.LogError(err, "Failed to get minat bakat soal", map[string]interface{}{"layer": "service", "operation": "GetMinatBakatSoal"})
+		return nil, err
+	}
+
+	return minatBakatSoal, nil
 }

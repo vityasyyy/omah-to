@@ -12,6 +12,7 @@ import (
 type SoalRepo interface {
 	GetSoalByPaketAndSubtest(paketSoal, subtest string) ([]models.SoalGabungan, error)
 	GetAnswerKeyByPaketAndSubtest(paketSoal, subtest string) (*models.AnswerKeys, error)
+	GetMinatBakatSoal() ([]models.MinatBakatGabungan, error)
 }
 
 type soalRepo struct {
@@ -41,6 +42,7 @@ func (r *soalRepo) GetSoalByPaketAndSubtest(paketSoal, subtest string) ([]models
 
 	rows, err := r.db.Queryx(query, paketSoal, subtest)
 	if err != nil {
+		logger.LogError(err, "Failed to query soal by paket and subtest", map[string]interface{}{"layer": "repository", "operation": "GetSoalByPaketAndSubtest"})
 		return nil, err
 	}
 	defer rows.Close()
@@ -58,6 +60,7 @@ func (r *soalRepo) GetSoalByPaketAndSubtest(paketSoal, subtest string) ([]models
 			&uraianID,
 		)
 		if err != nil {
+			logger.LogError(err, "Failed to scan soal by paket and subtest", map[string]interface{}{"layer": "repository", "operation": "GetSoalByPaketAndSubtest"})
 			return nil, err
 		}
 
@@ -130,6 +133,7 @@ func (r *soalRepo) GetAnswerKeyByPaketAndSubtest(paketSoal, subtest string) (*mo
 	`
 	pgRows, err := r.db.Queryx(pgQuery, paketSoal, subtest)
 	if err != nil {
+		logger.LogError(err, "Failed to query pilihan ganda by paket and subtest", map[string]interface{}{"layer": "repository", "operation": "GetAnswerKeyByPaketAndSubtest"})
 		return nil, err
 	}
 	defer pgRows.Close()
@@ -142,6 +146,7 @@ func (r *soalRepo) GetAnswerKeyByPaketAndSubtest(paketSoal, subtest string) (*mo
 		var textPilihan string
 		var pembahasan string
 		if err := pgRows.Scan(&pilihanGandaID, &isCorrect, &bobot, &kodeSoal, &pembahasan, &textPilihan); err != nil {
+			logger.LogError(err, "Failed to scan pilihan ganda by paket and subtest", map[string]interface{}{"layer": "repository", "operation": "GetAnswerKeyByPaketAndSubtest"})
 			return nil, err
 		}
 
@@ -173,6 +178,7 @@ func (r *soalRepo) GetAnswerKeyByPaketAndSubtest(paketSoal, subtest string) (*mo
 	`
 	tfRows, err := r.db.Queryx(tfQuery, paketSoal, subtest)
 	if err != nil {
+		logger.LogError(err, "Failed to query true false by paket and subtest", map[string]interface{}{"layer": "repository", "operation": "GetAnswerKeyByPaketAndSubtest"})
 		return nil, err
 	}
 	defer tfRows.Close()
@@ -185,6 +191,7 @@ func (r *soalRepo) GetAnswerKeyByPaketAndSubtest(paketSoal, subtest string) (*mo
 		var pembahasan string
 
 		if err := tfRows.Scan(&jawaban, &bobot, &kodeSoal, &pembahasan, &textPilihan); err != nil {
+			logger.LogError(err, "Failed to scan true false by paket and subtest", map[string]interface{}{"layer": "repository", "operation": "GetAnswerKeyByPaketAndSubtest"})
 			return nil, err
 		}
 
@@ -206,6 +213,7 @@ func (r *soalRepo) GetAnswerKeyByPaketAndSubtest(paketSoal, subtest string) (*mo
 	`
 	uraianRows, err := r.db.Queryx(uraianQuery, paketSoal, subtest)
 	if err != nil {
+		logger.LogError(err, "Failed to query uraian by paket and subtest", map[string]interface{}{"layer": "repository", "operation": "GetAnswerKeyByPaketAndSubtest"})
 		return nil, err
 	}
 	defer uraianRows.Close()
@@ -217,6 +225,7 @@ func (r *soalRepo) GetAnswerKeyByPaketAndSubtest(paketSoal, subtest string) (*mo
 		var pembahasan string
 
 		if err := uraianRows.Scan(&jawaban, &bobot, &kodeSoal, &pembahasan); err != nil {
+			logger.LogError(err, "Failed to scan uraian by paket and subtest", map[string]interface{}{"layer": "repository", "operation": "GetAnswerKeyByPaketAndSubtest"})
 			return nil, err
 		}
 
@@ -234,4 +243,63 @@ func (r *soalRepo) GetAnswerKeyByPaketAndSubtest(paketSoal, subtest string) (*mo
 	})
 
 	return answers, nil
+}
+
+func (r *soalRepo) GetMinatBakatSoal() ([]models.MinatBakatGabungan, error) {
+	var mappedSoal = make(map[string]*models.MinatBakatGabungan)
+	// query
+	query := `
+			SELECT 
+				mb.kode_soal, mb.text_soal, mbp.text_pilihan, mbp.divisi, mbp.pilihan_id
+				FROM minat_bakat_soal mb
+				LEFT JOIN minat_bakat_pilihan mbp ON mb.kode_soal = mbp.kode_soal
+		`
+
+	// execute query
+	rows, err := r.db.Queryx(query)
+	if err != nil {
+		logger.LogError(err, "Failed to query minat bakat soal", map[string]interface{}{"layer": "repository", "operation": "GetMinatBakatSoal"})
+		return nil, err
+	}
+	defer rows.Close()
+
+	// scan them rows, and map them to the struct
+	for rows.Next() {
+		var pilihan models.MinatBakatPilihan
+		var soalID string
+		var textSoal string
+
+		// scan the rows, making sure the data is not nil
+		err := rows.Scan(&soalID, &textSoal, &pilihan.TextPilihan, &pilihan.Divisi, &pilihan.PilihanID)
+		if err != nil {
+			logger.LogError(err, "Failed to scan minat bakat soal", map[string]interface{}{"layer": "repository", "operation": "GetMinatBakatSoal"})
+			return nil, err
+		}
+
+		// if the soalID is doesn't exists, make a map for that soal ID
+		if _, exists := mappedSoal[soalID]; !exists {
+			// mapped based on the struct of the models type stuff
+			mappedSoal[soalID] = &models.MinatBakatGabungan{
+				MinatBakatSoal: models.MinatBakatSoal{
+					KodeSoal: soalID,
+					TextSoal: textSoal,
+				},
+				Pilihan: []models.MinatBakatPilihan{},
+			}
+		}
+		// append the pilihan to the soal, if the pilihanID is not empty
+		if pilihan.PilihanID != "" {
+			mappedSoal[soalID].Pilihan = append(mappedSoal[soalID].Pilihan, pilihan)
+		}
+	}
+
+	// convert the map to slice
+	var results []models.MinatBakatGabungan
+	// iterate the map and append it to the slice
+	for _, soal := range mappedSoal {
+		results = append(results, *soal)
+	}
+
+	// return the slice
+	return results, nil
 }

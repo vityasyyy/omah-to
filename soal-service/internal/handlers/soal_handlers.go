@@ -39,3 +39,12 @@ func (h *SoalHandler) GetAnswerKeyByPaketAndSubtest(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, answerKeys)
 }
+
+func (h *SoalHandler) GetMinatBakatSoal(c *gin.Context) {
+	minatBakatSoal, err := h.soalService.GetMinatBakatSoal()
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "failed to get minat bakat soal"})
+		return
+	}
+	c.JSON(http.StatusOK, minatBakatSoal)
+}

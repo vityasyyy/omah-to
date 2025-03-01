@@ -22,5 +22,6 @@ func InitializeRoutes(r *gin.Engine, soalHandler *handlers.SoalHandler) {
 	{
 		soal.GET("/:paket_soal", soalHandler.GetSoalByPaketAndSubtest)
 		soal.GET("/answer-key/:paket_soal", soalHandler.GetAnswerKeyByPaketAndSubtest)
+		soal.GET("/minat-bakat", soalHandler.GetMinatBakatSoal)
 	}
 }
