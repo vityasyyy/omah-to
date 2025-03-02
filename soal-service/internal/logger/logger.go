@@ -14,39 +14,46 @@ var (
 )
 
 func InitLogger() {
-	// Set log level based on environment, default to debug if still in development
+	// Set log level based on environment
 	if os.Getenv("ENVIRONMENT") == "production" {
 		zerolog.SetGlobalLevel(zerolog.InfoLevel)
 	} else {
 		zerolog.SetGlobalLevel(zerolog.DebugLevel)
 	}
-	// Create log file path in container WORKDIR
-	logPath := "var/log/soal-service"
 
-	// Create log file if not exists
-	if err := os.MkdirAll(logPath, os.ModePerm); err != nil {
-		panic(err)
-	}
-	// Create app log file, allow read write permission (same goes for the error log file)
-	appLogFile, err := os.OpenFile(filepath.Join(logPath, "app.log"), os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
-	if err != nil {
-		panic(err)
-	}
-	errorLogFile, err := os.OpenFile(filepath.Join(logPath, "error.log"), os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
-	if err != nil {
-		panic(err)
-	}
+	// Check if running in Cloud Run (no need for file logging)
+	if os.Getenv("K_SERVICE") != "" {
+		// Cloud Run detected → Log only to stdout/stderr
+		Log = zerolog.New(os.Stdout).With().
+			Timestamp().
+			Str("service", "soal-service").
+			Logger()
 
-	// Create logger with timestamp, service name, and log level
-	Log = zerolog.New(appLogFile).With().
-		Timestamp().
-		Str("service", "soal-service").
-		Logger()
+		ErrorLog = zerolog.New(os.Stderr).With().
+			Timestamp().
+			Str("service", "soal-service").
+			Logger()
+	} else {
+		// Local or other environments → Log to both file and stdout
+		logPath := "var/log/soal-service"
+		os.MkdirAll(logPath, os.ModePerm)
 
-	ErrorLog = zerolog.New(errorLogFile).With().
-		Timestamp().
-		Str("service", "soal-service").
-		Logger()
+		appLogFile, _ := os.OpenFile(logPath+"/app.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
+		errorLogFile, _ := os.OpenFile(logPath+"/error.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
+
+		multiAppWriter := zerolog.MultiLevelWriter(os.Stdout, appLogFile)
+		multiErrorWriter := zerolog.MultiLevelWriter(os.Stderr, errorLogFile)
+
+		Log = zerolog.New(multiAppWriter).With().
+			Timestamp().
+			Str("service", "soal-service").
+			Logger()
+
+		ErrorLog = zerolog.New(multiErrorWriter).With().
+			Timestamp().
+			Str("service", "soal-service").
+			Logger()
+	}
 }
 
 // LogDebug to create debug log with function name and line number

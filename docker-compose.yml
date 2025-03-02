@@ -91,6 +91,37 @@ services:
       - omahtryout-network
     ports:
       - ${TRYOUT_SERVICE_PORT}:${TRYOUT_SERVICE_PORT}
+  
+  # Minat bakat service
+  minat-bakat-service-db:
+    image: postgres:17.2-alpine
+    env_file:
+      - minat-bakat-service/.env
+    volumes:
+      - ./minat-bakat-service/db/init.sql:/docker-entrypoint-initdb.d/init.sql # init script
+      - minat-bakat-data:/var/lib/postgresql/data
+    networks:
+      - omahtryout-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U omahTryOut -d minat-bakat_service_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # API for the minat bakat service
+  minat-bakat-service-api:
+    build: ./minat-bakat-service
+    env_file:
+      - minat-bakat-service/.env
+      - .env
+    depends_on:
+      minat-bakat-service-db:
+        condition: service_healthy  # Ensure DB is ready
+    networks:
+      - omahtryout-network
+    ports:
+      - ${MINAT_BAKAT_SERVICE_PORT}:${MINAT_BAKAT_SERVICE_PORT}
+
 networks:
   omahtryout-network:
 
@@ -99,3 +130,4 @@ volumes:
   auth-data:
   soal-data:
   tryout-data:
+  minat-bakat-data:
