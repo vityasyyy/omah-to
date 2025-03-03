@@ -131,12 +131,12 @@ func ValidateTryoutToken() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		tryout_token, err := c.Cookie("tryout_token")
 		if err != nil {
-			c.JSON(http.StatusUnauthorized, gin.H{"error": "Failed to get tryout token"})
+			c.JSON(http.StatusForbidden, gin.H{"error": "Failed to get tryout token"})
 			c.Abort()
 			return
 		}
 		if tryout_token == "" {
-			c.JSON(http.StatusUnauthorized, gin.H{"error": "Tryout token is required"})
+			c.JSON(http.StatusForbidden, gin.H{"error": "Tryout token is required"})
 			c.Abort()
 			return
 		}
@@ -161,7 +161,7 @@ func ValidateTryoutToken() gin.HandlerFunc {
 		}
 		defer response.Body.Close()
 		if response.StatusCode != http.StatusOK {
-			c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid tryout token"})
+			c.JSON(http.StatusForbidden, gin.H{"error": "Invalid tryout token"})
 			c.Abort()
 			return
 		}
