@@ -19,11 +19,17 @@ TODO 25 FEBRUARI 2025 (BACKEND/TRYOUT):
 - BIKIN FUNCTION UNTUK LEADERBOARD, routes untuk leaderboard
 - Bikin page pembahasan yang kalo difetch, semua di page pembahasan langsung ke frontend
 
+2 MARET 2025(BACKEND/TRYOUT):
+- belum tryout, gaboleh liat pembahasan page (FIXED). Pake get attempt from repo
+
+3 MARET 2025(BACKEND/TRYOUT):
+- Kalo time nya udah up (tapi user baru sync), harus progress tanpa harus store answers, (nanti local storage ngestore time limit untuk subtest itu,)
 
 CONCERN UNTUK FRONTEND:
 - nanti pas sync db, kalo gada answer, kirim answers: []
 - tiap abis start tryout, sync ke db, tiap abis next progress fetch subtest_selanjutnya dr response buat dikirim ke soal service. 
-- setiap open page kalo masih ada tryout token, sync ama db dulu,
+- setiap open page kalo masih ada tryout token, sync ama db dulu
+- kalo time limit udah up tapi user kebuang, gimana yah... 
 
 TODO PROD:
     -ganti domain cookies 
@@ -31,3 +37,4 @@ TODO PROD:
     -set up cloudinary buat image soal
     -cloud run
     -rate limiter jangan lupa diganti
+    -env db url nanti diganti pas deploy ke cloud run
