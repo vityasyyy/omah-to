@@ -14,6 +14,7 @@ type TryoutRepo interface {
 	BeginTransaction() (*sqlx.Tx, error)
 	CreateTryoutAttemptTx(tx *sqlx.Tx, attempt *models.TryoutAttempt) error                                          // Create a new tryout attempt
 	GetTryoutAttemptByUserIDTx(tx *sqlx.Tx, userID int) (string, error)                                              // Get the ongoing tryout attempt for a user
+	GetTryoutAttemptByUserIDAndPaket(userID int, paket string) (*models.TryoutAttempt, error)                        // Get the ongoing tryout attempt for a user
 	GetTryoutAttemptTx(tx *sqlx.Tx, attemptID int) (*models.TryoutAttempt, error)                                    // Get a tryout attempt by its ID, including the user's answers based on the current subtest also (for transactinos)
 	GetAnswerFromCurrentAttemptAndSubtestTx(tx *sqlx.Tx, attemptID int, subtest string) ([]models.UserAnswer, error) // Get user's answers for the current subtest (for transactions)
 	GetSubtestTimeTx(tx *sqlx.Tx, attemptID int, subtest string) (time.Time, error)                                  // Get the remaining time for a subtest (for transactions)
@@ -213,4 +214,17 @@ func (r *tryoutRepo) GetSubtestTimeTx(tx *sqlx.Tx, attemptID int, subtest string
 
 	logger.LogDebug("Time limit retrieved", map[string]interface{}{"layer": "repository", "operation": "GetRemainingSubtestTime"})
 	return timeLimit, nil
+}
+
+func (r *tryoutRepo) GetTryoutAttemptByUserIDAndPaket(userID int, paket string) (*models.TryoutAttempt, error) {
+	var attempt models.TryoutAttempt
+	query := `SELECT user_id, username, attempt_id, tryout_score FROM tryout_attempt WHERE user_id = $1 AND status = $2 AND paket = $3`
+	err := r.db.Get(&attempt, query, userID, "finished", paket)
+	if err != nil {
+		logger.LogError(err, "Failed to get attempt", map[string]interface{}{"layer": "repository", "operation": "GetTryoutAttemptByUserID"})
+		return nil, err
+	}
+
+	logger.LogDebug("Attempt retrieved", map[string]interface{}{"layer": "repository", "operation": "GetTryoutAttemptByUserID"})
+	return &attempt, nil
 }

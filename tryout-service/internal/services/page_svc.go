@@ -3,6 +3,7 @@ package services
 import (
 	"context"
 	"sync"
+	"tryout-service/internal/logger"
 	"tryout-service/internal/models"
 	"tryout-service/internal/repositories"
 
@@ -19,13 +20,18 @@ type PageService interface {
 type pageService struct {
 	pageRepo     repositories.PageRepo
 	scoreService ScoreService
+	tryoutRepo   repositories.TryoutRepo
 }
 
-func NewPageService(pageRepo repositories.PageRepo, scoreService ScoreService) PageService {
-	return &pageService{pageRepo: pageRepo, scoreService: scoreService}
+func NewPageService(pageRepo repositories.PageRepo, scoreService ScoreService, tryoutRepo repositories.TryoutRepo) PageService {
+	return &pageService{pageRepo: pageRepo, scoreService: scoreService, tryoutRepo: tryoutRepo}
 }
 
 func (s *pageService) GetPembahasanPage(ctx context.Context, userID int, paket, accessToken string) ([]models.EnrichedUserAnswer, float64, int, []models.UserScore, error) {
+	if _, err := s.tryoutRepo.GetTryoutAttemptByUserIDAndPaket(userID, paket); err != nil {
+		logger.LogError(err, "attempt on accessing pembahasan while not having a tryout", map[string]interface{}{"layer": "service", "operation": "GetPembahasanPage"})
+		return nil, 0, 0, nil, err
+	}
 	var (
 		mu                sync.Mutex
 		enrichedAnswers   []models.EnrichedUserAnswer

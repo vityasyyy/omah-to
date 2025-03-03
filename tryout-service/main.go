@@ -35,7 +35,7 @@ func main() {
 	pageRepo := repositories.NewPageRepo(db)
 
 	scoreService := services.NewScoreService(scoreRepo, soalServiceURL)
-	pageService := services.NewPageService(pageRepo, scoreService)
+	pageService := services.NewPageService(pageRepo, scoreService, tryoutRepo)
 	tryoutService := services.NewTryoutService(tryoutRepo, scoreService)
 
 	tryoutHandler := handlers.NewTryoutHandler(tryoutService)
