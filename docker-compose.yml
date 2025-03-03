@@ -1,4 +1,15 @@
 services:
+  # FRONTEND
+  web:
+    build: ./web
+    command: pnpm run dev
+    ports:
+    - "${FRONTEND_PORT}:${FRONTEND_PORT}"
+    volumes:
+      - ./web:/app
+      - /app/node_modules
+    networks:
+      - omahtryout-network
   # auth service
   # Database for the auth service
   auth-service-db:

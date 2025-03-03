@@ -20,7 +20,7 @@ const formSchema = z.object({
   email: z.string().email({
     message: 'Please enter a valid email address.',
   }),
-  name: z.string().min(2, {
+  nama_user: z.string().min(2, {
     message: 'Name must be at least 2 characters.',
   }),
   password: z.string().min(8, {
@@ -34,7 +34,7 @@ const RegisterForm = () => {
     resolver: zodResolver(formSchema),
     defaultValues: {
       email: '',
-      name: '',
+      nama_user: '',
       password: '',
     },
   })
@@ -67,10 +67,10 @@ const RegisterForm = () => {
         />
         <FormField
           control={form.control}
-          name='name'
+          name='nama_user'
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Email</FormLabel>
+              <FormLabel>Nama</FormLabel>
               <FormControl>
                 <Input placeholder='Tuliskan Nama Lengkap' {...field} />
               </FormControl>
