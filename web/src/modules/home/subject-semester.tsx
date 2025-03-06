@@ -187,7 +187,7 @@ const SubjectSemester = () => {
                 <div key={index}>
                   <button
                     onClick={() => toggleSemesterLeft(index)}
-                    className="cursor-pointer ease-in flex items-center justify-between w-full rounded-md bg-[#304A91] text-white font-bold py-3 px-5 text-left shadow-md hover:bg-[#2b3e75] transition-all"
+                    className="cursor-pointer ease-in flex items-center justify-between w-full rounded-md bg-secondary-new-500 text-white font-bold py-3 px-5 text-left shadow-md hover:bg-primary-new-500 transition-all"
                     >
                     <span className="text-lg">{item.label}</span>
                     {isOpen ? <ChevronUp /> : <ChevronDown />}
@@ -195,13 +195,13 @@ const SubjectSemester = () => {
 
                   {/* Semester List Left */}
                   <div 
-                    className={`overflow-hidden shadow-md border-[#304A91] transition-all duration-700 ease-in-out ${
+                    className={`overflow-hidden shadow-md border-secondary-new-500 transition-all duration-700 ease-in-out ${
                       isOpen ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"
                     }`}
                   >
-                    <div className="rounded-md p-4 mt-2 border-[#304A91] border-2 shadow-md">
+                    <div className="rounded-md p-4 mt-2 border-secondary-new-500 border-2 shadow-md">
                       <table className="w-full">
-                        <thead className="border-b-2 border-b-[#304A91] text-[#304A91]">
+                        <thead className="border-b-2 border-b-secondary-new-500 text-secondary-new-500">
                           <tr>
                             <th className="w-[10%] px-4 py-3 text-center">No</th>
                             <th className="w-[60%] px-4 py-3 text-center">Mata Kuliah</th>
@@ -211,7 +211,7 @@ const SubjectSemester = () => {
                         <tbody>
                           {item.subjects.map((subject, idx) => (
                             <tr key={idx}
-                              className="hover:bg-gray-200 text-[#304A91] transition">
+                              className="hover:bg-gray-200 text-secondary-new-500 transition">
                               <td className="px-4 py-3 text-center">
                                 {subject.no}
                               </td>
@@ -239,7 +239,7 @@ const SubjectSemester = () => {
                 <div key={index}>
                   <button
                     onClick={() => toggleSemesterRight(index)}
-                    className="cursor-pointer ease-in flex items-center justify-between w-full rounded-md bg-[#304A91] text-white font-bold py-3 px-5 text-left shadow-md hover:bg-[#2b3e75] transition-all"
+                    className="cursor-pointer ease-in flex items-center justify-between w-full rounded-md bg-secondary-new-500 text-white font-bold py-3 px-5 text-left shadow-md hover:bg-primary-new-500 transition-all"
                     >
                     <span className="text-lg">{item.label}</span>
                     <span className="material-symbols-outlined text-xl">
@@ -249,13 +249,13 @@ const SubjectSemester = () => {
 
                   {/* Semester List Right */}
                   <div 
-                    className={`overflow-hidden shadow-md border-[#304A91] transition-all duration-700 ease-in-out ${
+                    className={`overflow-hidden shadow-md border-secondary-new-500 transition-all duration-700 ease-in-out ${
                       isOpen ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"
                     }`}
                   >
-                    <div className="rounded-md p-4 mt-2 border-[#304A91] border-2 shadow-md">
+                    <div className="rounded-md p-4 mt-2 border-secondary-new-500 border-2 shadow-md">
                       <table className="w-full">
-                        <thead className="border-b-2 border-b-[#304A91] text-[#304A91]">
+                        <thead className="border-b-2 border-b-secondary-new-500 text-secondary-new-500">
                           <tr>
                             <th className="w-[10%] px-4 py-3 text-center">No</th>
                             <th className="w-[60%] px-4 py-3 text-center">Mata Kuliah</th>
@@ -265,7 +265,7 @@ const SubjectSemester = () => {
                         <tbody>
                           {item.subjects.map((subject, idx) => (
                             <tr key={idx}
-                              className="hover:bg-gray-200 text-[#304A91] transition">
+                              className="hover:bg-gray-200 text-secondary-new-500 transition">
                               <td className="px-4 py-3 text-center">
                                 {subject.no}
                               </td>
