@@ -121,17 +121,18 @@ func (r *tryoutRepo) SaveAnswersTx(tx *sqlx.Tx, answers []models.UserAnswer) err
 		values = append(values, answer.TryoutAttemptID, answer.Subtest, answer.KodeSoal, answer.Jawaban)
 	}
 
-	// Joining placeholders to form the full q/uery
+	// Joining placeholders to form the full query
 	query += strings.Join(placeholders, ",")
+	query += ` ON CONFLICT (attempt_id, subtest, kode_soal) DO UPDATE SET jawaban = EXCLUDED.jawaban`
 
 	// Executing the query
 	_, err := tx.Exec(query, values...)
 	if err != nil {
-		logger.LogError(err, "Failed to save user answers", map[string]interface{}{"layer": "repository", "operation": "SaveAnswers"})
+		logger.LogError(err, "Failed to save/update user answers", map[string]interface{}{"layer": "repository", "operation": "SaveAnswersTx"})
 		return err
 	}
 
-	logger.LogDebug("User answers saved", map[string]interface{}{"layer": "repository", "operation": "SaveAnswers"})
+	logger.LogDebug("User answers saved/updated", map[string]interface{}{"layer": "repository", "operation": "SaveAnswersTx"})
 	return nil
 }
 
