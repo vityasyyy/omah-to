@@ -3,7 +3,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
-
+import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import {
   Form,
@@ -26,9 +26,14 @@ const formSchema = z.object({
   password: z.string().min(8, {
     message: 'Password must be at least 8 characters.',
   }),
+  asal_sekolah: z.string().min(3, {
+    message: 'Asal Sekolah must be at least 3 characters.',
+  }
+  )
 })
 
 const RegisterForm = () => {
+  const router = useRouter()
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -36,15 +41,32 @@ const RegisterForm = () => {
       email: '',
       nama_user: '',
       password: '',
+      asal_sekolah: ''
     },
   })
 
   // 2. Define a submit handler.
-  const handleLogin = (values: z.infer<typeof formSchema>) => {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values)
-  }
+  const handleLogin = async (values: z.infer<typeof formSchema>) => {
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_AUTH_URL}/user/register`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include", // Needed if your backend uses cookies for authentication
+        body: JSON.stringify(values),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Login failed: ${response.statusText}`);
+      }
+      // buat toast pas udah berhasil, redirect ke halaman login sambil tunjukkin message "U can now login with your credentials"
+      router.push('/login')
+    } catch (error) {
+      //kasih toast di form
+      console.error("Login error:", error);
+    }
+};
 
   return (
     <Form {...form}>
@@ -80,6 +102,20 @@ const RegisterForm = () => {
         />
         <FormField
           control={form.control}
+          name='asal_sekolah'
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Asal Sekolah</FormLabel>
+              <FormControl>
+                <Input placeholder='Tuliskan Asal Sekolah' {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        
+        <FormField
+          control={form.control}
           name='password'
           render={({ field }) => (
             <FormItem>
@@ -91,7 +127,6 @@ const RegisterForm = () => {
             </FormItem>
           )}
         />
-
         <Button type='submit' className='mt-8 w-full max-w-xs self-center'>
           Daftar
         </Button>

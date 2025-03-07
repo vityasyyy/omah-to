@@ -1,5 +1,6 @@
 'use client'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
@@ -25,6 +26,7 @@ const formSchema = z.object({
 })
 
 const LoginForm = () => {
+  const router = useRouter()
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -35,11 +37,28 @@ const LoginForm = () => {
   })
 
   // 2. Define a submit handler.
-  const handleLogin = (values: z.infer<typeof formSchema>) => {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values)
-  }
+  const handleLogin = async (values: z.infer<typeof formSchema>) => {
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_AUTH_URL}/user/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include", // Required to send cookies for authentication
+        body: JSON.stringify(values),
+      });
+  
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Login failed");
+      }
+      router.push("/");
+      // Redirect or handle successful login here
+    } catch (error) {
+      console.error("Login error:", error);
+    }
+  };
+  
 
   return (
     <Form {...form}>
