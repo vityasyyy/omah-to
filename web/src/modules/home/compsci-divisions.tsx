@@ -16,7 +16,7 @@ const CompsciDivisions = () => {
 
   return (
     <>
-      <Container className='mt-12 mb-4 gap-12 md:gap-16'>
+      <Container className='my-20 mb-4 gap-12 md:gap-16'>
         <h1 className='text-2xl font-bold md:max-w-lg lg:text-3xl'>
           Mau Tahu Beberapa Bidang Kerja Keren di{' '}
           <span className='text-primary-500'> Computer Science</span>?
@@ -28,7 +28,7 @@ const CompsciDivisions = () => {
         plugins={[plugin.current]}
         onMouseEnter={plugin.current.stop}
         onMouseLeave={plugin.current.reset}
-        className='mx-auto w-full max-w-(--breakpoint-2xl)'
+        className='mx-auto mb-20 w-full max-w-(--breakpoint-2xl)'
       >
         <CarouselContent className='mb-4'>
           <CarouselItem className='basis-[4%]'></CarouselItem>

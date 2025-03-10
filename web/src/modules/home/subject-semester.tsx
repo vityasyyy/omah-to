@@ -140,14 +140,6 @@ const BUTTON_CONTENT_RIGHT = [
 ];
 
 const SubjectSemester = () => {
-  useEffect(() => {
-    const link = document.createElement("link");
-    link.rel = "stylesheet";
-    link.href =
-      "https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200";
-    document.head.appendChild(link);
-  }, []);
-
   const [openSemestersLeft, setOpenSemestersLeft] = useState<number[]>([]);
   const [openSemestersRight, setOpenSemestersRight] = useState<number[]>([]);
 
@@ -169,7 +161,7 @@ const SubjectSemester = () => {
   };
 
   return (
-    <Container className="flex w-full flex-col py-8 px-6 text-right mx-auto">
+    <Container className="flex my-20 w-full flex-col py-8 px-6 text-right mx-auto">
       <section className="flex flex-col gap-6">
         <h1 className="text-2xl font-bold lg:text-3xl">
           Mata Kuliah yang Akan Membentuk Masa Depanmu di
@@ -243,7 +235,7 @@ const SubjectSemester = () => {
                     >
                     <span className="text-lg">{item.label}</span>
                     <span className="material-symbols-outlined text-xl">
-                      {isOpen ? "keyboard_arrow_up" : "keyboard_arrow_down"}
+                    {isOpen ? <ChevronUp /> : <ChevronDown />}
                     </span>
                   </button>
 

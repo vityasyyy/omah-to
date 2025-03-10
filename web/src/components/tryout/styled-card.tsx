@@ -1,7 +1,7 @@
 import { cn } from '@/lib/utils'
 
 type StyledCardProps = {
-  title?: string
+  title?: string | React.ReactNode
   subtest?: string
   children?: React.ReactNode
   className?: string
@@ -15,13 +15,15 @@ const StyledCard = (props: StyledCardProps) => {
         props.className
       )}
     >
-      <header className='h-fit w-full border-b border-neutral-200 pb-2 text-sm md:text-base font-bold text-neutral-600 flex justify-between'>
-      <span>{props.title || 'Title'}</span>
-      {props.subtest && <span className="text-neutral-500">Subtest: {props.subtest}</span>}
+      <header className='flex h-fit items-center w-full justify-between border-b border-neutral-200 pb-2 text-sm font-bold text-neutral-600 md:text-base'>
+        <span>{props.title || 'Title'}</span>
+        {props.subtest && (
+          <span className='text-neutral-500'>Subtest: {props.subtest}</span>
+        )}
       </header>
 
       {/* content goes here */}
-      <div className='mb-2 text-sm h-full font-bold text-neutral-600 md:text-base'>
+      <div className='mb-2 h-full text-sm font-bold text-neutral-600 md:text-base'>
         {props.children}
       </div>
     </main>

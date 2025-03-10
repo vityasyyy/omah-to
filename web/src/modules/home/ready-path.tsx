@@ -33,7 +33,7 @@ const ReadyPath = () => {
         {/* Button */}
         <div className="mt-8">
           <Link href="/daftar" passHref>
-            <Button className="bg-[#304A91] text-white px-6 py-3 rounded-lg text-lg font-semibold hover:bg-blue-700">
+            <Button size={`lg`} className="bg-[#304A91] hover:bg-[#304A91]/90">
               Daftar Sekarang
             </Button>
           </Link>

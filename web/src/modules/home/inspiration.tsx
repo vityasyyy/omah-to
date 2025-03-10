@@ -12,7 +12,7 @@ import { StringDecoder } from 'string_decoder'
 
 const Inspiration = () => {
   return (
-    <Container className='mt-12 mb-4'>
+    <Container className='my-20'>
       <h1 className='mb-12 self-center text-center text-2xl font-bold md:max-w-lg lg:text-3xl'>
         Inspirasi dari Ahli{' '}
         <span className='text-primary-500'> Computer Science </span>

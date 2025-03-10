@@ -9,6 +9,7 @@ import { usePathname } from 'next/navigation'
 import { useState } from 'react'
 import { Button, buttonVariants } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
+import { cn } from '@/lib/utils'
 
 const DUMMY_ANSWERS = [
   {
@@ -54,7 +55,7 @@ const AnswerCard = ({ variant = 'choice' }: { variant?: Variant }) => {
         <section className='mt-auto grid grid-cols-2 gap-2'>
           <Link
             href={`${basePath}/${currentNumber - 1}`}
-            className={buttonVariants({ variant: 'secondaryOutline' })}
+            className={cn(buttonVariants({ variant: 'secondaryOutline' }), 'border-[1.5px]')}
           >
             <ArrowLeft />
             Back
@@ -82,7 +83,7 @@ const MultipleChoice = () => {
           key={item.id}
           className={`flex w-full items-center justify-between gap-4 rounded-lg px-4 py-4 text-start font-semibold transition-colors ease-in-out ${
             selectedAnswer === item.id
-              ? 'bg-blue-500 text-white'
+              ? 'bg-primary-500 text-white'
               : 'border-b border-neutral-200 text-black'
           }`}
           onClick={() => setSelectedAnswer(item.id)}
@@ -131,8 +132,8 @@ const TrueFalse = () => {
               size={`icon`}
               className='relative hover:bg-transparent'
             >
-              {answers[item.id] === true ? <SquareCheckBig /> : <Square />}
-              <h6 className='absolute -top-1.5 text-xs font-light text-neutral-800!'>
+              {answers[item.id] === true ? <SelectedBox /> : <UnselectedBox />}
+              <h6 className='absolute -top-1.5 text-[10px] font-light text-black!'>
                 Benar
               </h6>
             </Button>
@@ -142,8 +143,8 @@ const TrueFalse = () => {
               size={`icon`}
               className='relative hover:bg-transparent'
             >
-              {answers[item.id] === false ? <SquareCheckBig /> : <Square />}
-              <h6 className='absolute -top-1.5 text-xs font-light text-neutral-800!'>
+              {answers[item.id] === false ? <SelectedBox /> : <UnselectedBox />}
+              <h6 className='absolute -top-1.5 text-[10px] font-light text-black!'>
                 Salah
               </h6>
             </Button>
@@ -153,5 +154,13 @@ const TrueFalse = () => {
     </>
   )
 }
+
+const SelectedBox = () => (
+  <SquareCheckBig strokeWidth={2.5} className='text-neutral-500' />
+)
+
+const UnselectedBox = () => (
+  <Square strokeWidth={2.5} className='text-neutral-500' />
+)
 
 export default AnswerCard

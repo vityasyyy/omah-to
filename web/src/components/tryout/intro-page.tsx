@@ -1,9 +1,10 @@
 import Container from '@/components/container'
 import RemainingTime from '@/components/tryout/remaining-time'
 import TopBar from '@/components/tryout/top-bar'
+import { cn } from '@/lib/utils'
 import Image from 'next/image'
-import { Button } from '../ui/button'
 import Link from 'next/link'
+import { buttonVariants } from '../ui/button'
 
 type IntroPageProps = {
   id: number
@@ -30,13 +31,14 @@ const IntroPage = (props: IntroPageProps) => {
               'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque.'}
           </h2>
 
-          <Link href='/tryout/1'>
-            <Button
-              variant={`white`}
-              className='mt-2 w-fit font-medium! text-black!'
-            >
-              Mulai Subtest
-            </Button>
+          <Link
+            href='/tryout/1'
+            className={cn(
+              buttonVariants({ variant: 'white' }),
+              'mt-2 px-8 w-fit font-medium! text-black!'
+            )}
+          >
+            Mulai Subtest
           </Link>
         </section>
       </Container>

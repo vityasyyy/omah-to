@@ -12,6 +12,7 @@ import {
   SheetTrigger,
 } from '@/components/ui/sheet'
 import { Menu } from 'lucide-react'
+import NavbarResolver from './navbar-resolver'
 
 const NAV_ITEMS = [
   {
@@ -27,7 +28,7 @@ const NAV_ITEMS = [
 const Navbar = () => {
   return (
     <>
-      <main className='fixed inset-x-0 top-0 z-50 bg-white/60 backdrop-blur-md'>
+      <main className='fixed inset-x-0 top-0 bg-white/60 border-b-2 border-neutral-200 backdrop-blur-md z-50'>
         <Container className='flex-row h-16 items-center justify-between gap-8'>
           <Link href={`/`} className='flex items-center gap-4'>
             <div className='relative aspect-square h-7'>
@@ -39,7 +40,7 @@ const Navbar = () => {
                 className='object-cover'
               />
             </div>
-            <h1 className='text-primary font-bold'>omah-to</h1>
+            <h1 className='text-primary text-primary-700 font-bold'>omah-to</h1>
           </Link>
 
           <DesktopNavigation />
@@ -47,8 +48,7 @@ const Navbar = () => {
         </Container>
       </main>
 
-      {/* navbar resolver kudus */}
-      <Spacer />
+      <NavbarResolver />
     </>
   )
 }
@@ -57,14 +57,14 @@ const DesktopNavigation = () => (
   <main className='hidden gap-8 md:flex'>
     {NAV_ITEMS.map((nav, i) => (
       <Link href={nav.href} key={i}>
-        <Button variant={`link`} className='px-0 font-bold'>
+        <Button variant={`link`} className='px-0 font-normal'>
           {nav.name}
         </Button>
       </Link>
     ))}
 
     <Link href={`/login`}>
-      <Button variant={`default`} className='px-8 hover:cursor-pointer'>
+      <Button variant={`tertiary`} className='px-8 hover:cursor-pointer'>
         Login
       </Button>
     </Link>
@@ -117,7 +117,5 @@ const MobileNavigation = () => (
     </Sheet>
   </main>
 )
-
-const Spacer = () => <main className='h-16' />
 
 export default Navbar
