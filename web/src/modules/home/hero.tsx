@@ -1,3 +1,4 @@
+'use client'
 import * as motion from 'motion/react-client'
 import Link from 'next/link'
 
@@ -7,6 +8,7 @@ import { buttonVariants } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { Book } from 'lucide-react'
 import Image from 'next/image'
+import { useSession } from 'next-auth/react'
 
 const CARD_ITEMS = [
   {
@@ -67,16 +69,24 @@ const cardVariants = {
 }
 
 const Hero = () => {
+  const { data: session } = useSession()
+  console.log(session);
+
   return (
     <main className='bg-white'>
       <Container className='flex flex-col gap-0 py-8 text-center text-black md:py-10 md:text-start'>
-        <section className='relative flex md:mt-4 justify-between gap-8'>
+        <section className='relative flex justify-between gap-8 md:mt-4'>
           <motion.div
             variants={containerVariants}
             initial='hidden'
             animate='visible'
-            className='z-10 flex w-full self-center pb-12 pt-4 max-w-none flex-col gap-2 md:gap-6 md:max-w-lg md:py-0'
+            className='z-10 flex w-full max-w-none flex-col gap-2 self-start pt-4 pb-12 md:max-w-lg md:gap-6 md:py-0'
           >
+            {session?.user && (
+              <motion.h2 variants={childVariants} className='-mb-2'>
+                Hello, <span className='font-bold'>{session.user?.email}</span>!
+              </motion.h2>
+            )}
             <motion.h1
               variants={childVariants}
               className='text-2xl font-normal text-balance md:text-3xl'
@@ -94,7 +104,7 @@ const Hero = () => {
           </motion.div>
 
           {/* images */}
-          <div className='relative hidden md:flex h-[250px] w-full justify-center'>
+          <div className='relative hidden h-[250px] w-full justify-center items-center self-end md:flex'>
             {/* person */}
             <Image
               src={`/bron.png`}

@@ -13,7 +13,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
-import { Eye, EyeOff } from 'lucide-react'
+import { Eye, EyeOff, LoaderCircle } from 'lucide-react'
 import { useState } from 'react'
 
 const formSchema = z
@@ -44,6 +44,7 @@ const formSchema = z
 
 const RegisterForm = () => {
   const router = useRouter()
+  const [pending, setPending] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
 
@@ -60,6 +61,7 @@ const RegisterForm = () => {
 
   const handleLogin = async (values: z.infer<typeof formSchema>) => {
     try {
+      setPending(true)
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_AUTH_URL}/user/register`,
         {
@@ -78,6 +80,8 @@ const RegisterForm = () => {
       router.push('/login')
     } catch (error) {
       console.error('Login error:', error)
+    } finally {
+      setPending(false)
     }
   }
 
@@ -183,8 +187,15 @@ const RegisterForm = () => {
             </FormItem>
           )}
         />
-        <Button type='submit' className='mt-8 w-full max-w-xs self-center'>
-          Daftar
+        <Button type='submit' disabled={pending} className='mt-8 w-full max-w-xs self-center'>
+          {pending ? (
+            <>
+              <LoaderCircle className='animate-spin' />
+              Loading...
+            </>
+          ) : (
+            'Daftar'
+          )}
         </Button>
       </form>
     </Form>

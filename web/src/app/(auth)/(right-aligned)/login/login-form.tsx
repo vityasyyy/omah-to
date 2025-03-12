@@ -15,6 +15,9 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import Link from 'next/link'
+import { signIn } from 'next-auth/react'
+import { useState } from 'react'
+import { Eye, EyeOff, LoaderCircle } from 'lucide-react'
 
 const formSchema = z.object({
   email: z.string().email({
@@ -26,7 +29,8 @@ const formSchema = z.object({
 })
 
 const LoginForm = () => {
-  const router = useRouter()
+  const [showPassword, setShowPassword] = useState(false)
+  const [pending, setPending] = useState(false)
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -38,27 +42,13 @@ const LoginForm = () => {
 
   // 2. Define a submit handler.
   const handleLogin = async (values: z.infer<typeof formSchema>) => {
-    try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_AUTH_URL}/user/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include", // Required to send cookies for authentication
-        body: JSON.stringify(values),
-      });
-  
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Login failed");
-      }
-      router.push("/");
-      // Redirect or handle successful login here
-    } catch (error) {
-      console.error("Login error:", error);
-    }
-  };
-  
+    setPending(true)
+    signIn('credentials', {
+      callbackUrl: '/',
+      email: values.email,
+      password: values.password,
+    })
+  }
 
   return (
     <Form {...form}>
@@ -86,10 +76,24 @@ const LoginForm = () => {
             <FormItem>
               <FormLabel>Password</FormLabel>
               <FormControl>
-                <Input placeholder='Tuliskan Password' {...field} />
+                <div className='relative'>
+                  <Input
+                    type={showPassword ? 'text' : 'password'}
+                    placeholder='Tuliskan Password'
+                    {...field}
+                  />
+                  <button
+                    type='button'
+                    className='absolute top-1/2 right-3 -translate-y-1/2'
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                  </button>
+                </div>
               </FormControl>
               <Link
                 href={`/forgot-password`}
+                tabIndex={-1}
                 className='text-xs font-medium underline underline-offset-2'
               >
                 Lupa Password
@@ -99,8 +103,19 @@ const LoginForm = () => {
           )}
         />
 
-        <Button type='submit' className='mt-8 w-full max-w-xs self-center'>
-          Masuk
+        <Button
+          type='submit'
+          disabled={pending}
+          className='mt-8 w-full max-w-xs self-center'
+        >
+          {pending ? (
+            <>
+              <LoaderCircle className='animate-spin' />
+              Loading...
+            </>
+          ) : (
+            'Masuk'
+          )}
         </Button>
       </form>
     </Form>

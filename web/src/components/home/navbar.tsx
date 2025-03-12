@@ -1,3 +1,4 @@
+'use client'
 import Link from 'next/link'
 import Container from '../container'
 import { Button, buttonVariants } from '../ui/button'
@@ -11,8 +12,18 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '@/components/ui/sheet'
-import { Menu } from 'lucide-react'
+import { LogOut, Menu } from 'lucide-react'
 import NavbarResolver from './navbar-resolver'
+import { signOut, useSession } from 'next-auth/react'
+import { Session } from 'next-auth'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
 
 const NAV_ITEMS = [
   {
@@ -28,8 +39,8 @@ const NAV_ITEMS = [
 const Navbar = () => {
   return (
     <>
-      <main className='fixed inset-x-0 top-0 bg-white/60 border-b-2 border-neutral-200 backdrop-blur-md z-50'>
-        <Container className='flex-row h-16 items-center justify-between gap-8'>
+      <main className='fixed inset-x-0 top-0 z-50 border-b-2 border-neutral-200 bg-white/60 backdrop-blur-md'>
+        <Container className='h-16 flex-row items-center justify-between gap-8'>
           <Link href={`/`} className='flex items-center gap-4'>
             <div className='relative aspect-square h-7'>
               <Image
@@ -53,23 +64,31 @@ const Navbar = () => {
   )
 }
 
-const DesktopNavigation = () => (
-  <main className='hidden gap-8 md:flex'>
-    {NAV_ITEMS.map((nav, i) => (
-      <Link href={nav.href} key={i}>
-        <Button variant={`link`} className='px-0 font-normal'>
-          {nav.name}
-        </Button>
-      </Link>
-    ))}
+const DesktopNavigation = () => {
+  const { data: session } = useSession()
 
-    <Link href={`/login`}>
-      <Button variant={`tertiary`} className='px-8 hover:cursor-pointer'>
-        Login
-      </Button>
-    </Link>
-  </main>
-)
+  return (
+    <main className='hidden items-center gap-8 md:flex'>
+      {NAV_ITEMS.map((nav, i) => (
+        <Link href={nav.href} key={i}>
+          <Button variant={`link`} className='px-0 font-normal'>
+            {nav.name}
+          </Button>
+        </Link>
+      ))}
+
+      {session ? (
+        <ProfileButton session={session} />
+      ) : (
+        <Link href={`/login`}>
+          <Button variant={`tertiary`} className='px-8 hover:cursor-pointer'>
+            Login
+          </Button>
+        </Link>
+      )}
+    </main>
+  )
+}
 
 const MobileNavigation = () => (
   <main className='flex md:hidden'>
@@ -117,5 +136,51 @@ const MobileNavigation = () => (
     </Sheet>
   </main>
 )
+
+const ProfileButton = (props: { session: Session | null }) => {
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger tabIndex={-1}>
+        <div className='relative size-8 overflow-clip rounded-full bg-neutral-200'>
+          <Image
+            src={`/avatar.jpg`}
+            alt='Profile Picture'
+            fill
+            sizes='20%'
+            className='object-cover'
+          />
+        </div>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className='-translate-x-8'>
+        <DropdownMenuLabel>My Account</DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem
+          onClick={async () => {
+            const res = await fetch(
+              `${process.env.NEXT_PUBLIC_AUTH_URL}/auth/validateprofile`,
+              {
+                credentials: 'include',
+              }
+            )
+
+            if (res.ok) {
+              console.log('success:', res)
+            } else {
+              console.log('error')
+            }
+          }}
+        >
+          Validate Profile
+        </DropdownMenuItem>
+        <DropdownMenuItem
+          onClick={() => signOut({ callbackUrl: `${process.env.NEXT_PUBLIC_AUTH_URL}/auth/logout`})}
+          className='text-error-400 hover:text-error-400!'
+        >
+          <LogOut className='text-error-400' /> Log Out
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  )
+}
 
 export default Navbar

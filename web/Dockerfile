@@ -2,7 +2,7 @@
 FROM node:23-alpine3.21
 
 # Set the working directory inside the container
-WORKDIR /app
+WORKDIR /src
 
 # Copy only the package.json and pnpm-lock.yaml first for efficient caching
 COPY package.json pnpm-lock.yaml ./
