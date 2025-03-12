@@ -20,9 +20,10 @@ func InitializeRoutes(r *gin.Engine, userHandler *handlers.UserHandler) {
 	// public routes
 	public := r.Group("/user")
 	{
+		public.GET("/refresh", userHandler.RefreshTokenHandler)
+
 		public.POST("/register", userHandler.RegisterUserHandler)
 		public.POST("/login", userHandler.LoginUserHandler)
-		public.POST("/refresh", userHandler.RefreshTokenHandler)
 		public.POST("/reset-password", userHandler.ResetPasswordHandler)
 		public.POST("/request-password-reset", userHandler.RequestPasswordResetHandler)
 	}

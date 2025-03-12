@@ -122,7 +122,7 @@ func (h *UserHandler) RefreshTokenHandler(c *gin.Context) {
 	}
 
 	// return a success message and status code 200
-	c.JSON(http.StatusOK, gin.H{"message": "Token refreshed"})
+	c.JSON(http.StatusOK, gin.H{"message": "Token refreshed", "newAccessToken": newAccessToken, "newRefreshToken": newRefreshToken})
 }
 
 func (h *UserHandler) ValidateUserAndGetInfoHandler(c *gin.Context) {
