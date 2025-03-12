@@ -161,11 +161,11 @@ const SubjectSemester = () => {
   };
 
   return (
-    <Container className="flex my-20 w-full flex-col py-8 px-6 text-right mx-auto">
+    <Container className="flex my-20 w-full flex-col py-8 px-6 text-center mx-auto">
       <section className="flex flex-col gap-6">
         <h1 className="text-2xl font-bold lg:text-3xl">
           Mata Kuliah yang Akan Membentuk Masa Depanmu di
-          <span className="text-primary-500"> Computer Science</span>!
+          <span className="text-primary-700"> Computer Science</span>!
         </h1>
         <h3 className="text-xl font-bold">Universitas Gadjah Mada</h3>
 
@@ -179,21 +179,19 @@ const SubjectSemester = () => {
                 <div key={index}>
                   <button
                     onClick={() => toggleSemesterLeft(index)}
-                    className="cursor-pointer ease-in flex items-center justify-between w-full rounded-md bg-secondary-new-500 text-white font-bold py-3 px-5 text-left shadow-md hover:bg-primary-new-500 transition-all"
-                    >
+                    className={`hover:bg-primary-200 cursor-pointer ease-in flex items-center justify-between w-full bg-primary-100 
+                      text-black font-bold py-3 px-5 text-left shadow-md transition-all ${isOpen ? "rounded-t-lg" : "rounded-md"}`}>
                     <span className="text-lg">{item.label}</span>
                     {isOpen ? <ChevronUp /> : <ChevronDown />}
                   </button>
 
                   {/* Semester List Left */}
                   <div 
-                    className={`overflow-hidden shadow-md border-secondary-new-500 transition-all duration-700 ease-in-out ${
-                      isOpen ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"
-                    }`}
-                  >
-                    <div className="rounded-md p-4 mt-2 border-secondary-new-500 border-2 shadow-md">
+                    className={`overflow-hidden shadow-md border-primary-100 transition-all rounded-b-lg duration-700 ease-in-out ${
+                      isOpen ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"}`}>
+                    <div className="rounded-b-lg px-4 py-2 border-primary-100 border-2 shadow-md">
                       <table className="w-full">
-                        <thead className="border-b-2 border-b-secondary-new-500 text-secondary-new-500">
+                        <thead className="border-b-2 border-b-primary-100 text-black">
                           <tr>
                             <th className="w-[10%] px-4 py-3 text-center">No</th>
                             <th className="w-[60%] px-4 py-3 text-center">Mata Kuliah</th>
@@ -203,7 +201,7 @@ const SubjectSemester = () => {
                         <tbody>
                           {item.subjects.map((subject, idx) => (
                             <tr key={idx}
-                              className="hover:bg-gray-200 text-secondary-new-500 transition">
+                              className="hover:bg-gray-200 text-blacktransition">
                               <td className="px-4 py-3 text-center">
                                 {subject.no}
                               </td>
@@ -231,8 +229,8 @@ const SubjectSemester = () => {
                 <div key={index}>
                   <button
                     onClick={() => toggleSemesterRight(index)}
-                    className="cursor-pointer ease-in flex items-center justify-between w-full rounded-md bg-secondary-new-500 text-white font-bold py-3 px-5 text-left shadow-md hover:bg-primary-new-500 transition-all"
-                    >
+                    className={`hover:bg-primary-200 cursor-pointer ease-in flex items-center justify-between w-full bg-primary-100 
+                      text-black font-bold py-3 px-5 text-left shadow-md transition-all ${isOpen ? "rounded-t-lg" : "rounded-md"}`}>
                     <span className="text-lg">{item.label}</span>
                     <span className="material-symbols-outlined text-xl">
                     {isOpen ? <ChevronUp /> : <ChevronDown />}
@@ -241,13 +239,11 @@ const SubjectSemester = () => {
 
                   {/* Semester List Right */}
                   <div 
-                    className={`overflow-hidden shadow-md border-secondary-new-500 transition-all duration-700 ease-in-out ${
-                      isOpen ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"
-                    }`}
-                  >
-                    <div className="rounded-md p-4 mt-2 border-secondary-new-500 border-2 shadow-md">
+                    className={`overflow-hidden shadow-md border-primary-100 transition-all rounded-b-lg duration-700 ease-in-out ${
+                      isOpen ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"}`}>
+                    <div className="rounded-b-lg px-4 py-2 border-primary-100 border-2 shadow-md text-black">
                       <table className="w-full">
-                        <thead className="border-b-2 border-b-secondary-new-500 text-secondary-new-500">
+                        <thead className="border-b-2 border-b-primary-100">
                           <tr>
                             <th className="w-[10%] px-4 py-3 text-center">No</th>
                             <th className="w-[60%] px-4 py-3 text-center">Mata Kuliah</th>
@@ -257,7 +253,7 @@ const SubjectSemester = () => {
                         <tbody>
                           {item.subjects.map((subject, idx) => (
                             <tr key={idx}
-                              className="hover:bg-gray-200 text-secondary-new-500 transition">
+                              className="hover:bg-gray-200 text-black transition">
                               <td className="px-4 py-3 text-center">
                                 {subject.no}
                               </td>
