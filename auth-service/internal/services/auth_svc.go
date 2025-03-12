@@ -16,6 +16,7 @@ type AuthService interface {
 	LoginUser(email, password string) (string, string, error)
 	RequestPasswordReset(email string) error
 	ResetPassword(resetToken, newPassword string) error
+	GetUserInfoAfterLogin(email string) (*models.User, error)
 }
 
 type authService struct {
@@ -139,4 +140,14 @@ func (s *authService) ResetPassword(resetToken, newPassword string) error {
 	}
 
 	return nil
+}
+
+func (s *authService) GetUserInfoAfterLogin(email string) (*models.User, error) {
+	user, err := s.authRepo.GetUserByEmail(email)
+	if err != nil {
+		logger.LogError(err, "Failed to get user info after login", map[string]interface{}{"layer": "service", "operation": "GetUserInfoAfterLogin"})
+		return nil, errors.New("failed to get user info after login")
+	}
+
+	return user, nil
 }

@@ -63,6 +63,13 @@ func (h *UserHandler) LoginUserHandler(c *gin.Context) {
 		return
 	}
 
+	// get the user info after login
+	user, err := h.authService.GetUserInfoAfterLogin(loginRequestStruct.Email)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"message": "Failed to get user info", "error": err.Error()})
+		return
+	}
+
 	// set the access and refresh token in the cookie
 	if err := utils.SetAccessAndRefresh(c, accessToken, refreshToken); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"message": "Failed to set cookie", "error": err.Error()})
@@ -70,7 +77,7 @@ func (h *UserHandler) LoginUserHandler(c *gin.Context) {
 	}
 
 	// if the login is successful, return a success message and status code 200
-	c.JSON(http.StatusOK, gin.H{"message": "Login successful"})
+	c.JSON(http.StatusOK, gin.H{"message": "Login successful", "user_id": user.UserID, "email": user.Email, "nama_user": user.NamaUser, "asal_sekolah": user.AsalSekolah})
 }
 
 func (h *UserHandler) LogoutUserHandler(c *gin.Context) {
