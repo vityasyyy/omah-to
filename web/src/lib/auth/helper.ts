@@ -5,7 +5,7 @@ export async function validateUserAuth() {
   const cookieStore = await cookies();
   const accessToken = cookieStore.get("access_token")?.value;
   const refreshToken = cookieStore.get("refresh_token")?.value;
-  
+
   if (!refreshToken && !accessToken) {
     return { valid: false };
   }
@@ -20,45 +20,56 @@ export async function validateUserAuth() {
     credentials: "include",
   });
 
-  // If validation succeeded, return success
   if (res.ok) {
     const userData = await res.json();
     return { valid: true, userData };
   }
 
-  // If access token failed but we have refresh token, try to refresh
+  // If access token failed but we have a refresh token, attempt refresh
   if (refreshToken) {
-    const refreshRes = await fetch(`${process.env.AUTH_URL}/user/refresh`, {
+    const origin =
+      process.env.NEXT_PUBLIC_APP_URL ||
+      (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000");
+
+    const refreshRes = await fetch(`${origin}/api/refresh-token`, {
       method: "GET",
       headers: {
-        "Content-Type": "application/json",
         "Cookie": `refresh_token=${refreshToken}`,
       },
       credentials: "include",
     });
-    console.log("HEADERS:", refreshRes.headers)
-    if (refreshRes.ok) {
-        const { newAccessToken, newRefreshToken } = await refreshRes.json();
-        // Set new tokens as cookies
-        console.log(newAccessToken);
 
-      // Successfully refreshed token, validate again with new token
+    if (refreshRes.ok) {
+      // Extract the new access token from the response cookies
+      const newCookies = refreshRes.headers.get("set-cookie") || "";
+      const accessTokenMatch = newCookies.match(/access_token=([^;]+)/); // Extract access_token from set-cookie
+      const refreshTokenMatch = newCookies.match(/refresh_token=([^;]+)/); // Extract refresh_token from set-cookie
+      if (!accessTokenMatch) {
+        return { valid: false }; // Refresh failed
+      }
+      if (!refreshTokenMatch) {
+        return { valid: false }; // Refresh failed
+      }
+      const newAccessToken = accessTokenMatch[1]; // Extract token value
+      const newRefreshToken = refreshTokenMatch[1]; // Extract token value
+      const newTokens = { accessToken: newAccessToken, refreshToken: newRefreshToken};
+      console.log(newTokens);
+      // Retry validation with the new access token
       const validationRetry = await fetch(`${process.env.AUTH_URL}/auth/validateprofile`, {
         method: "GET",
-        credentials: "include", // Use newly set cookies
         headers: {
           "Content-Type": "application/json",
-          "Cookie": `access_token=${newAccessToken}`,
+          "Cookie": `access_token=${newAccessToken}`, // Use the refreshed token
         },
+        credentials: "include",
       });
-      console.log(validationRetry)
+
       if (validationRetry.ok) {
         const userData = await validationRetry.json();
-        return { valid: true, userData };
+        return { valid: true, userData, newTokens };
       }
     }
   }
-  
-  // If we got here, authentication failed
+
   return { valid: false };
 }
