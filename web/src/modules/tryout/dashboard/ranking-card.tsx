@@ -9,66 +9,51 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
+import { LeaderboardResponse } from '@/types/types'
 
-const DUMMY_DATA = [
-  {
-    id: 'INV001',
-    name: 'Alice',
-    score: 90,
-    rank: 1,
-  },
-  {
-    id: 'INV002',
-    name: 'Bob',
-    score: 85,
-    rank: 2,
-  },
-  {
-    id: 'INV003',
-    name: 'Charlie',
-    score: 80,
-    rank: 3,
-  },
-  {
-    id: 'INV004',
-    name: 'Diana',
-    score: 75,
-    rank: 4,
-  },
-  {
-    id: 'INV005',
-    name: 'Ethan',
-    score: 70,
-    rank: 5,
-  },
-]
-
-const HistoryCard = () => {
+const HistoryCard = async ({leaderboard}: {leaderboard: LeaderboardResponse}) => {
+  const hasData = leaderboard?.data && leaderboard?.data?.length > 0
   return (
     <StyledCard title='Ranking'>
       <ScrollArea className='h-[300px] w-full overflow-hidden rounded-xl border border-neutral-200'>
         <Table>
-          {DUMMY_DATA.length === 0 && (
+          {/* Error fetching */}
+          {leaderboard === null && (
+            <TableCaption className='mt-12 font-bold text-black'>
+              Error fetching leaderboard, please try again.
+            </TableCaption>
+          )}
+
+          {/* No participants */}
+          {!hasData && leaderboard !== null && (
             <TableCaption className='mt-12 font-bold text-black'>
               Belum ada peserta.
             </TableCaption>
           )}
-          <TableHeader>
-            <TableRow>
-              <TableHead className='w-[100px]'>Rank</TableHead>
-              <TableHead>Nama</TableHead>
-              <TableHead className='text-right'>Skor</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {DUMMY_DATA.map((data) => (
-              <TableRow key={data.id}>
-                <TableCell className='font-medium'>{data.rank}</TableCell>
-                <TableCell>{data.name}</TableCell>
-                <TableCell className='text-right'>{data.score}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
+
+          {/* Leaderboard Table */}
+          {hasData && (
+            <>
+              <TableHeader>
+                <TableRow>
+                  <TableHead className='w-[100px]'>Rank</TableHead>
+                  <TableHead>Nama</TableHead>
+                  <TableHead className='text-right'>Skor</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {leaderboard?.data.map((data: any, i: number) => (
+                  <TableRow key={data.user_id}>
+                    <TableCell className='font-medium'>{i + 1}</TableCell>
+                    <TableCell>{data.username}</TableCell>
+                    <TableCell className='text-right'>
+                      {data.tryout_score.toFixed(2)}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </>
+          )}
         </Table>
       </ScrollArea>
     </StyledCard>

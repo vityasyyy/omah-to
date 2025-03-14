@@ -5,7 +5,16 @@ import ProfileCard from '@/modules/tryout/dashboard/profile-card'
 import RankingCard from '@/modules/tryout/dashboard/ranking-card'
 import StartCard from '@/modules/tryout/dashboard/start-card'
 
-const TryOutPage = () => {
+import { cookies } from 'next/headers'
+import { getSubtestsScore, getLeaderboard } from '@/lib/fetch/tryout-page'
+import { fetchUser } from '@/lib/auth/fetch_user'
+
+const TryOutPage = async () => {
+  const cookieStore = await cookies();
+  const accessToken = cookieStore.get('access_token')?.value as string;
+  const subtestsScore = await getSubtestsScore(accessToken);
+  const leaderboard = await getLeaderboard(accessToken);
+  const userData = await fetchUser();
   return (
     <main className='bg-neutral-50 min-h-screen'>
       <Container>
@@ -13,11 +22,16 @@ const TryOutPage = () => {
 
         <section className='flex flex-col-reverse gap-4 md:grid md:grid-cols-4'>
           <StartCard />
-          <ProfileCard />
+          <ProfileCard user={{
+            username: userData.username,
+            asal_sekolah: userData.asalSekolah,
+            user_id: Number(userData.id),
+            email: userData.email
+          }}/>
         </section>
         <section className='grid gap-4 grid-cols-1 md:grid-cols-2'>
-          <HistoryCard />
-          <RankingCard />
+          <HistoryCard score={subtestsScore}/>
+          <RankingCard leaderboard={leaderboard}/>
         </section>
       </Container>
     </main>
