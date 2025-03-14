@@ -1,10 +1,9 @@
 // middleware.ts
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import { set } from 'react-hook-form';
 
 function setHeaders(response: NextResponse, userData: any) {
-  response.headers.set('x-user-id', userData.id);
+  response.headers.set('x-user-id', userData.user_id);
   response.headers.set('x-user-asal_sekolah', userData.asal_sekolah);
   response.headers.set('x-user-username', userData.username);
   response.headers.set('x-user-email', userData.email);
@@ -16,7 +15,13 @@ export async function middleware(request: NextRequest) {
   
   // Define public paths that don't require authentication
   const publicPaths = ['/login', '/register', '/forgot-password'];
-  const isPublicPath = publicPaths.some(path => request.nextUrl.pathname.startsWith(path));
+  
+  // Add paths under tryout/* (but not /tryout exactly)
+  const currentPath = request.nextUrl.pathname;
+  const isTryoutSubpath = currentPath.startsWith('/tryout/') && currentPath !== '/tryout/';
+  
+  // Check if current path is public
+  const isPublicPath = publicPaths.some(path => currentPath.startsWith(path)) || isTryoutSubpath;
   
   // Allow access to public paths without authentication
   if (isPublicPath) {
@@ -28,6 +33,7 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL('/login', request.url));
   }
   
+  // Rest of your middleware code remains the same...
   // Check if access token is valid
   if (accessToken) {
     try {
