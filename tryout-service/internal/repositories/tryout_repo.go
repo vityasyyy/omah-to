@@ -123,7 +123,7 @@ func (r *tryoutRepo) SaveAnswersTx(tx *sqlx.Tx, answers []models.UserAnswer) err
 
 	// Joining placeholders to form the full query
 	query += strings.Join(placeholders, ",")
-	query += ` ON CONFLICT (attempt_id, subtest, kode_soal) DO UPDATE SET jawaban = EXCLUDED.jawaban`
+	query += ` ON CONFLICT (attempt_id, kode_soal) DO UPDATE SET jawaban = EXCLUDED.jawaban`
 
 	// Executing the query
 	_, err := tx.Exec(query, values...)
