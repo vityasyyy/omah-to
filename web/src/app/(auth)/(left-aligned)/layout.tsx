@@ -4,7 +4,7 @@ import Image from "next/image"
 const AuthLeftAlignedLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <main className='grid h-full grid-cols-1 md:grid-cols-2'>
-      <section className='flex h-[40vh] items-end justify-center md:order-2 md:h-auto'>
+      <section className='flex h-[40vh] overflow-clip items-end justify-center md:order-2 md:h-auto'>
           <Image
             src={`/assets/fullbody_2.webp`}
             alt='Robot'

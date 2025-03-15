@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import Heading, { HeadingSpan } from '@/components/home/heading'
 import SoftCircle from '@/components/soft-circle'
+import * as motion from 'motion/react-client'
 
 const ReadyPath = () => {
   return (
@@ -27,12 +28,12 @@ const ReadyPath = () => {
         </Heading>
 
         {/* Subtitle */}
-        <p className='mt-4 text-xl text-black'>
+        <p className='mt-3 text-xl text-black'>
           Temukan Potensimu, Rancang Masa Depanmu!
         </p>
 
         {/* Button */}
-          <Link href='/daftar' passHref className='block mt-4'>
+          <Link href='/register' passHref className='block mt-4'>
             <Button variant={`tertiary`} size={`lg`} className='px-10'>
               Daftar Sekarang
             </Button>

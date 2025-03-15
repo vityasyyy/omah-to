@@ -39,6 +39,8 @@ const UtbkPerspective = () => {
         </CarouselContent>
       </Carousel>
     </Container> */}
+    <section className='relative'>
+
       <Carousel className='w-full bg-transparent'>
         <CarouselContent className='relative z-10 bg-transparent'>
           {Array.from({ length: 5 }).map((_, i) => (
@@ -55,16 +57,9 @@ const UtbkPerspective = () => {
           ))}
         </CarouselContent>
       </Carousel>
-
       {/* ellipse gradient in the background */}
       <SoftCircle />
-      {/* <Image
-        src={`/wide-ellipse.svg`}
-        alt='Gradient ellipse'
-        fill
-        sizes='30%'
-        className='object-contain'
-      /> */}
+    </section>
     </Container>
   )
 }

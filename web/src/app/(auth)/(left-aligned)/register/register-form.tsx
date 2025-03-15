@@ -13,7 +13,6 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
-import { Eye, EyeOff } from 'lucide-react'
 import { useState } from 'react'
 
 const formSchema = z
@@ -44,8 +43,6 @@ const formSchema = z
 
 const RegisterForm = () => {
   const router = useRouter()
-  const [showPassword, setShowPassword] = useState(false)
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -134,20 +131,11 @@ const RegisterForm = () => {
             <FormItem>
               <FormLabel>Password</FormLabel>
               <FormControl>
-                <div className='relative'>
-                  <Input
-                    type={showPassword ? 'text' : 'password'}
-                    placeholder='Tuliskan Password'
-                    {...field}
-                  />
-                  <button
-                    type='button'
-                    className='absolute top-1/2 right-3 -translate-y-1/2'
-                    onClick={() => setShowPassword(!showPassword)}
-                  >
-                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-                  </button>
-                </div>
+                <Input
+                  type='password'
+                  placeholder='Tuliskan Password'
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -160,30 +148,21 @@ const RegisterForm = () => {
             <FormItem>
               <FormLabel>Confirm Password</FormLabel>
               <FormControl>
-                <div className='relative'>
-                  <Input
-                    type={showConfirmPassword ? 'text' : 'password'}
-                    placeholder='Tuliskan Ulang Password'
-                    {...field}
-                  />
-                  <button
-                    type='button'
-                    className='absolute top-1/2 right-3 -translate-y-1/2'
-                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                  >
-                    {showConfirmPassword ? (
-                      <EyeOff size={18} />
-                    ) : (
-                      <Eye size={18} />
-                    )}
-                  </button>
-                </div>
+                <Input
+                  type='password'
+                  placeholder='Tuliskan Ulang Password'
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button type='submit' variant={`tertiary`} className='mt-8 w-full max-w-xs self-center'>
+        <Button
+          type='submit'
+          variant={`tertiary`}
+          className='mt-8 w-full max-w-xs self-center'
+        >
           Daftar
         </Button>
       </form>

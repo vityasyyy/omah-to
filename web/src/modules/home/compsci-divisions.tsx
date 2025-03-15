@@ -57,7 +57,7 @@ const CompsciDivisions = () => {
               key={i}
               className={`ease-in-expo basis-1/2 transition-all min-[340px]:basis-1/2 sm:basis-1/3 sm:pl-12 md:basis-1/4 lg:basis-1/5 ${current !== i + 1 && 'scale-70 sm:scale-100'}`}
             >
-              <Card {...item} />
+              <Card index={i} {...item} />
             </CarouselItem>
           ))}
           <CarouselItem className='basis-[25%] sm:basis-[4%]'></CarouselItem>
@@ -69,9 +69,16 @@ const CompsciDivisions = () => {
   )
 }
 
-const Card = (props: { name: string; img: string; description: string }) => {
+const Card = (props: {
+  name: string
+  img: string
+  description: string
+  index: number
+}) => {
   return (
-    <main className='border-primary-100 flex flex-col items-center gap-4 overflow-clip rounded-lg border-4 bg-white p-6 text-center sm:h-full'>
+    <main
+      className='border-primary-100 flex flex-col items-center gap-4 overflow-clip rounded-lg border-4 bg-white p-6 text-center sm:h-full'
+    >
       <section className='relative size-30 self-center sm:size-36'>
         <Image
           src={props.img}
