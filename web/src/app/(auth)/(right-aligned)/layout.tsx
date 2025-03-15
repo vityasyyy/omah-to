@@ -8,17 +8,16 @@ const AuthRightAlignedLayout = ({
 }) => {
   return (
     <main className='grid h-full grid-cols-1 md:grid-cols-2'>
-      <section className='flex h-[30vh] items-center justify-center md:h-auto'>
-        <BlurCard className='p-12 hidden md:flex'>
+      <section className='flex h-[40vh] items-end justify-center md:h-auto'>
           <Image
-            src={`/robot.png`}
+            src={`/assets/fullbody_2.webp`}
             alt='Robot'
-            width={250}
-            height={250}
+            width={450}
+            height={450}
+            className='translate-y-14 max-[768px]:size-60  md:translate-y-12 z-0 px-8'
           />
-        </BlurCard>
       </section>
-      <section className='flex h-full flex-col items-center justify-center gap-6 rounded-t-2xl bg-white p-6 text-center md:overflow-y-auto md:rounded-l-2xl md:rounded-tr-none md:p-8'>
+      <section className='flex h-full z-10 flex-col items-center justify-center gap-6 rounded-t-2xl bg-white p-6  text-center md:overflow-y-auto md:rounded-l-2xl md:rounded-tr-none md:p-8'>
         {children}
       </section>
     </main>

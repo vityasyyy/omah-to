@@ -7,12 +7,14 @@ import { buttonVariants } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { Book } from 'lucide-react'
 import Image from 'next/image'
+import Heading, { HeadingSpan } from '@/components/home/heading'
+import SoftCircle from '@/components/soft-circle'
 
 const CARD_ITEMS = [
   {
     title: (
       <>
-        <Book className='mr-2 inline bg-neutral-200 p-0.5' />
+        <Book className='bg-primary-100 mr-2 inline p-0.5' />
         CSTryOuts
       </>
     ),
@@ -24,12 +26,12 @@ const CARD_ITEMS = [
   {
     title: (
       <>
-        <Book className='mr-2 inline bg-neutral-200 p-0.5' />
+        <Book className='bg-primary-100 mr-2 inline p-0.5' />
         Career Match Up
       </>
     ),
     description: 'Temukan Karier yang Tepat, Bangun Masa Depan Berkualitas!',
-    cta: 'Career Match Up',
+    cta: 'Cari Kecocokan',
     href: '/career-match-up',
   },
 ]
@@ -53,40 +55,42 @@ const cardContainerVariants = {
   visible: {},
 }
 
-const cardVariants = {
-  hidden: {
-    scale: 0.9,
-  },
-  visible: {
-    scale: 1,
-    transition: {
-      type: 'tween',
-      duration: 1,
-    },
-  },
-}
+// const cardVariants = {
+//   hidden: {
+//     scale: 0.9,
+//   },
+//   visible: {
+//     scale: 1,
+//     transition: {
+//       type: 'tween',
+//       duration: 1,
+//     },
+//   },
+// }
 
 const Hero = () => {
   return (
     <main className='bg-white'>
       <Container className='flex flex-col gap-0 py-8 text-center text-black md:py-10 md:text-start'>
-        <section className='relative flex md:mt-4 justify-between gap-8'>
+        <section className='relative flex flex-col justify-between gap-8 md:mt-4 md:flex-row'>
           <motion.div
             variants={containerVariants}
             initial='hidden'
             animate='visible'
-            className='z-10 flex w-full self-center pb-12 pt-4 max-w-none flex-col gap-2 md:gap-6 md:max-w-lg md:py-0'
+            className='z-10 flex w-full max-w-none flex-col gap-2 self-center pt-4 md:pb-12 md:max-w-lg md:gap-6 md:py-0'
           >
-            <motion.h1
+            <motion.div
               variants={childVariants}
               className='text-2xl font-normal text-balance md:text-3xl'
             >
-              Saatnya kamu <Span>uji kemampuan</Span> & temukan
-              <Span> bidang yang paling cocok </Span>untukmu
-            </motion.h1>
+              <Heading className='text-balance'>
+                Saatnya kamu <HeadingSpan>uji kemampuan</HeadingSpan> & temukan
+                <HeadingSpan> bidang yang paling cocok </HeadingSpan>untukmu!
+              </Heading>
+            </motion.div>
             <motion.p
               variants={childVariants}
-              className='font-light text-balance'
+              className='mt-2 text-sm font-light text-balance text-neutral-700 md:mt-0 md:text-black'
             >
               Jelajahi Karir Impian di Dunia Computer Science dan Taklukkan UTBK
               2025 Bersama Fahmi
@@ -94,24 +98,18 @@ const Hero = () => {
           </motion.div>
 
           {/* images */}
-          <div className='relative hidden md:flex h-[250px] w-full justify-center'>
+          <div className='relative flex w-full justify-center items-center'>
             {/* person */}
             <Image
               src={`/bron.png`}
               alt='OmahTO Hero Image'
-              fill
-              sizes='80%'
-              className='z-10 mr-24 object-contain'
+              width={350}
+              height={250}
+              className='z-10 md:self-end'
             />
 
             {/* bg */}
-            <Image
-              src={`/ellipse.svg`}
-              alt='OmahTO Hero Image'
-              fill
-              sizes='20%'
-              className='z-0 object-contain'
-            />
+            <SoftCircle />
           </div>
         </section>
 
@@ -132,10 +130,6 @@ const Hero = () => {
   )
 }
 
-const Span = (props: { children?: string }) => (
-  <span className='text-primary-700 font-bold'>{props.children}</span>
-)
-
 const Card = ({
   title,
   description,
@@ -149,16 +143,17 @@ const Card = ({
 }) => (
   <StyledCard
     title={title}
-    className='w-full justify-between border-2 pb-2 *:text-black!'
+    variant='blue'
+    className='w-full justify-between h-full border-2 *:text-black!'
   >
-    <section className='-mt-2 flex h-full flex-col gap-4 text-start'>
+    <section className='-mt-2 flex h-full justify-between flex-col gap-4 text-start'>
       {/* text and cta */}
-      <p className='text-sm font-light'>{description}</p>
+      <p className='text-sm font-light min-h-12'>{description}</p>
       <Link
         href={href}
         className={cn(
           buttonVariants({ variant: 'tertiary' }),
-          'mt-1 ml-auto px-8 hover:cursor-pointer'
+          'self-end px-12 hover:cursor-pointer'
         )}
       >
         {cta}

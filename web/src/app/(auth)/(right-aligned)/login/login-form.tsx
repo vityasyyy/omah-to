@@ -3,6 +3,8 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
+import { Eye, EyeOff } from 'lucide-react'
+import { useState } from 'react'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -27,7 +29,8 @@ const formSchema = z.object({
 
 const LoginForm = () => {
   const router = useRouter()
-  // 1. Define your form.
+  const [showPassword, setShowPassword] = useState(false)
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -36,35 +39,36 @@ const LoginForm = () => {
     },
   })
 
-  // 2. Define a submit handler.
   const handleLogin = async (values: z.infer<typeof formSchema>) => {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_AUTH_URL}/user/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include", // Required to send cookies for authentication
-        body: JSON.stringify(values),
-      });
-  
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_AUTH_URL}/user/login`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          credentials: 'include', // Required to send cookies for authentication
+          body: JSON.stringify(values),
+        }
+      )
+
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Login failed");
+        const errorData = await response.json()
+        throw new Error(errorData.message || 'Login failed')
       }
-      router.push("/");
+      router.push('/')
       // Redirect or handle successful login here
     } catch (error) {
-      console.error("Login error:", error);
+      console.error('Login error:', error)
     }
-  };
-  
+  }
 
   return (
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(handleLogin)}
-        className='flex w-full flex-col gap-4 text-left'
+        className='flex w-full max-w-lg flex-col gap-4 text-left'
       >
         <FormField
           control={form.control}
@@ -86,7 +90,21 @@ const LoginForm = () => {
             <FormItem>
               <FormLabel>Password</FormLabel>
               <FormControl>
-                <Input placeholder='Tuliskan Password' {...field} />
+                <div className='relative'>
+                  <Input
+                    type={showPassword ? 'text' : 'password'}
+                    placeholder='Tuliskan Password'
+                    {...field}
+                  />
+                  <button
+                    type='button'
+                    tabIndex={-1}
+                    className='absolute top-1/2 right-3 -translate-y-1/2'
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                  </button>
+                </div>
               </FormControl>
               <Link
                 href={`/forgot-password`}
@@ -99,7 +117,7 @@ const LoginForm = () => {
           )}
         />
 
-        <Button type='submit' className='mt-8 w-full max-w-xs self-center'>
+        <Button type='submit' variant={`tertiary`} className='mt-8 w-full max-w-xs self-center'>
           Masuk
         </Button>
       </form>

@@ -1,4 +1,5 @@
 import Container from '@/components/container'
+import Logo from '@/components/home/logo'
 import { Instagram, Mail, Phone } from 'lucide-react'
 import Image from 'next/image'
 
@@ -19,13 +20,13 @@ const CONTACTS = [
 
 const Footer = () => {
   return (
-    <main className='mt-8 bg-[#304A91]'>
-      <Container className='py-8 '>
-        <section className='grid grid-cols-1 gap-4 md:gap-8 md:grid-cols-3'>
+    <main className='bg-primary-100 mt-8'>
+      <Container className='py-8'>
+        <section className='grid grid-cols-1 gap-4 md:grid-cols-3 md:gap-8'>
           <InfoSection />
           <ContactSection />
         </section>
-        <div className='w-full bg-white h-16 mt-4' />
+        <div className='mt-4 flex h-16 w-full items-center justify-center bg-white'></div>
       </Container>
     </main>
   )
@@ -35,21 +36,10 @@ const InfoSection = () => {
   return (
     <main className='flex flex-col gap-4 font-semibold'>
       {/* title + image */}
-      <div className='flex items-center gap-4'>
-        <div className='relative aspect-square h-7'>
-          <Image
-            src='/placeholder.png'
-            alt='logo'
-            fill
-            sizes='100%'
-            className='object-cover'
-          />
-        </div>
-        <h1 className='font-bold! text-white'>omah-to</h1>
-      </div>
+      <Logo />
 
       {/* body text */}
-      <div className='space-y-4 text-sm text-balance text-white'>
+      <div className='space-y-4 text-sm text-balance'>
         <p>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque alias
           nam perferendis, nihil voluptatem explicabo veniam aspernatur fugiat
@@ -65,7 +55,7 @@ const InfoSection = () => {
 
 const ContactSection = () => {
   return (
-    <main className='flex md:col-start-3 flex-col gap-4 text-sm font-semibold text-balance text-white'>
+    <main className='flex flex-col gap-4 text-sm font-semibold text-balance md:col-start-3'>
       <p className='text-balance'>
         Gedung Fakultas MIPA UGM Sekip Utara,Bulaksumur, Sinduadi, Mlati,
         Sleman, DI Yogyakarta

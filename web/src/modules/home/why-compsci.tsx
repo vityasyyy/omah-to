@@ -2,20 +2,27 @@ import * as motion from 'motion/react-client'
 import BoldUnderline from '@/components/bold-underline'
 import Container from '@/components/container'
 import { VariantProps } from 'class-variance-authority'
+import Heading, { HeadingSpan } from '@/components/home/heading'
+import SoftCircle from '@/components/soft-circle'
 
 type sideType = 'left' | 'right'
+
+const Span = ({children}: {children?: React.ReactNode}) => (
+  <span className='font-semibold'>{children}</span>
+)
+
 const CARD_CONTENT = [
   {
     title: <>80%</>,
     description: (
-      <>Perusahaan IT menawarkan Remote Work, memberikan fleksibilitas kerja.</>
+      <>Perusahaan IT menawarkan Remote Work, memberikan <Span> fleksibilitas kerja.</Span></>
     ),
   },
   {
     title: <>25%</>,
     description: (
       <>
-        Pekerjaan di bidang Computer Science tumbuh <strong>lebih cepat</strong>{' '}
+        Pekerjaan di bidang Computer Science tumbuh <Span>lebih cepat</Span>{' '}
         daripada semua industri lainnya.
       </>
     ),
@@ -25,7 +32,7 @@ const CARD_CONTENT = [
     description: (
       <>
         Computer Science adalah jalur terbaik menuju gaji tinggi dengan peluang
-        global dan karier —bahkan di usia muda!
+        global dan karier —<Span>bahkan di usia muda</Span>!
       </>
     ),
   },
@@ -33,8 +40,8 @@ const CARD_CONTENT = [
     title: <>55%</>,
     description: (
       <>
-        Startup teknologi didirikan oleh lulusan Computer Science dan kamu bisa
-        memulainya hanya dengan laptop.
+        Startup teknologi didirikan oleh lulusan Computer Science dan kamu bisa {" "}
+        <Span>memulainya hanya dengan laptop</Span>.
       </>
     ),
   },
@@ -100,10 +107,10 @@ const WhyCompsci = () => {
   return (
     <Container className='my-8 items-center gap-12 md:gap-16 lg:flex-row-reverse lg:items-start'>
       <section className='flex flex-col gap-8'>
-        <h1 className='text-2xl font-bold lg:text-3xl'>
-          Kenapa <span className='text-primary-500'> Computer Science </span>
+        <Heading className='text-center lg:text-start'>
+          Kenapa <HeadingSpan> Computer Science </HeadingSpan>
           bisa jadi tiket menuju masa depanmu?
-        </h1>
+        </Heading>
         <motion.main
           variants={containerVariants}
           initial='hidden'
@@ -122,7 +129,11 @@ const WhyCompsci = () => {
           ))}
         </motion.main>
       </section>
-      <Card />
+      <section className='relative'>
+        <Card />
+        {/* soft gradient in the back lol */}
+        <SoftCircle />
+      </section>
     </Container>
   )
 }
@@ -135,7 +146,7 @@ const ChatBubble = ({
   text: string | React.ReactNode
 }) => (
   <main
-    className={`text-primary-new-500 shadow-primary-new-200/40 w-full max-w-[80%] rounded-t-lg border-2 border-neutral-200 p-3 text-sm shadow-lg lg:max-w-[66%] ${side === 'left' ? 'self-start rounded-br-lg' : 'self-end rounded-bl-lg'}`}
+    className={`text-primary-new-500 shadow-primary-new-200/40 border-primary-100 w-full max-w-[80%] rounded-t-lg border-2 p-3 text-sm lg:max-w-[66%] ${side === 'left' ? 'self-start rounded-br-lg' : 'self-end rounded-bl-lg'}`}
   >
     {text}
   </main>
@@ -170,11 +181,11 @@ const Card = () => {
         visualDuration: 0.5,
       }}
       viewport={{ once: true, amount: 0.5 }}
-      className='border-primary-new-500 shadow-primary-new-200 mx-8 flex w-[75vw] max-w-sm flex-col gap-4 rounded-xl border-4 p-8 shadow-2xl lg:ml-8'
+      className='border-primary-new-500 z-10 drop-shadow-2xl bg-white relative mx-8 flex w-[75vw] max-w-sm flex-col gap-4 rounded-xl border-4 p-8 lg:ml-8'
     >
       {CARD_CONTENT.map((content, i) => (
-        <div key={i} className='w-fit'>
-          <h1 className='text-primary-new-400 text-xl font-bold md:text-2xl'>
+        <div key={i} className='relative z-10 w-fit'>
+          <h1 className='text-primary-700 text-xl font-bold md:text-2xl'>
             {content.title}
           </h1>
           <p className='text-sm font-light text-black md:text-base'>
@@ -185,5 +196,6 @@ const Card = () => {
     </motion.main>
   )
 }
+
 
 export default WhyCompsci

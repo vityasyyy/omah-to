@@ -1,6 +1,6 @@
 const NavbarResolver = () => {
     return ( 
-        <div className="h-16" />
+        <div className="h-20" />
      );
 }
  

@@ -13,6 +13,8 @@ import {
 } from '@/components/ui/sheet'
 import { Menu } from 'lucide-react'
 import NavbarResolver from './navbar-resolver'
+import Logo from './logo'
+import { cn } from '@/lib/utils'
 
 const NAV_ITEMS = [
   {
@@ -28,20 +30,9 @@ const NAV_ITEMS = [
 const Navbar = () => {
   return (
     <>
-      <main className='fixed inset-x-0 top-0 bg-white/60 border-b-2 border-neutral-200 backdrop-blur-md z-50'>
-        <Container className='flex-row h-16 items-center justify-between gap-8'>
-          <Link href={`/`} className='flex items-center gap-4'>
-            <div className='relative aspect-square h-7'>
-              <Image
-                src='/placeholder.png'
-                alt='logo'
-                fill
-                sizes='100%'
-                className='object-cover'
-              />
-            </div>
-            <h1 className='text-primary text-primary-700 font-bold'>omah-to</h1>
-          </Link>
+      <main className='fixed inset-x-0 top-0 bg-white/60 border-b-2 border-primary-100 backdrop-blur-md z-50'>
+        <Container className='flex-row h-20 items-center justify-between gap-8'>
+          <Logo />
 
           <DesktopNavigation />
           <MobileNavigation />
@@ -63,9 +54,9 @@ const DesktopNavigation = () => (
       </Link>
     ))}
 
-    <Link href={`/login`}>
+    <Link href={`/register`}>
       <Button variant={`tertiary`} className='px-8 hover:cursor-pointer'>
-        Login
+        Daftar Sekarang
       </Button>
     </Link>
   </main>
@@ -86,7 +77,7 @@ const MobileNavigation = () => (
             Description for sidebar
           </SheetDescription>
         </SheetHeader>
-        <main className='flex h-full w-full flex-col justify-between gap-8 text-lg font-bold text-black'>
+        <main className='flex h-full w-full flex-col justify-between gap-8 text-lg font-semibold text-black'>
           <section className='flex flex-col gap-2'>
             {NAV_ITEMS.map((nav, i) => (
               <Link key={i} href={nav.href}>
@@ -97,16 +88,16 @@ const MobileNavigation = () => (
           <section className='flex flex-col gap-2'>
             <SheetClose asChild>
               <Link
-                href={`/login`}
-                className={buttonVariants({ variant: 'default' })}
+                href={`/register`}
+                className={buttonVariants({ variant: 'tertiary' })}
               >
                 Daftar
               </Link>
             </SheetClose>
             <SheetClose asChild>
               <Link
-                href={'/signup'}
-                className={buttonVariants({ variant: 'outline' })}
+                href={'/login'}
+                className={cn(buttonVariants({ variant: 'blur' }), 'text-primary-700 shadow-none')}
               >
                 Masuk
               </Link>

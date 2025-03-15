@@ -1,23 +1,12 @@
 import { cn } from '@/lib/utils'
-import Image from 'next/image'
 
 export default function SoftCircle(props: { className?: string }) {
   return (
-    <main
+    <div
       className={cn(
-        'absolute z-0 inset-x-0 -inset-y-20 overflow-visible',
+        'from-primary-500/70 absolute z-0 inset-0 rounded-full bg-radial/decreasing to-transparent object-contain blur-3xl',
         props.className
       )}
-    >
-      <div className='relative w-full h-full'>
-        <Image
-          src={`/ellipse.svg`}
-          alt='Circle'
-          sizes='20%'
-          fill
-          className='object-contain'
-        />
-      </div>
-    </main>
+    />
   )
 }

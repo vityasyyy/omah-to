@@ -85,7 +85,7 @@ const RegisterForm = () => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(handleLogin)}
-        className='flex w-full flex-col gap-4 text-left'
+        className='flex w-full max-w-lg flex-col gap-4 text-left'
       >
         <FormField
           control={form.control}
@@ -183,7 +183,7 @@ const RegisterForm = () => {
             </FormItem>
           )}
         />
-        <Button type='submit' className='mt-8 w-full max-w-xs self-center'>
+        <Button type='submit' variant={`tertiary`} className='mt-8 w-full max-w-xs self-center'>
           Daftar
         </Button>
       </form>

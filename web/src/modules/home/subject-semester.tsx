@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { ChevronUp, ChevronDown } from 'lucide-react'
 import Container from "@/components/container"
+import Heading, { HeadingSpan } from "@/components/home/heading";
 
 const BUTTON_CONTENT_LEFT = [
   {
@@ -163,11 +164,11 @@ const SubjectSemester = () => {
   return (
     <Container className="flex my-20 w-full flex-col py-8 px-6 text-center mx-auto">
       <section className="flex flex-col gap-6">
-        <h1 className="text-2xl font-bold lg:text-3xl">
+        <Heading>
           Mata Kuliah yang Akan Membentuk Masa Depanmu di
-          <span className="text-primary-700"> Computer Science</span>!
-        </h1>
-        <h3 className="text-xl font-bold">Universitas Gadjah Mada</h3>
+          <HeadingSpan> Computer Science</HeadingSpan>!
+        </Heading>
+        <h3 className="text-xl font-normal">Universitas Gadjah Mada</h3>
 
         {/* Button Container */}
         <div className="flex flex-col items-start lg:grid lg:grid-cols-2 gap-6 w-full overflow-auto">
