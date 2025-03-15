@@ -37,7 +37,7 @@ func (r *pageRepo) GetAllSubtestScoreForAUser(userID int) ([]models.UserScore, e
 // tryout homepage
 func (r *pageRepo) GetTop4Leaderboard() ([]models.TryoutAttempt, error) {
 	var leaderboards []models.TryoutAttempt
-	query := `SELECT username, tryout_score FROM tryout_attempt ORDER BY tryout_score DESC LIMIT 4`
+	query := `SELECT user_id, username, tryout_score FROM tryout_attempt WHERE status = 'finished' ORDER BY tryout_score DESC LIMIT 4`
 	err := r.db.Select(&leaderboards, query)
 	if err != nil {
 		logger.LogError(err, "Failed to get top 4 leaderboard", map[string]interface{}{"layer": "repository", "operation": "GetTop4Leaderboard"})
@@ -55,7 +55,7 @@ func (r *pageRepo) GetScoreAndRank(userID int, paket string) (float64, int, erro
 	WITH RankedUsers AS (
 	    SELECT user_id, paket, tryout_score,
 	           RANK() OVER (PARTITION BY paket ORDER BY tryout_score DESC) AS rank
-	    FROM tryout_attempt
+	    FROM tryout_attempt WHERE status = 'finished'
 	)
 	SELECT tryout_score, rank FROM RankedUsers WHERE user_id = $1 AND paket = $2;
 	`

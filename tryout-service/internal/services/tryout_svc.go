@@ -14,6 +14,7 @@ type TryoutService interface {
 	StartAttempt(userID int, username, paket, accessToken string) (attempt *models.TryoutAttempt, tryoutToken string, retErr error)
 	SyncWithDatabase(answers []models.AnswerPayload, attemptID int) (answersInDB []models.UserAnswer, timeLimit time.Time, err error)
 	SubmitCurrentSubtest(answers []models.AnswerPayload, attemptID, userID int, tryoutToken string) (updatedSubtest string, retErr error)
+	GetCurrentAttempt(attemptID int) (*models.TryoutAttempt, error)
 }
 
 type tryoutService struct {
@@ -378,4 +379,8 @@ func (s *tryoutService) SubmitCurrentSubtest(answers []models.AnswerPayload, att
 
 	// return updated so later the frontend can fetch the next subtest
 	return updatedSubtest, nil
+}
+
+func (s *tryoutService) GetCurrentAttempt(attemptID int) (*models.TryoutAttempt, error) {
+	return s.tryoutRepo.GetTryoutAttempt(attemptID)
 }

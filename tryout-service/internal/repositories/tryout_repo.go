@@ -20,7 +20,8 @@ type TryoutRepo interface {
 	GetSubtestTimeTx(tx *sqlx.Tx, attemptID int, subtest string) (time.Time, error)                                  // Get the remaining time for a subtest (for transactions)
 	SaveAnswersTx(tx *sqlx.Tx, answers []models.UserAnswer) error                                                    // Save user's answers to the database
 	ProgressTryoutTx(tx *sqlx.Tx, attemptID int, subtest string) (string, error)                                     // End a subtest attempt, marking the end time
-	EndTryOutTx(tx *sqlx.Tx, attemptID int) error                                                                    // End a tryout attempt, marking the end time
+	EndTryOutTx(tx *sqlx.Tx, attemptID int) error
+	GetTryoutAttempt(attemptID int) (*models.TryoutAttempt, error) // End a tryout attempt, marking the end time
 }
 
 type tryoutRepo struct {
@@ -227,5 +228,18 @@ func (r *tryoutRepo) GetTryoutAttemptByUserIDAndPaket(userID int, paket string) 
 	}
 
 	logger.LogDebug("Attempt retrieved", map[string]interface{}{"layer": "repository", "operation": "GetTryoutAttemptByUserID"})
+	return &attempt, nil
+}
+
+func (r *tryoutRepo) GetTryoutAttempt(attemptID int) (*models.TryoutAttempt, error) {
+	var attempt models.TryoutAttempt
+	query := `SELECT * FROM tryout_attempt WHERE attempt_id = $1 AND status = 'ongoing'`
+	err := r.db.Get(&attempt, query, attemptID)
+	if err != nil {
+		logger.LogError(err, "Failed to get attempt", map[string]interface{}{"layer": "repository", "operation": "GetTryoutAttempt"})
+		return nil, err
+	}
+
+	logger.LogDebug("Attempt retrieved", map[string]interface{}{"layer": "repository", "operation": "GetTryoutAttempt"})
 	return &attempt, nil
 }

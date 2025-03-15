@@ -85,3 +85,13 @@ func (h *TryoutHandler) ProgressTryoutHandler(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, gin.H{"message": "Successfully get progress or submitted scores", "updated_subtest": updatedSubtest})
 }
+
+func (h *TryoutHandler) GetCurrentAttempt(c *gin.Context) {
+	attemptID := c.GetInt("attempt_id")
+	attempt, err := h.tryoutService.GetCurrentAttempt(attemptID)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"message": "Failed to get current attempt", "error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"message": "Successfully get current attempt", "data": attempt})
+}
