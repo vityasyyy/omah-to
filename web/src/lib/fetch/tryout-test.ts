@@ -1,0 +1,108 @@
+import { SOAL_URL, TRYOUT_URL, PUBLIC_TRYOUT_URL, PUBLIC_SOAL_URL } from "@/types/url";
+import { Jawaban } from "@/types/types";
+
+export const getTryoutUrl = (isPublic?: boolean) => {
+  return isPublic ? PUBLIC_TRYOUT_URL : TRYOUT_URL;
+};
+
+export const getSoalUrl = (isPublic?: boolean) => {
+  return isPublic ? PUBLIC_SOAL_URL : SOAL_URL;
+};
+
+export const getCurrentTryout = async (tryoutToken?: string, isPublic?: boolean) => {
+  const tryoutUrl = getTryoutUrl(isPublic);
+  const res = await fetch(`${tryoutUrl}/sync/current`, { 
+    method: "GET", 
+    credentials: "include" ,
+    headers: {
+      "Content-Type": "application/json",
+      "Cookie": `tryout_token=${tryoutToken}`
+    }
+});
+  if (!res.ok) {
+    throw new Error("Failed to fetch tryout data");
+  }
+
+  return res.json();
+};
+
+export const getSoal = async (subtest: string, token?: string, isPublic?: boolean, tokenType?: boolean) => {
+  const soalUrl = getSoalUrl(isPublic);
+  const keren = tokenType ? "tryout_token" : "access_token";
+  const res = await fetch(`${soalUrl}/soal/paket1?subtest=${subtest}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      "Cookie": `${keren}=${token}`
+    },
+    credentials: "include",
+  });
+  if (!res.ok) {
+    throw new Error("Failed to fetch soal");
+  }
+
+  return res.json();
+};
+
+export const syncTryout = async (jawaban: Jawaban[], tryoutToken?: string, isPublic?: boolean) => {
+  const tryoutUrl = getTryoutUrl(isPublic);
+  const payload = {
+    answers: jawaban
+  }
+  const res = await fetch(`${tryoutUrl}/sync`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Cookie": `tryout_token=${tryoutToken}`
+    },
+    credentials: "include",
+    body: JSON.stringify(payload),
+  });
+
+  if (!res.ok) {
+    throw new Error("Failed to sync tryout data");
+  }
+
+  return res.json();
+};
+
+export const progressTryout = async (jawaban: Jawaban[], tryoutToken?: string, isPublic?: boolean) => {
+    const tryoutUrl = getTryoutUrl(isPublic);
+    const payload = {
+        answers: jawaban
+    }
+    const res = await fetch(`${tryoutUrl}/progress`, {
+        method: "POST",
+        headers: {
+        "Content-Type": "application/json",
+        "Cookie": `tryout_token=${tryoutToken}`
+        },
+        credentials: "include",
+        body: JSON.stringify(payload),
+    });
+    
+    if (!res.ok) {
+        throw new Error("Failed to progress tryout data");
+    }
+    
+    return res.json();
+}
+
+export const startTryout = async (accessToken?: string, isPublic?: boolean) => {
+  const tryoutUrl = getTryoutUrl(isPublic);
+
+  const res = await fetch(`${tryoutUrl}/tryout/start-attempt/paket1`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Cookie": `access_token=${accessToken}`
+    },
+    credentials: "include"
+  });
+
+  if (!res.ok) {
+    throw new Error("Failed to start tryout");
+  }
+
+  return res.json();
+};

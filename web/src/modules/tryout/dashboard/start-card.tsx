@@ -15,6 +15,7 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
 import { useRouter } from 'next/navigation'
+import { startTryout } from '@/lib/fetch/tryout-test'
 
 const POINTS = [
   {
@@ -44,11 +45,6 @@ const POINTS = [
 ]
 
 const StartCard = () => {
-  const router = useRouter()
-
-  const handleStart = () => {
-    router.push('/tryout/intro')
-  }
 
   return (
     <StyledCard title='TryOut' className='col-span-3'>
@@ -86,7 +82,12 @@ const StartCard = () => {
 const StartButton = () => {
   const router = useRouter()
 
-  function handleStart() {
+  async function handleStart() { 
+    const resTest = await startTryout("", true);
+    if (!resTest) {
+      console.error('Failed to start tryout')
+      return
+    }
     router.push('/tryout/intro')
   }
 

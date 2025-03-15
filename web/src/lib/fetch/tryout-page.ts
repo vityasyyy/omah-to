@@ -1,8 +1,4 @@
-const TRYOUT_URL = process.env.TRYOUT_URL as string;
-const AUTH_URL = process.env.AUTH_URL as string;
-const MINAT_BAKAT_URL = process.env.MINAT_BAKAT_URL as string;
-const SOAL_URL = process.env.SOAL_URL as string;
-
+import { TRYOUT_URL } from "@/types/url";
 import { SubtestsScoreResponse, LeaderboardResponse } from "@/types/types";
 
 export const getSubtestsScore = async (accessToken: string): Promise<SubtestsScoreResponse> => {

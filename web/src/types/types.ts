@@ -23,3 +23,8 @@ export type Leaderboard = {
 export type LeaderboardResponse = {
     data: Leaderboard[]
 } | null
+
+export type Jawaban = {
+    kode_soal: string
+    jawaban: string | null
+}

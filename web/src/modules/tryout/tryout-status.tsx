@@ -6,18 +6,19 @@ type TryoutStatusProps = {
   title: string
 }
 
-const TryoutStatus = (props: TryoutStatusProps) => {
+const TryoutStatus = ({ title }: { title: string }) => {
   return (
     <>
       <main className='flex gap-2 md:gap-6'>
         <RemainingTime className='w-full shrink md:shrink-0 md:w-fit' />
-        <TitleCard title={props.title} className='hidden md:flex' />
+        <TitleCard title={title} className='hidden md:flex' />
         <ProfileCard className='w-full shrink md:w-fit md:shrink-0' />
       </main>
-      <TitleCard title={props.title} className='md:hidden' />
+      <TitleCard title={title} className='md:hidden' />
     </>
-  )
-}
+  );
+};
+
 
 const TitleCard = ({
   title,

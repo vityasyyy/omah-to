@@ -11,9 +11,16 @@ import {
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
-const NumberCarousel = () => {
-  const pathname = usePathname()
-  const currentNumber = pathname.slice(pathname.lastIndexOf('/') + 1)
+const NumberCarousel = ({ totalQuestions }: { totalQuestions: number }) => {
+  const pathname = usePathname();
+  let currentNumber = Number(pathname.slice(pathname.lastIndexOf('/') + 1));
+
+  // Ensure the currentNumber stays within the valid range
+  if (isNaN(currentNumber) || currentNumber < 1) {
+    currentNumber = 1;
+  } else if (currentNumber > totalQuestions) {
+    currentNumber = totalQuestions;
+  }
 
   return (
     <SmallStyledCard className='w-full py-4'>
@@ -21,7 +28,7 @@ const NumberCarousel = () => {
         <section className='flex items-center gap-2'>
           <CarouselPrevious className='relative shrink-0' />
           <CarouselContent className='-ml-2 w-full'>
-            {Array.from({ length: 40 }).map((_, index) => (
+            {Array.from({ length: totalQuestions }).map((_, index) => (
               <CarouselItem
                 key={index}
                 className='basis-[33%] pl-2 min-[400px]:basis-[25%] sm:basis-[11%] md:basis-[9%] lg:basis-[6%] xl:basis-[5%]'
@@ -33,7 +40,7 @@ const NumberCarousel = () => {
                 >
                   <Button
                     variant={
-                      currentNumber === `${index + 1}` ? 'secondary' : 'card'
+                      currentNumber === index + 1 ? 'secondary' : 'card'
                     }
                     className='cursor-pointer'
                   >
@@ -47,7 +54,7 @@ const NumberCarousel = () => {
         </section>
       </Carousel>
     </SmallStyledCard>
-  )
-}
+  );
+};
 
-export default NumberCarousel
+export default NumberCarousel;
