@@ -26,20 +26,60 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
 
-const TryoutResult = () => {
+const subtestTitles: Record<string, string> = {
+  subtest_pu: 'Pengetahuan Umum',
+  subtest_ppu: 'Pengetahuan dan Pemahaman Umum',
+  subtest_pbm: 'Pengetahuan Membaca dan Menulis',
+  subtest_pk: 'Pengetahuan Kuantitatif',
+  subtest_lbi: 'Literasi Bahasa Indonesia',
+  subtest_lbe: 'Literasi Bahasa Inggris',
+  subtest_pm: 'Penalaran Matematika',
+};
+interface TryoutResultProps {
+  userScores: {
+    subtest: string
+    score: number
+  }[]
+  userAnswers: {
+    subtest: string
+    user_answer: string
+    is_correct: boolean
+    text_pilihan?: string
+    pembahasan: string
+    kode_soal: string
+  }[]
+  totalRank?: number
+}
+
+const TryoutResult = ({ userScores, userAnswers, totalRank }: TryoutResultProps) => {
+  // Group answers by subtest
+  const groupedAnswers = userAnswers.reduce((acc, answer) => {
+    const key = answer.subtest
+    if (!acc[key]) {
+      acc[key] = []
+    }
+    acc[key].push({
+      no: acc[key].length + 1,
+      jawaban: answer.text_pilihan || answer.user_answer,
+      pembahasan: answer.pembahasan,
+      isCorrect: answer.is_correct
+    })
+    return acc
+  }, {} as Record<string, Array<{ no: number, jawaban: string, pembahasan: string, isCorrect: boolean }>>)
+
   return (
     <Container>
       <h1 className='text-primary-900 mt-9 mb-4.5 text-center text-2xl font-bold md:mb-7'>
         Hasil TryOut
       </h1>
-      <Statistic />
-      {/* <Pembahasan title='Jawaban' subtest='PU' /> */}
+      <Statistic userScores={userScores} userAnswers={userAnswers} totalRank={totalRank} />
       <div className='space-y-6'>
-        {DUMMY_ANSWER.map((subtestData) => (
+        {Object.entries(groupedAnswers).map(([subtest, qna]) => (
           <Pembahasan
-            key={subtestData.subtest}
-            title={`Jawaban ${subtestData.subtest}`}
-            subtest={subtestData.subtest}
+            key={subtest}
+            title={`Jawaban ${subtestTitles[subtest] || subtest}`}
+            subtest={subtest}
+            qnaData={qna}
           />
         ))}
       </div>
@@ -47,7 +87,27 @@ const TryoutResult = () => {
   )
 }
 
-const Statistic = () => {
+interface StatisticProps {
+  userScores: TryoutResultProps['userScores']
+  userAnswers: TryoutResultProps['userAnswers']
+  totalRank?: number
+}
+
+const Statistic = ({ userScores, userAnswers, totalRank }: StatisticProps) => {
+  const totalSkorSemua = userScores.reduce((sum, score) => sum + score.score, 0)
+  const totalSkor = totalSkorSemua / userScores.length
+  const totalBenar = userAnswers.filter(answer => answer.is_correct).length
+
+  // Create statistics data
+  const statisticsData = userScores.map(score => {
+    const subtestAnswers = userAnswers.filter(answer => answer.subtest === score.subtest)
+    return {
+      subtest: score.subtest,
+      jml_benar: subtestAnswers.filter(answer => answer.is_correct).length,
+      skor: score.score
+    }
+  })
+
   return (
     <div className='grid w-full grid-cols-1 gap-6 xl:grid-cols-4'>
       <div className='col-span-3 grid w-full grid-cols-1 gap-4 md:grid-cols-2 xl:col-span-1 xl:grid-cols-1'>
@@ -56,24 +116,18 @@ const Statistic = () => {
             <div className='rounded-lg bg-white'>
               <div className='px-auto pt-1 pb-1 font-medium text-black'>
                 <p className='text-primary-900 text-[3rem] font-bold sm:text-[4rem]'>
-                  11
+                  {totalSkor.toFixed(1)}
                 </p>
-                / 1000
-              </div>
-              <p className='border-t border-neutral-200 pt-1.5 pb-2.5 text-black'>
                 Total Skor
-              </p>
+              </div>
             </div>
             <div className='rounded-lg bg-white'>
               <div className='px-auto pt-1 pb-1 font-medium text-black'>
                 <p className='text-primary-900 text-[3rem] font-bold sm:text-[4rem]'>
-                  11
+                  {totalRank ? totalRank.toFixed(1) : 'N/A'}
                 </p>
-                / 1000
+                Peringkat
               </div>
-              <p className='border-t border-neutral-200 pt-1.5 pb-2.5 text-black'>
-                Total Skor
-              </p>
             </div>
           </div>
         </ResultTable>
@@ -96,7 +150,7 @@ const Statistic = () => {
           />
         </section>
       </div>
-      <StatisticTable className='col-span-3 px-6' />
+      <StatisticTable data={statisticsData} className='col-span-3 px-6' />
     </div>
   )
 }
@@ -119,7 +173,7 @@ const ResultTable = (props: ResultTableProps) => {
       <header className='flex h-fit w-full justify-between pb-2 text-sm font-bold text-white md:text-base'>
         <span>{props.title || 'Title'}</span>
         {props.subtest && (
-          <span className='text-neutral-500'>Subtest: {props.subtest}</span>
+          <span className='text-neutral-500'>Subtest: {subtestTitles[props.subtest] || props.subtest}</span>
         )}
       </header>
 
@@ -131,66 +185,49 @@ const ResultTable = (props: ResultTableProps) => {
   )
 }
 
-const Pembahasan = ({
-  title,
-  className,
-  subtest,
-}: {
+
+interface PembahasanProps {
   title?: string
   className?: string
   subtest?: string
-}) => {
-  const selectedSubtest = DUMMY_ANSWER.find((item) => item.subtest === subtest)
-
-  return (
-    <StyledCard title={title} className={className} subtest={subtest}>
-      <ScrollArea className='h-full w-full overflow-hidden rounded-lg border border-neutral-200'>
-        <Table>
-          {!selectedSubtest && (
-            <TableCaption className='mt-12 text-lg font-bold text-black'>
-              Subtest tidak ditemukan atau belum ada data.
-            </TableCaption>
-          )}
-
-          {selectedSubtest && (
-            <>
-              <TableHeader>
-                <TableRow>
-                  <TableHead className='text-nowrap'>No.</TableHead>
-                  <TableHead>Jawaban kamu</TableHead>
-                  <TableHead className='text-center'>Pembahasan</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {selectedSubtest.qna.map((data, index) => (
-                  <TableRow key={index}>
-                    <TableCell className='text-center font-medium'>
-                      {data.no}
-                    </TableCell>
-                    <TableCell className='w-full text-left'>
-                      {data.jawaban}
-                    </TableCell>
-                    <TableCell className='w-24 text-center'>
-                      <PembahasanButton data={data} />
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </>
-          )}
-        </Table>
-      </ScrollArea>
-    </StyledCard>
-  )
+  qnaData: Array<{
+    no: number
+    jawaban: string
+    pembahasan: string
+    isCorrect: boolean
+  }>
 }
 
-interface QnaType {
-  no: number
-  jawaban: string
-  pembahasan: string
-}
+const Pembahasan = ({ title, className, subtest, qnaData }: PembahasanProps) => (
+  <StyledCard title={title} className={className} subtest={subtest}>
+    <ScrollArea className='h-full w-full overflow-hidden rounded-lg border border-neutral-200'>
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead className='text-nowrap'>No.</TableHead>
+            <TableHead>Jawaban kamu</TableHead>
+            <TableHead className='text-center'>Pembahasan</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {qnaData.map((data, index) => (
+            <TableRow key={index}>
+              <TableCell className='text-center font-medium'>{data.no}</TableCell>
+              <TableCell className={cn('w-full text-left', data.isCorrect ? 'text-green-600' : 'text-red-600')}>
+                {data.jawaban}
+              </TableCell>
+              <TableCell className='w-24 text-center'>
+                <PembahasanButton data={data} />
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </ScrollArea>
+  </StyledCard>
+)
 
-const PembahasanButton = ({ data }: { data: QnaType }) => {
+const PembahasanButton = ({ data }: { data: any }) => {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
@@ -224,30 +261,29 @@ const PembahasanButton = ({ data }: { data: QnaType }) => {
   )
 }
 
-const StatisticTable = ({ className }: { className?: string }) => {
-  const leftData = DUMMY_STATISTIC.slice(0, 4)
-  const rightData = DUMMY_STATISTIC.slice(4)
+interface StatisticTableProps {
+  data: Array<{
+    subtest: string
+    jml_benar: number
+    skor: number
+  }>
+  className?: string
+}
 
-  const totalBenar = DUMMY_STATISTIC.reduce(
-    (sum, data) => sum + data.jml_benar,
-    0
-  )
-  const totalSkor = DUMMY_STATISTIC.reduce((sum, data) => sum + data.skor, 0)
-
+const StatisticTable = ({ data, className }: StatisticTableProps) => {
+  const leftData = data.slice(0, 4)
+  const rightData = data.slice(4)
+  const totalBenar = data.reduce((sum, item) => sum + item.jml_benar, 0)
+  const totalSkorSemua = data.reduce((sum, item) => sum + item.skor, 0)
+  const totalSkor = totalSkorSemua / data.length
   return (
     <StyledCard title='Statistik Nilai' className={className}>
       <div className='flex flex-col gap-5 lg:flex-row lg:gap-9'>
-        {/* Left Side */}
         <ScrollArea className='h-full w-full overflow-hidden rounded-lg border border-neutral-200'>
           <Table>
-            {leftData.length === 0 && (
-              <TableCaption className='mt-12 text-lg font-bold text-black'>
-                Kamu belum melakukan tes.
-              </TableCaption>
-            )}
             <TableHeader>
               <TableRow>
-                <TableHead className='w-[100px]'>Subtest</TableHead>
+                <TableHead>Subtest</TableHead>
                 <TableHead>Benar</TableHead>
                 <TableHead>Skor</TableHead>
               </TableRow>
@@ -255,29 +291,19 @@ const StatisticTable = ({ className }: { className?: string }) => {
             <TableBody>
               {leftData.map((data) => (
                 <TableRow key={data.subtest}>
-                  <TableCell className='w-full font-medium'>
-                    {data.subtest}
-                  </TableCell>
-                  <TableCell className='text-center'>
-                    {data.jml_benar}
-                  </TableCell>
-                  <TableCell className='text-center'>{data.skor}</TableCell>
+                  <TableCell className='font-medium'>{subtestTitles[data.subtest] || data.subtest}</TableCell>
+                  <TableCell className='text-center'>{data.jml_benar}</TableCell>
+                  <TableCell className='text-center'>{data.skor.toFixed(1)}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
           </Table>
         </ScrollArea>
-        {/* Right Side */}
         <ScrollArea className='h-full w-full overflow-hidden rounded-xl border border-neutral-200'>
           <Table>
-            {rightData.length === 0 && (
-              <TableCaption className='mt-12 text-lg font-bold text-black'>
-                Kamu belum melakukan tes.
-              </TableCaption>
-            )}
             <TableHeader>
               <TableRow>
-                <TableHead className='w-[100px]'>Subtest</TableHead>
+                <TableHead>Subtest</TableHead>
                 <TableHead>Benar</TableHead>
                 <TableHead>Skor</TableHead>
               </TableRow>
@@ -285,20 +311,15 @@ const StatisticTable = ({ className }: { className?: string }) => {
             <TableBody>
               {rightData.map((data) => (
                 <TableRow key={data.subtest}>
-                  <TableCell className='w-full font-medium'>
-                    {data.subtest}
-                  </TableCell>
-                  <TableCell className='text-center'>
-                    {data.jml_benar}
-                  </TableCell>
-                  <TableCell className='text-center'>{data.skor}</TableCell>
+                  <TableCell className='font-medium'>{subtestTitles[data.subtest] || data.subtest}</TableCell>
+                  <TableCell className='text-center'>{data.jml_benar}</TableCell>
+                  <TableCell className='text-center'>{data.skor.toFixed(1)}</TableCell>
                 </TableRow>
               ))}
-              {/* Total Row */}
               <TableRow className='bg-gray-100 font-bold'>
                 <TableCell className='text-center'>Total</TableCell>
                 <TableCell className='text-center'>{totalBenar}</TableCell>
-                <TableCell className='text-center'>{totalSkor}</TableCell>
+                <TableCell className='text-center'>{totalSkor.toFixed(1)}</TableCell>
               </TableRow>
             </TableBody>
           </Table>
@@ -308,121 +329,6 @@ const StatisticTable = ({ className }: { className?: string }) => {
   )
 }
 
-const DUMMY_STATISTIC = [
-  {
-    subtest: 'Penalaran Umum',
-    jml_benar: 9,
-    skor: 90,
-  },
-  {
-    subtest: 'Pengetahuan & Pemahaman Umum',
-    jml_benar: 9,
-    skor: 90,
-  },
-  {
-    subtest: 'Pemahaman Bacaan & Menulis',
-    jml_benar: 9,
-    skor: 90,
-  },
-  {
-    subtest: 'Pengetahuan Kuantitatif',
-    jml_benar: 9,
-    skor: 90,
-  },
-  {
-    subtest: 'Literasi Bahasa Indonesia',
-    jml_benar: 9,
-    skor: 90,
-  },
-  {
-    subtest: 'Literasi Bahasa Inggris',
-    jml_benar: 9,
-    skor: 90,
-  },
-  {
-    subtest: 'Penalaran Matematika',
-    jml_benar: 9,
-    skor: 90,
-  },
-]
+// Keep existing PembahasanButton implementation
 
-const DUMMY_ANSWER = [
-  {
-    subtest: 'PU',
-    qna: [
-      {
-        no: 1,
-        jawaban: 'jawaban nomor 1',
-        pembahasan: 'pembahasan nomor 1',
-      },
-      {
-        no: 2,
-        jawaban: 'jawaban nomor 2',
-        pembahasan: 'pembahasan nomor 2',
-      },
-      {
-        no: 3,
-        jawaban:
-          'membuktikan lokasi yang sangat buruk tetap bisa menguatkan tekad belajar Bung Karno',
-        pembahasan:
-          'Contrary to popular belief, Lorem Ipsum is not simply random text. It  has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at  Hampden-Sydney College in Virginia, looked up one of the more obscure  Latin words, consectetur, from a Lorem Ipsum passage, and going through  the cites of the word in classical literature, discovered the  undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33  of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by  Cicero, written in 45 BC. This book is a treatise on the theory of  ethics, very popular during the Renaissance. The first line of Lorem  Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section  1.10.32.',
-      },
-      {
-        no: 4,
-        jawaban:
-          'membuktikan lokasi yang sangat buruk tetap bisa menguatkan tekad belajar Bung Karno',
-        pembahasan:
-          'Contrary to popular belief, Lorem Ipsum is not simply random text. It  has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at  Hampden-Sydney College in Virginia, looked up one of the more obscure  Latin words, consectetur, from a Lorem Ipsum passage, and going through  the cites of the word in classical literature, discovered the  undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33  of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by  Cicero, written in 45 BC. This book is a treatise on the theory of  ethics, very popular during the Renaissance. The first line of Lorem  Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section  1.10.32.',
-      },
-      {
-        no: 5,
-        jawaban:
-          'membuktikan lokasi yang sangat buruk tetap bisa menguatkan tekad belajar Bung Karno',
-        pembahasan:
-          'Contrary to popular belief, Lorem Ipsum is not simply random text. It  has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at  Hampden-Sydney College in Virginia, looked up one of the more obscure  Latin words, consectetur, from a Lorem Ipsum passage, and going through  the cites of the word in classical literature, discovered the  undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33  of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by  Cicero, written in 45 BC. This book is a treatise on the theory of  ethics, very popular during the Renaissance. The first line of Lorem  Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section  1.10.32.',
-      },
-    ],
-  },
-  {
-    subtest: 'PPU',
-    qna: [
-      {
-        no: 1,
-        jawaban:
-          'membuktikan lokasi yang sangat buruk tetap bisa menguatkan tekad belajar Bung Karno',
-        pembahasan:
-          'Contrary to popular belief, Lorem Ipsum is not simply random text. It  has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at  Hampden-Sydney College in Virginia, looked up one of the more obscure  Latin words, consectetur, from a Lorem Ipsum passage, and going through  the cites of the word in classical literature, discovered the  undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33  of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by  Cicero, written in 45 BC. This book is a treatise on the theory of  ethics, very popular during the Renaissance. The first line of Lorem  Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section  1.10.32.',
-      },
-      {
-        no: 2,
-        jawaban:
-          'membuktikan lokasi yang sangat buruk tetap bisa menguatkan tekad belajar Bung Karno',
-        pembahasan:
-          'Contrary to popular belief, Lorem Ipsum is not simply random text. It  has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at  Hampden-Sydney College in Virginia, looked up one of the more obscure  Latin words, consectetur, from a Lorem Ipsum passage, and going through  the cites of the word in classical literature, discovered the  undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33  of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by  Cicero, written in 45 BC. This book is a treatise on the theory of  ethics, very popular during the Renaissance. The first line of Lorem  Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section  1.10.32.',
-      },
-      {
-        no: 3,
-        jawaban:
-          'membuktikan lokasi yang sangat buruk tetap bisa menguatkan tekad belajar Bung Karno',
-        pembahasan:
-          'Contrary to popular belief, Lorem Ipsum is not simply random text. It  has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at  Hampden-Sydney College in Virginia, looked up one of the more obscure  Latin words, consectetur, from a Lorem Ipsum passage, and going through  the cites of the word in classical literature, discovered the  undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33  of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by  Cicero, written in 45 BC. This book is a treatise on the theory of  ethics, very popular during the Renaissance. The first line of Lorem  Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section  1.10.32.',
-      },
-      {
-        no: 4,
-        jawaban:
-          'membuktikan lokasi yang sangat buruk tetap bisa menguatkan tekad belajar Bung Karno',
-        pembahasan:
-          'Contrary to popular belief, Lorem Ipsum is not simply random text. It  has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at  Hampden-Sydney College in Virginia, looked up one of the more obscure  Latin words, consectetur, from a Lorem Ipsum passage, and going through  the cites of the word in classical literature, discovered the  undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33  of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by  Cicero, written in 45 BC. This book is a treatise on the theory of  ethics, very popular during the Renaissance. The first line of Lorem  Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section  1.10.32.',
-      },
-      {
-        no: 5,
-        jawaban:
-          'membuktikan lokasi yang sangat buruk tetap bisa menguatkan tekad belajar Bung Karno',
-        pembahasan:
-          'Contrary to popular belief, Lorem Ipsum is not simply random text. It  has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at  Hampden-Sydney College in Virginia, looked up one of the more obscure  Latin words, consectetur, from a Lorem Ipsum passage, and going through  the cites of the word in classical literature, discovered the  undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33  of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by  Cicero, written in 45 BC. This book is a treatise on the theory of  ethics, very popular during the Renaissance. The first line of Lorem  Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section  1.10.32.',
-      },
-    ],
-  },
-]
-
-export default TryoutResult
+export default TryoutResult;

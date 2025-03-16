@@ -44,40 +44,33 @@ const POINTS = [
   },
 ]
 
-const StartCard = () => {
-
+const StartCard = ({ status }: { status: 'none' | 'ongoing' | 'finished' }) => {
   return (
-    <StyledCard title='TryOut' className='col-span-3'>
-      <main className='flex h-full flex-col gap-6 md:flex-row'>
-        <section className='relative h-24 w-full overflow-hidden rounded-xl md:aspect-6/7 md:h-auto md:max-w-[22rem]'>
-          <Image
-            src={`/hero.jpg`}
-            alt='LeBron James'
-            fill
-            sizes='50%'
-            className='object-cover'
-          />
+    <StyledCard title="TryOut" className="col-span-3">
+      <main className="flex h-full flex-col gap-6 md:flex-row">
+        <section className="relative h-24 w-full overflow-hidden rounded-xl md:aspect-6/7 md:h-auto md:max-w-[22rem]">
+          <Image src={`/hero.jpg`} alt="TryOut" fill sizes="50%" className="object-cover" />
         </section>
-
-        <section className='flex w-full flex-col gap-2 md:pt-2'>
-          <h1 className='text-primary-900 mb-1 text-xl font-bold md:text-2xl'>
+        <section className="flex w-full flex-col gap-2 md:pt-2">
+          <h1 className="text-primary-900 mb-1 text-xl font-bold md:text-2xl">
             Lakukan Tryout Sekarang
           </h1>
           {POINTS.map((point, i) => (
-            <div
-              key={i}
-              className={`flex items-center gap-3 text-sm text-neutral-600 ${(i + 1) % 3 === 0 && 'mb-4'}`}
-            >
+            <div key={i} className={`flex items-center gap-3 text-sm text-neutral-600 ${ (i + 1) % 3 === 0 && 'mb-4' }`}>
               {point.icon}
               <span>{point.title}</span>
             </div>
           ))}
-          <StartButton />
+          
+          {/* Conditional Button Rendering */}
+          {status === 'none' && <StartButton />}
+          {status === 'ongoing' && <ResumeButton />}
         </section>
       </main>
     </StyledCard>
-  )
-}
+  );
+};
+
 
 const StartButton = () => {
   const router = useRouter()
@@ -124,5 +117,19 @@ const StartButton = () => {
     </AlertDialog>
   )
 }
+
+const ResumeButton = () => {
+  const router = useRouter();
+
+  return (
+    <Button
+      variant="secondary"
+      className="mt-auto self-end px-6"
+      onClick={() => router.push('/tryout/intro')}
+    >
+      Lanjutkan Tryout
+    </Button>
+  );
+};
 
 export default StartCard
