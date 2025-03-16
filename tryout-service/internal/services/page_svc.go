@@ -15,6 +15,8 @@ type PageService interface {
 	GetUserSubtestNilai(userId int) ([]models.UserScore, error)
 	GetScoreAndRank(userID int, paket string) (float64, int, error)
 	GetPembahasanPage(ctx context.Context, userID int, paket, accessToken string) ([]models.EnrichedUserAnswer, float64, int, []models.UserScore, error)
+	GetOngoingAttempt(userID int) (*models.TryoutAttempt, error)
+	GetFinishedAttempt(userID int) (*models.TryoutAttempt, error)
 }
 
 type pageService struct {
@@ -170,4 +172,12 @@ func (s *pageService) GetUserSubtestNilai(userId int) ([]models.UserScore, error
 
 func (s *pageService) GetScoreAndRank(userID int, paket string) (float64, int, error) {
 	return s.pageRepo.GetScoreAndRank(userID, paket)
+}
+
+func (s *pageService) GetOngoingAttempt(userID int) (*models.TryoutAttempt, error) {
+	return s.pageRepo.GetOngoingAttemptByUserID(userID)
+}
+
+func (s *pageService) GetFinishedAttempt(userID int) (*models.TryoutAttempt, error) {
+	return s.pageRepo.GetFinishedAttemptByUserID(userID)
 }

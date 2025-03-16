@@ -22,6 +22,7 @@ type TryoutRepo interface {
 	ProgressTryoutTx(tx *sqlx.Tx, attemptID int, subtest string) (string, error)                                     // End a subtest attempt, marking the end time
 	EndTryOutTx(tx *sqlx.Tx, attemptID int) error
 	GetTryoutAttempt(attemptID int) (*models.TryoutAttempt, error) // End a tryout attempt, marking the end time
+	DeleteAttempt(attemptID int) error
 }
 
 type tryoutRepo struct {
@@ -242,4 +243,16 @@ func (r *tryoutRepo) GetTryoutAttempt(attemptID int) (*models.TryoutAttempt, err
 
 	logger.LogDebug("Attempt retrieved", map[string]interface{}{"layer": "repository", "operation": "GetTryoutAttempt"})
 	return &attempt, nil
+}
+
+func (r *tryoutRepo) DeleteAttempt(attemptID int) error {
+	query := `DELETE FROM tryout_attempt WHERE attempt_id = $1`
+	_, err := r.db.Exec(query, attemptID)
+	if err != nil {
+		logger.LogError(err, "Failed to delete attempt", map[string]interface{}{"layer": "repository", "operation": "DeleteAttempt"})
+		return err
+	}
+
+	logger.LogDebug("Attempt deleted", map[string]interface{}{"layer": "repository", "operation": "DeleteAttempt"})
+	return nil
 }

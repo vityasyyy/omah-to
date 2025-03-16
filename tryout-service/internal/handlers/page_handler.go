@@ -59,3 +59,15 @@ func (h *PageHandler) GetPembahasanPageHandler(c *gin.Context) {
 		"subtests_scores":  subtestsScores,
 	}})
 }
+
+func (h *PageHandler) GetOngoingAttemptHandler(c *gin.Context) {
+	userID := c.GetInt("user_id")
+	attempt, _ := h.pageService.GetOngoingAttempt(userID)
+	c.JSON(http.StatusOK, gin.H{"message": "Ongoing attempt retrieved successfully", "data": attempt})
+}
+
+func (h *PageHandler) GetFinishedAttemptHandler(c *gin.Context) {
+	userID := c.GetInt("user_id")
+	attempt, _ := h.pageService.GetFinishedAttempt(userID)
+	c.JSON(http.StatusOK, gin.H{"message": "Finished attempt retrieved successfully", "data": attempt})
+}

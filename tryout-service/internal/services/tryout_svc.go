@@ -15,6 +15,7 @@ type TryoutService interface {
 	SyncWithDatabase(answers []models.AnswerPayload, attemptID int) (answersInDB []models.UserAnswer, timeLimit time.Time, err error)
 	SubmitCurrentSubtest(answers []models.AnswerPayload, attemptID, userID int, tryoutToken string) (updatedSubtest string, retErr error)
 	GetCurrentAttempt(attemptID int) (*models.TryoutAttempt, error)
+	DeleteAttempt(attemptID int) error
 }
 
 type tryoutService struct {
@@ -287,6 +288,25 @@ func (s *tryoutService) SubmitCurrentSubtest(answers []models.AnswerPayload, att
 		}
 	}
 
+	// Get time limit within transaction
+	timeLimit, err := s.tryoutRepo.GetSubtestTimeTx(tx, attemptID, attempt.SubtestSekarang)
+	if err != nil {
+		retErr = err
+		logger.LogError(err, "Failed to get time limit", map[string]interface{}{
+			"layer":     "service",
+			"operation": "SyncWithDatabase",
+			"attemptID": attemptID,
+			"subtest":   attempt.SubtestSekarang,
+		})
+		return "", retErr
+	}
+
+	// exceed time limit
+	if time.Now().After(timeLimit) {
+		retErr = errors.New("time limit has been reached for this subtest")
+		return "", retErr
+	}
+
 	// Save final answers if any
 	if len(answers) > 0 {
 		// make a hash map of the answers, to be used for checking if the answer is valid
@@ -383,4 +403,8 @@ func (s *tryoutService) SubmitCurrentSubtest(answers []models.AnswerPayload, att
 
 func (s *tryoutService) GetCurrentAttempt(attemptID int) (*models.TryoutAttempt, error) {
 	return s.tryoutRepo.GetTryoutAttempt(attemptID)
+}
+
+func (s *tryoutService) DeleteAttempt(attemptID int) error {
+	return s.tryoutRepo.DeleteAttempt(attemptID)
 }

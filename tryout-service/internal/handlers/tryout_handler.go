@@ -95,3 +95,13 @@ func (h *TryoutHandler) GetCurrentAttempt(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, gin.H{"message": "Successfully get current attempt", "data": attempt})
 }
+
+func (h *TryoutHandler) DeleteAttemptHandler(c *gin.Context) {
+	attemptID := c.GetInt("attempt_id")
+	err := h.tryoutService.DeleteAttempt(attemptID)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"message": "Failed to delete attempt", "error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"message": "Successfully deleted attempt"})
+}

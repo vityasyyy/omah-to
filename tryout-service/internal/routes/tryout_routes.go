@@ -24,6 +24,8 @@ func InitializeRoutes(r *gin.Engine, tryoutHandler *handlers.TryoutHandler, page
 		tryout.GET("/pembahasan", pageHandler.GetPembahasanPageHandler)
 		tryout.GET("/leaderboard", pageHandler.GetLeaderboardHandler)
 		tryout.GET("/subtests-score", pageHandler.GetUserSubtestsScore)
+		tryout.GET("/ongoing-attempts", pageHandler.GetOngoingAttemptHandler)
+		tryout.GET("/finished-attempt", pageHandler.GetFinishedAttemptHandler)
 	}
 
 	sync := r.Group("/sync")
@@ -31,6 +33,7 @@ func InitializeRoutes(r *gin.Engine, tryoutHandler *handlers.TryoutHandler, page
 	{
 		sync.POST("", tryoutHandler.SyncHandler)
 		sync.POST("/progress", tryoutHandler.ProgressTryoutHandler)
+		sync.DELETE("/delete-attempt", tryoutHandler.DeleteAttemptHandler)
 		sync.GET("/current", tryoutHandler.GetCurrentAttempt)
 	}
 }

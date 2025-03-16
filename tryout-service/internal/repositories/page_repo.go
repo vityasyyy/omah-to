@@ -12,6 +12,8 @@ type PageRepo interface {
 	GetTop4Leaderboard() ([]models.TryoutAttempt, error)            // /leaderboard
 	GetScoreAndRank(userID int, paket string) (float64, int, error) // /pembahasan
 	GetUserAnswersBasedOnIDPaketAndSubtest(userID int, paket, subtest string) ([]models.UserAnswer, error)
+	GetOngoingAttemptByUserID(userID int) (*models.TryoutAttempt, error)
+	GetFinishedAttemptByUserID(userID int) (*models.TryoutAttempt, error)
 }
 
 type pageRepo struct {
@@ -87,4 +89,26 @@ func (s *pageRepo) GetUserAnswersBasedOnIDPaketAndSubtest(userID int, paket, sub
 	}
 
 	return userAnswers, nil
+}
+
+func (s *pageRepo) GetOngoingAttemptByUserID(userID int) (*models.TryoutAttempt, error) {
+	query := `SELECT * FROM tryout_attempt WHERE user_id = $1 AND status = 'ongoing'`
+	var attempt models.TryoutAttempt
+	err := s.db.Get(&attempt, query, userID)
+	if err != nil {
+		logger.LogError(err, "Failed to get ongoing attempt", map[string]interface{}{"layer": "repository", "operation": "GetOngoingAttempt"})
+		return nil, err
+	}
+	return &attempt, nil
+}
+
+func (s *pageRepo) GetFinishedAttemptByUserID(userID int) (*models.TryoutAttempt, error) {
+	query := `SELECT * FROM tryout_attempt WHERE user_id = $1 AND status = 'finished'`
+	var attempt models.TryoutAttempt
+	err := s.db.Get(&attempt, query, userID)
+	if err != nil {
+		logger.LogError(err, "Failed to get finished attempt", map[string]interface{}{"layer": "repository", "operation": "GetFinishedAttempt"})
+		return nil, err
+	}
+	return &attempt, nil
 }
