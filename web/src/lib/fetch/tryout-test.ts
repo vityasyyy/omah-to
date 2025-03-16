@@ -20,7 +20,7 @@ export const getCurrentTryout = async (tryoutToken?: string, isPublic?: boolean)
     }
 });
   if (!res.ok) {
-    throw new Error("Failed to fetch tryout data");
+    return null;
   }
 
   return res.json();
@@ -60,7 +60,15 @@ export const syncTryout = async (jawaban: Jawaban[], tryoutToken?: string, isPub
   });
 
   if (!res.ok) {
-    throw new Error("Failed to sync tryout data");
+    const deleted = await fetch(`${tryoutUrl}/sync/delete-attempt`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json", 
+        "Cookie": `tryout_token=${tryoutToken}`
+      },
+      credentials: "include"
+    });
+    throw new Error("Failed to sync tryout data, u exceed the time limit, start over the tryout");
   }
 
   return res.json();
@@ -82,7 +90,15 @@ export const progressTryout = async (jawaban: Jawaban[], tryoutToken?: string, i
     });
     
     if (!res.ok) {
-        throw new Error("Failed to progress tryout data");
+      const deleted = await fetch(`${tryoutUrl}/sync/delete-attempt`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json", 
+          "Cookie": `tryout_token=${tryoutToken}`
+        },
+        credentials: "include"
+      });
+        throw new Error("Failed to progress tryout data, u exceed the time limit, start over the tryout");
     }
     
     return res.json();

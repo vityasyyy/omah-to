@@ -6,12 +6,24 @@ import TryoutStatus from '@/modules/tryout/tryout-status'
 import { cookies } from 'next/headers'
 import { TryoutDataProvider } from './tryout-context'
 import { fetchUserClient } from '@/lib/auth/fetch_user'
+import { redirect } from 'next/navigation'
+import { getFinishedAttempt } from '@/lib/fetch/tryout-page'
 
 const TryoutLayout = async ({ children }: { children: React.ReactNode }) => {
   const tryoutToken = (await cookies()).get('tryout_token')?.value as string;
   const accessToken = (await cookies()).get('access_token')?.value as string;
+  const finishedAttempt = await getFinishedAttempt(accessToken);
+  if (finishedAttempt) {
+    redirect('/tryout');
+  }
   const currentSubtest = await getCurrentTryout(tryoutToken);
+  if (currentSubtest == null) {
+    redirect('/tryout');
+  }
   const syncData = await syncTryout([], tryoutToken);
+  if (syncData == null) {
+    redirect('/tryout');
+  }
   const timeLimit = syncData.data.time_limit;
   const grace = 30_000;
   const adjustedTimeLimit = new Date(new Date(timeLimit).getTime() - grace);
