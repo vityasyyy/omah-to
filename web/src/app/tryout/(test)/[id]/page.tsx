@@ -9,8 +9,7 @@ const TryoutPage = ({ params }: {
   params: Promise< { id: number } >
 }) => {
   const { id } = use(params) 
-  const {value: soal} = useTryoutData()
-  const {time: time} = useTryoutData()
+  const {value: soal, time, currentSubtest} = useTryoutData()
   const currentSoal = soal[id - 1]
   if (!currentSoal) return <p>Loading...</p> // Prevent errors if soal is not ready
 
@@ -27,7 +26,7 @@ const TryoutPage = ({ params }: {
       </StyledCard>
 
       {/* Pass only the current question */}
-      <AnswerCard time={time} variant={variant} soal={[currentSoal]} soalSemua={soal}/>
+      <AnswerCard time={time} variant={variant} soal={[currentSoal]} soalSemua={soal} currentSubtest={currentSubtest}/>
     </main>
   );
 }

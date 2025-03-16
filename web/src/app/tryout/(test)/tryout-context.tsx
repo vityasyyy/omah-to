@@ -6,6 +6,7 @@ import { createContext, useContext } from 'react';
 type TryoutContextType = {
   value: any; // Replace 'any' with the actual type of your tryout data
   time: Date; // Assuming 'time' is a Date object
+  currentSubtest: string
 };
 
 // Create the context with default `undefined`
@@ -15,14 +16,16 @@ const TryoutContext = createContext<TryoutContextType | undefined>(undefined);
 export function TryoutDataProvider({ 
   children, 
   value,
-  time
+  time,
+  currentSubtest
 }: { 
   children: React.ReactNode; 
   value: any;  // Replace with actual type
   time: Date;  // Assuming time is a Date
+  currentSubtest: string
 }) {
   return (
-    <TryoutContext.Provider value={{ value, time }}>
+    <TryoutContext.Provider value={{ value, time, currentSubtest}}>
       {children}
     </TryoutContext.Provider>
   );

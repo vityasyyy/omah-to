@@ -1,7 +1,7 @@
 'use client';
 
 import StyledCard from '@/components/tryout/styled-card';
-import { ArrowLeft, ArrowRight, Check } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Check, Clock } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState, useEffect, useCallback, useRef } from 'react';
@@ -9,7 +9,7 @@ import { buttonVariants } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { cn } from '@/lib/utils';
 import { progressTryout, syncTryout } from '@/lib/fetch/tryout-test';
-
+import { useRouter } from 'next/navigation';
 type Variant = 'multiple_choice' | 'true_false' | 'uraian';
 
 interface AnswerCardProps {
@@ -17,6 +17,7 @@ interface AnswerCardProps {
   soal?: any;
   soalSemua: any[];
   time: Date;
+  currentSubtest: string;
 }
 
 interface AnswerPayload {
@@ -29,7 +30,8 @@ interface LocalAnswer extends AnswerPayload {
   synced: boolean;
 }
 
-const AnswerCard = ({ variant = 'multiple_choice', soalSemua }: AnswerCardProps) => {
+const AnswerCard = ({ time, currentSubtest, variant = 'multiple_choice', soalSemua }: AnswerCardProps) => {
+  const router = useRouter();
   const pathname = usePathname();
   const basePath = pathname.slice(0, pathname.lastIndexOf('/'));
   const currentNumber = Number(pathname.slice(pathname.lastIndexOf('/') + 1)) || 1;
@@ -41,8 +43,12 @@ const AnswerCard = ({ variant = 'multiple_choice', soalSemua }: AnswerCardProps)
   const [answers, setAnswers] = useState<Record<string, LocalAnswer>>({});
   const [syncStatus, setSyncStatus] = useState<'idle' | 'syncing' | 'error'>('idle');
   const [lastSynced, setLastSynced] = useState<Date | null>(null);
-  const [timeLimit, setTimeLimit] = useState<number | null>(null);
   const [submitting, setSubmitting] = useState(false);
+  const [isGracePeriod, setIsGracePeriod] = useState(false);
+  const [graceTimeRemaining, setGraceTimeRemaining] = useState<number>(5 * 60); // 5 minutes in seconds
+
+  // Use the time prop directly as timeLimit instead of state
+  const timeLimit = time ? time.getTime() : null;
 
   // Derived values
   const totalQuestions = soalSemua.length;
@@ -55,15 +61,30 @@ const AnswerCard = ({ variant = 'multiple_choice', soalSemua }: AnswerCardProps)
     if (!timeLimit) return;
 
     const checkTime = () => {
-      if (Date.now() >= timeLimit && !hasSubmitted) {
-        submitAllAnswers();
-        setHasSubmitted(true);
+      if (Date.now() >= timeLimit && !hasSubmitted && !isGracePeriod) {
+        // Enter grace period
+        setIsGracePeriod(true);
+        if (timerRef.current) clearInterval(timerRef.current);
+        
+        // Start grace period countdown
+        timerRef.current = setInterval(() => {
+          setGraceTimeRemaining(prev => {
+            if (prev <= 1) {
+              // Auto-submit when grace period ends
+              submitAllAnswers();
+              setHasSubmitted(true);
+              if (timerRef.current) clearInterval(timerRef.current);
+              return 0;
+            }
+            return prev - 1;
+          });
+        }, 1000);
       }
     };
 
     timerRef.current = setInterval(checkTime, 1000);
     return () => { timerRef.current && clearInterval(timerRef.current) };
-  }, [timeLimit, hasSubmitted]);
+  }, [timeLimit, hasSubmitted, isGracePeriod]);
 
   // Sync logic
   const syncWithServer = useCallback(async (force = false) => {
@@ -81,9 +102,6 @@ const AnswerCard = ({ variant = 'multiple_choice', soalSemua }: AnswerCardProps)
       setSyncStatus('syncing');
       const result = await syncTryout(answersToSync, '', true);
 
-      if (result?.data?.time_limit) {
-        setTimeLimit(new Date(result.data.time_limit).getTime());
-      }
       setAnswers(prev => {
         const merged = { ...prev };
         result.data.answers?.forEach((sa: AnswerPayload) => {
@@ -122,6 +140,9 @@ const AnswerCard = ({ variant = 'multiple_choice', soalSemua }: AnswerCardProps)
 
   // Answer handling
   const updateAnswer = useCallback((kodeSoal: string, jawaban: string | null) => {
+    // Don't allow answer updates during grace period
+    if (isGracePeriod) return;
+
     setAnswers(prev => {
       const updated = {
         ...prev,
@@ -135,7 +156,7 @@ const AnswerCard = ({ variant = 'multiple_choice', soalSemua }: AnswerCardProps)
       localStorage.setItem(localStorageKey, JSON.stringify(updated));
       return updated;
     });
-  }, [localStorageKey]);
+  }, [localStorageKey, isGracePeriod]);
 
   // Submission handler
   const submitAllAnswers = useCallback(async () => {
@@ -151,8 +172,12 @@ const AnswerCard = ({ variant = 'multiple_choice', soalSemua }: AnswerCardProps)
       localStorage.removeItem(localStorageKey);
       setHasSubmitted(true);
       if (timerRef.current) clearInterval(timerRef.current);
-
-      alert('Answers submitted successfully!');
+      if (currentSubtest === "subtest_pm"){
+        router.push('/tryout')  
+      } else {
+        router.push('/tryout/intro')
+      }
+      alert('Answers submitted successfully!')
       return result;
     } catch (error) {
       console.error('Submission error:', error);
@@ -162,7 +187,14 @@ const AnswerCard = ({ variant = 'multiple_choice', soalSemua }: AnswerCardProps)
       setSubmitting(false);
       setSyncStatus('idle');
     }
-  }, [answers, hasSubmitted, localStorageKey]);
+  }, [answers, hasSubmitted, localStorageKey, currentSubtest, router]);
+
+  // Format time remaining for display
+  const formatTimeRemaining = (seconds: number) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+  };
 
   // Render helpers
   const renderQuestionComponent = () => {
@@ -171,7 +203,8 @@ const AnswerCard = ({ variant = 'multiple_choice', soalSemua }: AnswerCardProps)
     const commonProps = {
       soal: currentSoal,
       savedAnswer: answers[currentSoal.kode_soal]?.jawaban || null,
-      onAnswerChange: (value: string) => updateAnswer(currentSoal.kode_soal, value)
+      onAnswerChange: (value: string) => updateAnswer(currentSoal.kode_soal, value),
+      disabled: isGracePeriod // Disable inputs during grace period
     };
 
     switch (variant) {
@@ -187,6 +220,16 @@ const AnswerCard = ({ variant = 'multiple_choice', soalSemua }: AnswerCardProps)
   return (
     <StyledCard title='Jawaban' className='gap-1'>
       <main className='flex h-full flex-col'>
+        {isGracePeriod && (
+          <div className="bg-amber-100 border-l-4 border-amber-500 text-amber-700 p-4 mb-4 flex items-center">
+            <Clock className="mr-2" size={20} />
+            <div>
+              <strong>Time's up!</strong> You now have {formatTimeRemaining(graceTimeRemaining)} remaining to submit your answers.
+              All answers are locked. Please review and submit.
+            </div>
+          </div>
+        )}
+
         {renderQuestionComponent()}
 
         <div className="text-xs text-gray-500 mt-2 flex items-center justify-between">
@@ -211,14 +254,14 @@ const AnswerCard = ({ variant = 'multiple_choice', soalSemua }: AnswerCardProps)
             className={cn(
               buttonVariants({ variant: 'secondaryOutline' }),
               'border-[1.5px]',
-              clampedNumber === 1 && 'pointer-events-none opacity-50'
+              (clampedNumber === 1 || isGracePeriod) && 'pointer-events-none opacity-50'
             )}
           >
             <ArrowLeft />
             Back
           </Link>
 
-          {isLastQuestion ? (
+          {isGracePeriod ? (
             <button
               onClick={submitAllAnswers}
               disabled={submitting || syncStatus === 'syncing'}
@@ -230,10 +273,24 @@ const AnswerCard = ({ variant = 'multiple_choice', soalSemua }: AnswerCardProps)
               <Check size={16} />
               {submitting ? 'Submitting...' : 'Submit All'}
             </button>
+          ) : isLastQuestion ? (
+            <button
+              disabled={true}
+              className={cn(
+                buttonVariants({ variant: 'secondary' }),
+                'flex items-center justify-center gap-2 cursor-not-allowed'
+              )}
+            >
+              <Clock size={16} />
+              Wait for Time to End
+            </button>
           ) : (
             <Link
               href={`${basePath}/${clampedNumber + 1}`}
-              className={buttonVariants({ variant: 'secondary' })}
+              className={cn(
+                buttonVariants({ variant: 'secondary' }),
+                isGracePeriod && 'pointer-events-none opacity-50'
+              )}
             >
               Next
               <ArrowRight />
@@ -245,18 +302,17 @@ const AnswerCard = ({ variant = 'multiple_choice', soalSemua }: AnswerCardProps)
   );
 };
 
-// Component implementations remain similar but with proper TypeScript typing
-// Add interface definitions for each component's props
-//
-// Updated components to accept and manage saved answers
+// Component implementations updated to support disabled state
 const MultipleChoice = ({ 
   soal, 
   savedAnswer,
-  onAnswerChange
+  onAnswerChange,
+  disabled = false
 }: { 
   soal: any;
   savedAnswer: string | null;
   onAnswerChange: (value: string) => void;
+  disabled?: boolean;
 }) => {
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(savedAnswer);
 
@@ -265,6 +321,7 @@ const MultipleChoice = ({
   }, [savedAnswer]);
 
   const handleSelect = (answerId: string) => {
+    if (disabled) return;
     setSelectedAnswer(answerId);
     onAnswerChange(answerId);
   };
@@ -278,8 +335,9 @@ const MultipleChoice = ({
             selectedAnswer === option.soal_pilihan_ganda_id
               ? 'bg-primary-500 text-white'
               : 'border-b border-neutral-200 text-black'
-          }`}
+          } ${disabled ? 'cursor-not-allowed opacity-80' : ''}`}
           onClick={() => handleSelect(option.soal_pilihan_ganda_id)}
+          disabled={disabled}
         >
           <div className='flex gap-4'>
             <span className='font-bold'>{String.fromCharCode(97 + idx)}.</span> {/* a, b, c, d */}
@@ -294,11 +352,13 @@ const MultipleChoice = ({
 const TextAnswer = ({ 
   soal,
   savedAnswer,
-  onAnswerChange
+  onAnswerChange,
+  disabled = false
 }: { 
   soal: any;
   savedAnswer: string | null;
   onAnswerChange: (value: string) => void;
+  disabled?: boolean;
 }) => {
   const [text, setText] = useState(savedAnswer || '');
   
@@ -307,6 +367,7 @@ const TextAnswer = ({
   }, [savedAnswer]);
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    if (disabled) return;
     const newValue = e.target.value;
     setText(newValue);
     onAnswerChange(newValue);
@@ -318,6 +379,8 @@ const TextAnswer = ({
         placeholder='Ketik jawabanmu disini' 
         value={text}
         onChange={handleChange}
+        disabled={disabled}
+        className={disabled ? 'cursor-not-allowed opacity-80' : ''}
       />
     </div>
   );
@@ -328,12 +391,15 @@ const TrueFalse = ({
   soal,
   savedAnswer,
   onAnswerChange,
+  disabled
 }: {
   soal: any;
   savedAnswer: string | null;
   onAnswerChange: (value: string) => void;
+  disabled?: boolean;
 }) => {
-  const [selectedOptions, setSelectedOptions] = useState<Record<string, boolean>>({});
+  // Track answers with format "id:true" or "id:false"
+  const [selectedAnswers, setSelectedAnswers] = useState<Record<string, string>>({});
   const prevAnswerRef = useRef<string | null>(null);
 
   // Initialize from saved answer
@@ -342,75 +408,81 @@ const TrueFalse = ({
     prevAnswerRef.current = savedAnswer;
 
     if (!savedAnswer) {
-      setSelectedOptions({});
+      setSelectedAnswers({});
       return;
     }
 
     try {
-      const selected = savedAnswer.split(',').filter(Boolean).reduce((acc, id) => {
-        acc[id] = true;
+      const parsed = savedAnswer.split(',').filter(Boolean).reduce((acc, item) => {
+        const [id, value] = item.split(':');
+        if (id && (value === 'true' || value === 'false')) {
+          acc[id] = value;
+        }
         return acc;
-      }, {} as Record<string, boolean>);
+      }, {} as Record<string, string>);
       
-      setSelectedOptions(selected);
+      setSelectedAnswers(parsed);
     } catch (error) {
       console.error('Error parsing saved true/false answers:', error);
-      setSelectedOptions({});
+      setSelectedAnswers({});
     }
   }, [savedAnswer]);
 
-  // Add this effect to handle answer changes
+  // Sync answers with parent component
   useEffect(() => {
-    // Skip initial render
-    if (Object.keys(selectedOptions).length === 0 && !prevAnswerRef.current) return;
+    // Skip initial render when nothing is selected and no previous answer
+    if (Object.keys(selectedAnswers).length === 0 && !prevAnswerRef.current) return;
     
-    const newAnswer = Object.keys(selectedOptions).join(',');
+    const newAnswer = Object.entries(selectedAnswers)
+      .map(([id, value]) => `${id}:${value}`)
+      .join(',');
     
     // Only update if different from previous
     if (newAnswer !== prevAnswerRef.current) {
       prevAnswerRef.current = newAnswer;
-      onAnswerChange(newAnswer);
+      onAnswerChange(newAnswer || ""); // Send null if empty
     }
-  }, [selectedOptions, onAnswerChange]);
+  }, [selectedAnswers, onAnswerChange]);
 
-  const handleSelect = (optionId: string, value: boolean) => {
-    setSelectedOptions(prev => {
-      const newOptions = { ...prev };
-      
-      if (value) {
-        newOptions[optionId] = true;
-      } else {
-        delete newOptions[optionId];
-      }
-      
-      return newOptions;
+  const handleSelect = (optionId: string, isTrue: boolean) => {
+    if (disabled) return;
+    
+    setSelectedAnswers(prev => {
+      const newAnswers = { ...prev };
+      newAnswers[optionId] = isTrue ? 'true' : 'false';
+      return newAnswers;
     });
-    // Removed the onAnswerChange call from here
   };
 
   return (
     <div className="mb-4 flex flex-col gap-4">
       {soal.true_false?.map((option: any) => {
-        const isSelected = selectedOptions[option.soal_true_false_id] === true;
+        const answer = selectedAnswers[option.soal_true_false_id];
+        const isTrue = answer === 'true';
+        const isFalse = answer === 'false';
         
         return (
           <div key={option.soal_true_false_id} className="flex items-center gap-4">
             <span className="w-40">{option.pilihan_tf}</span>
 
             <button
+              type="button"
               onClick={() => handleSelect(option.soal_true_false_id, true)}
               className={`px-4 py-2 border rounded ${
-                isSelected ? "bg-primary-500 text-white" : ""
-              }`}
+                isTrue ? "bg-primary-500 text-white" : "bg-white"
+              } ${disabled ? 'opacity-70 cursor-not-allowed' : ''}`}
+              disabled={disabled}
             >
               True
             </button>
 
             <button
+              type="button"
               onClick={() => handleSelect(option.soal_true_false_id, false)}
               className={`px-4 py-2 border rounded ${
-                !isSelected ? "bg-primary-500 text-white" : ""
-              }`}
+                isFalse ? "bg-primary-500 text-white" : "bg-white"
+              } ${disabled ? 'opacity-70 cursor-not-allowed' : ''}`}
+              disabled={disabled}
             >
               False
             </button>
@@ -420,5 +492,6 @@ const TrueFalse = ({
     </div>
   );
 };
+
 
 export default AnswerCard;

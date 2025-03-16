@@ -8,3 +8,18 @@ export async function fetchUser() {
     const id = headersList.get('x-user-id');
     return { username, email, asalSekolah, id };
 }
+
+export const fetchUserClient = async (accessToken?: string) => {
+    const res = await fetch(`${process.env.AUTH_URL}/auth/validateprofile`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Cookie': `access_token=${accessToken}`
+        },
+        credentials: 'include'
+    })
+    if (res.ok) {
+        return await res.json();
+    }
+    return null;
+}

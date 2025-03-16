@@ -5,27 +5,32 @@ import NumberCarousel from '@/modules/tryout/number-carousel'
 import TryoutStatus from '@/modules/tryout/tryout-status'
 import { cookies } from 'next/headers'
 import { TryoutDataProvider } from './tryout-context'
+import { fetchUserClient } from '@/lib/auth/fetch_user'
 
 const TryoutLayout = async ({ children }: { children: React.ReactNode }) => {
   const tryoutToken = (await cookies()).get('tryout_token')?.value as string;
+  const accessToken = (await cookies()).get('access_token')?.value as string;
   const currentSubtest = await getCurrentTryout(tryoutToken);
   const syncData = await syncTryout([], tryoutToken);
   const timeLimit = syncData.data.time_limit;
-  console.log("SYNC", syncData);
+  const grace = 30_000;
+  const adjustedTimeLimit = new Date(new Date(timeLimit).getTime() - grace);
+  const subtestSekarang = currentSubtest.data.subtest_sekarang;
+  const user = await fetchUserClient(accessToken);
   const soal = await getSoal(
     currentSubtest.data.subtest_sekarang,
     tryoutToken,
     false,
     true
   );
-
+  const panjangSoal = soal.length;
   return (
     <main className='bg-neutral-25 min-h-screen'>
       <Container>
         <TopBar />
-        <TryoutStatus time={timeLimit} title={currentSubtest.data.subtest_sekarang} />
-        <NumberCarousel totalQuestions={soal.length} />
-        <TryoutDataProvider value={soal} time={timeLimit}>{children}</TryoutDataProvider>
+        <TryoutStatus time={adjustedTimeLimit} title={subtestSekarang} user={user}/>
+        <NumberCarousel totalQuestions={panjangSoal} />
+        <TryoutDataProvider currentSubtest={subtestSekarang} value={soal} time={adjustedTimeLimit}>{children}</TryoutDataProvider>
       </Container>
     </main>
   );

@@ -6,13 +6,13 @@ type TryoutStatusProps = {
   title: string
 }
 
-const TryoutStatus = ({ title, time }: { title: string, time: Date }) => {
+const TryoutStatus = ({ title, time, user }: { title: string, time: Date, user: any }) => {
   return (
     <>
       <main className='flex gap-2 md:gap-6'>
         <RemainingTime time={time} className='w-full shrink md:shrink-0 md:w-fit' />
         <TitleCard title={title} className='hidden md:flex' />
-        <ProfileCard className='w-full shrink md:w-fit md:shrink-0' />
+        <ProfileCard user={user} className='w-full shrink md:w-fit md:shrink-0' />
       </main>
       <TitleCard title={title} className='md:hidden' />
     </>
@@ -36,7 +36,7 @@ const TitleCard = ({
   )
 }
 
-const ProfileCard = ({ className }: { className?: string }) => {
+const ProfileCard = ({ user, className }: { user: any, className?: string }) => {
   return (
     <SmallStyledCard className={cn('gap-3 overflow-hidden', className)}>
       <section
@@ -45,7 +45,7 @@ const ProfileCard = ({ className }: { className?: string }) => {
         )}
       ></section>
       <h1 className='overflow-hidden text-ellipsis whitespace-nowrap'>
-        Fahmi Shampoerna
+        {user.username}
       </h1>
     </SmallStyledCard>
   )
