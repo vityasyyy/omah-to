@@ -6,11 +6,11 @@ type TryoutStatusProps = {
   title: string
 }
 
-const TryoutStatus = ({ title }: { title: string }) => {
+const TryoutStatus = ({ title, time }: { title: string, time: Date }) => {
   return (
     <>
       <main className='flex gap-2 md:gap-6'>
-        <RemainingTime className='w-full shrink md:shrink-0 md:w-fit' />
+        <RemainingTime time={time} className='w-full shrink md:shrink-0 md:w-fit' />
         <TitleCard title={title} className='hidden md:flex' />
         <ProfileCard className='w-full shrink md:w-fit md:shrink-0' />
       </main>

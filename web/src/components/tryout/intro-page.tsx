@@ -54,7 +54,7 @@ const IntroPage = async () => {
       <Container className='z-10 h-full justify-between *:z-10'>
         <section className='flex flex-col gap-4'>
           <TopBar variant='ghost' />
-          <RemainingTime className='md:px-6 md:py-3' />
+          <RemainingTime time={""} className='md:px-6 md:py-3' />
         </section>
 
         <section className='mt-auto mb-[10vh] flex w-full max-w-(--breakpoint-md) flex-col gap-4 *:font-bold *:text-white'>

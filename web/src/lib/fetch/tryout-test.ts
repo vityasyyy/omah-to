@@ -71,7 +71,7 @@ export const progressTryout = async (jawaban: Jawaban[], tryoutToken?: string, i
     const payload = {
         answers: jawaban
     }
-    const res = await fetch(`${tryoutUrl}/progress`, {
+    const res = await fetch(`${tryoutUrl}/sync/progress`, {
         method: "POST",
         headers: {
         "Content-Type": "application/json",
