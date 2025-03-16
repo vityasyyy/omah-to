@@ -6,7 +6,7 @@ const Logo = () => {
     <Link href={`/`} className='flex items-center gap-4'>
       <div className='relative size-8'>
         <Image
-          src='/default-robot.webp'
+          src='/assets/default-robot.webp'
           alt='logo'
           fill
           sizes='100%'
