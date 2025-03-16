@@ -12,7 +12,7 @@ const ReadyPath = () => {
         {/* Robot Image */}
         <div className='relative mx-auto mb-12 size-60 md:size-96'>
           <Image
-            src='/fullbody_2.webp'
+            src='/assets/fullbody_2.webp'
             alt='Robot Illustration'
             fill
             sizes='10%'

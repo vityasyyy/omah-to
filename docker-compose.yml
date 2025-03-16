@@ -2,7 +2,6 @@ services:
   # FRONTEND
   web:
     build: ./web
-    command: pnpm run dev
     ports:
     - "${FRONTEND_PORT}:${FRONTEND_PORT}"
     volumes:

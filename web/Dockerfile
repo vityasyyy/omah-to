@@ -8,7 +8,7 @@ WORKDIR /app
 COPY package.json pnpm-lock.yaml ./
 
 # Install dependencies
-RUN corepack enable && pnpm install
+RUN corepack enable && pnpm install --frozen-lockfile
 
 # Copy the rest of the frontend code
 COPY . .
