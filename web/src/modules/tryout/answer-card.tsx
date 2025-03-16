@@ -398,8 +398,8 @@ const TrueFalse = ({
   onAnswerChange: (value: string) => void;
   disabled?: boolean;
 }) => {
-  // Track answers with format "id:true" or "id:false"
-  const [selectedAnswers, setSelectedAnswers] = useState<Record<string, string>>({});
+  // Track only the IDs of options that are marked as TRUE
+  const [trueAnswerIds, setTrueAnswerIds] = useState<string[]>([]);
   const prevAnswerRef = useRef<string | null>(null);
 
   // Initialize from saved answer
@@ -408,58 +408,53 @@ const TrueFalse = ({
     prevAnswerRef.current = savedAnswer;
 
     if (!savedAnswer) {
-      setSelectedAnswers({});
+      setTrueAnswerIds([]);
       return;
     }
 
     try {
-      const parsed = savedAnswer.split(',').filter(Boolean).reduce((acc, item) => {
-        const [id, value] = item.split(':');
-        if (id && (value === 'true' || value === 'false')) {
-          acc[id] = value;
-        }
-        return acc;
-      }, {} as Record<string, string>);
-      
-      setSelectedAnswers(parsed);
+      // Parse the comma-separated list of IDs
+      const ids = savedAnswer.split(',').filter(Boolean);
+      setTrueAnswerIds(ids);
     } catch (error) {
       console.error('Error parsing saved true/false answers:', error);
-      setSelectedAnswers({});
+      setTrueAnswerIds([]);
     }
   }, [savedAnswer]);
 
   // Sync answers with parent component
   useEffect(() => {
     // Skip initial render when nothing is selected and no previous answer
-    if (Object.keys(selectedAnswers).length === 0 && !prevAnswerRef.current) return;
+    if (trueAnswerIds.length === 0 && !prevAnswerRef.current) return;
     
-    const newAnswer = Object.entries(selectedAnswers)
-      .map(([id, value]) => `${id}:${value}`)
-      .join(',');
+    // Create a comma-separated list of IDs that are marked as true
+    const newAnswer = trueAnswerIds.join(',');
     
     // Only update if different from previous
     if (newAnswer !== prevAnswerRef.current) {
       prevAnswerRef.current = newAnswer;
-      onAnswerChange(newAnswer || ""); // Send null if empty
+      onAnswerChange(newAnswer);
     }
-  }, [selectedAnswers, onAnswerChange]);
+  }, [trueAnswerIds, onAnswerChange]);
 
   const handleSelect = (optionId: string, isTrue: boolean) => {
     if (disabled) return;
     
-    setSelectedAnswers(prev => {
-      const newAnswers = { ...prev };
-      newAnswers[optionId] = isTrue ? 'true' : 'false';
-      return newAnswers;
+    setTrueAnswerIds(prev => {
+      if (isTrue) {
+        // Add ID if it's not already included
+        return prev.includes(optionId) ? prev : [...prev, optionId];
+      } else {
+        // Remove ID if it's marked as false
+        return prev.filter(id => id !== optionId);
+      }
     });
   };
 
   return (
     <div className="mb-4 flex flex-col gap-4">
       {soal.true_false?.map((option: any) => {
-        const answer = selectedAnswers[option.soal_true_false_id];
-        const isTrue = answer === 'true';
-        const isFalse = answer === 'false';
+        const isTrue = trueAnswerIds.includes(option.soal_true_false_id);
         
         return (
           <div key={option.soal_true_false_id} className="flex items-center gap-4">
@@ -480,7 +475,7 @@ const TrueFalse = ({
               type="button"
               onClick={() => handleSelect(option.soal_true_false_id, false)}
               className={`px-4 py-2 border rounded ${
-                isFalse ? "bg-primary-500 text-white" : "bg-white"
+                !isTrue ? "bg-primary-500 text-white" : "bg-white"
               } ${disabled ? 'opacity-70 cursor-not-allowed' : ''}`}
               disabled={disabled}
             >

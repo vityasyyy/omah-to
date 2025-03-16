@@ -6,6 +6,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { buttonVariants } from '../ui/button'
 import { cookies } from 'next/headers'
+import { redirect } from 'next/navigation'
 
 const subtestDetails: Record<string, { title: string; index: number; description: string }> = {
   subtest_pu: {
@@ -13,17 +14,38 @@ const subtestDetails: Record<string, { title: string; index: number; description
     index: 1,
     description: 'Uji wawasan umummu dengan berbagai pertanyaan tentang dunia, sejarah, dan ilmu pengetahuan.',
   },
-  subtest_mtk: {
-    title: 'Matematika',
+  subtest_ppu: {
+    title: 'Pengetahuan dan Pemahaman Umum',
     index: 2,
-    description: 'Tes kemampuan matematika dasar dan pemecahan masalah dengan berbagai soal numerik.',
+    description: 'Tes kemampuan memahami informasi dan wawasan umum dalam berbagai konteks.',
   },
-  subtest_logika: {
-    title: 'Logika',
+  subtest_pbm: {
+    title: 'Pengetahuan Membaca dan Menulis',
     index: 3,
-    description: 'Uji kemampuan berpikir logis dengan serangkaian soal yang mengasah pola pikir kritis.',
+    description: 'Uji keterampilan membaca dan menulis untuk memahami dan menyampaikan informasi secara efektif.',
   },
-}
+  subtest_pk: {
+    title: 'Pengetahuan Kuantitatif',
+    index: 4,
+    description: 'Tes pemahaman konsep matematika dasar dan kemampuan analisis kuantitatif.',
+  },
+  subtest_lbi: {
+    title: 'Literasi Bahasa Indonesia',
+    index: 5,
+    description: 'Uji pemahaman dan keterampilan berbahasa Indonesia dalam berbagai situasi komunikasi.',
+  },
+  subtest_lbe: {
+    title: 'Literasi Bahasa Inggris',
+    index: 6,
+    description: 'Tes kemampuan membaca dan memahami teks berbahasa Inggris dalam berbagai konteks.',
+  },
+  subtest_pm: {
+    title: 'Penalaran Matematika',
+    index: 7,
+    description: 'Uji kemampuan berpikir logis dan pemecahan masalah melalui soal-soal matematika.',
+  },
+};
+
 
 const IntroPage = async () => {
   const tryoutToken = (await cookies()).get('tryout_token')?.value as string
@@ -36,8 +58,7 @@ const IntroPage = async () => {
   })
 
   if (!res.ok) {
-    console.error('Failed to fetch current tryout')
-    return <div>Error fetching tryout data.</div>
+    redirect('/tryout')
   }
 
   const currentTryout = await res.json()
