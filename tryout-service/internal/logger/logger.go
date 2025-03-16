@@ -26,16 +26,16 @@ func InitLogger() {
 		// Cloud Run detected → Log only to stdout/stderr
 		Log = zerolog.New(os.Stdout).With().
 			Timestamp().
-			Str("service", "soal-service").
+			Str("service", "tryout-service").
 			Logger()
 
 		ErrorLog = zerolog.New(os.Stderr).With().
 			Timestamp().
-			Str("service", "soal-service").
+			Str("service", "tryout-service").
 			Logger()
 	} else {
 		// Local or other environments → Log to both file and stdout
-		logPath := "var/log/soal-service"
+		logPath := "var/log/tryout-service"
 		os.MkdirAll(logPath, os.ModePerm)
 
 		appLogFile, _ := os.OpenFile(logPath+"/app.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
@@ -46,12 +46,12 @@ func InitLogger() {
 
 		Log = zerolog.New(multiAppWriter).With().
 			Timestamp().
-			Str("service", "soal-service").
+			Str("service", "tryout-service").
 			Logger()
 
 		ErrorLog = zerolog.New(multiErrorWriter).With().
 			Timestamp().
-			Str("service", "soal-service").
+			Str("service", "tryout-service").
 			Logger()
 	}
 }

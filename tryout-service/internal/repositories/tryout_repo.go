@@ -58,13 +58,13 @@ func (r *tryoutRepo) CreateTryoutAttemptTx(tx *sqlx.Tx, attempt *models.TryoutAt
 		Subtest   string
 		TimeLimit time.Duration // Time in minutes
 	}{
-		{"subtest_pu", 30 * time.Minute},
-		{"subtest_ppu", 40 * time.Minute},
-		{"subtest_pbm", 45 * time.Minute},
-		{"subtest_pk", 30 * time.Minute},
-		{"subtest_lbi", 30 * time.Minute},
-		{"subtest_lbe", 30 * time.Minute},
-		{"subtest_pm", 30 * time.Minute},
+		{"subtest_pu", 1 * time.Minute},
+		{"subtest_ppu", 1 * time.Minute},
+		{"subtest_pbm", 1 * time.Minute},
+		{"subtest_pk", 1 * time.Minute},
+		{"subtest_lbi", 1 * time.Minute},
+		{"subtest_lbe", 1 * time.Minute},
+		{"subtest_pm", 1 * time.Minute},
 	}
 
 	// Construct the query for batch insertion
