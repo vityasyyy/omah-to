@@ -232,66 +232,77 @@ const Pembahasan = ({ title, className, subtest, qnaData }: PembahasanProps) => 
   </StyledCard>
 )
 
-const LatexRenderer = ({ content }: { content: string }) => {
-  if (!content) return null;
+interface LatexRendererProps {
+  content: string;
+}
 
-  // Process content with proper LaTeX escaping
-  const processedContent = content
-    .replace(/\\\\/g, '\\') // Replace double backslashes with single
-    .replace(/\\\[/g, '[')  // Convert \[ to [
-    .replace(/\\\]/g, ']')  // Convert \] to ]
-    .replace(/\\\%/g, '%')  // Convert \% to %
-    .replace(/\r\n/g, '\n'); // Normalize line endings
+const LatexRenderer = ({ content }: LatexRendererProps) => {
+  // Check if content actually contains LaTeX
+  const hasLatex = /\$|\\\(|\\\)|\\\[|\\\]|\\begin\{|\\end\{/.test(content);
+  
+  if (!hasLatex) {
+    // If no LaTeX detected, just render as plain text with proper line breaks
+    return (
+      <div className="w-full">
+        <div className="px-4 py-2 border border-neutral-200 rounded-md whitespace-pre-wrap">
+          {content}
+        </div>
+      </div>
+    );
+  }
 
-  // Split content into display math blocks and text
-  const blocks = processedContent.split(/(\$\$[\s\S]*?\$\$|\\\[[\s\S]*?\\\])/g);
+  // For LaTeX content, preprocess to fix common issues
+  try {
+    // Wrap standalone equations in display mode with appropriate delimiters
+    const formattedContent = content
+    .replace(/[“”]/g, '"') // Fix curly quotes
+    .replace(/\\\\/g, '\\') // Remove redundant escape backslashes
+    .replace(/\\\s*\\\s*/g, '\\\\ ') // Ensure valid LaTeX line breaks
+    .replace(/\\\[/g, '\\begin{align*}') // Convert `\[ ... \]` to `align*`
+    .replace(/\\\]/g, '\\end{align*}');
+    
+    // Render to KaTeX
+    const html = katex.renderToString(formattedContent, {
+      throwOnError: false,
+      displayMode: true,
+      output: 'html',
+      trust: true,
+      strict: false
+    });
 
-  return (
-    <div className="latex-container">
-      {blocks.map((block, index) => {
-        if (!block) return null;
-
-        // Handle display math (both $$...$$ and \[...\])
-        if (block.startsWith('$$') && block.endsWith('$$')) {
-          try {
-            const html = katex.renderToString(block.slice(2, -2), {
-              displayMode: true,
-              throwOnError: false
-            });
-            return <div key={index} dangerouslySetInnerHTML={{ __html: html }} />;
-          } catch (error) {
-            return <div key={index} className="text-red-500">{block}</div>;
-          }
-        }
-
-        // Handle \[...\] style display math
-        if (block.startsWith('[') && block.endsWith(']')) {
-          try {
-            const html = katex.renderToString(block.slice(1, -1), {
-              displayMode: true,
-              throwOnError: false
-            });
-            return <div key={index} dangerouslySetInnerHTML={{ __html: html }} />;
-          } catch (error) {
-            return <div key={index} className="text-red-500">{block}</div>;
-          }
-        }
-
-        // Handle regular text with line breaks
-        return (
-          <span key={index}>
-            {block.split('\n').map((line, lineIndex, arr) => (
-              <React.Fragment key={lineIndex}>
-                {line}
-                {lineIndex < arr.length - 1 && <br />}
-              </React.Fragment>
-            ))}
-          </span>
-        );
-      })}
-    </div>
-  );
-};
+    return (
+      <div className="w-full my-2">
+        <div 
+          className="px-4 py-3 border border-neutral-200 rounded-md overflow-x-auto"
+          style={{ 
+            maxWidth: '100%',
+            overflowY: 'hidden',
+            scrollbarWidth: 'thin'
+          }}
+        >
+          <div 
+            className="katex-container" 
+            style={{ display: 'inline-block', maxWidth: '100%' }}
+            dangerouslySetInnerHTML={{ __html: html }} 
+          />
+        </div>
+      </div>
+    );
+  } catch (error) {
+    // Fallback in case LaTeX rendering fails
+    console.error("LaTeX rendering error:", error);
+    return (
+      <div className="w-full my-2">
+        <div className="px-4 py-2 border border-neutral-200 rounded-md text-red-500 whitespace-pre-wrap">
+          {content}
+          <div className="text-xs mt-2 text-gray-500">
+            (LaTeX rendering failed - check syntax)
+          </div>
+        </div>
+      </div>
+    );
+  }
+}
 
 const PembahasanButton = ({ data }: { data: any }) => {
   return (
