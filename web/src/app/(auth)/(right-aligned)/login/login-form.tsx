@@ -1,10 +1,10 @@
 'use client'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { Eye, EyeOff } from 'lucide-react'
 import { useRouter } from 'next/navigation'
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
-import { Eye, EyeOff } from 'lucide-react'
-import { useState } from 'react'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -52,6 +52,7 @@ const LoginForm = () => {
           body: JSON.stringify(values),
         }
       )
+      console.log('signedin');
 
       if (!response.ok) {
         const errorData = await response.json()
@@ -117,7 +118,11 @@ const LoginForm = () => {
           )}
         />
 
-        <Button type='submit' variant={`tertiary`} className='mt-8 w-full max-w-xs self-center'>
+        <Button
+          type='submit'
+          variant={`tertiary`}
+          className='mt-8 w-full max-w-xs self-center'
+        >
           Masuk
         </Button>
       </form>

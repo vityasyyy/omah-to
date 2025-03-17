@@ -1,7 +1,3 @@
-import Link from 'next/link'
-import Container from '../container'
-import { Button, buttonVariants } from '../ui/button'
-import Image from 'next/image'
 import {
   Sheet,
   SheetClose,
@@ -11,10 +7,15 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '@/components/ui/sheet'
-import { Menu } from 'lucide-react'
-import NavbarResolver from './navbar-resolver'
-import Logo from './logo'
+import { fetchUser } from '@/lib/auth/fetch_user'
 import { cn } from '@/lib/utils'
+import { Menu } from 'lucide-react'
+import { cookies } from 'next/headers'
+import Link from 'next/link'
+import Container from '../container'
+import { Button, buttonVariants } from '../ui/button'
+import Logo from './logo'
+import NavbarResolver from './navbar-resolver'
 
 const NAV_ITEMS = [
   {
@@ -27,12 +28,18 @@ const NAV_ITEMS = [
   },
 ]
 
-const Navbar = () => {
+const Navbar = async () => {
+  const res = await fetchUser()
+  const cookieStore = await cookies()
+  const isSignedIn = cookieStore.get('isSignedIn')
+
   return (
     <>
-      <main className='fixed inset-x-0 top-0 bg-white/60 border-b-2 border-primary-100 backdrop-blur-md z-50'>
-        <Container className='flex-row h-20 items-center justify-between gap-8'>
+      <main className='border-primary-100 fixed inset-x-0 top-0 z-50 border-b-2 bg-white/60 backdrop-blur-md'>
+        <Container className='h-20 flex-row items-center justify-between gap-8'>
           <Logo />
+          {isSignedIn && 'signed in'}
+          {JSON.stringify(res)}
 
           <DesktopNavigation />
           <MobileNavigation />
@@ -97,7 +104,10 @@ const MobileNavigation = () => (
             <SheetClose asChild>
               <Link
                 href={'/login'}
-                className={cn(buttonVariants({ variant: 'blur' }), 'text-primary-700 shadow-none')}
+                className={cn(
+                  buttonVariants({ variant: 'blur' }),
+                  'text-primary-700 shadow-none'
+                )}
               >
                 Masuk
               </Link>
