@@ -33,7 +33,6 @@ func InitializeRoutes(r *gin.Engine, tryoutHandler *handlers.TryoutHandler, page
 	{
 		sync.POST("", tryoutHandler.SyncHandler)
 		sync.POST("/progress", tryoutHandler.ProgressTryoutHandler)
-		sync.DELETE("/delete-attempt", tryoutHandler.DeleteAttemptHandler)
 		sync.GET("/current", tryoutHandler.GetCurrentAttempt)
 	}
 }

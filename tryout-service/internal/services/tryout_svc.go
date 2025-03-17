@@ -15,7 +15,6 @@ type TryoutService interface {
 	SyncWithDatabase(answers []models.AnswerPayload, attemptID int) (answersInDB []models.UserAnswer, timeLimit time.Time, err error)
 	SubmitCurrentSubtest(answers []models.AnswerPayload, attemptID, userID int, tryoutToken string) (updatedSubtest string, retErr error)
 	GetCurrentAttempt(attemptID int) (*models.TryoutAttempt, error)
-	DeleteAttempt(attemptID int) error
 }
 
 type tryoutService struct {
@@ -31,7 +30,7 @@ func (s *tryoutService) StartAttempt(userID int, username, paket, accessToken st
 	// sstart a transaction to the db
 	startTime := time.Now()
 	tx, err := s.tryoutRepo.BeginTransaction()
-	if retErr != nil {
+	if err != nil {
 		logger.LogError(err, "Failed to start transaction", map[string]interface{}{
 			"layer":     "service",
 			"operation": "StartAttempt",
@@ -108,6 +107,7 @@ func (s *tryoutService) StartAttempt(userID int, username, paket, accessToken st
 
 // SyncWithDatabase is a service that syncs the answers from the user with the database
 func (s *tryoutService) SyncWithDatabase(answers []models.AnswerPayload, attemptID int) (answersInDB []models.UserAnswer, timeLimit time.Time, retErr error) {
+	var committed bool
 	// EMPTY ANSWERS ARE OKAY, BUT IF THERE ARE ANSWERS, THEY MUST BE VALID
 	// Start transaction
 	tx, err := s.tryoutRepo.BeginTransaction()
@@ -122,6 +122,9 @@ func (s *tryoutService) SyncWithDatabase(answers []models.AnswerPayload, attempt
 
 	// Ensure rollback on error
 	defer func() {
+		if committed {
+			return
+		}
 		if retErr != nil {
 			if rbErr := tx.Rollback(); rbErr != nil {
 				logger.LogError(rbErr, "Failed to rollback transaction", map[string]interface{}{
@@ -173,6 +176,28 @@ func (s *tryoutService) SyncWithDatabase(answers []models.AnswerPayload, attempt
 
 	// exceed time limit
 	if time.Now().After(timeLimit) {
+		// Delete attempt and answers if time limit has been reached
+		if err = s.tryoutRepo.DeleteAttempt(tx, attemptID); err != nil {
+			retErr = err
+			logger.LogError(err, "Failed to delete attempt", map[string]interface{}{
+				"layer":     "service",
+				"operation": "SyncWithDatabase",
+				"attemptID": attemptID,
+			})
+			return nil, time.Time{}, retErr
+		}
+		// Commit transaction so that the attempt is deleted
+		if err = tx.Commit(); err != nil {
+			retErr = err
+			logger.LogError(err, "Failed to commit transaction", map[string]interface{}{
+				"layer":     "service",
+				"operation": "SyncWithDatabase",
+				"attemptID": attemptID,
+			})
+			return nil, time.Time{}, retErr
+		}
+		// set committed to true so that the defer won't rollback the transaction
+		committed = true
 		retErr = errors.New("time limit has been reached for this subtest")
 		return nil, time.Time{}, retErr
 	}
@@ -223,6 +248,8 @@ func (s *tryoutService) SyncWithDatabase(answers []models.AnswerPayload, attempt
 		})
 		return nil, timeLimit, retErr
 	}
+	// set committed to true so that the defer won't rollback the transaction
+	committed = true
 
 	// will return answers that are stored in the db (for sync purpose) and the time limit also for the sync purpose
 	return answersInDB, timeLimit, nil
@@ -230,6 +257,7 @@ func (s *tryoutService) SyncWithDatabase(answers []models.AnswerPayload, attempt
 
 func (s *tryoutService) SubmitCurrentSubtest(answers []models.AnswerPayload, attemptID, userID int, tryoutToken string) (updatedSubtest string, retErr error) {
 	// begin a transaction
+	var committed bool
 	tx, err := s.tryoutRepo.BeginTransaction()
 	if err != nil {
 		logger.LogError(err, "Failed to start transaction", map[string]interface{}{
@@ -241,6 +269,9 @@ func (s *tryoutService) SubmitCurrentSubtest(answers []models.AnswerPayload, att
 	}
 	// if something happened, rollback the transaction
 	defer func() {
+		if committed {
+			return
+		}
 		if retErr != nil && tx != nil {
 			if rbErr := tx.Rollback(); rbErr != nil {
 				logger.LogError(rbErr, "Failed to rollback transaction", map[string]interface{}{
@@ -276,18 +307,6 @@ func (s *tryoutService) SubmitCurrentSubtest(answers []models.AnswerPayload, att
 		return "", retErr
 	}
 
-	// Get the next subtest
-	currentSubtest := attempt.SubtestSekarang
-	subtests := []string{"subtest_pu", "subtest_ppu", "subtest_pbm", "subtest_pk", "subtest_lbi", "subtest_lbe", "subtest_pm"}
-	var nextSubtest *string
-	for i, sub := range subtests {
-		// If the current subtest is found and there is a next subtest, set the next subtest
-		if sub == currentSubtest && i < len(subtests)-1 {
-			nextSubtest = &subtests[i+1]
-			break
-		}
-	}
-
 	// Get time limit within transaction
 	timeLimit, err := s.tryoutRepo.GetSubtestTimeTx(tx, attemptID, attempt.SubtestSekarang)
 	if err != nil {
@@ -303,8 +322,42 @@ func (s *tryoutService) SubmitCurrentSubtest(answers []models.AnswerPayload, att
 
 	// exceed time limit
 	if time.Now().After(timeLimit) {
+		// Delete attempt and answers if time limit has been reached
+		if err = s.tryoutRepo.DeleteAttempt(tx, attemptID); err != nil {
+			retErr = err
+			logger.LogError(err, "Failed to delete attempt", map[string]interface{}{
+				"layer":     "service",
+				"operation": "SubmitCurrentSubtest",
+				"attemptID": attemptID,
+			})
+			return "", retErr
+		}
+		// Commit transaction so that the attempt is deleted
+		if err = tx.Commit(); err != nil {
+			retErr = err
+			logger.LogError(err, "Failed to commit transaction", map[string]interface{}{
+				"layer":     "service",
+				"operation": "SubmitCurrentSubtest",
+				"attemptID": attemptID,
+			})
+			return "", retErr
+		}
+		// set committed to true so that the defer won't rollback the transaction
+		committed = true
 		retErr = errors.New("time limit has been reached for this subtest")
 		return "", retErr
+	}
+
+	// Get the next subtest
+	currentSubtest := attempt.SubtestSekarang
+	subtests := []string{"subtest_pu", "subtest_ppu", "subtest_pbm", "subtest_pk", "subtest_lbi", "subtest_lbe", "subtest_pm"}
+	var nextSubtest *string
+	for i, sub := range subtests {
+		// If the current subtest is found and there is a next subtest, set the next subtest
+		if sub == currentSubtest && i < len(subtests)-1 {
+			nextSubtest = &subtests[i+1]
+			break
+		}
 	}
 
 	// Save final answers if any
@@ -367,6 +420,8 @@ func (s *tryoutService) SubmitCurrentSubtest(answers []models.AnswerPayload, att
 			retErr = err
 			return "", retErr
 		}
+		// set committed to true so that the defer won't rollback the transaction
+		committed = true
 		tx = nil
 
 		// return final indicating a final state
@@ -395,6 +450,8 @@ func (s *tryoutService) SubmitCurrentSubtest(answers []models.AnswerPayload, att
 		retErr = err
 		return "", retErr
 	}
+	// set committed to true so that the defer won't rollback the transaction
+	committed = true
 	tx = nil
 
 	// return updated so later the frontend can fetch the next subtest
@@ -403,8 +460,4 @@ func (s *tryoutService) SubmitCurrentSubtest(answers []models.AnswerPayload, att
 
 func (s *tryoutService) GetCurrentAttempt(attemptID int) (*models.TryoutAttempt, error) {
 	return s.tryoutRepo.GetTryoutAttempt(attemptID)
-}
-
-func (s *tryoutService) DeleteAttempt(attemptID int) error {
-	return s.tryoutRepo.DeleteAttempt(attemptID)
 }
