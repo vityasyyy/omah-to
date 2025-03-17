@@ -10,89 +10,89 @@ function setHeaders(response: NextResponse, userData: any) {
 }
 
 export async function middleware(request: NextRequest) {
-  // const accessToken = request.cookies.get('access_token')?.value;
-  // const refreshToken = request.cookies.get('refresh_token')?.value;
+  const accessToken = request.cookies.get('access_token')?.value;
+  const refreshToken = request.cookies.get('refresh_token')?.value;
   
-  // // Define public paths that don't require authentication
-  // const publicPaths = ['/login', '/register', '/forgot-password'];
+  // Define public paths that don't require authentication
+  const publicPaths = ['/login', '/register', '/forgot-password'];
   
-  // // Add paths under tryout/* (but not /tryout exactly)
-  // const currentPath = request.nextUrl.pathname;
-  // const isTryoutSubpath = currentPath.startsWith('/tryout/') && currentPath !== '/tryout/';
+  // Add paths under tryout/* (but not /tryout exactly)
+  const currentPath = request.nextUrl.pathname;
+  const isTryoutSubpath = currentPath.startsWith('/tryout/') && currentPath !== '/tryout/';
   
-  // // Check if current path is public
-  // const isPublicPath = publicPaths.some(path => currentPath.startsWith(path)) || isTryoutSubpath;
+  // Check if current path is public
+  const isPublicPath = publicPaths.some(path => currentPath.startsWith(path)) || isTryoutSubpath;
   
-  // // Allow access to public paths without authentication
-  // if (isPublicPath) {
-  //   return NextResponse.next();
-  // }
+  // Allow access to public paths without authentication
+  if (isPublicPath) {
+    return NextResponse.next();
+  }
   
-  // // If no tokens exist, redirect to login
-  // if (!accessToken && !refreshToken) {
-  //   return NextResponse.redirect(new URL('/login', request.url));
-  // }
+  // If no tokens exist, redirect to login
+  if (!accessToken && !refreshToken) {
+    return NextResponse.redirect(new URL('/login', request.url));
+  }
   
-  // // Rest of your middleware code remains the same...
-  // // Check if access token is valid
-  // if (accessToken) {
-  //   try {
-  //     const res = await fetch(`${process.env.AUTH_URL}/auth/validateprofile`, {
-  //       method: 'GET',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //         'Cookie': `access_token=${accessToken}`
-  //       },
-  //       credentials: 'include'
-  //     });
+  // Rest of your middleware code remains the same...
+  // Check if access token is valid
+  if (accessToken) {
+    try {
+      const res = await fetch(`${process.env.AUTH_URL}/auth/validateprofile`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Cookie': `access_token=${accessToken}`
+        },
+        credentials: 'include'
+      });
       
-  //     if (res.ok) {
-  //       // Token is valid, allow access
-  //       const response = NextResponse.next();
-  //       const userData = await res.json();
-  //       setHeaders(response, userData);
-  //       return response;
-  //     }
-  //   } catch (error) {
-  //     console.error('Access token validation error:', error);
-  //   }
-  // }
+      if (res.ok) {
+        // Token is valid, allow access
+        const response = NextResponse.next();
+        const userData = await res.json();
+        setHeaders(response, userData);
+        return response;
+      }
+    } catch (error) {
+      console.error('Access token validation error:', error);
+    }
+  }
   
-  // // Access token is invalid, try refresh token if available
-  // if (refreshToken) {
-  //   try {
-  //     const res = await fetch(`${process.env.AUTH_URL}/user/refresh`, {
-  //       method: 'GET',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //         'Cookie': `refresh_token=${refreshToken}`
-  //       },
-  //       credentials: 'include'
-  //     });
+  // Access token is invalid, try refresh token if available
+  if (refreshToken) {
+    try {
+      const res = await fetch(`${process.env.AUTH_URL}/user/refresh`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Cookie': `refresh_token=${refreshToken}`
+        },
+        credentials: 'include'
+      });
       
-  //     if (res.ok) {
-  //       const resBody = await res.json();
-  //       // Extract new tokens from response
-  //       const setCookieHeader = res.headers.get('set-cookie');
-  //       if (!setCookieHeader) {
-  //         return NextResponse.redirect(new URL('/login', request.url));
-  //       }
+      if (res.ok) {
+        const resBody = await res.json();
+        // Extract new tokens from response
+        const setCookieHeader = res.headers.get('set-cookie');
+        if (!setCookieHeader) {
+          return NextResponse.redirect(new URL('/login', request.url));
+        }
         
-  //       // Create response that will continue to the requested page
-  //       const response = NextResponse.next();
+        // Create response that will continue to the requested page
+        const response = NextResponse.next();
         
-  //       // Forward the Set-Cookie header from the auth service
-  //       response.headers.set('Set-Cookie', setCookieHeader);
-  //       setHeaders(response, resBody);
-  //       return response;
-  //     }
-  //   } catch (error) {
-  //     console.error('Refresh token error:', error);
-  //   }
-  // }
+        // Forward the Set-Cookie header from the auth service
+        response.headers.set('Set-Cookie', setCookieHeader);
+        setHeaders(response, resBody);
+        return response;
+      }
+    } catch (error) {
+      console.error('Refresh token error:', error);
+    }
+  }
   
-  // // If all validation attempts fail, redirect to login
-  // return NextResponse.redirect(new URL('/login', request.url));
+  // If all validation attempts fail, redirect to login
+  return NextResponse.redirect(new URL('/login', request.url));
 }
 
 // Configure which paths the middleware runs on

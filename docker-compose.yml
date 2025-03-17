@@ -49,6 +49,8 @@ services:
       - soal-service/.env
     volumes:
       - ./soal-service/db/init.sql:/docker-entrypoint-initdb.d/init.sql # init script
+      - ./soal-service/db/soal.sql:/docker-entrypoint-initdb.d/soal.sql # soal script
+      - ./soal-service/db/minatbakat.sql:/docker-entrypoint-initdb.d/minatbakat.sql # minatbakat script
       - soal-data:/var/lib/postgresql/data
     networks:
       - omahtryout-network

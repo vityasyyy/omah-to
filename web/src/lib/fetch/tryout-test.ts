@@ -1,5 +1,6 @@
 import { SOAL_URL, TRYOUT_URL, PUBLIC_TRYOUT_URL, PUBLIC_SOAL_URL } from "@/types/url";
 import { Jawaban } from "@/types/types";
+import { redirect } from "next/navigation";
 
 export const getTryoutUrl = (isPublic?: boolean) => {
   return isPublic ? PUBLIC_TRYOUT_URL : TRYOUT_URL;
@@ -60,14 +61,6 @@ export const syncTryout = async (jawaban: Jawaban[], tryoutToken?: string, isPub
   });
 
   if (!res.ok) {
-    const deleted = await fetch(`${tryoutUrl}/sync/delete-attempt`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json", 
-        "Cookie": `tryout_token=${tryoutToken}`
-      },
-      credentials: "include"
-    });
     throw new Error("Failed to sync tryout data, u exceed the time limit, start over the tryout");
   }
 
@@ -90,14 +83,6 @@ export const progressTryout = async (jawaban: Jawaban[], tryoutToken?: string, i
     });
     
     if (!res.ok) {
-      const deleted = await fetch(`${tryoutUrl}/sync/delete-attempt`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json", 
-          "Cookie": `tryout_token=${tryoutToken}`
-        },
-        credentials: "include"
-      });
         throw new Error("Failed to progress tryout data, u exceed the time limit, start over the tryout");
     }
     
