@@ -6,6 +6,10 @@ import { Button } from '@/components/ui/button'
 import StyledCard from '@/components/tryout/styled-card'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { cn } from '@/lib/utils'
+// Import KaTeX for LaTeX rendering
+import 'katex/dist/katex.min.css'
+import katex from 'katex'
+
 import {
   Table,
   TableBody,
@@ -108,6 +112,7 @@ const Statistic = ({ userScores, userAnswers, totalRank }: StatisticProps) => {
     }
   })
 
+// In your component
   return (
     <div className='grid w-full grid-cols-1 gap-6 xl:grid-cols-4'>
       <div className='col-span-3 grid w-full grid-cols-1 gap-4 md:grid-cols-2 xl:col-span-1 xl:grid-cols-1'>
@@ -227,6 +232,67 @@ const Pembahasan = ({ title, className, subtest, qnaData }: PembahasanProps) => 
   </StyledCard>
 )
 
+const LatexRenderer = ({ content }: { content: string }) => {
+  if (!content) return null;
+
+  // Process content with proper LaTeX escaping
+  const processedContent = content
+    .replace(/\\\\/g, '\\') // Replace double backslashes with single
+    .replace(/\\\[/g, '[')  // Convert \[ to [
+    .replace(/\\\]/g, ']')  // Convert \] to ]
+    .replace(/\\\%/g, '%')  // Convert \% to %
+    .replace(/\r\n/g, '\n'); // Normalize line endings
+
+  // Split content into display math blocks and text
+  const blocks = processedContent.split(/(\$\$[\s\S]*?\$\$|\\\[[\s\S]*?\\\])/g);
+
+  return (
+    <div className="latex-container">
+      {blocks.map((block, index) => {
+        if (!block) return null;
+
+        // Handle display math (both $$...$$ and \[...\])
+        if (block.startsWith('$$') && block.endsWith('$$')) {
+          try {
+            const html = katex.renderToString(block.slice(2, -2), {
+              displayMode: true,
+              throwOnError: false
+            });
+            return <div key={index} dangerouslySetInnerHTML={{ __html: html }} />;
+          } catch (error) {
+            return <div key={index} className="text-red-500">{block}</div>;
+          }
+        }
+
+        // Handle \[...\] style display math
+        if (block.startsWith('[') && block.endsWith(']')) {
+          try {
+            const html = katex.renderToString(block.slice(1, -1), {
+              displayMode: true,
+              throwOnError: false
+            });
+            return <div key={index} dangerouslySetInnerHTML={{ __html: html }} />;
+          } catch (error) {
+            return <div key={index} className="text-red-500">{block}</div>;
+          }
+        }
+
+        // Handle regular text with line breaks
+        return (
+          <span key={index}>
+            {block.split('\n').map((line, lineIndex, arr) => (
+              <React.Fragment key={lineIndex}>
+                {line}
+                {lineIndex < arr.length - 1 && <br />}
+              </React.Fragment>
+            ))}
+          </span>
+        );
+      })}
+    </div>
+  );
+};
+
 const PembahasanButton = ({ data }: { data: any }) => {
   return (
     <AlertDialog>
@@ -251,7 +317,10 @@ const PembahasanButton = ({ data }: { data: any }) => {
               <X className='text-neutral-500' />
             </AlertDialogCancel>
           </AlertDialogTitle>
-          <AlertDialogDescription>{data.pembahasan}</AlertDialogDescription>
+          {/* Using div with same styling as AlertDialogDescription to avoid nesting div in p */}
+          <div className="text-black font-light text-sm dark:text-neutral-400 whitespace-pre-wrap">
+            <LatexRenderer content={data.pembahasan} />
+          </div>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Kembali</AlertDialogCancel>
