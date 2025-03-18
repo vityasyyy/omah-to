@@ -1,10 +1,9 @@
-import { cookies } from 'next/headers'
+import { fetchUser } from '@/lib/auth/fetch_user'
 import { redirect } from 'next/navigation'
 
 const AuthLayout = async ({ children }: { children?: React.ReactNode }) => {
-  const cookieStore = await cookies()
-  const isSignedIn = cookieStore.get('isSignedIn')
-  if (isSignedIn) redirect('/')
+  const user = await fetchUser()
+  if (user) redirect('/')
 
   return <main className='bg-primary-100 md:h-screen'>{children}</main>
 }

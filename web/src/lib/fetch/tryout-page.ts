@@ -1,5 +1,5 @@
-import { TRYOUT_URL } from "@/types/url";
-import { SubtestsScoreResponse, LeaderboardResponse } from "@/types/types";
+import { TRYOUT_URL } from "@/lib/types/url";
+import { SubtestsScoreResponse, LeaderboardResponse } from "@/lib/types/types";
 
 export const getSubtestsScore = async (accessToken: string): Promise<SubtestsScoreResponse> => {
     const res = await fetch(`${TRYOUT_URL}/tryout/subtests-score`, {

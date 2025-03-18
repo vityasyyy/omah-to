@@ -9,13 +9,23 @@ import {
 } from '@/components/ui/sheet'
 import { fetchUser } from '@/lib/auth/fetch_user'
 import { cn } from '@/lib/utils'
-import { Menu } from 'lucide-react'
-import { cookies } from 'next/headers'
+import { LogOut, Menu } from 'lucide-react'
 import Link from 'next/link'
 import Container from '../container'
 import { Button, buttonVariants } from '../ui/button'
 import Logo from './logo'
 import NavbarResolver from './navbar-resolver'
+import Image from 'next/image'
+import { User } from '@/lib/types/types'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '../ui/dropdown-menu'
+import { cookies } from 'next/headers'
 
 const NAV_ITEMS = [
   {
@@ -29,19 +39,20 @@ const NAV_ITEMS = [
 ]
 
 const Navbar = async () => {
-  const res = await fetchUser()
+  const user = await fetchUser()
   const cookieStore = await cookies()
-  const isSignedIn = cookieStore.get('isSignedIn')
+  const foo = cookieStore.getAll()
+  const isSignedIn = user !== null
 
   return (
     <>
       <main className='border-primary-100 fixed inset-x-0 top-0 z-50 border-b-2 bg-white/60 backdrop-blur-md'>
         <Container className='h-20 flex-row items-center justify-between gap-8'>
           <Logo />
-          {isSignedIn && 'signed in'}
-          {JSON.stringify(res)}
+          {JSON.stringify(user)}
+          {JSON.stringify(foo)}
 
-          <DesktopNavigation />
+          <DesktopNavigation signedIn={isSignedIn} />
           <MobileNavigation />
         </Container>
       </main>
@@ -51,7 +62,7 @@ const Navbar = async () => {
   )
 }
 
-const DesktopNavigation = () => (
+const DesktopNavigation = ({ signedIn = false }: { signedIn: boolean }) => (
   <main className='hidden gap-8 md:flex'>
     {NAV_ITEMS.map((nav, i) => (
       <Link href={nav.href} key={i}>
@@ -61,11 +72,15 @@ const DesktopNavigation = () => (
       </Link>
     ))}
 
-    <Link href={`/register`}>
-      <Button variant={`tertiary`} className='px-8 hover:cursor-pointer'>
-        Daftar Sekarang
-      </Button>
-    </Link>
+    {signedIn ? (
+      <></>
+    ) : (
+      <Link href={`/register`}>
+        <Button variant={`tertiary`} className='px-8 hover:cursor-pointer'>
+          Daftar Sekarang
+        </Button>
+      </Link>
+    )}
   </main>
 )
 
@@ -118,5 +133,51 @@ const MobileNavigation = () => (
     </Sheet>
   </main>
 )
+
+const ProfileButton = (props: User) => {
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger tabIndex={-1}>
+        <div className='relative size-8 overflow-clip rounded-full bg-neutral-200'>
+          <Image
+            src={`/avatar.jpg`}
+            alt='Profile Picture'
+            fill
+            sizes='20%'
+            className='object-cover'
+          />
+        </div>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className='-translate-x-8'>
+        <DropdownMenuLabel>My Account</DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem
+          onClick={async () => {
+            const res = await fetch(
+              `${process.env.NEXT_PUBLIC_AUTH_URL}/auth/validateprofile`,
+              {
+                credentials: 'include',
+              }
+            )
+
+            if (res.ok) {
+              console.log('success:', res)
+            } else {
+              console.log('error')
+            }
+          }}
+        >
+          Validate Profile
+        </DropdownMenuItem>
+        <DropdownMenuItem
+          onClick={() => {}}
+          className='text-error-400 hover:text-error-400!'
+        >
+          <LogOut className='text-error-400' /> Log Out
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  )
+}
 
 export default Navbar

@@ -9,10 +9,10 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import { SubtestScore, SubtestsScoreResponse } from '@/types/types'
+import { SubtestScore, SubtestsScoreResponse } from '@/lib/types/types'
 
-const HistoryCard = async ({score}: {score: SubtestsScoreResponse}) => {
-  const subtestsScore:SubtestsScoreResponse = score
+const HistoryCard = async ({ score }: { score: SubtestsScoreResponse }) => {
+  const subtestsScore: SubtestsScoreResponse = score
   return (
     <StyledCard title='History'>
       <ScrollArea className='h-[300px] w-full overflow-hidden rounded-xl border border-neutral-200'>
@@ -37,8 +37,10 @@ const HistoryCard = async ({score}: {score: SubtestsScoreResponse}) => {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {subtestsScore?.data.map((data: SubtestScore,  i: number) => (
-                  <TableRow key={`${data.user_id}-${data.attempt_id}-${data.subtest}`}>
+                {subtestsScore?.data.map((data: SubtestScore, i: number) => (
+                  <TableRow
+                    key={`${data.user_id}-${data.attempt_id}-${data.subtest}`}
+                  >
                     <TableCell className='font-medium'>{i + 1}</TableCell>
                     <TableCell>{data.subtest}</TableCell>
                     <TableCell>{data.score}</TableCell>
