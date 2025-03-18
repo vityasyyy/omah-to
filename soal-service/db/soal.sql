@@ -391,18 +391,19 @@ Agar rata-rata kedua kelompok menjadi sama, jumlah umur harus seimbang setelah p
 Selisih usia antara kedua anak yang ditukarkan harus 1 tahun agar total usia di setiap kelompok menjadi 23 tahun dengan rata-rata 5.75 tahun.
 '),
 
-('ppu-001', 'paket1', 'subtest_ppu', 'multiple_choice','(1) Penampilan Lionel Messi dalam laga Argentina vs Kroasia mendapat apresiasi. (2) Salah 
-satu aksi menawan ditampilkan dalam proses gol ketiga Tim Tango. (3) Messi mendapat penghargaan man of the match usai laga semifinal Piala Dunia 
-2022. (4) Meski mencetak satu gol saat dua gol lain dilesakkan Julian Alvarez, Messi menunjukkan penampilan brilian. (5) Keterlibatan Messi dalam 
-permainan Argentina begitu terasa dengan 63 sentuhan bola. (6) Selain itu, Messi juga mengirimkan 34 umpan sukses dan lima kali menggocek lawan. 
-(7) Salah satu gocekan Messi yang membuat lawan tak berdaya sekaligus mengundang decak kagum terjadi pada menit ke-69.
-
-(8) Argentina mendapat lemparan ke dalam di tengah lapangan. (9) Sepintas, momen ini tidak mengundang ancaman ke gawang Kroasia. (10) Bola lantas mengarah ke Alvarez, 
-lalu penyerang Argentina itu melepas bola lagi ke arah Messi. (11) Dengan cepat dan cekatan, Messi menguasai si kulit bulat. (12) Messi berlari mendekati kotak penalti 
-dengan kawalan ketat Josko Gvardiol, bek Kroasia yang mendapat penilaian baik selama Piala Dunia 2022. (13) Sebelum memasuki kotak penalti, Messi berhenti sejenak. 
-(14) Dengan gerakan memutar badan ke kiri, Messi mengecoh Gvardiol. (15) Messi menerobos kotak penalti dan tak terkejar. (16) Alih-alih menuntaskan kesempatan dari sudut sempit, 
-bola dikirim Messi kepada Alvarez. (17) Tanpa kesulitan, Alvarez menyepak bola masuk ke gawang. (18) Momen tersebut banyak pula direkam dan kemudian diunggah para suporter 
-yang hadir di Stadion Lusail Iconic. (19) Sembari mengunggah momen tersebut ke media sosial, suporter tak sungkan memberi pujian kepada Messi.
+('ppu-001', 'paket1', 'subtest_ppu', 'multiple_choice','(1) Penampilan Lionel Messi dalam pertandingan antara Argentina dan Kroasia mendapat pujian. 
+(2) Salah satu aksi memukau terjadi saat proses terciptanya gol ketiga bagi Tim Tango. (3) Messi dinobatkan sebagai man of the match setelah laga 
+semifinal Piala Dunia 2022. (4) Meskipun hanya mencetak satu gol sementara dua gol lainnya dilesakkan oleh Julian Alvarez, Messi tetap menunjukkan 
+performa luar biasa. (5) Perannya dalam permainan Argentina sangat terlihat dengan 63 sentuhan terhadap bola. (6) Selain itu, ia juga berhasil 
+mengirimkan 34 umpan sukses serta menggiring bola melewati lawan sebanyak lima kali. (7) Salah satu momen gocekan Messi yang membuat lawan tak berkutik 
+sekaligus mengundang kekaguman terjadi di menit ke-69.
+(8) Argentina mendapatkan lemparan ke dalam di area tengah lapangan. (9) Sekilas, situasi ini tampak tidak memberikan ancaman bagi gawang Kroasia. 
+(10) Bola kemudian mengarah ke Alvarez, yang selanjutnya mengoper kembali ke Messi. (11) Dengan sigap dan cekatan, Messi menguasai bola. (12) Messi
+berlari menuju kotak penalti sambil dikawal ketat oleh Josko Gvardiol, bek Kroasia yang mendapat banyak pujian sepanjang Piala Dunia 2022. 
+(13) Sebelum memasuki kotak penalti, Messi berhenti sesaat. (14) Dengan sebuah gerakan memutar ke kiri, ia berhasil mengecoh Gvardiol. (15) Messi 
+kemudian mentrobos masuk ke kotak penalti tanpa bisa dikejar. (16) Alih-alih mengeksekusi dari sudut sempit, ia memilih ngoper bola kepada Alvarez. 
+(17) Dengan mudah, Alvarez menyarangkan bola ke dalam gawang. (18) Momen ini banyak direkam oleh para suporter yang hadir di Stadion Lusail Iconic. 
+(19) Saat mengunggah rekaman tersebut ke media sosial, para suporter pun tidak ragu memberikan pujian kepada Messi.
 
 Sumber: CNN Indonesia, 14 Desember 2022, Sihir Messi Buat Pemain Kroasia Terkecoh dan Fans Terpesona.
 
@@ -414,21 +415,21 @@ Biasanya berupa satu kalimat lengkap
 Mempunyai arti yang jelas tanpa dihubungkan dengan kalimat lain
 Dibentuk tanpa kata sambung atau transisi
 Mewakili isi teks bacaan
-Berdasarkan hal tersebut, dapat kita tentukan gagasan pokok dari bacaan tersebut adalah Lionel Messi mendapat apresiasi dalam laga Argentina vs Kroasia.
-'),
+Pada kalimat (1) disebutkan secara jelas bahwa penampilan Messi mendapat pujian, sehingga opsi C adalah jawaban yang tepat.'),
 
-('ppu-002', 'paket1', 'subtest_ppu', 'multiple_choice','(1) Penampilan Lionel Messi dalam laga Argentina vs Kroasia mendapat apresiasi. (2) Salah 
-satu aksi menawan ditampilkan dalam proses gol ketiga Tim Tango. (3) Messi mendapat penghargaan man of the match usai laga semifinal Piala Dunia 
-2022. (4) Meski mencetak satu gol saat dua gol lain dilesakkan Julian Alvarez, Messi menunjukkan penampilan brilian. (5) Keterlibatan Messi dalam 
-permainan Argentina begitu terasa dengan 63 sentuhan bola. (6) Selain itu, Messi juga mengirimkan 34 umpan sukses dan lima kali menggocek lawan. 
-(7) Salah satu gocekan Messi yang membuat lawan tak berdaya sekaligus mengundang decak kagum terjadi pada menit ke-69.
-
-(8) Argentina mendapat lemparan ke dalam di tengah lapangan. (9) Sepintas, momen ini tidak mengundang ancaman ke gawang Kroasia. (10) Bola lantas mengarah ke Alvarez, 
-lalu penyerang Argentina itu melepas bola lagi ke arah Messi. (11) Dengan cepat dan cekatan, Messi menguasai si kulit bulat. (12) Messi berlari mendekati kotak penalti 
-dengan kawalan ketat Josko Gvardiol, bek Kroasia yang mendapat penilaian baik selama Piala Dunia 2022. (13) Sebelum memasuki kotak penalti, Messi berhenti sejenak. 
-(14) Dengan gerakan memutar badan ke kiri, Messi mengecoh Gvardiol. (15) Messi menerobos kotak penalti dan tak terkejar. (16) Alih-alih menuntaskan kesempatan dari sudut sempit, 
-bola dikirim Messi kepada Alvarez. (17) Tanpa kesulitan, Alvarez menyepak bola masuk ke gawang. (18) Momen tersebut banyak pula direkam dan kemudian diunggah para suporter 
-yang hadir di Stadion Lusail Iconic. (19) Sembari mengunggah momen tersebut ke media sosial, suporter tak sungkan memberi pujian kepada Messi.
+('ppu-002', 'paket1', 'subtest_ppu', 'multiple_choice','(1) Penampilan Lionel Messi dalam pertandingan antara Argentina dan Kroasia mendapat pujian. 
+(2) Salah satu aksi memukau terjadi saat proses terciptanya gol ketiga bagi Tim Tango. (3) Messi dinobatkan sebagai man of the match setelah laga 
+semifinal Piala Dunia 2022. (4) Meskipun hanya mencetak satu gol sementara dua gol lainnya dilesakkan oleh Julian Alvarez, Messi tetap menunjukkan 
+performa luar biasa. (5) Perannya dalam permainan Argentina sangat terlihat dengan 63 sentuhan terhadap bola. (6) Selain itu, ia juga berhasil 
+mengirimkan 34 umpan sukses serta menggiring bola melewati lawan sebanyak lima kali. (7) Salah satu momen gocekan Messi yang membuat lawan tak berkutik 
+sekaligus mengundang kekaguman terjadi di menit ke-69.
+(8) Argentina mendapatkan lemparan ke dalam di area tengah lapangan. (9) Sekilas, situasi ini tampak tidak memberikan ancaman bagi gawang Kroasia. 
+(10) Bola kemudian mengarah ke Alvarez, yang selanjutnya mengoper kembali ke Messi. (11) Dengan sigap dan cekatan, Messi menguasai bola. (12) Messi
+berlari menuju kotak penalti sambil dikawal ketat oleh Josko Gvardiol, bek Kroasia yang mendapat banyak pujian sepanjang Piala Dunia 2022. 
+(13) Sebelum memasuki kotak penalti, Messi berhenti sesaat. (14) Dengan sebuah gerakan memutar ke kiri, ia berhasil mengecoh Gvardiol. (15) Messi 
+kemudian mentrobos masuk ke kotak penalti tanpa bisa dikejar. (16) Alih-alih mengeksekusi dari sudut sempit, ia memilih ngoper bola kepada Alvarez. 
+(17) Dengan mudah, Alvarez menyarangkan bola ke dalam gawang. (18) Momen ini banyak direkam oleh para suporter yang hadir di Stadion Lusail Iconic. 
+(19) Saat mengunggah rekaman tersebut ke media sosial, para suporter pun tidak ragu memberikan pujian kepada Messi.
 
 Sumber: CNN Indonesia, 14 Desember 2022, Sihir Messi Buat Pemain Kroasia Terkecoh dan Fans Terpesona.
 
@@ -439,145 +440,153 @@ Memiliki unsur wajib dalam kalimat
 Keparalelan bentuk
 Kehematan kata
 Dari segi ejaan dan tanda baca juga harus tepat.
-Berdasarkan hal tersebut, dapat kita temukan kalimat tidak efektif dalam teks bacaan pada kalimat (16). Hal tersebut dikarenakan kalimat (16) terdapat kesalahan pada kata "mentuntaskan" yang seharusnya "menuntaskan", terjadi peleburan KTSP.
+Berdasarkan hal tersebut, dapat kita temukan kalimat tidak efektif dalam teks bacaan pada kalimat (16). Hal tersebut dikarenakan kalimat (16) terdapat kesalahan 
+pada kata "ngoper" yang seharusnya "mengoper".
 '),
 
-('ppu-003', 'paket1', 'subtest_ppu', 'multiple_choice','(1) Penampilan Lionel Messi dalam laga Argentina vs Kroasia mendapat apresiasi. (2) Salah 
-satu aksi menawan ditampilkan dalam proses gol ketiga Tim Tango. (3) Messi mendapat penghargaan man of the match usai laga semifinal Piala Dunia 
-2022. (4) Meski mencetak satu gol saat dua gol lain dilesakkan Julian Alvarez, Messi menunjukkan penampilan brilian. (5) Keterlibatan Messi dalam 
-permainan Argentina begitu terasa dengan 63 sentuhan bola. (6) Selain itu, Messi juga mengirimkan 34 umpan sukses dan lima kali menggocek lawan. 
-(7) Salah satu gocekan Messi yang membuat lawan tak berdaya sekaligus mengundang decak kagum terjadi pada menit ke-69.
-
-(8) Argentina mendapat lemparan ke dalam di tengah lapangan. (9) Sepintas, momen ini tidak mengundang ancaman ke gawang Kroasia. (10) Bola lantas mengarah ke Alvarez, 
-lalu penyerang Argentina itu melepas bola lagi ke arah Messi. (11) Dengan cepat dan cekatan, Messi menguasai si kulit bulat. (12) Messi berlari mendekati kotak penalti 
-dengan kawalan ketat Josko Gvardiol, bek Kroasia yang mendapat penilaian baik selama Piala Dunia 2022. (13) Sebelum memasuki kotak penalti, Messi berhenti sejenak. 
-(14) Dengan gerakan memutar badan ke kiri, Messi mengecoh Gvardiol. (15) Messi menerobos kotak penalti dan tak terkejar. (16) Alih-alih menuntaskan kesempatan dari sudut sempit, 
-bola dikirim Messi kepada Alvarez. (17) Tanpa kesulitan, Alvarez menyepak bola masuk ke gawang. (18) Momen tersebut banyak pula direkam dan kemudian diunggah para suporter 
-yang hadir di Stadion Lusail Iconic. (19) Sembari mengunggah momen tersebut ke media sosial, suporter tak sungkan memberi pujian kepada Messi.
+('ppu-003', 'paket1', 'subtest_ppu', 'multiple_choice','(1) Penampilan Lionel Messi dalam pertandingan antara Argentina dan Kroasia mendapat pujian. 
+(2) Salah satu aksi memukau terjadi saat proses terciptanya gol ketiga bagi Tim Tango. (3) Messi dinobatkan sebagai man of the match setelah laga 
+semifinal Piala Dunia 2022. (4) Meskipun hanya mencetak satu gol sementara dua gol lainnya dilesakkan oleh Julian Alvarez, Messi tetap menunjukkan 
+performa luar biasa. (5) Perannya dalam permainan Argentina sangat terlihat dengan 63 sentuhan terhadap bola. (6) Selain itu, ia juga berhasil 
+mengirimkan 34 umpan sukses serta menggiring bola melewati lawan sebanyak lima kali. (7) Salah satu momen gocekan Messi yang membuat lawan tak berkutik 
+sekaligus mengundang kekaguman terjadi di menit ke-69.
+(8) Argentina mendapatkan lemparan ke dalam di area tengah lapangan. (9) Sekilas, situasi ini tampak tidak memberikan ancaman bagi gawang Kroasia. 
+(10) Bola kemudian mengarah ke Alvarez, yang selanjutnya mengoper kembali ke Messi. (11) Dengan sigap dan cekatan, Messi menguasai bola. (12) Messi
+berlari menuju kotak penalti sambil dikawal ketat oleh Josko Gvardiol, bek Kroasia yang mendapat banyak pujian sepanjang Piala Dunia 2022. 
+(13) Sebelum memasuki kotak penalti, Messi berhenti sesaat. (14) Dengan sebuah gerakan memutar ke kiri, ia berhasil mengecoh Gvardiol. (15) Messi 
+kemudian mentrobos masuk ke kotak penalti tanpa bisa dikejar. (16) Alih-alih mengeksekusi dari sudut sempit, ia memilih ngoper bola kepada Alvarez. 
+(17) Dengan mudah, Alvarez menyarangkan bola ke dalam gawang. (18) Momen ini banyak direkam oleh para suporter yang hadir di Stadion Lusail Iconic. 
+(19) Saat mengunggah rekaman tersebut ke media sosial, para suporter pun tidak ragu memberikan pujian kepada Messi.
 
 Sumber: CNN Indonesia, 14 Desember 2022, Sihir Messi Buat Pemain Kroasia Terkecoh dan Fans Terpesona.
 
 Inti dari kalimat ke-12 adalah...
 ', NULL, 47, '
 Inti dari suatu kalimat dapat dilihat berdasarkan unsur subjek dan predikat kalimat tersebut serta dapat ditambahkan objek dan pelengkap sebagai unsur tambahan jika diperlukan. Berikut analisis kalimat (12):
-Messi (S) berlari mendekati (P) kotak penalti (O) dengan kawalan ketat Josko Gvardiol, bek Kroasia yang mendapat penilaian baik selama Piala Dunia 2022 (K).
+Messi (S) berlari menuju (P) kotak penalti (O) sambil dikawal ketat Josko Gvardiol, bek Kroasia yang mendapat banyak pujian sepanjang Piala Dunia 2022 (K).
 Oleh karena itu, dapat kita simpulkan inti kalimat yang paling sesuai terdapat dalam opsi jawaban B.
 '),
 
-('ppu-004', 'paket1', 'subtest_ppu', 'multiple_choice','(1) Penampilan Lionel Messi dalam laga Argentina vs Kroasia mendapat apresiasi. (2) Salah 
-satu aksi menawan ditampilkan dalam proses gol ketiga Tim Tango. (3) Messi mendapat penghargaan man of the match usai laga semifinal Piala Dunia 
-2022. (4) Meski mencetak satu gol saat dua gol lain dilesakkan Julian Alvarez, Messi menunjukkan penampilan brilian. (5) Keterlibatan Messi dalam 
-permainan Argentina begitu terasa dengan 63 sentuhan bola. (6) Selain itu, Messi juga mengirimkan 34 umpan sukses dan lima kali menggocek lawan. 
-(7) Salah satu gocekan Messi yang membuat lawan tak berdaya sekaligus mengundang decak kagum terjadi pada menit ke-69.
-
-(8) Argentina mendapat lemparan ke dalam di tengah lapangan. (9) Sepintas, momen ini tidak mengundang ancaman ke gawang Kroasia. (10) Bola lantas mengarah ke Alvarez, 
-lalu penyerang Argentina itu melepas bola lagi ke arah Messi. (11) Dengan cepat dan cekatan, Messi menguasai si kulit bulat. (12) Messi berlari mendekati kotak penalti 
-dengan kawalan ketat Josko Gvardiol, bek Kroasia yang mendapat penilaian baik selama Piala Dunia 2022. (13) Sebelum memasuki kotak penalti, Messi berhenti sejenak. 
-(14) Dengan gerakan memutar badan ke kiri, Messi mengecoh Gvardiol. (15) Messi menerobos kotak penalti dan tak terkejar. (16) Alih-alih menuntaskan kesempatan dari sudut sempit, 
-bola dikirim Messi kepada Alvarez. (17) Tanpa kesulitan, Alvarez menyepak bola masuk ke gawang. (18) Momen tersebut banyak pula direkam dan kemudian diunggah para suporter 
-yang hadir di Stadion Lusail Iconic. (19) Sembari mengunggah momen tersebut ke media sosial, suporter tak sungkan memberi pujian kepada Messi.
+('ppu-004', 'paket1', 'subtest_ppu', 'multiple_choice','(1) Penampilan Lionel Messi dalam pertandingan antara Argentina dan Kroasia mendapat pujian. 
+(2) Salah satu aksi memukau terjadi saat proses terciptanya gol ketiga bagi Tim Tango. (3) Messi dinobatkan sebagai man of the match setelah laga 
+semifinal Piala Dunia 2022. (4) Meskipun hanya mencetak satu gol sementara dua gol lainnya dilesakkan oleh Julian Alvarez, Messi tetap menunjukkan 
+performa luar biasa. (5) Perannya dalam permainan Argentina sangat terlihat dengan 63 sentuhan terhadap bola. (6) Selain itu, ia juga berhasil 
+mengirimkan 34 umpan sukses serta menggiring bola melewati lawan sebanyak lima kali. (7) Salah satu momen gocekan Messi yang membuat lawan tak berkutik 
+sekaligus mengundang kekaguman terjadi di menit ke-69.
+(8) Argentina mendapatkan lemparan ke dalam di area tengah lapangan. (9) Sekilas, situasi ini tampak tidak memberikan ancaman bagi gawang Kroasia. 
+(10) Bola kemudian mengarah ke Alvarez, yang selanjutnya mengoper kembali ke Messi. (11) Dengan sigap dan cekatan, Messi menguasai bola. (12) Messi
+berlari menuju kotak penalti sambil dikawal ketat oleh Josko Gvardiol, bek Kroasia yang mendapat banyak pujian sepanjang Piala Dunia 2022. 
+(13) Sebelum memasuki kotak penalti, Messi berhenti sesaat. (14) Dengan sebuah gerakan memutar ke kiri, ia berhasil mengecoh Gvardiol. (15) Messi 
+kemudian mentrobos masuk ke kotak penalti tanpa bisa dikejar. (16) Alih-alih mengeksekusi dari sudut sempit, ia memilih ngoper bola kepada Alvarez. 
+(17) Dengan mudah, Alvarez menyarangkan bola ke dalam gawang. (18) Momen ini banyak direkam oleh para suporter yang hadir di Stadion Lusail Iconic. 
+(19) Saat mengunggah rekaman tersebut ke media sosial, para suporter pun tidak ragu memberikan pujian kepada Messi.
 
 Sumber: CNN Indonesia, 14 Desember 2022, Sihir Messi Buat Pemain Kroasia Terkecoh dan Fans Terpesona.
 
 Informasi yang tidak terdapat dalam bacaan ditunjukkan dalam pernyataan...
 ', NULL, 53, '
-Berikut analisis pernyataan yang tidak sesuai dengan teks bacaan berdasarkan pernyataan pada opsi jawaban:
-A. Lionel Messi berhasil mengecoh Gvardiol. Hal ini tidak tepat karena telah disampaikan dalam kalimat (14)
-B. Lionel Messi sempat berhenti sebelum memasuki kotak penalti. Hal ini tidak tepat karena telah disampaikan dalam kalimat (13)
-C. Suporter memberi pujian kepada Alvarez karena memperoleh dua gol. Hal ini benar karena tidak disampaikan dalam kalimat manapun.
-D. Lionel Messi mencetak satu gol. Hal ini tidak tepat karena telah disampaikan dalam kalimat (4)
-E. Alvarez tidak mengalami kesulitan saat menyepak bola masuk ke gawang. Hal ini tidak tepat karena telah disampaikan dalam kalimat (17)
-Berdasarkan analisis tersebut, maka jawaban yang tepat adalah C.
+Dalam teks disebutkan bahwa:
+(A) Tercermin dalam kalimat (14) bahwa Messi berhasil mengecoh Gvardiol.
+(B) Kalimat (13) menyebutkan bahwa Messi berhenti sesaat sebelum memasuki kotak penalti.
+(D) Kalimat (4) menyatakan Messi mencetak satu gol.
+(E) Kalimat (17) menyampaikan bahwa Alvarez dengan mudah menyarangkan bola ke gawang.
+Namun, tidak ada informasi yang menyatakan suporter memberi pujian kepada Alvarez karena memperoleh dua gol. Oleh karena itu, pernyataan C tidak terdapat dalam teks.
 '),
 
-('ppu-005', 'paket1', 'subtest_ppu', 'multiple_choice','(1) Penampilan Lionel Messi dalam laga Argentina vs Kroasia mendapat apresiasi. (2) Salah 
-satu aksi menawan ditampilkan dalam proses gol ketiga Tim Tango. (3) Messi mendapat penghargaan man of the match usai laga semifinal Piala Dunia 
-2022. (4) Meski mencetak satu gol saat dua gol lain dilesakkan Julian Alvarez, Messi menunjukkan penampilan brilian. (5) Keterlibatan Messi dalam 
-permainan Argentina begitu terasa dengan 63 sentuhan bola. (6) Selain itu, Messi juga mengirimkan 34 umpan sukses dan lima kali menggocek lawan. 
-(7) Salah satu gocekan Messi yang membuat lawan tak berdaya sekaligus mengundang decak kagum terjadi pada menit ke-69.
-
-(8) Argentina mendapat lemparan ke dalam di tengah lapangan. (9) Sepintas, momen ini tidak mengundang ancaman ke gawang Kroasia. (10) Bola lantas mengarah ke Alvarez, 
-lalu penyerang Argentina itu melepas bola lagi ke arah Messi. (11) Dengan cepat dan cekatan, Messi menguasai si kulit bulat. (12) Messi berlari mendekati kotak penalti 
-dengan kawalan ketat Josko Gvardiol, bek Kroasia yang mendapat penilaian baik selama Piala Dunia 2022. (13) Sebelum memasuki kotak penalti, Messi berhenti sejenak. 
-(14) Dengan gerakan memutar badan ke kiri, Messi mengecoh Gvardiol. (15) Messi menerobos kotak penalti dan tak terkejar. (16) Alih-alih menuntaskan kesempatan dari sudut sempit, 
-bola dikirim Messi kepada Alvarez. (17) Tanpa kesulitan, Alvarez menyepak bola masuk ke gawang. (18) Momen tersebut banyak pula direkam dan kemudian diunggah para suporter 
-yang hadir di Stadion Lusail Iconic. (19) Sembari mengunggah momen tersebut ke media sosial, suporter tak sungkan memberi pujian kepada Messi.
+('ppu-005', 'paket1', 'subtest_ppu', 'multiple_choice','(1) Penampilan Lionel Messi dalam pertandingan antara Argentina dan Kroasia mendapat pujian. 
+(2) Salah satu aksi memukau terjadi saat proses terciptanya gol ketiga bagi Tim Tango. (3) Messi dinobatkan sebagai man of the match setelah laga 
+semifinal Piala Dunia 2022. (4) Meskipun hanya mencetak satu gol sementara dua gol lainnya dilesakkan oleh Julian Alvarez, Messi tetap menunjukkan 
+performa luar biasa. (5) Perannya dalam permainan Argentina sangat terlihat dengan 63 sentuhan terhadap bola. (6) Selain itu, ia juga berhasil 
+mengirimkan 34 umpan sukses serta menggiring bola melewati lawan sebanyak lima kali. (7) Salah satu momen gocekan Messi yang membuat lawan tak berkutik 
+sekaligus mengundang kekaguman terjadi di menit ke-69.
+(8) Argentina mendapatkan lemparan ke dalam di area tengah lapangan. (9) Sekilas, situasi ini tampak tidak memberikan ancaman bagi gawang Kroasia. 
+(10) Bola kemudian mengarah ke Alvarez, yang selanjutnya mengoper kembali ke Messi. (11) Dengan sigap dan cekatan, Messi menguasai bola. (12) Messi
+berlari menuju kotak penalti sambil dikawal ketat oleh Josko Gvardiol, bek Kroasia yang mendapat banyak pujian sepanjang Piala Dunia 2022. 
+(13) Sebelum memasuki kotak penalti, Messi berhenti sesaat. (14) Dengan sebuah gerakan memutar ke kiri, ia berhasil mengecoh Gvardiol. (15) Messi 
+kemudian mentrobos masuk ke kotak penalti tanpa bisa dikejar. (16) Alih-alih mengeksekusi dari sudut sempit, ia memilih ngoper bola kepada Alvarez. 
+(17) Dengan mudah, Alvarez menyarangkan bola ke dalam gawang. (18) Momen ini banyak direkam oleh para suporter yang hadir di Stadion Lusail Iconic. 
+(19) Saat mengunggah rekaman tersebut ke media sosial, para suporter pun tidak ragu memberikan pujian kepada Messi.
 
 Sumber: CNN Indonesia, 14 Desember 2022, Sihir Messi Buat Pemain Kroasia Terkecoh dan Fans Terpesona.
 
 Hubungan antara kalimat (5) dan (6) menunjukkan...
 ', NULL, 47, '
-Untuk menentukan hubungan antar kalimat, hal yang harus kita perhatikan adalah informasi yang disampaikan dari kedua kalimat tersebut. Kalimat (5) menyampaikan informasi terkait "Keterlibatan Messi dalam permainan Argentina begitu terasa dengan 63 sentuhan bola" dan kalimat (6) menyampaikan informasi terkait "Selain itu, Messi juga mengirimkan 34 umpan sukses, dan lima kali menggocek lawan."
-Oleh karena itu, dapat kita lihat antara kalimat (5) dan (6) keduanya saling membuktikan argumentasi.
+Kalimat (5) menyampaikan bahwa Messi terlibat aktif dengan 63 sentuhan bola, sedangkan kalimat (6) menambahkan bukti melalui umpan sukses dan dribelnya. 
+Kedua kalimat tersebut saling menguatkan argumentasi mengenai peran aktif Messi dalam permainan.
 '),
 
-('ppu-006', 'paket1', 'subtest_ppu', 'multiple_choice','(1) Penampilan Lionel Messi dalam laga Argentina vs Kroasia mendapat apresiasi. (2) Salah 
-satu aksi menawan ditampilkan dalam proses gol ketiga Tim Tango. (3) Messi mendapat penghargaan man of the match usai laga semifinal Piala Dunia 
-2022. (4) Meski mencetak satu gol saat dua gol lain dilesakkan Julian Alvarez, Messi menunjukkan penampilan brilian. (5) Keterlibatan Messi dalam 
-permainan Argentina begitu terasa dengan 63 sentuhan bola. (6) Selain itu, Messi juga mengirimkan 34 umpan sukses dan lima kali menggocek lawan. 
-(7) Salah satu gocekan Messi yang membuat lawan tak berdaya sekaligus mengundang decak kagum terjadi pada menit ke-69.
-
-(8) Argentina mendapat lemparan ke dalam di tengah lapangan. (9) Sepintas, momen ini tidak mengundang ancaman ke gawang Kroasia. (10) Bola lantas mengarah ke Alvarez, 
-lalu penyerang Argentina itu melepas bola lagi ke arah Messi. (11) Dengan cepat dan cekatan, Messi menguasai si kulit bulat. (12) Messi berlari mendekati kotak penalti 
-dengan kawalan ketat Josko Gvardiol, bek Kroasia yang mendapat penilaian baik selama Piala Dunia 2022. (13) Sebelum memasuki kotak penalti, Messi berhenti sejenak. 
-(14) Dengan gerakan memutar badan ke kiri, Messi mengecoh Gvardiol. (15) Messi menerobos kotak penalti dan tak terkejar. (16) Alih-alih menuntaskan kesempatan dari sudut sempit, 
-bola dikirim Messi kepada Alvarez. (17) Tanpa kesulitan, Alvarez menyepak bola masuk ke gawang. (18) Momen tersebut banyak pula direkam dan kemudian diunggah para suporter 
-yang hadir di Stadion Lusail Iconic. (19) Sembari mengunggah momen tersebut ke media sosial, suporter tak sungkan memberi pujian kepada Messi.
+('ppu-006', 'paket1', 'subtest_ppu', 'multiple_choice','(1) Penampilan Lionel Messi dalam pertandingan antara Argentina dan Kroasia mendapat pujian. 
+(2) Salah satu aksi memukau terjadi saat proses terciptanya gol ketiga bagi Tim Tango. (3) Messi dinobatkan sebagai man of the match setelah laga 
+semifinal Piala Dunia 2022. (4) Meskipun hanya mencetak satu gol sementara dua gol lainnya dilesakkan oleh Julian Alvarez, Messi tetap menunjukkan 
+performa luar biasa. (5) Perannya dalam permainan Argentina sangat terlihat dengan 63 sentuhan terhadap bola. (6) Selain itu, ia juga berhasil 
+mengirimkan 34 umpan sukses serta menggiring bola melewati lawan sebanyak lima kali. (7) Salah satu momen gocekan Messi yang membuat lawan tak berkutik 
+sekaligus mengundang kekaguman terjadi di menit ke-69.
+(8) Argentina mendapatkan lemparan ke dalam di area tengah lapangan. (9) Sekilas, situasi ini tampak tidak memberikan ancaman bagi gawang Kroasia. 
+(10) Bola kemudian mengarah ke Alvarez, yang selanjutnya mengoper kembali ke Messi. (11) Dengan sigap dan cekatan, Messi menguasai bola. (12) Messi
+berlari menuju kotak penalti sambil dikawal ketat oleh Josko Gvardiol, bek Kroasia yang mendapat banyak pujian sepanjang Piala Dunia 2022. 
+(13) Sebelum memasuki kotak penalti, Messi berhenti sesaat. (14) Dengan sebuah gerakan memutar ke kiri, ia berhasil mengecoh Gvardiol. (15) Messi 
+kemudian mentrobos masuk ke kotak penalti tanpa bisa dikejar. (16) Alih-alih mengeksekusi dari sudut sempit, ia memilih ngoper bola kepada Alvarez. 
+(17) Dengan mudah, Alvarez menyarangkan bola ke dalam gawang. (18) Momen ini banyak direkam oleh para suporter yang hadir di Stadion Lusail Iconic. 
+(19) Saat mengunggah rekaman tersebut ke media sosial, para suporter pun tidak ragu memberikan pujian kepada Messi.
 
 Sumber: CNN Indonesia, 14 Desember 2022, Sihir Messi Buat Pemain Kroasia Terkecoh dan Fans Terpesona.
 
 Perbaikan kata yang tepat adalah...
 ', NULL, 53, '
 Berikut analisis perbaikan kalimat berdasarkan opsi jawaban:
-A. Penyerang menjadi menyerang dalam kalimat (9). Hal ini tidak perlu diperbaiki karena kata “penyerang” sudah tepat dari segi penulisan dan penggunaan dalam kalimat (9)
-B. Mengarah menjadi mengarahkan dalam kalimat (10). Hal ini tidak perlu diperbaiki karena kata “mengarah” sudah tepat dari segi penulisan dan penggunaan dalam kalimat (10)
-C. Gerakan menjadi pergerakan dalam kalimat (14). Hal ini tidak perlu diperbaiki karena kata “gerakan” sudah tepat dari segi penulisan dan penggunaan dalam kalimat (14)
-D. Mentrobos menjadi menerobos dalam kalimat (15). Hal ini perbaikan karena kata “mentrobos” berasal dari kata dasar “terobos” yang kemudian diberikan imbuhan “me-“ sehingga terjadi peleburan huruf “T”. Oleh karena itu, penulisan yang tepat adalah “menerobos”
-E. Diunggah menjadi di-upload dalam kalimat (19). Hal ini tidak perlu diperbaiki karena kata “diunggah” sudah tepat dari segi penulisan dan penggunaan dalam kalimat (19)
+Gocekan menjadi menggocek dalam kalimat (7). Hal ini tidak perlu diperbaiki karena kata “gocekan” sudah tepat dari segi penulisan dan penggunaan dalam kalimat (7)
+Mengarah menjadi mengarahkan dalam kalimat (10). Hal ini tidak perlu diperbaiki karena kata “mengarah” sudah tepat dari segi penulisan dan penggunaan dalam kalimat (10)
+Gerakan menjadi pergerakan dalam kalimat (14). Hal ini tidak perlu diperbaiki karena kata “gerakan” sudah tepat dari segi penulisan dan penggunaan dalam kalimat (14)
+Mentrobos menjadi menerobos dalam kalimat (15). Hal ini perbaikan karena kata “mentrobos” berasal dari kata dasar “terobos” yang kemudian diberikan imbuhan “me-“ sehingga terjadi peleburan huruf “T”. Oleh karena itu, penulisan yang tepat adalah “menerobos”
+Mengunggah menjadi meng-upload dalam kalimat (19). Hal ini tidak perlu diperbaiki karena kata “mengunggah” sudah tepat dari segi penulisan dan penggunaan dalam kalimat (19)
 Berdasarkan analisis tersebut, maka jawaban yang tepat adalah D.
 '),
 
-('ppu-007', 'paket1', 'subtest_ppu', 'multiple_choice','(1) Penampilan Lionel Messi dalam laga Argentina vs Kroasia mendapat apresiasi. (2) Salah 
-satu aksi menawan ditampilkan dalam proses gol ketiga Tim Tango. (3) Messi mendapat penghargaan man of the match usai laga semifinal Piala Dunia 
-2022. (4) Meski mencetak satu gol saat dua gol lain dilesakkan Julian Alvarez, Messi menunjukkan penampilan brilian. (5) Keterlibatan Messi dalam 
-permainan Argentina begitu terasa dengan 63 sentuhan bola. (6) Selain itu, Messi juga mengirimkan 34 umpan sukses dan lima kali menggocek lawan. 
-(7) Salah satu gocekan Messi yang membuat lawan tak berdaya sekaligus mengundang decak kagum terjadi pada menit ke-69.
-
-(8) Argentina mendapat lemparan ke dalam di tengah lapangan. (9) Sepintas, momen ini tidak mengundang ancaman ke gawang Kroasia. (10) Bola lantas mengarah ke Alvarez, 
-lalu penyerang Argentina itu melepas bola lagi ke arah Messi. (11) Dengan cepat dan cekatan, Messi menguasai si kulit bulat. (12) Messi berlari mendekati kotak penalti 
-dengan kawalan ketat Josko Gvardiol, bek Kroasia yang mendapat penilaian baik selama Piala Dunia 2022. (13) Sebelum memasuki kotak penalti, Messi berhenti sejenak. 
-(14) Dengan gerakan memutar badan ke kiri, Messi mengecoh Gvardiol. (15) Messi menerobos kotak penalti dan tak terkejar. (16) Alih-alih menuntaskan kesempatan dari sudut sempit, 
-bola dikirim Messi kepada Alvarez. (17) Tanpa kesulitan, Alvarez menyepak bola masuk ke gawang. (18) Momen tersebut banyak pula direkam dan kemudian diunggah para suporter 
-yang hadir di Stadion Lusail Iconic. (19) Sembari mengunggah momen tersebut ke media sosial, suporter tak sungkan memberi pujian kepada Messi.
+('ppu-007', 'paket1', 'subtest_ppu', 'multiple_choice','(1) Penampilan Lionel Messi dalam pertandingan antara Argentina dan Kroasia mendapat pujian. 
+(2) Salah satu aksi memukau terjadi saat proses terciptanya gol ketiga bagi Tim Tango. (3) Messi dinobatkan sebagai man of the match setelah laga 
+semifinal Piala Dunia 2022. (4) Meskipun hanya mencetak satu gol sementara dua gol lainnya dilesakkan oleh Julian Alvarez, Messi tetap menunjukkan 
+performa luar biasa. (5) Perannya dalam permainan Argentina sangat terlihat dengan 63 sentuhan terhadap bola. (6) Selain itu, ia juga berhasil 
+mengirimkan 34 umpan sukses serta menggiring bola melewati lawan sebanyak lima kali. (7) Salah satu momen gocekan Messi yang membuat lawan tak berkutik 
+sekaligus mengundang kekaguman terjadi di menit ke-69.
+(8) Argentina mendapatkan lemparan ke dalam di area tengah lapangan. (9) Sekilas, situasi ini tampak tidak memberikan ancaman bagi gawang Kroasia. 
+(10) Bola kemudian mengarah ke Alvarez, yang selanjutnya mengoper kembali ke Messi. (11) Dengan sigap dan cekatan, Messi menguasai bola. (12) Messi
+berlari menuju kotak penalti sambil dikawal ketat oleh Josko Gvardiol, bek Kroasia yang mendapat banyak pujian sepanjang Piala Dunia 2022. 
+(13) Sebelum memasuki kotak penalti, Messi berhenti sesaat. (14) Dengan sebuah gerakan memutar ke kiri, ia berhasil mengecoh Gvardiol. (15) Messi 
+kemudian mentrobos masuk ke kotak penalti tanpa bisa dikejar. (16) Alih-alih mengeksekusi dari sudut sempit, ia memilih ngoper bola kepada Alvarez. 
+(17) Dengan mudah, Alvarez menyarangkan bola ke dalam gawang. (18) Momen ini banyak direkam oleh para suporter yang hadir di Stadion Lusail Iconic. 
+(19) Saat mengunggah rekaman tersebut ke media sosial, para suporter pun tidak ragu memberikan pujian kepada Messi.
 
 Sumber: CNN Indonesia, 14 Desember 2022, Sihir Messi Buat Pemain Kroasia Terkecoh dan Fans Terpesona.
 
 Pada paragraf pertama, kalimat manakah yang jika dihilangkan akan merusak paragraf tersebut...
 ', NULL, 47, '
-Untuk menghilangkan suatu kalimat dalam teks bacaan, hal yang harus kita perhatikan adalah apabila kalimat tersebut dihilangkan, tidak akan merusak teks bacaan tersebut. Berdasarkan hal tersebut, dapat kita temukan pada paragraf pertama kalimat yang jika dihilangkan akan merusak paragraf adalah kalimat (1) karena kalimat (1) merupakan gagasan utama, sehingga jika dihilangkan akan merusak seluruh paragraf tersebut sebab paragraf tidak ada lagi pondasinya.
+Untuk menghilangkan suatu kalimat dalam teks bacaan, hal yang harus kita perhatikan adalah apabila kalimat tersebut dihilangkan, tidak akan merusak 
+teks bacaan tersebut. Berdasarkan hal tersebut, dapat kita temukan pada paragraf pertama kalimat yang jika dihilangkan akan merusak paragraf adalah 
+kalimat (1) karena kalimat (1) merupakan gagasan utama, sehingga jika dihilangkan akan merusak seluruh paragraf tersebut sebab paragraf tidak ada lagi pondasinya.
 '),
 
-('ppu-008', 'paket1', 'subtest_ppu', 'multiple_choice','(1) Pasar tradisional atau yang lebih dikenal sebagai pasar rakyat adalah pusat pertemuan antara penjual dan pembeli 
-yang melakukan transaksi, serta menjadi sarana interaksi sosial budaya dan pengembangan ekonomi masyarakat. (2) Sebagai tempat usaha, pasar rakyat ditata, dibangun, dan 
-dikelola, baik oleh pemerintah, swasta, badan usaha milik negara, dan/atau badan usaha milik daerah, dapat berupa toko/kios, los, dan tenda, yang dimiliki/dikelola oleh 
-pedagang kecil dan menengah, swadaya masyarakat, koperasi serta UKM, atau badan usaha milik desa, … proses jual beli melalui tawar menawar (UU No. 7/2014 tentang Perdagangan). 
-(3) Selain itu, pasar rakyat merupakan salah satu bagian dari rantai pemasaran dalam distribusi barang kebutuhan pokok, sumber Pendapatan Asli Daerah (PAD), 
-serta lapangan kerja yang lebih luas. (4) Seiring berkembangnya pusat perbelanjaan dan toko swalayan, pasar rakyat menghadapi tantangan terutama dari sisi sarana 
-dan prasarana, yang mengakibatkan menurunnya jumlah konsumen atau pengunjung. (5) Konsumen lebih memilih memenuhi kebutuhannya dengan mengunjungi pasar modern, yakni 
-pusat perbelanjaan dan toko swalayan karena kenyamanan dan fasilitas yang ditawarkan. (6) Dengan kata lain, pasar rakyat memerlukan pembenahan dalam konteks revitalisasi 
-agar dapat bersaing dengan pasar modern.
+('ppu-008', 'paket1', 'subtest_ppu', 'multiple_choice','(1) Pasar tradisional, atau yang lebih dikenal sebagai pasar rakyat, adalah tempat bertemunya 
+penjual dan pembeli untuk bertransaksi, sekaligus menjadi wadah interaksi sosial budaya dan pengembangan ekonomi masyarakat. (2) Sebagai area usaha, 
+pasar rakyat merancang, dibangun, dan dikelola oleh pemerintah, swasta, BUMN, dan/atau BUMD, serta dapat berupa toko/kios, los, atau tenda yang dikelola 
+oleh pedagang kecil dan menengah, swadaya masyarakat, koperasi, UKM, atau badan usaha milik desa, … proses jual beli yang dilakukan melalui tawar-menawar 
+(UU No. 7/2014 tentang Perdagangan). (3) Selain itu, pasar rakyat merupakan bagian integral dari rantai distribusi barang kebutuhan pokok, sumber Pendapatan 
+Asli Daerah (PAD), serta pencipta lapangan kerja yang lebih luas. (4) Seiring dengan berkembangnya pusat perbelanjaan dan toko swalayan, pasar rakyat 
+menghadapi tantangan terutama dalam hal sarana dan prasarana, yang berdampak pada penurunan jumlah konsumen atau pengunjung. (5) Konsumen kini lebih 
+memilih memenuhi kebutuhan mereka dengan mengunjungi pasar modern, seperti pusat perbelanjaan dan toko swalayan, karena kenyamanan dan fasilitas yang 
+lebih lengkap. (6) Dengan demikian, pasar rakyat membutuhkan revitalisasi agar dapat bersaing dengan pasar modern.
 
-(7) Sebagai penggerak ekonomi masyarakat, pasar rakyat memiliki fungsi strategis dan kedekatan dengan aspek sosial dan budaya masyarakat serta memiliki kekhasan, 
-seperti adanya aktivitas tawar menawar yang tidak dimiliki oleh pasar modern, pusat perbelanjaan, maupun toko swalayan. (8) Pasar yang berhasil adalah pasar yang 
-ramai dengan aktivitas ekonomi dan sosial, ditandai tersedianya ruang-ruang yang nyaman, aksesibel, dan menjadi wadah aktivitas sosio kultural. (9) Berdasarkan data 
-survei Badan Pusat Statistik pada 2019, terdapat 14.182 pasar rakyat dengan 13 juta lebih pedagang yang beraktivitas di dalamnya. (10) Jika setiap pedagang memiliki 
-empat anggota keluarga, artinya lebih dari 52 juta orang atau hampir 19% dari populasi total penduduk Indonesia beraktivitas di pasar.
+(7) Sebagai pendorong ekonomi masyarakat, pasar rakyat memiliki fungsi strategis dan kedekatan dengan aspek sosial budaya, serta memiliki keunikan, 
+seperti aktivitas tawar-menawar yang tidak ditemui di pasar modern, pusat perbelanjaan, maupun toko swalayan. (8) Pasar yang sukses adalah pasar yang 
+ramai dengan aktivitas ekonomi dan sosial, ditandai dengan tersedianya ruang-ruang yang nyaman, mudah diakses, dan menjadi pusat kegiatan sosio-kultural. 
+(9) Berdasarkan data survei Badan Pusat Statistik pada tahun 2019, terdapat 14.182 pasar rakyat dengan lebih dari 13 juta pedagang yang beraktivitas di 
+dalamnya. (10) Jika setiap pedagang memiliki empat anggota keluarga, berarti lebih dari 52 juta orang atau hampir 19% dari total penduduk Indonesia terlibat 
+dalam aktivitas pasar.
 
-(11) Secara sosiologis, pasar merupakan institusi sosial yang memberikan tatanan siap pakai, termasuk memecahkan berbagai persoalan terkait kebutuhan ekonomi 
-dasar manusia dalam distribusi barang dan jasa. (12) Pasar rakyat di Indonesia selalu dicitrakan sebagai tempat yang kumuh, kotor, becek, tidak terawat, memiliki 
-tingkat kualitas hunian yang sangat rendah, dan disinyalir dikelola tanpa inovasi yang berarti. (13) Tidak heran, selain menjadi sumber kemacetan lalu lintas, sebagian 
-besar masyarakat melihat pasar rakyat sebagai tempat yang tidak nyaman dan kompetitif, serta berpotensi menjadi kluster penyebaran pandemi. (14) Oleh karena itu, untuk 
-menghadirkan pasar rakyat yang nyaman memerlukan perlakuan khusus dalam pengelolaan, pengembangan, dan pelestariannya.
+(11) Secara sosiologis, pasar merupakan institusi sosial yang menyediakan tatanan siap pakai, termasuk dalam menyelesaikan berbagai persoalan kebutuhan 
+ekonomi dasar manusia melalui distribusi barang dan jasa. (12) Di Indonesia, pasar rakyat sering dicitrakan sebagai tempat yang kumuh, kotor, becek, 
+tidak terawat, dengan kualitas hunian yang rendah, dan diduga dikelola tanpa inovasi berarti. (13) Tak heran jika, selain menjadi penyebab kemacetan lalu 
+lintas, banyak masyarakat menganggap pasar rakyat sebagai tempat yang tidak nyaman, kompetitif, serta berpotensi menjadi kluster penyebaran pandemi. (14) 
+Oleh karena itu, untuk menciptakan pasar rakyat yang nyaman, diperlukan perlakuan khusus dalam pengelolaan, pengembangan, dan pelestariannya.
 
 Sumber: Media Indonesia, 15 Desember 2022. Pengelolaan Pasar Rakyat Berkelanjutan Berbasis ESG.
 
@@ -589,31 +598,31 @@ Biasanya berupa satu kalimat lengkap
 Mempunyai arti yang jelas tanpa dihubungkan dengan kalimat lain
 Dibentuk tanpa kata sambung atau transisi
 Mewakili isi teks bacaan
-Berdasarkan hal tersebut, dapat kita tentukan gagasan pokok dari paragraf tiga teks bacaan tersebut adalah “Pasar rakyat yang nyaman memerlukan perlakuan khusus dalam pengelolaan, pengembangan, dan pelestariannya.”
-
+Berdasarkan hal tersebut, dapat kita tentukan gagasan pokok dari paragraf tiga teks bacaan tersebut adalah “Pasar rakyat yang nyaman, diperlukan perlakuan khusus dalam pengelolaan, pengembangan, dan pelestariannya.”
 '),
 
-('ppu-009', 'paket1', 'subtest_ppu', 'multiple_choice','(1) Pasar tradisional atau yang lebih dikenal sebagai pasar rakyat adalah pusat pertemuan antara penjual dan pembeli 
-yang melakukan transaksi, serta menjadi sarana interaksi sosial budaya dan pengembangan ekonomi masyarakat. (2) Sebagai tempat usaha, pasar rakyat ditata, dibangun, dan 
-dikelola, baik oleh pemerintah, swasta, badan usaha milik negara, dan/atau badan usaha milik daerah, dapat berupa toko/kios, los, dan tenda, yang dimiliki/dikelola oleh 
-pedagang kecil dan menengah, swadaya masyarakat, koperasi serta UKM, atau badan usaha milik desa, … proses jual beli melalui tawar menawar (UU No. 7/2014 tentang Perdagangan). 
-(3) Selain itu, pasar rakyat merupakan salah satu bagian dari rantai pemasaran dalam distribusi barang kebutuhan pokok, sumber Pendapatan Asli Daerah (PAD), 
-serta lapangan kerja yang lebih luas. (4) Seiring berkembangnya pusat perbelanjaan dan toko swalayan, pasar rakyat menghadapi tantangan terutama dari sisi sarana 
-dan prasarana, yang mengakibatkan menurunnya jumlah konsumen atau pengunjung. (5) Konsumen lebih memilih memenuhi kebutuhannya dengan mengunjungi pasar modern, yakni 
-pusat perbelanjaan dan toko swalayan karena kenyamanan dan fasilitas yang ditawarkan. (6) Dengan kata lain, pasar rakyat memerlukan pembenahan dalam konteks revitalisasi 
-agar dapat bersaing dengan pasar modern.
+('ppu-009', 'paket1', 'subtest_ppu', 'multiple_choice','(1) Pasar tradisional, atau yang lebih dikenal sebagai pasar rakyat, adalah tempat bertemunya 
+penjual dan pembeli untuk bertransaksi, sekaligus menjadi wadah interaksi sosial budaya dan pengembangan ekonomi masyarakat. (2) Sebagai area usaha, 
+pasar rakyat merancang, dibangun, dan dikelola oleh pemerintah, swasta, BUMN, dan/atau BUMD, serta dapat berupa toko/kios, los, atau tenda yang dikelola 
+oleh pedagang kecil dan menengah, swadaya masyarakat, koperasi, UKM, atau badan usaha milik desa, … proses jual beli yang dilakukan melalui tawar-menawar 
+(UU No. 7/2014 tentang Perdagangan). (3) Selain itu, pasar rakyat merupakan bagian integral dari rantai distribusi barang kebutuhan pokok, sumber Pendapatan 
+Asli Daerah (PAD), serta pencipta lapangan kerja yang lebih luas. (4) Seiring dengan berkembangnya pusat perbelanjaan dan toko swalayan, pasar rakyat 
+menghadapi tantangan terutama dalam hal sarana dan prasarana, yang berdampak pada penurunan jumlah konsumen atau pengunjung. (5) Konsumen kini lebih 
+memilih memenuhi kebutuhan mereka dengan mengunjungi pasar modern, seperti pusat perbelanjaan dan toko swalayan, karena kenyamanan dan fasilitas yang 
+lebih lengkap. (6) Dengan demikian, pasar rakyat membutuhkan revitalisasi agar dapat bersaing dengan pasar modern.
 
-(7) Sebagai penggerak ekonomi masyarakat, pasar rakyat memiliki fungsi strategis dan kedekatan dengan aspek sosial dan budaya masyarakat serta memiliki kekhasan, 
-seperti adanya aktivitas tawar menawar yang tidak dimiliki oleh pasar modern, pusat perbelanjaan, maupun toko swalayan. (8) Pasar yang berhasil adalah pasar yang 
-ramai dengan aktivitas ekonomi dan sosial, ditandai tersedianya ruang-ruang yang nyaman, aksesibel, dan menjadi wadah aktivitas sosio kultural. (9) Berdasarkan data 
-survei Badan Pusat Statistik pada 2019, terdapat 14.182 pasar rakyat dengan 13 juta lebih pedagang yang beraktivitas di dalamnya. (10) Jika setiap pedagang memiliki 
-empat anggota keluarga, artinya lebih dari 52 juta orang atau hampir 19% dari populasi total penduduk Indonesia beraktivitas di pasar.
+(7) Sebagai pendorong ekonomi masyarakat, pasar rakyat memiliki fungsi strategis dan kedekatan dengan aspek sosial budaya, serta memiliki keunikan, 
+seperti aktivitas tawar-menawar yang tidak ditemui di pasar modern, pusat perbelanjaan, maupun toko swalayan. (8) Pasar yang sukses adalah pasar yang 
+ramai dengan aktivitas ekonomi dan sosial, ditandai dengan tersedianya ruang-ruang yang nyaman, mudah diakses, dan menjadi pusat kegiatan sosio-kultural. 
+(9) Berdasarkan data survei Badan Pusat Statistik pada tahun 2019, terdapat 14.182 pasar rakyat dengan lebih dari 13 juta pedagang yang beraktivitas di 
+dalamnya. (10) Jika setiap pedagang memiliki empat anggota keluarga, berarti lebih dari 52 juta orang atau hampir 19% dari total penduduk Indonesia terlibat 
+dalam aktivitas pasar.
 
-(11) Secara sosiologis, pasar merupakan institusi sosial yang memberikan tatanan siap pakai, termasuk memecahkan berbagai persoalan terkait kebutuhan ekonomi 
-dasar manusia dalam distribusi barang dan jasa. (12) Pasar rakyat di Indonesia selalu dicitrakan sebagai tempat yang kumuh, kotor, becek, tidak terawat, memiliki 
-tingkat kualitas hunian yang sangat rendah, dan disinyalir dikelola tanpa inovasi yang berarti. (13) Tidak heran, selain menjadi sumber kemacetan lalu lintas, sebagian 
-besar masyarakat melihat pasar rakyat sebagai tempat yang tidak nyaman dan kompetitif, serta berpotensi menjadi kluster penyebaran pandemi. (14) Oleh karena itu, untuk 
-menghadirkan pasar rakyat yang nyaman memerlukan perlakuan khusus dalam pengelolaan, pengembangan, dan pelestariannya.
+(11) Secara sosiologis, pasar merupakan institusi sosial yang menyediakan tatanan siap pakai, termasuk dalam menyelesaikan berbagai persoalan kebutuhan 
+ekonomi dasar manusia melalui distribusi barang dan jasa. (12) Di Indonesia, pasar rakyat sering dicitrakan sebagai tempat yang kumuh, kotor, becek, 
+tidak terawat, dengan kualitas hunian yang rendah, dan diduga dikelola tanpa inovasi berarti. (13) Tak heran jika, selain menjadi penyebab kemacetan lalu 
+lintas, banyak masyarakat menganggap pasar rakyat sebagai tempat yang tidak nyaman, kompetitif, serta berpotensi menjadi kluster penyebaran pandemi. (14) 
+Oleh karena itu, untuk menciptakan pasar rakyat yang nyaman, diperlukan perlakuan khusus dalam pengelolaan, pengembangan, dan pelestariannya.
 
 Sumber: Media Indonesia, 15 Desember 2022. Pengelolaan Pasar Rakyat Berkelanjutan Berbasis ESG.
 
@@ -622,85 +631,88 @@ Bagian rumpang pada kalimat (2) dapat diisi dengan kata...
 Dalam kalimat (2) dapat kita temukan bagian yang rumpang ada di dalam kalimat sehingga dapat kita simpulkan konjungsi yang tepat untuk melengkapi bagian rumpang tersebut adalah konjungsi intrakalimat. Konjungsi intrakalimat yang tepat adalah konjungsi “dengan” karena kalimat tersebut menunjukkan adanya informasi tambahan sehingga tepat menggunakan konjungsi "dengan".
 '),
 
-('ppu-010', 'paket1', 'subtest_ppu', 'multiple_choice','(1) Pasar tradisional atau yang lebih dikenal sebagai pasar rakyat adalah pusat pertemuan antara penjual dan pembeli 
-yang melakukan transaksi, serta menjadi sarana interaksi sosial budaya dan pengembangan ekonomi masyarakat. (2) Sebagai tempat usaha, pasar rakyat ditata, dibangun, dan 
-dikelola, baik oleh pemerintah, swasta, badan usaha milik negara, dan/atau badan usaha milik daerah, dapat berupa toko/kios, los, dan tenda, yang dimiliki/dikelola oleh 
-pedagang kecil dan menengah, swadaya masyarakat, koperasi serta UKM, atau badan usaha milik desa, … proses jual beli melalui tawar menawar (UU No. 7/2014 tentang Perdagangan). 
-(3) Selain itu, pasar rakyat merupakan salah satu bagian dari rantai pemasaran dalam distribusi barang kebutuhan pokok, sumber Pendapatan Asli Daerah (PAD), 
-serta lapangan kerja yang lebih luas. (4) Seiring berkembangnya pusat perbelanjaan dan toko swalayan, pasar rakyat menghadapi tantangan terutama dari sisi sarana 
-dan prasarana, yang mengakibatkan menurunnya jumlah konsumen atau pengunjung. (5) Konsumen lebih memilih memenuhi kebutuhannya dengan mengunjungi pasar modern, yakni 
-pusat perbelanjaan dan toko swalayan karena kenyamanan dan fasilitas yang ditawarkan. (6) Dengan kata lain, pasar rakyat memerlukan pembenahan dalam konteks revitalisasi 
-agar dapat bersaing dengan pasar modern.
+('ppu-010', 'paket1', 'subtest_ppu', 'multiple_choice','(1) Pasar tradisional, atau yang lebih dikenal sebagai pasar rakyat, adalah tempat bertemunya 
+penjual dan pembeli untuk bertransaksi, sekaligus menjadi wadah interaksi sosial budaya dan pengembangan ekonomi masyarakat. (2) Sebagai area usaha, 
+pasar rakyat merancang, dibangun, dan dikelola oleh pemerintah, swasta, BUMN, dan/atau BUMD, serta dapat berupa toko/kios, los, atau tenda yang dikelola 
+oleh pedagang kecil dan menengah, swadaya masyarakat, koperasi, UKM, atau badan usaha milik desa, … proses jual beli yang dilakukan melalui tawar-menawar 
+(UU No. 7/2014 tentang Perdagangan). (3) Selain itu, pasar rakyat merupakan bagian integral dari rantai distribusi barang kebutuhan pokok, sumber Pendapatan 
+Asli Daerah (PAD), serta pencipta lapangan kerja yang lebih luas. (4) Seiring dengan berkembangnya pusat perbelanjaan dan toko swalayan, pasar rakyat 
+menghadapi tantangan terutama dalam hal sarana dan prasarana, yang berdampak pada penurunan jumlah konsumen atau pengunjung. (5) Konsumen kini lebih 
+memilih memenuhi kebutuhan mereka dengan mengunjungi pasar modern, seperti pusat perbelanjaan dan toko swalayan, karena kenyamanan dan fasilitas yang 
+lebih lengkap. (6) Dengan demikian, pasar rakyat membutuhkan revitalisasi agar dapat bersaing dengan pasar modern.
 
-(7) Sebagai penggerak ekonomi masyarakat, pasar rakyat memiliki fungsi strategis dan kedekatan dengan aspek sosial dan budaya masyarakat serta memiliki kekhasan, 
-seperti adanya aktivitas tawar menawar yang tidak dimiliki oleh pasar modern, pusat perbelanjaan, maupun toko swalayan. (8) Pasar yang berhasil adalah pasar yang 
-ramai dengan aktivitas ekonomi dan sosial, ditandai tersedianya ruang-ruang yang nyaman, aksesibel, dan menjadi wadah aktivitas sosio kultural. (9) Berdasarkan data 
-survei Badan Pusat Statistik pada 2019, terdapat 14.182 pasar rakyat dengan 13 juta lebih pedagang yang beraktivitas di dalamnya. (10) Jika setiap pedagang memiliki 
-empat anggota keluarga, artinya lebih dari 52 juta orang atau hampir 19% dari populasi total penduduk Indonesia beraktivitas di pasar.
+(7) Sebagai pendorong ekonomi masyarakat, pasar rakyat memiliki fungsi strategis dan kedekatan dengan aspek sosial budaya, serta memiliki keunikan, 
+seperti aktivitas tawar-menawar yang tidak ditemui di pasar modern, pusat perbelanjaan, maupun toko swalayan. (8) Pasar yang sukses adalah pasar yang 
+ramai dengan aktivitas ekonomi dan sosial, ditandai dengan tersedianya ruang-ruang yang nyaman, mudah diakses, dan menjadi pusat kegiatan sosio-kultural. 
+(9) Berdasarkan data survei Badan Pusat Statistik pada tahun 2019, terdapat 14.182 pasar rakyat dengan lebih dari 13 juta pedagang yang beraktivitas di 
+dalamnya. (10) Jika setiap pedagang memiliki empat anggota keluarga, berarti lebih dari 52 juta orang atau hampir 19% dari total penduduk Indonesia terlibat 
+dalam aktivitas pasar.
 
-(11) Secara sosiologis, pasar merupakan institusi sosial yang memberikan tatanan siap pakai, termasuk memecahkan berbagai persoalan terkait kebutuhan ekonomi 
-dasar manusia dalam distribusi barang dan jasa. (12) Pasar rakyat di Indonesia selalu dicitrakan sebagai tempat yang kumuh, kotor, becek, tidak terawat, memiliki 
-tingkat kualitas hunian yang sangat rendah, dan disinyalir dikelola tanpa inovasi yang berarti. (13) Tidak heran, selain menjadi sumber kemacetan lalu lintas, sebagian 
-besar masyarakat melihat pasar rakyat sebagai tempat yang tidak nyaman dan kompetitif, serta berpotensi menjadi kluster penyebaran pandemi. (14) Oleh karena itu, untuk 
-menghadirkan pasar rakyat yang nyaman memerlukan perlakuan khusus dalam pengelolaan, pengembangan, dan pelestariannya.
+(11) Secara sosiologis, pasar merupakan institusi sosial yang menyediakan tatanan siap pakai, termasuk dalam menyelesaikan berbagai persoalan kebutuhan 
+ekonomi dasar manusia melalui distribusi barang dan jasa. (12) Di Indonesia, pasar rakyat sering dicitrakan sebagai tempat yang kumuh, kotor, becek, 
+tidak terawat, dengan kualitas hunian yang rendah, dan diduga dikelola tanpa inovasi berarti. (13) Tak heran jika, selain menjadi penyebab kemacetan lalu 
+lintas, banyak masyarakat menganggap pasar rakyat sebagai tempat yang tidak nyaman, kompetitif, serta berpotensi menjadi kluster penyebaran pandemi. (14) 
+Oleh karena itu, untuk menciptakan pasar rakyat yang nyaman, diperlukan perlakuan khusus dalam pengelolaan, pengembangan, dan pelestariannya.
 
 Sumber: Media Indonesia, 15 Desember 2022. Pengelolaan Pasar Rakyat Berkelanjutan Berbasis ESG.
 
-Makna kata rantai dalam kalimat (3) adalah...
+Makna kata integral dalam kalimat (3) adalah...
 ', NULL, 53, '
-Berdasarkan KBBI, “rantai” memiliki makna tali, ikatan, belenggu, dan deret atom. Namun, dalam hal ini, dalam memaknai kata “rantai,” kita harus memaknainya secara kontekstual alias berdasarkan konteks kalimatnya. Oleh karena itu, berdasarkan kalimat tersebut, kata “rantai” mengandung makna “rangkaian proses.”
+Menurut KBBI, “integral” merujuk pada sesuatu yang menyatu dan tidak dapat dipisahkan dari keseluruhan. Dalam konteks kalimat (3), pasar rakyat digambarkan sebagai bagian yang tidak terpisahkan dari rantai distribusi barang kebutuhan pokok, sumber PAD, dan pencipta lapangan kerja. Dengan demikian, makna yang tepat adalah “bagian yang tidak dapat dipisahkan.”
 '),
 
-('ppu-011', 'paket1', 'subtest_ppu', 'multiple_choice','(1) Pasar tradisional atau yang lebih dikenal sebagai pasar rakyat adalah pusat pertemuan antara penjual dan pembeli 
-yang melakukan transaksi, serta menjadi sarana interaksi sosial budaya dan pengembangan ekonomi masyarakat. (2) Sebagai tempat usaha, pasar rakyat ditata, dibangun, dan 
-dikelola, baik oleh pemerintah, swasta, badan usaha milik negara, dan/atau badan usaha milik daerah, dapat berupa toko/kios, los, dan tenda, yang dimiliki/dikelola oleh 
-pedagang kecil dan menengah, swadaya masyarakat, koperasi serta UKM, atau badan usaha milik desa, … proses jual beli melalui tawar menawar (UU No. 7/2014 tentang Perdagangan). 
-(3) Selain itu, pasar rakyat merupakan salah satu bagian dari rantai pemasaran dalam distribusi barang kebutuhan pokok, sumber Pendapatan Asli Daerah (PAD), 
-serta lapangan kerja yang lebih luas. (4) Seiring berkembangnya pusat perbelanjaan dan toko swalayan, pasar rakyat menghadapi tantangan terutama dari sisi sarana 
-dan prasarana, yang mengakibatkan menurunnya jumlah konsumen atau pengunjung. (5) Konsumen lebih memilih memenuhi kebutuhannya dengan mengunjungi pasar modern, yakni 
-pusat perbelanjaan dan toko swalayan karena kenyamanan dan fasilitas yang ditawarkan. (6) Dengan kata lain, pasar rakyat memerlukan pembenahan dalam konteks revitalisasi 
-agar dapat bersaing dengan pasar modern.
+('ppu-011', 'paket1', 'subtest_ppu', 'multiple_choice','(1) Pasar tradisional, atau yang lebih dikenal sebagai pasar rakyat, adalah tempat bertemunya 
+penjual dan pembeli untuk bertransaksi, sekaligus menjadi wadah interaksi sosial budaya dan pengembangan ekonomi masyarakat. (2) Sebagai area usaha, 
+pasar rakyat merancang, dibangun, dan dikelola oleh pemerintah, swasta, BUMN, dan/atau BUMD, serta dapat berupa toko/kios, los, atau tenda yang dikelola 
+oleh pedagang kecil dan menengah, swadaya masyarakat, koperasi, UKM, atau badan usaha milik desa, … proses jual beli yang dilakukan melalui tawar-menawar 
+(UU No. 7/2014 tentang Perdagangan). (3) Selain itu, pasar rakyat merupakan bagian integral dari rantai distribusi barang kebutuhan pokok, sumber Pendapatan 
+Asli Daerah (PAD), serta pencipta lapangan kerja yang lebih luas. (4) Seiring dengan berkembangnya pusat perbelanjaan dan toko swalayan, pasar rakyat 
+menghadapi tantangan terutama dalam hal sarana dan prasarana, yang berdampak pada penurunan jumlah konsumen atau pengunjung. (5) Konsumen kini lebih 
+memilih memenuhi kebutuhan mereka dengan mengunjungi pasar modern, seperti pusat perbelanjaan dan toko swalayan, karena kenyamanan dan fasilitas yang 
+lebih lengkap. (6) Dengan demikian, pasar rakyat membutuhkan revitalisasi agar dapat bersaing dengan pasar modern.
 
-(7) Sebagai penggerak ekonomi masyarakat, pasar rakyat memiliki fungsi strategis dan kedekatan dengan aspek sosial dan budaya masyarakat serta memiliki kekhasan, 
-seperti adanya aktivitas tawar menawar yang tidak dimiliki oleh pasar modern, pusat perbelanjaan, maupun toko swalayan. (8) Pasar yang berhasil adalah pasar yang 
-ramai dengan aktivitas ekonomi dan sosial, ditandai tersedianya ruang-ruang yang nyaman, aksesibel, dan menjadi wadah aktivitas sosio kultural. (9) Berdasarkan data 
-survei Badan Pusat Statistik pada 2019, terdapat 14.182 pasar rakyat dengan 13 juta lebih pedagang yang beraktivitas di dalamnya. (10) Jika setiap pedagang memiliki 
-empat anggota keluarga, artinya lebih dari 52 juta orang atau hampir 19% dari populasi total penduduk Indonesia beraktivitas di pasar.
+(7) Sebagai pendorong ekonomi masyarakat, pasar rakyat memiliki fungsi strategis dan kedekatan dengan aspek sosial budaya, serta memiliki keunikan, 
+seperti aktivitas tawar-menawar yang tidak ditemui di pasar modern, pusat perbelanjaan, maupun toko swalayan. (8) Pasar yang sukses adalah pasar yang 
+ramai dengan aktivitas ekonomi dan sosial, ditandai dengan tersedianya ruang-ruang yang nyaman, mudah diakses, dan menjadi pusat kegiatan sosio-kultural. 
+(9) Berdasarkan data survei Badan Pusat Statistik pada tahun 2019, terdapat 14.182 pasar rakyat dengan lebih dari 13 juta pedagang yang beraktivitas di 
+dalamnya. (10) Jika setiap pedagang memiliki empat anggota keluarga, berarti lebih dari 52 juta orang atau hampir 19% dari total penduduk Indonesia terlibat 
+dalam aktivitas pasar.
 
-(11) Secara sosiologis, pasar merupakan institusi sosial yang memberikan tatanan siap pakai, termasuk memecahkan berbagai persoalan terkait kebutuhan ekonomi 
-dasar manusia dalam distribusi barang dan jasa. (12) Pasar rakyat di Indonesia selalu dicitrakan sebagai tempat yang kumuh, kotor, becek, tidak terawat, memiliki 
-tingkat kualitas hunian yang sangat rendah, dan disinyalir dikelola tanpa inovasi yang berarti. (13) Tidak heran, selain menjadi sumber kemacetan lalu lintas, sebagian 
-besar masyarakat melihat pasar rakyat sebagai tempat yang tidak nyaman dan kompetitif, serta berpotensi menjadi kluster penyebaran pandemi. (14) Oleh karena itu, untuk 
-menghadirkan pasar rakyat yang nyaman memerlukan perlakuan khusus dalam pengelolaan, pengembangan, dan pelestariannya.
+(11) Secara sosiologis, pasar merupakan institusi sosial yang menyediakan tatanan siap pakai, termasuk dalam menyelesaikan berbagai persoalan kebutuhan 
+ekonomi dasar manusia melalui distribusi barang dan jasa. (12) Di Indonesia, pasar rakyat sering dicitrakan sebagai tempat yang kumuh, kotor, becek, 
+tidak terawat, dengan kualitas hunian yang rendah, dan diduga dikelola tanpa inovasi berarti. (13) Tak heran jika, selain menjadi penyebab kemacetan lalu 
+lintas, banyak masyarakat menganggap pasar rakyat sebagai tempat yang tidak nyaman, kompetitif, serta berpotensi menjadi kluster penyebaran pandemi. (14) 
+Oleh karena itu, untuk menciptakan pasar rakyat yang nyaman, diperlukan perlakuan khusus dalam pengelolaan, pengembangan, dan pelestariannya.
 
 Sumber: Media Indonesia, 15 Desember 2022. Pengelolaan Pasar Rakyat Berkelanjutan Berbasis ESG.
 
 Kata yang perlu perbaikan terdapat dalam kalimat...
 ', NULL, 47, '
-Kalimat yang mengandung kata yang perlu diperbaiki dapat kita temui pada kalimat (2), yaitu pada kata “mengelola.” Kata “mengelola” seharusnya “dikelola” agar bentuknya paralel dengan kata sebelumnya dalam kalimat tersebut, sehingga menjadi kalimat yang efektif.
+Kalimat yang mengandung kata yang perlu diperbaiki dapat kita temui pada kalimat (2), yaitu pada kata “merancang.” Kata “merancang” seharusnya “dirancang” agar bentuknya paralel dengan kata setelahnya dalam kalimat tersebut, sehingga menjadi kalimat yang efektif.
 '),
 
-('ppu-012', 'paket1', 'subtest_ppu', 'multiple_choice','(1) Pasar tradisional atau yang lebih dikenal sebagai pasar rakyat adalah pusat pertemuan antara penjual dan pembeli 
-yang melakukan transaksi, serta menjadi sarana interaksi sosial budaya dan pengembangan ekonomi masyarakat. (2) Sebagai tempat usaha, pasar rakyat ditata, dibangun, dan 
-dikelola, baik oleh pemerintah, swasta, badan usaha milik negara, dan/atau badan usaha milik daerah, dapat berupa toko/kios, los, dan tenda, yang dimiliki/dikelola oleh 
-pedagang kecil dan menengah, swadaya masyarakat, koperasi serta UKM, atau badan usaha milik desa, … proses jual beli melalui tawar menawar (UU No. 7/2014 tentang Perdagangan). 
-(3) Selain itu, pasar rakyat merupakan salah satu bagian dari rantai pemasaran dalam distribusi barang kebutuhan pokok, sumber Pendapatan Asli Daerah (PAD), 
-serta lapangan kerja yang lebih luas. (4) Seiring berkembangnya pusat perbelanjaan dan toko swalayan, pasar rakyat menghadapi tantangan terutama dari sisi sarana 
-dan prasarana, yang mengakibatkan menurunnya jumlah konsumen atau pengunjung. (5) Konsumen lebih memilih memenuhi kebutuhannya dengan mengunjungi pasar modern, yakni 
-pusat perbelanjaan dan toko swalayan karena kenyamanan dan fasilitas yang ditawarkan. (6) Dengan kata lain, pasar rakyat memerlukan pembenahan dalam konteks revitalisasi 
-agar dapat bersaing dengan pasar modern.
+('ppu-012', 'paket1', 'subtest_ppu', 'multiple_choice','(1) Pasar tradisional, atau yang lebih dikenal sebagai pasar rakyat, adalah tempat bertemunya 
+penjual dan pembeli untuk bertransaksi, sekaligus menjadi wadah interaksi sosial budaya dan pengembangan ekonomi masyarakat. (2) Sebagai area usaha, 
+pasar rakyat merancang, dibangun, dan dikelola oleh pemerintah, swasta, BUMN, dan/atau BUMD, serta dapat berupa toko/kios, los, atau tenda yang dikelola 
+oleh pedagang kecil dan menengah, swadaya masyarakat, koperasi, UKM, atau badan usaha milik desa, … proses jual beli yang dilakukan melalui tawar-menawar 
+(UU No. 7/2014 tentang Perdagangan). (3) Selain itu, pasar rakyat merupakan bagian integral dari rantai distribusi barang kebutuhan pokok, sumber Pendapatan 
+Asli Daerah (PAD), serta pencipta lapangan kerja yang lebih luas. (4) Seiring dengan berkembangnya pusat perbelanjaan dan toko swalayan, pasar rakyat 
+menghadapi tantangan terutama dalam hal sarana dan prasarana, yang berdampak pada penurunan jumlah konsumen atau pengunjung. (5) Konsumen kini lebih 
+memilih memenuhi kebutuhan mereka dengan mengunjungi pasar modern, seperti pusat perbelanjaan dan toko swalayan, karena kenyamanan dan fasilitas yang 
+lebih lengkap. (6) Dengan demikian, pasar rakyat membutuhkan revitalisasi agar dapat bersaing dengan pasar modern.
 
-(7) Sebagai penggerak ekonomi masyarakat, pasar rakyat memiliki fungsi strategis dan kedekatan dengan aspek sosial dan budaya masyarakat serta memiliki kekhasan, 
-seperti adanya aktivitas tawar menawar yang tidak dimiliki oleh pasar modern, pusat perbelanjaan, maupun toko swalayan. (8) Pasar yang berhasil adalah pasar yang 
-ramai dengan aktivitas ekonomi dan sosial, ditandai tersedianya ruang-ruang yang nyaman, aksesibel, dan menjadi wadah aktivitas sosio kultural. (9) Berdasarkan data 
-survei Badan Pusat Statistik pada 2019, terdapat 14.182 pasar rakyat dengan 13 juta lebih pedagang yang beraktivitas di dalamnya. (10) Jika setiap pedagang memiliki 
-empat anggota keluarga, artinya lebih dari 52 juta orang atau hampir 19% dari populasi total penduduk Indonesia beraktivitas di pasar.
+(7) Sebagai pendorong ekonomi masyarakat, pasar rakyat memiliki fungsi strategis dan kedekatan dengan aspek sosial budaya, serta memiliki keunikan, 
+seperti aktivitas tawar-menawar yang tidak ditemui di pasar modern, pusat perbelanjaan, maupun toko swalayan. (8) Pasar yang sukses adalah pasar yang 
+ramai dengan aktivitas ekonomi dan sosial, ditandai dengan tersedianya ruang-ruang yang nyaman, mudah diakses, dan menjadi pusat kegiatan sosio-kultural. 
+(9) Berdasarkan data survei Badan Pusat Statistik pada tahun 2019, terdapat 14.182 pasar rakyat dengan lebih dari 13 juta pedagang yang beraktivitas di 
+dalamnya. (10) Jika setiap pedagang memiliki empat anggota keluarga, berarti lebih dari 52 juta orang atau hampir 19% dari total penduduk Indonesia terlibat 
+dalam aktivitas pasar.
 
-(11) Secara sosiologis, pasar merupakan institusi sosial yang memberikan tatanan siap pakai, termasuk memecahkan berbagai persoalan terkait kebutuhan ekonomi 
-dasar manusia dalam distribusi barang dan jasa. (12) Pasar rakyat di Indonesia selalu dicitrakan sebagai tempat yang kumuh, kotor, becek, tidak terawat, memiliki 
-tingkat kualitas hunian yang sangat rendah, dan disinyalir dikelola tanpa inovasi yang berarti. (13) Tidak heran, selain menjadi sumber kemacetan lalu lintas, sebagian 
-besar masyarakat melihat pasar rakyat sebagai tempat yang tidak nyaman dan kompetitif, serta berpotensi menjadi kluster penyebaran pandemi. (14) Oleh karena itu, untuk 
-menghadirkan pasar rakyat yang nyaman memerlukan perlakuan khusus dalam pengelolaan, pengembangan, dan pelestariannya.
+(11) Secara sosiologis, pasar merupakan institusi sosial yang menyediakan tatanan siap pakai, termasuk dalam menyelesaikan berbagai persoalan kebutuhan 
+ekonomi dasar manusia melalui distribusi barang dan jasa. (12) Di Indonesia, pasar rakyat sering dicitrakan sebagai tempat yang kumuh, kotor, becek, 
+tidak terawat, dengan kualitas hunian yang rendah, dan diduga dikelola tanpa inovasi berarti. (13) Tak heran jika, selain menjadi penyebab kemacetan lalu 
+lintas, banyak masyarakat menganggap pasar rakyat sebagai tempat yang tidak nyaman, kompetitif, serta berpotensi menjadi kluster penyebaran pandemi. (14) 
+Oleh karena itu, untuk menciptakan pasar rakyat yang nyaman, diperlukan perlakuan khusus dalam pengelolaan, pengembangan, dan pelestariannya.
 
 Sumber: Media Indonesia, 15 Desember 2022. Pengelolaan Pasar Rakyat Berkelanjutan Berbasis ESG.
 
@@ -712,31 +724,32 @@ Bersifat subjektif dan biasanya disertai dengan pendapat dan saran
 Tidak memiliki narasumber
 Informasi yang disampaikan belum ada buktinya
 Biasanya ditandai dengan penggunaan kata-kata seperti bias, jadi, sepertinya, mungkin, seharusnya, dan sebaiknya
-Oleh karena itu, dapat kita lihat kalimat yang mengandung opini terdapat dalam kalimat (13), yaitu “Tidak heran, selain menjadi sumber 
-kemacetan lalu lintas, sebagian besar masyarakat melihat pasar rakyat sebagai tempat yang tidak nyaman dan kompetitif, serta berpotensi menjadi kluster penyebaran pandemi.”
+Oleh karena itu, dapat kita lihat kalimat yang mengandung opini terdapat dalam kalimat (13), yaitu “Tak heran jika, selain menjadi penyebab kemacetan lalu 
+lintas, banyak masyarakat menganggap pasar rakyat sebagai tempat yang tidak nyaman, kompetitif, serta berpotensi menjadi kluster penyebaran pandemi.”
 '),
 
-('ppu-013', 'paket1', 'subtest_ppu', 'multiple_choice','(1) Pasar tradisional atau yang lebih dikenal sebagai pasar rakyat adalah pusat pertemuan antara penjual dan pembeli 
-yang melakukan transaksi, serta menjadi sarana interaksi sosial budaya dan pengembangan ekonomi masyarakat. (2) Sebagai tempat usaha, pasar rakyat ditata, dibangun, dan 
-dikelola, baik oleh pemerintah, swasta, badan usaha milik negara, dan/atau badan usaha milik daerah, dapat berupa toko/kios, los, dan tenda, yang dimiliki/dikelola oleh 
-pedagang kecil dan menengah, swadaya masyarakat, koperasi serta UKM, atau badan usaha milik desa, … proses jual beli melalui tawar menawar (UU No. 7/2014 tentang Perdagangan). 
-(3) Selain itu, pasar rakyat merupakan salah satu bagian dari rantai pemasaran dalam distribusi barang kebutuhan pokok, sumber Pendapatan Asli Daerah (PAD), 
-serta lapangan kerja yang lebih luas. (4) Seiring berkembangnya pusat perbelanjaan dan toko swalayan, pasar rakyat menghadapi tantangan terutama dari sisi sarana 
-dan prasarana, yang mengakibatkan menurunnya jumlah konsumen atau pengunjung. (5) Konsumen lebih memilih memenuhi kebutuhannya dengan mengunjungi pasar modern, yakni 
-pusat perbelanjaan dan toko swalayan karena kenyamanan dan fasilitas yang ditawarkan. (6) Dengan kata lain, pasar rakyat memerlukan pembenahan dalam konteks revitalisasi 
-agar dapat bersaing dengan pasar modern.
+('ppu-013', 'paket1', 'subtest_ppu', 'multiple_choice','(1) Pasar tradisional, atau yang lebih dikenal sebagai pasar rakyat, adalah tempat bertemunya 
+penjual dan pembeli untuk bertransaksi, sekaligus menjadi wadah interaksi sosial budaya dan pengembangan ekonomi masyarakat. (2) Sebagai area usaha, 
+pasar rakyat merancang, dibangun, dan dikelola oleh pemerintah, swasta, BUMN, dan/atau BUMD, serta dapat berupa toko/kios, los, atau tenda yang dikelola 
+oleh pedagang kecil dan menengah, swadaya masyarakat, koperasi, UKM, atau badan usaha milik desa, … proses jual beli yang dilakukan melalui tawar-menawar 
+(UU No. 7/2014 tentang Perdagangan). (3) Selain itu, pasar rakyat merupakan bagian integral dari rantai distribusi barang kebutuhan pokok, sumber Pendapatan 
+Asli Daerah (PAD), serta pencipta lapangan kerja yang lebih luas. (4) Seiring dengan berkembangnya pusat perbelanjaan dan toko swalayan, pasar rakyat 
+menghadapi tantangan terutama dalam hal sarana dan prasarana, yang berdampak pada penurunan jumlah konsumen atau pengunjung. (5) Konsumen kini lebih 
+memilih memenuhi kebutuhan mereka dengan mengunjungi pasar modern, seperti pusat perbelanjaan dan toko swalayan, karena kenyamanan dan fasilitas yang 
+lebih lengkap. (6) Dengan demikian, pasar rakyat membutuhkan revitalisasi agar dapat bersaing dengan pasar modern.
 
-(7) Sebagai penggerak ekonomi masyarakat, pasar rakyat memiliki fungsi strategis dan kedekatan dengan aspek sosial dan budaya masyarakat serta memiliki kekhasan, 
-seperti adanya aktivitas tawar menawar yang tidak dimiliki oleh pasar modern, pusat perbelanjaan, maupun toko swalayan. (8) Pasar yang berhasil adalah pasar yang 
-ramai dengan aktivitas ekonomi dan sosial, ditandai tersedianya ruang-ruang yang nyaman, aksesibel, dan menjadi wadah aktivitas sosio kultural. (9) Berdasarkan data 
-survei Badan Pusat Statistik pada 2019, terdapat 14.182 pasar rakyat dengan 13 juta lebih pedagang yang beraktivitas di dalamnya. (10) Jika setiap pedagang memiliki 
-empat anggota keluarga, artinya lebih dari 52 juta orang atau hampir 19% dari populasi total penduduk Indonesia beraktivitas di pasar.
+(7) Sebagai pendorong ekonomi masyarakat, pasar rakyat memiliki fungsi strategis dan kedekatan dengan aspek sosial budaya, serta memiliki keunikan, 
+seperti aktivitas tawar-menawar yang tidak ditemui di pasar modern, pusat perbelanjaan, maupun toko swalayan. (8) Pasar yang sukses adalah pasar yang 
+ramai dengan aktivitas ekonomi dan sosial, ditandai dengan tersedianya ruang-ruang yang nyaman, mudah diakses, dan menjadi pusat kegiatan sosio-kultural. 
+(9) Berdasarkan data survei Badan Pusat Statistik pada tahun 2019, terdapat 14.182 pasar rakyat dengan lebih dari 13 juta pedagang yang beraktivitas di 
+dalamnya. (10) Jika setiap pedagang memiliki empat anggota keluarga, berarti lebih dari 52 juta orang atau hampir 19% dari total penduduk Indonesia terlibat 
+dalam aktivitas pasar.
 
-(11) Secara sosiologis, pasar merupakan institusi sosial yang memberikan tatanan siap pakai, termasuk memecahkan berbagai persoalan terkait kebutuhan ekonomi 
-dasar manusia dalam distribusi barang dan jasa. (12) Pasar rakyat di Indonesia selalu dicitrakan sebagai tempat yang kumuh, kotor, becek, tidak terawat, memiliki 
-tingkat kualitas hunian yang sangat rendah, dan disinyalir dikelola tanpa inovasi yang berarti. (13) Tidak heran, selain menjadi sumber kemacetan lalu lintas, sebagian 
-besar masyarakat melihat pasar rakyat sebagai tempat yang tidak nyaman dan kompetitif, serta berpotensi menjadi kluster penyebaran pandemi. (14) Oleh karena itu, untuk 
-menghadirkan pasar rakyat yang nyaman memerlukan perlakuan khusus dalam pengelolaan, pengembangan, dan pelestariannya.
+(11) Secara sosiologis, pasar merupakan institusi sosial yang menyediakan tatanan siap pakai, termasuk dalam menyelesaikan berbagai persoalan kebutuhan 
+ekonomi dasar manusia melalui distribusi barang dan jasa. (12) Di Indonesia, pasar rakyat sering dicitrakan sebagai tempat yang kumuh, kotor, becek, 
+tidak terawat, dengan kualitas hunian yang rendah, dan diduga dikelola tanpa inovasi berarti. (13) Tak heran jika, selain menjadi penyebab kemacetan lalu 
+lintas, banyak masyarakat menganggap pasar rakyat sebagai tempat yang tidak nyaman, kompetitif, serta berpotensi menjadi kluster penyebaran pandemi. (14) 
+Oleh karena itu, untuk menciptakan pasar rakyat yang nyaman, diperlukan perlakuan khusus dalam pengelolaan, pengembangan, dan pelestariannya.
 
 Sumber: Media Indonesia, 15 Desember 2022. Pengelolaan Pasar Rakyat Berkelanjutan Berbasis ESG.
 
@@ -750,31 +763,31 @@ Menjadi inti dan pelajaran yang bisa diambil pada bacaan
 Hal yang bisa ditarik, misalnya jawaban dari pokok permasalahan
 Memerlukan gagasan utama dan penjelas untuk menentukan kesimpulan suatu bacaan
 Kesimpulan harus mewakili seluruh paragraf
-Berdasarkan hal tersebut, maka kesimpulan dari teks bacaan tersebut adalah “Keberhasilan suatu pasar dapat kita lihat dari kondisi pasar yang ramai dengan aktivitas 
-ekonomi dan sosial.”
+Berdasarkan hal tersebut, maka kesimpulan dari teks bacaan tersebut adalah “Keberhasilan suatu pasar dapat diukur dari keramaian aktivitas ekonomi dan sosial yang terjadi di sana.”
 '),
 
-('ppu-014', 'paket1', 'subtest_ppu', 'multiple_choice','(1) Pasar tradisional atau yang lebih dikenal sebagai pasar rakyat adalah pusat pertemuan antara penjual dan pembeli 
-yang melakukan transaksi, serta menjadi sarana interaksi sosial budaya dan pengembangan ekonomi masyarakat. (2) Sebagai tempat usaha, pasar rakyat ditata, dibangun, dan 
-dikelola, baik oleh pemerintah, swasta, badan usaha milik negara, dan/atau badan usaha milik daerah, dapat berupa toko/kios, los, dan tenda, yang dimiliki/dikelola oleh 
-pedagang kecil dan menengah, swadaya masyarakat, koperasi serta UKM, atau badan usaha milik desa, … proses jual beli melalui tawar menawar (UU No. 7/2014 tentang Perdagangan). 
-(3) Selain itu, pasar rakyat merupakan salah satu bagian dari rantai pemasaran dalam distribusi barang kebutuhan pokok, sumber Pendapatan Asli Daerah (PAD), 
-serta lapangan kerja yang lebih luas. (4) Seiring berkembangnya pusat perbelanjaan dan toko swalayan, pasar rakyat menghadapi tantangan terutama dari sisi sarana 
-dan prasarana, yang mengakibatkan menurunnya jumlah konsumen atau pengunjung. (5) Konsumen lebih memilih memenuhi kebutuhannya dengan mengunjungi pasar modern, yakni 
-pusat perbelanjaan dan toko swalayan karena kenyamanan dan fasilitas yang ditawarkan. (6) Dengan kata lain, pasar rakyat memerlukan pembenahan dalam konteks revitalisasi 
-agar dapat bersaing dengan pasar modern.
+('ppu-014', 'paket1', 'subtest_ppu', 'multiple_choice','(1) Pasar tradisional, atau yang lebih dikenal sebagai pasar rakyat, adalah tempat bertemunya 
+penjual dan pembeli untuk bertransaksi, sekaligus menjadi wadah interaksi sosial budaya dan pengembangan ekonomi masyarakat. (2) Sebagai area usaha, 
+pasar rakyat merancang, dibangun, dan dikelola oleh pemerintah, swasta, BUMN, dan/atau BUMD, serta dapat berupa toko/kios, los, atau tenda yang dikelola 
+oleh pedagang kecil dan menengah, swadaya masyarakat, koperasi, UKM, atau badan usaha milik desa, … proses jual beli yang dilakukan melalui tawar-menawar 
+(UU No. 7/2014 tentang Perdagangan). (3) Selain itu, pasar rakyat merupakan bagian integral dari rantai distribusi barang kebutuhan pokok, sumber Pendapatan 
+Asli Daerah (PAD), serta pencipta lapangan kerja yang lebih luas. (4) Seiring dengan berkembangnya pusat perbelanjaan dan toko swalayan, pasar rakyat 
+menghadapi tantangan terutama dalam hal sarana dan prasarana, yang berdampak pada penurunan jumlah konsumen atau pengunjung. (5) Konsumen kini lebih 
+memilih memenuhi kebutuhan mereka dengan mengunjungi pasar modern, seperti pusat perbelanjaan dan toko swalayan, karena kenyamanan dan fasilitas yang 
+lebih lengkap. (6) Dengan demikian, pasar rakyat membutuhkan revitalisasi agar dapat bersaing dengan pasar modern.
 
-(7) Sebagai penggerak ekonomi masyarakat, pasar rakyat memiliki fungsi strategis dan kedekatan dengan aspek sosial dan budaya masyarakat serta memiliki kekhasan, 
-seperti adanya aktivitas tawar menawar yang tidak dimiliki oleh pasar modern, pusat perbelanjaan, maupun toko swalayan. (8) Pasar yang berhasil adalah pasar yang 
-ramai dengan aktivitas ekonomi dan sosial, ditandai tersedianya ruang-ruang yang nyaman, aksesibel, dan menjadi wadah aktivitas sosio kultural. (9) Berdasarkan data 
-survei Badan Pusat Statistik pada 2019, terdapat 14.182 pasar rakyat dengan 13 juta lebih pedagang yang beraktivitas di dalamnya. (10) Jika setiap pedagang memiliki 
-empat anggota keluarga, artinya lebih dari 52 juta orang atau hampir 19% dari populasi total penduduk Indonesia beraktivitas di pasar.
+(7) Sebagai pendorong ekonomi masyarakat, pasar rakyat memiliki fungsi strategis dan kedekatan dengan aspek sosial budaya, serta memiliki keunikan, 
+seperti aktivitas tawar-menawar yang tidak ditemui di pasar modern, pusat perbelanjaan, maupun toko swalayan. (8) Pasar yang sukses adalah pasar yang 
+ramai dengan aktivitas ekonomi dan sosial, ditandai dengan tersedianya ruang-ruang yang nyaman, mudah diakses, dan menjadi pusat kegiatan sosio-kultural. 
+(9) Berdasarkan data survei Badan Pusat Statistik pada tahun 2019, terdapat 14.182 pasar rakyat dengan lebih dari 13 juta pedagang yang beraktivitas di 
+dalamnya. (10) Jika setiap pedagang memiliki empat anggota keluarga, berarti lebih dari 52 juta orang atau hampir 19% dari total penduduk Indonesia terlibat 
+dalam aktivitas pasar.
 
-(11) Secara sosiologis, pasar merupakan institusi sosial yang memberikan tatanan siap pakai, termasuk memecahkan berbagai persoalan terkait kebutuhan ekonomi 
-dasar manusia dalam distribusi barang dan jasa. (12) Pasar rakyat di Indonesia selalu dicitrakan sebagai tempat yang kumuh, kotor, becek, tidak terawat, memiliki 
-tingkat kualitas hunian yang sangat rendah, dan disinyalir dikelola tanpa inovasi yang berarti. (13) Tidak heran, selain menjadi sumber kemacetan lalu lintas, sebagian 
-besar masyarakat melihat pasar rakyat sebagai tempat yang tidak nyaman dan kompetitif, serta berpotensi menjadi kluster penyebaran pandemi. (14) Oleh karena itu, untuk 
-menghadirkan pasar rakyat yang nyaman memerlukan perlakuan khusus dalam pengelolaan, pengembangan, dan pelestariannya.
+(11) Secara sosiologis, pasar merupakan institusi sosial yang menyediakan tatanan siap pakai, termasuk dalam menyelesaikan berbagai persoalan kebutuhan 
+ekonomi dasar manusia melalui distribusi barang dan jasa. (12) Di Indonesia, pasar rakyat sering dicitrakan sebagai tempat yang kumuh, kotor, becek, 
+tidak terawat, dengan kualitas hunian yang rendah, dan diduga dikelola tanpa inovasi berarti. (13) Tak heran jika, selain menjadi penyebab kemacetan lalu 
+lintas, banyak masyarakat menganggap pasar rakyat sebagai tempat yang tidak nyaman, kompetitif, serta berpotensi menjadi kluster penyebaran pandemi. (14) 
+Oleh karena itu, untuk menciptakan pasar rakyat yang nyaman, diperlukan perlakuan khusus dalam pengelolaan, pengembangan, dan pelestariannya.
 
 Sumber: Media Indonesia, 15 Desember 2022. Pengelolaan Pasar Rakyat Berkelanjutan Berbasis ESG.
 
@@ -789,115 +802,113 @@ Tujuannya untuk memangkas gagasan.
 Berdasarkan hal tersebut, dapat kita lihat pernyataan opsi B adalah pernyataan yang tepat untuk menjadi ringkasan teks bacaan tersebut.
 '),
 
-('ppu-015', 'paket1', 'subtest_ppu', 'multiple_choice','(1) Pasar tradisional atau yang lebih dikenal sebagai pasar rakyat adalah pusat pertemuan antara penjual dan pembeli 
-yang melakukan transaksi, serta menjadi sarana interaksi sosial budaya dan pengembangan ekonomi masyarakat. (2) Sebagai tempat usaha, pasar rakyat ditata, dibangun, dan 
-dikelola, baik oleh pemerintah, swasta, badan usaha milik negara, dan/atau badan usaha milik daerah, dapat berupa toko/kios, los, dan tenda, yang dimiliki/dikelola oleh 
-pedagang kecil dan menengah, swadaya masyarakat, koperasi serta UKM, atau badan usaha milik desa, … proses jual beli melalui tawar menawar (UU No. 7/2014 tentang Perdagangan). 
-(3) Selain itu, pasar rakyat merupakan salah satu bagian dari rantai pemasaran dalam distribusi barang kebutuhan pokok, sumber Pendapatan Asli Daerah (PAD), 
-serta lapangan kerja yang lebih luas. (4) Seiring berkembangnya pusat perbelanjaan dan toko swalayan, pasar rakyat menghadapi tantangan terutama dari sisi sarana 
-dan prasarana, yang mengakibatkan menurunnya jumlah konsumen atau pengunjung. (5) Konsumen lebih memilih memenuhi kebutuhannya dengan mengunjungi pasar modern, yakni 
-pusat perbelanjaan dan toko swalayan karena kenyamanan dan fasilitas yang ditawarkan. (6) Dengan kata lain, pasar rakyat memerlukan pembenahan dalam konteks revitalisasi 
-agar dapat bersaing dengan pasar modern.
+('ppu-015', 'paket1', 'subtest_ppu', 'multiple_choice','(1) Pasar tradisional, atau yang lebih dikenal sebagai pasar rakyat, adalah tempat bertemunya 
+penjual dan pembeli untuk bertransaksi, sekaligus menjadi wadah interaksi sosial budaya dan pengembangan ekonomi masyarakat. (2) Sebagai area usaha, 
+pasar rakyat merancang, dibangun, dan dikelola oleh pemerintah, swasta, BUMN, dan/atau BUMD, serta dapat berupa toko/kios, los, atau tenda yang dikelola 
+oleh pedagang kecil dan menengah, swadaya masyarakat, koperasi, UKM, atau badan usaha milik desa, … proses jual beli yang dilakukan melalui tawar-menawar 
+(UU No. 7/2014 tentang Perdagangan). (3) Selain itu, pasar rakyat merupakan bagian integral dari rantai distribusi barang kebutuhan pokok, sumber Pendapatan 
+Asli Daerah (PAD), serta pencipta lapangan kerja yang lebih luas. (4) Seiring dengan berkembangnya pusat perbelanjaan dan toko swalayan, pasar rakyat 
+menghadapi tantangan terutama dalam hal sarana dan prasarana, yang berdampak pada penurunan jumlah konsumen atau pengunjung. (5) Konsumen kini lebih 
+memilih memenuhi kebutuhan mereka dengan mengunjungi pasar modern, seperti pusat perbelanjaan dan toko swalayan, karena kenyamanan dan fasilitas yang 
+lebih lengkap. (6) Dengan demikian, pasar rakyat membutuhkan revitalisasi agar dapat bersaing dengan pasar modern.
 
-(7) Sebagai penggerak ekonomi masyarakat, pasar rakyat memiliki fungsi strategis dan kedekatan dengan aspek sosial dan budaya masyarakat serta memiliki kekhasan, 
-seperti adanya aktivitas tawar menawar yang tidak dimiliki oleh pasar modern, pusat perbelanjaan, maupun toko swalayan. (8) Pasar yang berhasil adalah pasar yang 
-ramai dengan aktivitas ekonomi dan sosial, ditandai tersedianya ruang-ruang yang nyaman, aksesibel, dan menjadi wadah aktivitas sosio kultural. (9) Berdasarkan data 
-survei Badan Pusat Statistik pada 2019, terdapat 14.182 pasar rakyat dengan 13 juta lebih pedagang yang beraktivitas di dalamnya. (10) Jika setiap pedagang memiliki 
-empat anggota keluarga, artinya lebih dari 52 juta orang atau hampir 19% dari populasi total penduduk Indonesia beraktivitas di pasar.
+(7) Sebagai pendorong ekonomi masyarakat, pasar rakyat memiliki fungsi strategis dan kedekatan dengan aspek sosial budaya, serta memiliki keunikan, 
+seperti aktivitas tawar-menawar yang tidak ditemui di pasar modern, pusat perbelanjaan, maupun toko swalayan. (8) Pasar yang sukses adalah pasar yang 
+ramai dengan aktivitas ekonomi dan sosial, ditandai dengan tersedianya ruang-ruang yang nyaman, mudah diakses, dan menjadi pusat kegiatan sosio-kultural. 
+(9) Berdasarkan data survei Badan Pusat Statistik pada tahun 2019, terdapat 14.182 pasar rakyat dengan lebih dari 13 juta pedagang yang beraktivitas di 
+dalamnya. (10) Jika setiap pedagang memiliki empat anggota keluarga, berarti lebih dari 52 juta orang atau hampir 19% dari total penduduk Indonesia terlibat 
+dalam aktivitas pasar.
 
-(11) Secara sosiologis, pasar merupakan institusi sosial yang memberikan tatanan siap pakai, termasuk memecahkan berbagai persoalan terkait kebutuhan ekonomi 
-dasar manusia dalam distribusi barang dan jasa. (12) Pasar rakyat di Indonesia selalu dicitrakan sebagai tempat yang kumuh, kotor, becek, tidak terawat, memiliki 
-tingkat kualitas hunian yang sangat rendah, dan disinyalir dikelola tanpa inovasi yang berarti. (13) Tidak heran, selain menjadi sumber kemacetan lalu lintas, sebagian 
-besar masyarakat melihat pasar rakyat sebagai tempat yang tidak nyaman dan kompetitif, serta berpotensi menjadi kluster penyebaran pandemi. (14) Oleh karena itu, untuk 
-menghadirkan pasar rakyat yang nyaman memerlukan perlakuan khusus dalam pengelolaan, pengembangan, dan pelestariannya.
+(11) Secara sosiologis, pasar merupakan institusi sosial yang menyediakan tatanan siap pakai, termasuk dalam menyelesaikan berbagai persoalan kebutuhan 
+ekonomi dasar manusia melalui distribusi barang dan jasa. (12) Di Indonesia, pasar rakyat sering dicitrakan sebagai tempat yang kumuh, kotor, becek, 
+tidak terawat, dengan kualitas hunian yang rendah, dan diduga dikelola tanpa inovasi berarti. (13) Tak heran jika, selain menjadi penyebab kemacetan lalu 
+lintas, banyak masyarakat menganggap pasar rakyat sebagai tempat yang tidak nyaman, kompetitif, serta berpotensi menjadi kluster penyebaran pandemi. (14) 
+Oleh karena itu, untuk menciptakan pasar rakyat yang nyaman, diperlukan perlakuan khusus dalam pengelolaan, pengembangan, dan pelestariannya.
 
 Sumber: Media Indonesia, 15 Desember 2022. Pengelolaan Pasar Rakyat Berkelanjutan Berbasis ESG.
 
 Pernyataan yang tidak sesuai dengan isi bacaan adalah...
 ', NULL, 47, '
 Berikut analisis pernyataan yang tidak sesuai dengan teks bacaan berdasarkan analisis opsi jawaban:
-Pasar rakyat menghadapi tantangan terutama dari sisi sarana dan prasarana. Pernyataan ini sesuai dengan informasi dalam teks bacaan kalimat (4).
-Pasar rakyat memiliki fungsi strategis dan kedekatan dengan aspek sosial dan budaya masyarakat. Pernyataan ini sesuai dengan informasi dalam teks bacaan kalimat (7).
-Pasar modern memberikan fasilitas yang nyaman dan proses tawar menawar kepada konsumen. Pernyataan ini tidak tertera informasinya dalam kalimat manapun 
-dalam teks bacaan, bahkan lebih condong ke pertentangan dengan informasi dalam teks bacaan.
-Pasar modern menjadi pilihan masyarakat saat ini sehingga menurunkan konsumen berkunjung ke pasar tradisional. Pernyataan ini sesuai dengan informasi 
-dalam teks bacaan kalimat (5).
-Pasar rakyat sering mendapat citra buruk dari masyarakat. Pernyataan ini sesuai dengan informasi dalam teks bacaan kalimat (12).
+Pasar rakyat menghadapi tantangan terutama dari sisi sarana dan prasarana yang kurang memadai. Pernyataan ini sesuai dengan informasi dalam teks bacaan kalimat (4).
+Pasar rakyat memiliki fungsi strategis dan kedekatan dengan aspek sosial budaya masyarakat. Pernyataan ini sesuai dengan informasi dalam teks bacaan kalimat (7).
+Pasar modern memberikan fasilitas yang nyaman dan proses tawar menawar kepada konsumen. Pernyataan ini tidak tertera informasinya dalam kalimat manapun dalam teks bacaan, bahkan lebih condong ke pertentangan dengan informasi dalam teks bacaan.
+Pasar modern menjadi pilihan masyarakat saat ini sehingga menurunkan konsumen berkunjung ke pasar tradisional. Pernyataan ini sesuai dengan informasi dalam teks bacaan kalimat (5).
+14.182 pasar rakyat dengan lebih dari 13 juta pedagang. Pernyataan ini sesuai dengan informasi dalam teks bacaan kalimat (9).
 Berdasarkan hasil analisis tersebut maka jawaban paling tepat adalah C.
 '),
 
-('ppu-016', 'paket1', 'subtest_ppu', 'multiple_choice','(1) Pasar tradisional atau yang lebih dikenal sebagai pasar rakyat adalah pusat pertemuan antara penjual dan pembeli 
-yang melakukan transaksi, serta menjadi sarana interaksi sosial budaya dan pengembangan ekonomi masyarakat. (2) Sebagai tempat usaha, pasar rakyat ditata, dibangun, dan 
-dikelola, baik oleh pemerintah, swasta, badan usaha milik negara, dan/atau badan usaha milik daerah, dapat berupa toko/kios, los, dan tenda, yang dimiliki/dikelola oleh 
-pedagang kecil dan menengah, swadaya masyarakat, koperasi serta UKM, atau badan usaha milik desa, … proses jual beli melalui tawar menawar (UU No. 7/2014 tentang Perdagangan). 
-(3) Selain itu, pasar rakyat merupakan salah satu bagian dari rantai pemasaran dalam distribusi barang kebutuhan pokok, sumber Pendapatan Asli Daerah (PAD), 
-serta lapangan kerja yang lebih luas. (4) Seiring berkembangnya pusat perbelanjaan dan toko swalayan, pasar rakyat menghadapi tantangan terutama dari sisi sarana 
-dan prasarana, yang mengakibatkan menurunnya jumlah konsumen atau pengunjung. (5) Konsumen lebih memilih memenuhi kebutuhannya dengan mengunjungi pasar modern, yakni 
-pusat perbelanjaan dan toko swalayan karena kenyamanan dan fasilitas yang ditawarkan. (6) Dengan kata lain, pasar rakyat memerlukan pembenahan dalam konteks revitalisasi 
-agar dapat bersaing dengan pasar modern.
+('ppu-016', 'paket1', 'subtest_ppu', 'multiple_choice','(1) Pasar tradisional, atau yang lebih dikenal sebagai pasar rakyat, adalah tempat bertemunya 
+penjual dan pembeli untuk bertransaksi, sekaligus menjadi wadah interaksi sosial budaya dan pengembangan ekonomi masyarakat. (2) Sebagai area usaha, 
+pasar rakyat merancang, dibangun, dan dikelola oleh pemerintah, swasta, BUMN, dan/atau BUMD, serta dapat berupa toko/kios, los, atau tenda yang dikelola 
+oleh pedagang kecil dan menengah, swadaya masyarakat, koperasi, UKM, atau badan usaha milik desa, … proses jual beli yang dilakukan melalui tawar-menawar 
+(UU No. 7/2014 tentang Perdagangan). (3) Selain itu, pasar rakyat merupakan bagian integral dari rantai distribusi barang kebutuhan pokok, sumber Pendapatan 
+Asli Daerah (PAD), serta pencipta lapangan kerja yang lebih luas. (4) Seiring dengan berkembangnya pusat perbelanjaan dan toko swalayan, pasar rakyat 
+menghadapi tantangan terutama dalam hal sarana dan prasarana, yang berdampak pada penurunan jumlah konsumen atau pengunjung. (5) Konsumen kini lebih 
+memilih memenuhi kebutuhan mereka dengan mengunjungi pasar modern, seperti pusat perbelanjaan dan toko swalayan, karena kenyamanan dan fasilitas yang 
+lebih lengkap. (6) Dengan demikian, pasar rakyat membutuhkan revitalisasi agar dapat bersaing dengan pasar modern.
 
-(7) Sebagai penggerak ekonomi masyarakat, pasar rakyat memiliki fungsi strategis dan kedekatan dengan aspek sosial dan budaya masyarakat serta memiliki kekhasan, 
-seperti adanya aktivitas tawar menawar yang tidak dimiliki oleh pasar modern, pusat perbelanjaan, maupun toko swalayan. (8) Pasar yang berhasil adalah pasar yang 
-ramai dengan aktivitas ekonomi dan sosial, ditandai tersedianya ruang-ruang yang nyaman, aksesibel, dan menjadi wadah aktivitas sosio kultural. (9) Berdasarkan data 
-survei Badan Pusat Statistik pada 2019, terdapat 14.182 pasar rakyat dengan 13 juta lebih pedagang yang beraktivitas di dalamnya. (10) Jika setiap pedagang memiliki 
-empat anggota keluarga, artinya lebih dari 52 juta orang atau hampir 19% dari populasi total penduduk Indonesia beraktivitas di pasar.
+(7) Sebagai pendorong ekonomi masyarakat, pasar rakyat memiliki fungsi strategis dan kedekatan dengan aspek sosial budaya, serta memiliki keunikan, 
+seperti aktivitas tawar-menawar yang tidak ditemui di pasar modern, pusat perbelanjaan, maupun toko swalayan. (8) Pasar yang sukses adalah pasar yang 
+ramai dengan aktivitas ekonomi dan sosial, ditandai dengan tersedianya ruang-ruang yang nyaman, mudah diakses, dan menjadi pusat kegiatan sosio-kultural. 
+(9) Berdasarkan data survei Badan Pusat Statistik pada tahun 2019, terdapat 14.182 pasar rakyat dengan lebih dari 13 juta pedagang yang beraktivitas di 
+dalamnya. (10) Jika setiap pedagang memiliki empat anggota keluarga, berarti lebih dari 52 juta orang atau hampir 19% dari total penduduk Indonesia terlibat 
+dalam aktivitas pasar.
 
-(11) Secara sosiologis, pasar merupakan institusi sosial yang memberikan tatanan siap pakai, termasuk memecahkan berbagai persoalan terkait kebutuhan ekonomi 
-dasar manusia dalam distribusi barang dan jasa. (12) Pasar rakyat di Indonesia selalu dicitrakan sebagai tempat yang kumuh, kotor, becek, tidak terawat, memiliki 
-tingkat kualitas hunian yang sangat rendah, dan disinyalir dikelola tanpa inovasi yang berarti. (13) Tidak heran, selain menjadi sumber kemacetan lalu lintas, sebagian 
-besar masyarakat melihat pasar rakyat sebagai tempat yang tidak nyaman dan kompetitif, serta berpotensi menjadi kluster penyebaran pandemi. (14) Oleh karena itu, untuk 
-menghadirkan pasar rakyat yang nyaman memerlukan perlakuan khusus dalam pengelolaan, pengembangan, dan pelestariannya.
+(11) Secara sosiologis, pasar merupakan institusi sosial yang menyediakan tatanan siap pakai, termasuk dalam menyelesaikan berbagai persoalan kebutuhan 
+ekonomi dasar manusia melalui distribusi barang dan jasa. (12) Di Indonesia, pasar rakyat sering dicitrakan sebagai tempat yang kumuh, kotor, becek, 
+tidak terawat, dengan kualitas hunian yang rendah, dan diduga dikelola tanpa inovasi berarti. (13) Tak heran jika, selain menjadi penyebab kemacetan lalu 
+lintas, banyak masyarakat menganggap pasar rakyat sebagai tempat yang tidak nyaman, kompetitif, serta berpotensi menjadi kluster penyebaran pandemi. (14) 
+Oleh karena itu, untuk menciptakan pasar rakyat yang nyaman, diperlukan perlakuan khusus dalam pengelolaan, pengembangan, dan pelestariannya.
 
 Sumber: Media Indonesia, 15 Desember 2022. Pengelolaan Pasar Rakyat Berkelanjutan Berbasis ESG.
 
-Makna berlawanan dengan kata aksesibel pada kalimat (8)...
+Makna berlawanan dengan kata kluster pada kalimat (8)...
 ', NULL, 53, '
-Berdasarkan KBBI, aksesibel mengandung makna terakses, mudah diakses, dan dapat diakses. Oleh karena itu, dapat kita simpulkan makna berlawanan yang tepat 
-untuk kata aksesibel adalah tidak dapat diakses.
+Menurut KBBI, kata "kluster" menggambarkan kumpulan atau kelompok yang terkumpul secara rapat. Oleh karena itu, antonim yang tepat adalah sesuatu yang tidak 
+terkonsentrasi, yaitu tersebar. Maka, jawaban yang tepat adalah opsi B.
 '),
 
-('ppu-017', 'paket1', 'subtest_ppu', 'multiple_choice','(1) Dalam lingkup Kementerian Keuangan, terdapat beberapa program pemberdayaan UMKM yang dilaksanakan masing-masing 
-seluruh unit secara terpisah. (2) Di antaranya fasilitas akses pembiayaan yang berada dalam pengelolaan Ditjen Perbendaharaan, fasilitas perpajakan bagi UMKM yang dalam 
-pengelolaan Ditjen Pajak, fasilitas kepabeanan dan cukai serta pembinaan ekspor oleh Ditjen Bea dan Cukai, dan juga perluasan pasar melalui media lelang online untuk UMKM 
-oleh Ditjen Kekayaan Negara serta Digipay selaku marketplace belanja pemerintah yang dikelola oleh Ditjen Perbendaharaan.
-
-(3) Dengan adanya program pemberdayaan UMKM yang cukup lengkap, mulai dari modal untuk memulai usaha hingga pembinaan UMKM menuju kualitas ekspor, dibutuhkan sebuah langkah 
-untuk menjadikan program UMKM di Kementerian Keuangan menjadi satu kesatuan yang utuh. (4) Hal ini yang kemudian ditindaklanjuti dengan terbitnya Keputusan Menteri Keuangan 
-Nomor 396 Tahun 2022 tentang Program Sinergi Pembiayaan Usaha Mikro, Kecil dan Menengah Kementerian Keuangan.
-
-(5) Program dan kebijakan terkait pemberdayaan UMKM di lingkup Kementerian Keuangan tersebut jelas cuman sebuah contoh kecil untuk dapat meningkatkan kapasitas UMKM di 
-Indonesia. (6) Dalam lingkup yang lebih luas, pemberdayaan UMKM membutuhkan sinergi berbagai pihak dari tingkat Pemerintah Pusat, Pemerintah Daerah, Lembaga Pembiayaan,
- dan pihak-pihak lainnya yang bersentuhan dengan program-program pemberdayaan UMKM.
-
-(7) Memulai sinergi dalam sebuah program untuk satu tujuan, dalam hal ini pemberdayaan UMKM, jelas bukanlah hal yang mudah. (8) Perlu kesediaan banyak pihak untuk 
-mengesampingkan ego sektoral dan menyingkirkan keinginan klaim sepihak atas keberhasilan pemberdayaan UMKM yang dilaksanakan. (9) Karena pada akhirnya, kesuksesan 
-program pemberdayaan UMKM adalah keberhasilan atas kerja semua pihak. (10) Tanpa sinergi yang nyata, pemberdayaan UMKM hanya akan bergerak di situ-situ saja.
+('ppu-017', 'paket1', 'subtest_ppu', 'multiple_choice','(1) Dalam lingkup Kementerian Keuangan, terdapat beberapa program pemberdayaan UMKM yang 
+diimplementasikan oleh masing-masing unit secara independen. (2) Antara program-program tersebut terdapat fasilitas akses pembiayaan yang dikelola
+oleh Ditjen Perbendaharaan, fasilitas perpajakan untuk UMKM di bawah pengelolaan Ditjen Pajak, serta fasilitas kepabeanan, cukai, dan pembinaan 
+ekspor yang dijalankan oleh Ditjen Bea dan Cukai. Selain itu, ada pula program perluasan pasar melalui lelang online untuk UMKM yang diselenggarakan 
+oleh Ditjen Kekayaan Negara dan Digipay, sebuah marketplace belanja pemerintah yang dikelola oleh Ditjen Perbendaharaan.
+(3) Mengingat tersedianya program pemberdayaan UMKM yang komprehensif, mulai dari penyediaan modal usaha hingga pembinaan untuk mencapai standar ekspor, 
+diperlukan langkah untuk menyatukan seluruh program UMKM di Kementerian Keuangan menjadi satu kesatuan yang terpadu. (4) Langkah tersebut kemudian diwujudkan 
+melalui terbitnya Keputusan Menteri Keuangan Nomor 396 Tahun 2022 tentang Program Sinergi Pembiayaan Usaha Mikro, Kecil, dan Menengah di Kementerian Keuangan.
+(5) Program dan kebijakan pemberdayaan UMKM di lingkungan Kementerian Keuangan tersebut hanyalah salah satu contoh upaya untuk meningkatkan kapasitas 
+UMKM di Indonesia. (6) Dalam skala yang lebih luas, pemberdayaan UMKM memerlukan sinergi antara berbagai pihak, termasuk Pemerintah Pusat, Pemerintah 
+Daerah, Lembaga Pembiayaan, serta pihak-pihak lain yang terlibat dalam program pemberdayaan UMKM.
+(7) Menginisiasi sinergi dalam suatu program dengan tujuan bersama, khususnya pemberdayaan UMKM, jelas merupakan tantangan tersendiri. (8) Diperlukan 
+komitmen dari berbagai pihak untuk mengesampingkan ego sektoral dan menghilangkan kecenderungan klaim sepihak atas keberhasilan program pemberdayaan 
+UMKM. (9) Pada akhirnya, keberhasilan program pemberdayaan UMKM merupakan hasil kerja sama dari semua pihak yang terlibat. (10) Tanpa adanya sinergi 
+yang efektif, program pemberdayaan UMKM hanya akan berjalan di tempat dan tidak berkembang.
 
 Sumber: detiknews, 12 Desember 2022, Menuju Pemberdayaan UMKM yang Menyeluruh.
 
-Pada paragraf pertama penulis ingin menginformasikan hal...
+Pada paragraf kedua penulis ingin menginformasikan hal...
 ', NULL, 47, '
-Informasi yang ingin disampaikan oleh penulis dapat kita lihat dari kalimat utama paragraf tersebut. Berdasarkan hal tersebut, kalimat utama dari paragraf pertama 
-teks bacaan adalah “Dalam lingkup Kementerian Keuangan, terdapat beberapa program pemberdayaan UMKM yang dilaksanakan masing-masing seluruh unit secara terpisah.
-” Oleh karena itu, dapat kita simpulkan informasi yang ingin disampaikan penulis adalah “Beberapa program pemberdayaan UMKM dalam lingkup Kementerian Keuangan.”
+Paragraf kedua menjelaskan bahwa, meskipun sudah terdapat program pemberdayaan UMKM yang komprehensif, diperlukan langkah untuk menyatukan seluruh program 
+tersebut menjadi satu kesatuan terpadu. Langkah ini kemudian diwujudkan melalui terbitnya Keputusan Menteri Keuangan Nomor 396 Tahun 2022. Dengan demikian, 
+informasi utama yang ingin disampaikan penulis adalah terwujudnya penyatuan program UMKM melalui kebijakan resmi, sehingga jawaban yang tepat adalah opsi C.
 '),
 
-('ppu-018', 'paket1', 'subtest_ppu', 'multiple_choice','(1) Dalam lingkup Kementerian Keuangan, terdapat beberapa program pemberdayaan UMKM yang dilaksanakan masing-masing 
-seluruh unit secara terpisah. (2) Di antaranya fasilitas akses pembiayaan yang berada dalam pengelolaan Ditjen Perbendaharaan, fasilitas perpajakan bagi UMKM yang dalam 
-pengelolaan Ditjen Pajak, fasilitas kepabeanan dan cukai serta pembinaan ekspor oleh Ditjen Bea dan Cukai, dan juga perluasan pasar melalui media lelang online untuk UMKM 
-oleh Ditjen Kekayaan Negara serta Digipay selaku marketplace belanja pemerintah yang dikelola oleh Ditjen Perbendaharaan.
-
-(3) Dengan adanya program pemberdayaan UMKM yang cukup lengkap, mulai dari modal untuk memulai usaha hingga pembinaan UMKM menuju kualitas ekspor, dibutuhkan sebuah langkah 
-untuk menjadikan program UMKM di Kementerian Keuangan menjadi satu kesatuan yang utuh. (4) Hal ini yang kemudian ditindaklanjuti dengan terbitnya Keputusan Menteri Keuangan 
-Nomor 396 Tahun 2022 tentang Program Sinergi Pembiayaan Usaha Mikro, Kecil dan Menengah Kementerian Keuangan.
-
-(5) Program dan kebijakan terkait pemberdayaan UMKM di lingkup Kementerian Keuangan tersebut jelas cuman sebuah contoh kecil untuk dapat meningkatkan kapasitas UMKM di 
-Indonesia. (6) Dalam lingkup yang lebih luas, pemberdayaan UMKM membutuhkan sinergi berbagai pihak dari tingkat Pemerintah Pusat, Pemerintah Daerah, Lembaga Pembiayaan,
- dan pihak-pihak lainnya yang bersentuhan dengan program-program pemberdayaan UMKM.
-
-(7) Memulai sinergi dalam sebuah program untuk satu tujuan, dalam hal ini pemberdayaan UMKM, jelas bukanlah hal yang mudah. (8) Perlu kesediaan banyak pihak untuk 
-mengesampingkan ego sektoral dan menyingkirkan keinginan klaim sepihak atas keberhasilan pemberdayaan UMKM yang dilaksanakan. (9) Karena pada akhirnya, kesuksesan 
-program pemberdayaan UMKM adalah keberhasilan atas kerja semua pihak. (10) Tanpa sinergi yang nyata, pemberdayaan UMKM hanya akan bergerak di situ-situ saja.
+('ppu-018', 'paket1', 'subtest_ppu', 'multiple_choice','(1) Dalam lingkup Kementerian Keuangan, terdapat beberapa program pemberdayaan UMKM yang 
+diimplementasikan oleh masing-masing unit secara independen. (2) Antara program-program tersebut terdapat fasilitas akses pembiayaan yang dikelola
+oleh Ditjen Perbendaharaan, fasilitas perpajakan untuk UMKM di bawah pengelolaan Ditjen Pajak, serta fasilitas kepabeanan, cukai, dan pembinaan 
+ekspor yang dijalankan oleh Ditjen Bea dan Cukai. Selain itu, ada pula program perluasan pasar melalui lelang online untuk UMKM yang diselenggarakan 
+oleh Ditjen Kekayaan Negara dan Digipay, sebuah marketplace belanja pemerintah yang dikelola oleh Ditjen Perbendaharaan.
+(3) Mengingat tersedianya program pemberdayaan UMKM yang komprehensif, mulai dari penyediaan modal usaha hingga pembinaan untuk mencapai standar ekspor, 
+diperlukan langkah untuk menyatukan seluruh program UMKM di Kementerian Keuangan menjadi satu kesatuan yang terpadu. (4) Langkah tersebut kemudian diwujudkan 
+melalui terbitnya Keputusan Menteri Keuangan Nomor 396 Tahun 2022 tentang Program Sinergi Pembiayaan Usaha Mikro, Kecil, dan Menengah di Kementerian Keuangan.
+(5) Program dan kebijakan pemberdayaan UMKM di lingkungan Kementerian Keuangan tersebut hanyalah salah satu contoh upaya untuk meningkatkan kapasitas 
+UMKM di Indonesia. (6) Dalam skala yang lebih luas, pemberdayaan UMKM memerlukan sinergi antara berbagai pihak, termasuk Pemerintah Pusat, Pemerintah 
+Daerah, Lembaga Pembiayaan, serta pihak-pihak lain yang terlibat dalam program pemberdayaan UMKM.
+(7) Menginisiasi sinergi dalam suatu program dengan tujuan bersama, khususnya pemberdayaan UMKM, jelas merupakan tantangan tersendiri. (8) Diperlukan 
+komitmen dari berbagai pihak untuk mengesampingkan ego sektoral dan menghilangkan kecenderungan klaim sepihak atas keberhasilan program pemberdayaan 
+UMKM. (9) Pada akhirnya, keberhasilan program pemberdayaan UMKM merupakan hasil kerja sama dari semua pihak yang terlibat. (10) Tanpa adanya sinergi 
+yang efektif, program pemberdayaan UMKM hanya akan berjalan di tempat dan tidak berkembang.
 
 Sumber: detiknews, 12 Desember 2022, Menuju Pemberdayaan UMKM yang Menyeluruh.
 
@@ -905,27 +916,26 @@ Inti dari kalimat (6) adalah...
 ', NULL, 53, '
 Inti dari suatu kalimat dapat dilihat berdasarkan unsur subjek dan predikat kalimat tersebut serta dapat ditambahkan objek dan pelengkap sebagai unsur tambahan 
 jika diperlukan. Berikut analisis kalimat (6):
-Dalam lingkup yang lebih luas (K), pemberdayaan UMKM (S) membutuhkan (P) sinergi berbagai pihak (O) dari tingkat Pemerintah Pusat, Pemerintah Daerah, Lembaga Pembiayaan, 
-dan pihak-pihak lainnya (K) yang bersentuhan dengan program-program pemberdayaan UMKM (P).
+Dalam skala yang lebih luas (K), pemberdayaan UMKM (S) memerlukan (P) sinergi antara berbagai pihak (O), termasuk Pemerintah Pusat, Pemerintah Daerah, 
+Lembaga Pembiayaan (K), termasuk Pemerintah Pusat, Pemerintah Daerah, Lembaga Pembiayaan, serta pihak-pihak lain yang terlibat dalam program pemberdayaan UMKM(P).
 Oleh karena itu, jawaban yang paling tepat adalah A.
 '),
 
-('ppu-019', 'paket1', 'subtest_ppu', 'multiple_choice','(1) Dalam lingkup Kementerian Keuangan, terdapat beberapa program pemberdayaan UMKM yang dilaksanakan masing-masing 
-seluruh unit secara terpisah. (2) Di antaranya fasilitas akses pembiayaan yang berada dalam pengelolaan Ditjen Perbendaharaan, fasilitas perpajakan bagi UMKM yang dalam 
-pengelolaan Ditjen Pajak, fasilitas kepabeanan dan cukai serta pembinaan ekspor oleh Ditjen Bea dan Cukai, dan juga perluasan pasar melalui media lelang online untuk UMKM 
-oleh Ditjen Kekayaan Negara serta Digipay selaku marketplace belanja pemerintah yang dikelola oleh Ditjen Perbendaharaan.
-
-(3) Dengan adanya program pemberdayaan UMKM yang cukup lengkap, mulai dari modal untuk memulai usaha hingga pembinaan UMKM menuju kualitas ekspor, dibutuhkan sebuah langkah 
-untuk menjadikan program UMKM di Kementerian Keuangan menjadi satu kesatuan yang utuh. (4) Hal ini yang kemudian ditindaklanjuti dengan terbitnya Keputusan Menteri Keuangan 
-Nomor 396 Tahun 2022 tentang Program Sinergi Pembiayaan Usaha Mikro, Kecil dan Menengah Kementerian Keuangan.
-
-(5) Program dan kebijakan terkait pemberdayaan UMKM di lingkup Kementerian Keuangan tersebut jelas cuman sebuah contoh kecil untuk dapat meningkatkan kapasitas UMKM di 
-Indonesia. (6) Dalam lingkup yang lebih luas, pemberdayaan UMKM membutuhkan sinergi berbagai pihak dari tingkat Pemerintah Pusat, Pemerintah Daerah, Lembaga Pembiayaan,
- dan pihak-pihak lainnya yang bersentuhan dengan program-program pemberdayaan UMKM.
-
-(7) Memulai sinergi dalam sebuah program untuk satu tujuan, dalam hal ini pemberdayaan UMKM, jelas bukanlah hal yang mudah. (8) Perlu kesediaan banyak pihak untuk 
-mengesampingkan ego sektoral dan menyingkirkan keinginan klaim sepihak atas keberhasilan pemberdayaan UMKM yang dilaksanakan. (9) Karena pada akhirnya, kesuksesan 
-program pemberdayaan UMKM adalah keberhasilan atas kerja semua pihak. (10) Tanpa sinergi yang nyata, pemberdayaan UMKM hanya akan bergerak di situ-situ saja.
+('ppu-019', 'paket1', 'subtest_ppu', 'multiple_choice','(1) Dalam lingkup Kementerian Keuangan, terdapat beberapa program pemberdayaan UMKM yang 
+diimplementasikan oleh masing-masing unit secara independen. (2) Antara program-program tersebut terdapat fasilitas akses pembiayaan yang dikelola
+oleh Ditjen Perbendaharaan, fasilitas perpajakan untuk UMKM di bawah pengelolaan Ditjen Pajak, serta fasilitas kepabeanan, cukai, dan pembinaan 
+ekspor yang dijalankan oleh Ditjen Bea dan Cukai. Selain itu, ada pula program perluasan pasar melalui lelang online untuk UMKM yang diselenggarakan 
+oleh Ditjen Kekayaan Negara dan Digipay, sebuah marketplace belanja pemerintah yang dikelola oleh Ditjen Perbendaharaan.
+(3) Mengingat tersedianya program pemberdayaan UMKM yang komprehensif, mulai dari penyediaan modal usaha hingga pembinaan untuk mencapai standar ekspor, 
+diperlukan langkah untuk menyatukan seluruh program UMKM di Kementerian Keuangan menjadi satu kesatuan yang terpadu. (4) Langkah tersebut kemudian diwujudkan 
+melalui terbitnya Keputusan Menteri Keuangan Nomor 396 Tahun 2022 tentang Program Sinergi Pembiayaan Usaha Mikro, Kecil, dan Menengah di Kementerian Keuangan.
+(5) Program dan kebijakan pemberdayaan UMKM di lingkungan Kementerian Keuangan tersebut hanyalah salah satu contoh upaya untuk meningkatkan kapasitas 
+UMKM di Indonesia. (6) Dalam skala yang lebih luas, pemberdayaan UMKM memerlukan sinergi antara berbagai pihak, termasuk Pemerintah Pusat, Pemerintah 
+Daerah, Lembaga Pembiayaan, serta pihak-pihak lain yang terlibat dalam program pemberdayaan UMKM.
+(7) Menginisiasi sinergi dalam suatu program dengan tujuan bersama, khususnya pemberdayaan UMKM, jelas merupakan tantangan tersendiri. (8) Diperlukan 
+komitmen dari berbagai pihak untuk mengesampingkan ego sektoral dan menghilangkan kecenderungan klaim sepihak atas keberhasilan program pemberdayaan 
+UMKM. (9) Pada akhirnya, keberhasilan program pemberdayaan UMKM merupakan hasil kerja sama dari semua pihak yang terlibat. (10) Tanpa adanya sinergi 
+yang efektif, program pemberdayaan UMKM hanya akan berjalan di tempat dan tidak berkembang.
 
 Sumber: detiknews, 12 Desember 2022, Menuju Pemberdayaan UMKM yang Menyeluruh.
 
@@ -942,22 +952,21 @@ Mewakili isi teks bacaan
 Namun, karena di soal diminta gagasan berupa suatu frasa maka frasa yang tepat untuk menjadi gagasan pokok teks bacaan adalah “Pemberdayaan UMKM.”
 '),
 
-('ppu-020', 'paket1', 'subtest_ppu', 'multiple_choice','(1) Dalam lingkup Kementerian Keuangan, terdapat beberapa program pemberdayaan UMKM yang dilaksanakan masing-masing 
-seluruh unit secara terpisah. (2) Di antaranya fasilitas akses pembiayaan yang berada dalam pengelolaan Ditjen Perbendaharaan, fasilitas perpajakan bagi UMKM yang dalam 
-pengelolaan Ditjen Pajak, fasilitas kepabeanan dan cukai serta pembinaan ekspor oleh Ditjen Bea dan Cukai, dan juga perluasan pasar melalui media lelang online untuk UMKM 
-oleh Ditjen Kekayaan Negara serta Digipay selaku marketplace belanja pemerintah yang dikelola oleh Ditjen Perbendaharaan.
-
-(3) Dengan adanya program pemberdayaan UMKM yang cukup lengkap, mulai dari modal untuk memulai usaha hingga pembinaan UMKM menuju kualitas ekspor, dibutuhkan sebuah langkah 
-untuk menjadikan program UMKM di Kementerian Keuangan menjadi satu kesatuan yang utuh. (4) Hal ini yang kemudian ditindaklanjuti dengan terbitnya Keputusan Menteri Keuangan 
-Nomor 396 Tahun 2022 tentang Program Sinergi Pembiayaan Usaha Mikro, Kecil dan Menengah Kementerian Keuangan.
-
-(5) Program dan kebijakan terkait pemberdayaan UMKM di lingkup Kementerian Keuangan tersebut jelas cuman sebuah contoh kecil untuk dapat meningkatkan kapasitas UMKM di 
-Indonesia. (6) Dalam lingkup yang lebih luas, pemberdayaan UMKM membutuhkan sinergi berbagai pihak dari tingkat Pemerintah Pusat, Pemerintah Daerah, Lembaga Pembiayaan,
- dan pihak-pihak lainnya yang bersentuhan dengan program-program pemberdayaan UMKM.
-
-(7) Memulai sinergi dalam sebuah program untuk satu tujuan, dalam hal ini pemberdayaan UMKM, jelas bukanlah hal yang mudah. (8) Perlu kesediaan banyak pihak untuk 
-mengesampingkan ego sektoral dan menyingkirkan keinginan klaim sepihak atas keberhasilan pemberdayaan UMKM yang dilaksanakan. (9) Karena pada akhirnya, kesuksesan 
-program pemberdayaan UMKM adalah keberhasilan atas kerja semua pihak. (10) Tanpa sinergi yang nyata, pemberdayaan UMKM hanya akan bergerak di situ-situ saja.
+('ppu-020', 'paket1', 'subtest_ppu', 'multiple_choice','(1) Dalam lingkup Kementerian Keuangan, terdapat beberapa program pemberdayaan UMKM yang 
+diimplementasikan oleh masing-masing unit secara independen. (2) Antara program-program tersebut terdapat fasilitas akses pembiayaan yang dikelola
+oleh Ditjen Perbendaharaan, fasilitas perpajakan untuk UMKM di bawah pengelolaan Ditjen Pajak, serta fasilitas kepabeanan, cukai, dan pembinaan 
+ekspor yang dijalankan oleh Ditjen Bea dan Cukai. Selain itu, ada pula program perluasan pasar melalui lelang online untuk UMKM yang diselenggarakan 
+oleh Ditjen Kekayaan Negara dan Digipay, sebuah marketplace belanja pemerintah yang dikelola oleh Ditjen Perbendaharaan.
+(3) Mengingat tersedianya program pemberdayaan UMKM yang komprehensif, mulai dari penyediaan modal usaha hingga pembinaan untuk mencapai standar ekspor, 
+diperlukan langkah untuk menyatukan seluruh program UMKM di Kementerian Keuangan menjadi satu kesatuan yang terpadu. (4) Langkah tersebut kemudian diwujudkan 
+melalui terbitnya Keputusan Menteri Keuangan Nomor 396 Tahun 2022 tentang Program Sinergi Pembiayaan Usaha Mikro, Kecil, dan Menengah di Kementerian Keuangan.
+(5) Program dan kebijakan pemberdayaan UMKM di lingkungan Kementerian Keuangan tersebut hanyalah salah satu contoh upaya untuk meningkatkan kapasitas 
+UMKM di Indonesia. (6) Dalam skala yang lebih luas, pemberdayaan UMKM memerlukan sinergi antara berbagai pihak, termasuk Pemerintah Pusat, Pemerintah 
+Daerah, Lembaga Pembiayaan, serta pihak-pihak lain yang terlibat dalam program pemberdayaan UMKM.
+(7) Menginisiasi sinergi dalam suatu program dengan tujuan bersama, khususnya pemberdayaan UMKM, jelas merupakan tantangan tersendiri. (8) Diperlukan 
+komitmen dari berbagai pihak untuk mengesampingkan ego sektoral dan menghilangkan kecenderungan klaim sepihak atas keberhasilan program pemberdayaan 
+UMKM. (9) Pada akhirnya, keberhasilan program pemberdayaan UMKM merupakan hasil kerja sama dari semua pihak yang terlibat. (10) Tanpa adanya sinergi 
+yang efektif, program pemberdayaan UMKM hanya akan berjalan di tempat dan tidak berkembang.
 
 Sumber: detiknews, 12 Desember 2022, Menuju Pemberdayaan UMKM yang Menyeluruh.
 
@@ -972,502 +981,445 @@ Di antaranya menjadi diantaranya pada kalimat (2). Hal ini tidak perlu diperbaik
 Berdasarkan hal tersebut dapat kita simpulkan, kata yang salah terdapat dalam opsi B
 '),
 
-('pbm-001', 'paket1', 'subtest_pbm', 'multiple_choice','(1) Kementerian Kesehatan, diacu pada pedoman Organisasi Kesehatan Dunia (WHO), menganjurkan konsumsi gula 
-tambahan per orang per hari sebesar 50 gram atau empat sendok makan. (2) WHO bahkan mengatakan konsumsi gula tambahan di bawah 25 gram per hari akan memberi manfaat 
-kesehatan tambahan. (3) Gula tambahan yang dimaksud mengacu pada monosakarida (seperti glukosa dan fruktosa) serta disakarida (seperti sukrosa) yang ditambahkan ke 
-makanan dan minuman oleh produsen, serta gula yang secara alami ada di dalam madu, sirup, jus buah, dan konsentrat jus buah.
-
-(4) Pedoman itu tidak mengacu pada gula alami yang terkandung di dalam buah-buahan, sayuran segar, dan gula alami di dalam susu karena sejauh ini belum ada bukti efek 
-samping dari konsumsi gula tersebut. (5) Menurut WHO, gula tambahan itu biasanya tersembunyi di dalam produk makanan dan minuman olahan, termasuk MBDK. (6) Minuman kemasan 
-atau produk olahan yang dimaksud, menurut Badan Pengawas Obat dan Makanan (BPOM), adalah yang memiliki izin edar dan masa simpan lebih dari tujuh hari. (7) Misalnya, minuman
- soda kaleng yang bisa mengandung 27 gram gula.
-
-(8) Di Indonesia, informasi kandungan gizi, termasuk gula, dalam minuman kemasan itu telah diatur oleh Peraturan Badan Pengawas Obat dan Makanan (BPOM) Nomor 26 Tahun 2021. 
-(9) Gerai yang sedang menjadi sorotan, Es Teh Indonesia, juga sempat membagikan bahwa salah satu menunya, es teh susu nusantara, mengandung 31 gram gula. (10) Sedangkan, 
-minuman boba seperti Chatime mengandung 24 gram gula untuk takaran normal, meski konsumen bisa meminta takaran gula yang lebih sedikit. (11) Peraturan Menteri Kesehatan 
-Nomor 30 Tahun 2013 mewajibkan produsen pangan siap saji yang memiliki lebih dari 250 gerai untuk memberikan informasi kandungan gula, garam, dan lemak serta pesan kesehatan 
-melalui informasi dan promosinya.
-
-(12) Namun, pelaksanaan dan pengawasannya selama ini belum jelas. (13) Banyak industri pangan siap saji yang tidak secara terbuka mencantumkan kandungan gulanya. 
-(14) Selain itu, belum jelas pula sanksi yang dikenakan terhadap gerai-gerai pangan siap saji yang tidak mencantumkan kandungan gula dalam produknya.
+('pbm-001', 'paket1', 'subtest_pbm', 'multiple_choice','(1) Kementerian Kesehatan, mengacu pada pedoman Organisasi Kesehatan Dunia (WHO), direkomendasikan 
+konsumsi gula tambahan harian per orang sebanyak 50 gram atau setara dengan empat sendok makan. (2) WHO bahkan menyatakan bahwa konsumsi gula tambahan di bawah 
+25 gram per hari dapat memberikan manfaat kesehatan yang lebih besar. (3) Gula tambahan yang dimaksud mencakup monosakarida (seperti glukosa dan fruktosa) 
+serta disakarida (seperti sukrosa) yang ditambahkan ke makanan dan minuman oleh produsen, termasuk gula alami dalam madu, sirup, jus buah, dan konsentrat jus buah.
+(4) Pedoman tersebut tidak mencakup gula alami yang terdapat dalam buah-buahan, sayuran segar, serta susu karena hingga saat ini belum ditemukan bukti efek 
+negatif dari konsumsi gula tersebut. (5) Menurut WHO, gula tambahan ini sangat sering sekali tersembunyi dalam makanan dan minuman olahan, termasuk MBDK. 
+(6) Minuman kemasan atau produk olahan yang dimaksud, berdasarkan keterangan Badan Pengawas Obat dan Makanan (BPOM), adalah produk dengan izin edar dan masa 
+simpan lebih dari tujuh hari. (7) Contohnya, minuman soda dalam kaleng dapat mengandung hingga 27 gram gula.
+(8) Di Indonesia, informasi mengenai kandungan gizi dalam minuman kemasan, termasuk kadar gula, telah diatur dalam Peraturan Badan Pengawas Obat dan Makanan 
+(BPOM) Nomor 26 Tahun 2021. (9) Es Teh Indonesia, yang belakangan menjadi sorotan, pernah mengungkapkan bahwa salah satu produknya, yaitu es teh susu nusantara, 
+memiliki kandungan gula sebanyak 31 gram. (10) Sementara itu, minuman boba seperti Chatime mengandung 24 gram gula dalam takaran normal, meskipun pelanggan dapat 
+meminta pengurangan kadar gula. (11) Peraturan Menteri Kesehatan Nomor 30 Tahun 2013 mewajibkan produsen makanan siap saji dengan lebih dari 250 gerai untuk 
+mencantumkan informasi kandungan gula, garam, dan lemak, serta menyertakan pesan kesehatan dalam promosi dan informasi produknya. (12) Namun, implementasi dan 
+pengawasannya masih belum jelas. (13) Banyak produsen makanan siap saji yang tidak secara transparan mencantumkan kadar gula dalam produknya. (14) Selain itu, 
+belum ada kejelasan mengenai sanksi bagi gerai makanan siap saji yang tidak memberikan informasi kandungan gula dalam produknya.
 
 Sumber: BBC, 27 September 2022, Kandungan Gula dalam Minuman Berpemanis Jadi Polemik, Apakah Penerapan Cukai Bisa Jadi Solusi?
 
 Kalimat (1) perlu disempurnakan dengan...
 ', NULL, 46, '
-Kalimat (1) terdapat kesalahan pemakaian imbuhan sehingga kata tersebut tidak sesuai untuk konteks kalimat (1), yaitu pada kata diacu seharusnya mengacu.
+Kalimat (1) terdapat kesalahan pemakaian imbuhan sehingga kata tersebut tidak sesuai untuk konteks kalimat (1), yaitu pada kata direkomendasikan seharusnya merekomendasikan.
 '),
 
-('pbm-002', 'paket1', 'subtest_pbm', 'multiple_choice','(1) Kementerian Kesehatan, diacu pada pedoman Organisasi Kesehatan Dunia (WHO), menganjurkan konsumsi gula 
-tambahan per orang per hari sebesar 50 gram atau empat sendok makan. (2) WHO bahkan mengatakan konsumsi gula tambahan di bawah 25 gram per hari akan memberi manfaat 
-kesehatan tambahan. (3) Gula tambahan yang dimaksud mengacu pada monosakarida (seperti glukosa dan fruktosa) serta disakarida (seperti sukrosa) yang ditambahkan ke 
-makanan dan minuman oleh produsen, serta gula yang secara alami ada di dalam madu, sirup, jus buah, dan konsentrat jus buah.
-
-(4) Pedoman itu tidak mengacu pada gula alami yang terkandung di dalam buah-buahan, sayuran segar, dan gula alami di dalam susu karena sejauh ini belum ada bukti efek 
-samping dari konsumsi gula tersebut. (5) Menurut WHO, gula tambahan itu biasanya tersembunyi di dalam produk makanan dan minuman olahan, termasuk MBDK. (6) Minuman kemasan 
-atau produk olahan yang dimaksud, menurut Badan Pengawas Obat dan Makanan (BPOM), adalah yang memiliki izin edar dan masa simpan lebih dari tujuh hari. (7) Misalnya, minuman
- soda kaleng yang bisa mengandung 27 gram gula.
-
-(8) Di Indonesia, informasi kandungan gizi, termasuk gula, dalam minuman kemasan itu telah diatur oleh Peraturan Badan Pengawas Obat dan Makanan (BPOM) Nomor 26 Tahun 2021. 
-(9) Gerai yang sedang menjadi sorotan, Es Teh Indonesia, juga sempat membagikan bahwa salah satu menunya, es teh susu nusantara, mengandung 31 gram gula. (10) Sedangkan, 
-minuman boba seperti Chatime mengandung 24 gram gula untuk takaran normal, meski konsumen bisa meminta takaran gula yang lebih sedikit. (11) Peraturan Menteri Kesehatan 
-Nomor 30 Tahun 2013 mewajibkan produsen pangan siap saji yang memiliki lebih dari 250 gerai untuk memberikan informasi kandungan gula, garam, dan lemak serta pesan kesehatan 
-melalui informasi dan promosinya.
-
-(12) Namun, pelaksanaan dan pengawasannya selama ini belum jelas. (13) Banyak industri pangan siap saji yang tidak secara terbuka mencantumkan kandungan gulanya. 
-(14) Selain itu, belum jelas pula sanksi yang dikenakan terhadap gerai-gerai pangan siap saji yang tidak mencantumkan kandungan gula dalam produknya.
+('pbm-002', 'paket1', 'subtest_pbm', 'multiple_choice','(1) Kementerian Kesehatan, mengacu pada pedoman Organisasi Kesehatan Dunia (WHO), direkomendasikan 
+konsumsi gula tambahan harian per orang sebanyak 50 gram atau setara dengan empat sendok makan. (2) WHO bahkan menyatakan bahwa konsumsi gula tambahan di bawah 
+25 gram per hari dapat memberikan manfaat kesehatan yang lebih besar. (3) Gula tambahan yang dimaksud mencakup monosakarida (seperti glukosa dan fruktosa) 
+serta disakarida (seperti sukrosa) yang ditambahkan ke makanan dan minuman oleh produsen, termasuk gula alami dalam madu, sirup, jus buah, dan konsentrat jus buah.
+(4) Pedoman tersebut tidak mencakup gula alami yang terdapat dalam buah-buahan, sayuran segar, serta susu karena hingga saat ini belum ditemukan bukti efek 
+negatif dari konsumsi gula tersebut. (5) Menurut WHO, gula tambahan ini sangat sering sekali tersembunyi dalam makanan dan minuman olahan, termasuk MBDK. 
+(6) Minuman kemasan atau produk olahan yang dimaksud, berdasarkan keterangan Badan Pengawas Obat dan Makanan (BPOM), adalah produk dengan izin edar dan masa 
+simpan lebih dari tujuh hari. (7) Contohnya, minuman soda dalam kaleng dapat mengandung hingga 27 gram gula.
+(8) Di Indonesia, informasi mengenai kandungan gizi dalam minuman kemasan, termasuk kadar gula, telah diatur dalam Peraturan Badan Pengawas Obat dan Makanan 
+(BPOM) Nomor 26 Tahun 2021. (9) Es Teh Indonesia, yang belakangan menjadi sorotan, pernah mengungkapkan bahwa salah satu produknya, yaitu es teh susu nusantara, 
+memiliki kandungan gula sebanyak 31 gram. (10) Sementara itu, minuman boba seperti Chatime mengandung 24 gram gula dalam takaran normal, meskipun pelanggan dapat 
+meminta pengurangan kadar gula. (11) Peraturan Menteri Kesehatan Nomor 30 Tahun 2013 mewajibkan produsen makanan siap saji dengan lebih dari 250 gerai untuk 
+mencantumkan informasi kandungan gula, garam, dan lemak, serta menyertakan pesan kesehatan dalam promosi dan informasi produknya. (12) Namun, implementasi dan 
+pengawasannya masih belum jelas. (13) Banyak produsen makanan siap saji yang tidak secara transparan mencantumkan kadar gula dalam produknya. (14) Selain itu, 
+belum ada kejelasan mengenai sanksi bagi gerai makanan siap saji yang tidak memberikan informasi kandungan gula dalam produknya.
 
 Sumber: BBC, 27 September 2022, Kandungan Gula dalam Minuman Berpemanis Jadi Polemik, Apakah Penerapan Cukai Bisa Jadi Solusi?
 
-Kata yang harus dihilangkan pada kalimat (13) adalah...
+Kata yang harus dihilangkan pada kalimat (5) adalah...
 ', NULL, 54, '
-Pada kalimat (13) terdapat pemborosan kata sehingga kata tersebut harus dihilangkan. Kata yang harus dihilangkan adalah industri karena sebelumnya sudah ada 
-kata banyak, sehingga tidak perlu lagi menulis bentuk pengulangan untuk kata industri.
+Pada kalimat (5) terdapat pemborosan kata sehingga kata tersebut harus dihilangkan. Kata yang harus dihilangkan adalah sekali karena sebelumnya sudah ada kata sangat.
 '),
 
-('pbm-003', 'paket1', 'subtest_pbm', 'multiple_choice','(1) Kementerian Kesehatan, diacu pada pedoman Organisasi Kesehatan Dunia (WHO), menganjurkan konsumsi gula 
-tambahan per orang per hari sebesar 50 gram atau empat sendok makan. (2) WHO bahkan mengatakan konsumsi gula tambahan di bawah 25 gram per hari akan memberi manfaat 
-kesehatan tambahan. (3) Gula tambahan yang dimaksud mengacu pada monosakarida (seperti glukosa dan fruktosa) serta disakarida (seperti sukrosa) yang ditambahkan ke 
-makanan dan minuman oleh produsen, serta gula yang secara alami ada di dalam madu, sirup, jus buah, dan konsentrat jus buah.
-
-(4) Pedoman itu tidak mengacu pada gula alami yang terkandung di dalam buah-buahan, sayuran segar, dan gula alami di dalam susu karena sejauh ini belum ada bukti efek 
-samping dari konsumsi gula tersebut. (5) Menurut WHO, gula tambahan itu biasanya tersembunyi di dalam produk makanan dan minuman olahan, termasuk MBDK. (6) Minuman kemasan 
-atau produk olahan yang dimaksud, menurut Badan Pengawas Obat dan Makanan (BPOM), adalah yang memiliki izin edar dan masa simpan lebih dari tujuh hari. (7) Misalnya, minuman
- soda kaleng yang bisa mengandung 27 gram gula.
-
-(8) Di Indonesia, informasi kandungan gizi, termasuk gula, dalam minuman kemasan itu telah diatur oleh Peraturan Badan Pengawas Obat dan Makanan (BPOM) Nomor 26 Tahun 2021. 
-(9) Gerai yang sedang menjadi sorotan, Es Teh Indonesia, juga sempat membagikan bahwa salah satu menunya, es teh susu nusantara, mengandung 31 gram gula. (10) Sedangkan, 
-minuman boba seperti Chatime mengandung 24 gram gula untuk takaran normal, meski konsumen bisa meminta takaran gula yang lebih sedikit. (11) Peraturan Menteri Kesehatan 
-Nomor 30 Tahun 2013 mewajibkan produsen pangan siap saji yang memiliki lebih dari 250 gerai untuk memberikan informasi kandungan gula, garam, dan lemak serta pesan kesehatan 
-melalui informasi dan promosinya.
-
-(12) Namun, pelaksanaan dan pengawasannya selama ini belum jelas. (13) Banyak industri pangan siap saji yang tidak secara terbuka mencantumkan kandungan gulanya. 
-(14) Selain itu, belum jelas pula sanksi yang dikenakan terhadap gerai-gerai pangan siap saji yang tidak mencantumkan kandungan gula dalam produknya.
+('pbm-003', 'paket1', 'subtest_pbm', 'multiple_choice','(1) Kementerian Kesehatan, mengacu pada pedoman Organisasi Kesehatan Dunia (WHO), direkomendasikan 
+konsumsi gula tambahan harian per orang sebanyak 50 gram atau setara dengan empat sendok makan. (2) WHO bahkan menyatakan bahwa konsumsi gula tambahan di bawah 
+25 gram per hari dapat memberikan manfaat kesehatan yang lebih besar. (3) Gula tambahan yang dimaksud mencakup monosakarida (seperti glukosa dan fruktosa) 
+serta disakarida (seperti sukrosa) yang ditambahkan ke makanan dan minuman oleh produsen, termasuk gula alami dalam madu, sirup, jus buah, dan konsentrat jus buah.
+(4) Pedoman tersebut tidak mencakup gula alami yang terdapat dalam buah-buahan, sayuran segar, serta susu karena hingga saat ini belum ditemukan bukti efek 
+negatif dari konsumsi gula tersebut. (5) Menurut WHO, gula tambahan ini sangat sering sekali tersembunyi dalam makanan dan minuman olahan, termasuk MBDK. 
+(6) Minuman kemasan atau produk olahan yang dimaksud, berdasarkan keterangan Badan Pengawas Obat dan Makanan (BPOM), adalah produk dengan izin edar dan masa 
+simpan lebih dari tujuh hari. (7) Contohnya, minuman soda dalam kaleng dapat mengandung hingga 27 gram gula.
+(8) Di Indonesia, informasi mengenai kandungan gizi dalam minuman kemasan, termasuk kadar gula, telah diatur dalam Peraturan Badan Pengawas Obat dan Makanan 
+(BPOM) Nomor 26 Tahun 2021. (9) Es Teh Indonesia, yang belakangan menjadi sorotan, pernah mengungkapkan bahwa salah satu produknya, yaitu es teh susu nusantara, 
+memiliki kandungan gula sebanyak 31 gram. (10) Sementara itu, minuman boba seperti Chatime mengandung 24 gram gula dalam takaran normal, meskipun pelanggan dapat 
+meminta pengurangan kadar gula. (11) Peraturan Menteri Kesehatan Nomor 30 Tahun 2013 mewajibkan produsen makanan siap saji dengan lebih dari 250 gerai untuk 
+mencantumkan informasi kandungan gula, garam, dan lemak, serta menyertakan pesan kesehatan dalam promosi dan informasi produknya. (12) Namun, implementasi dan 
+pengawasannya masih belum jelas. (13) Banyak produsen makanan siap saji yang tidak secara transparan mencantumkan kadar gula dalam produknya. (14) Selain itu, 
+belum ada kejelasan mengenai sanksi bagi gerai makanan siap saji yang tidak memberikan informasi kandungan gula dalam produknya.
 
 Sumber: BBC, 27 September 2022, Kandungan Gula dalam Minuman Berpemanis Jadi Polemik, Apakah Penerapan Cukai Bisa Jadi Solusi?
 
 Kata yang tepat untuk menggantikan kata “tersembunyi” dalam bacaan adalah...
 ', NULL, 46, '
-Untuk menggantikan kata “tersembunyi” tersebut, hal yang harus diperhatikan adalah makna yang sepadan dengan kata tersebut dan sesuai dengan 
-konteks kalimat. Oleh karena itu, kata yang sesuai untuk menggantikan kata tersembunyi adalah terkandung.
+Untuk menggantikan kata "tersembunyi," perlu memperhatikan makna yang sepadan dan sesuai dengan konteks kalimat. Oleh karena itu, kata yang tepat sebagai 
+penggantinya adalah "terkandung."
 '),
 
-('pbm-004', 'paket1', 'subtest_pbm', 'multiple_choice','(1) Kementerian Kesehatan, diacu pada pedoman Organisasi Kesehatan Dunia (WHO), menganjurkan konsumsi gula 
-tambahan per orang per hari sebesar 50 gram atau empat sendok makan. (2) WHO bahkan mengatakan konsumsi gula tambahan di bawah 25 gram per hari akan memberi manfaat 
-kesehatan tambahan. (3) Gula tambahan yang dimaksud mengacu pada monosakarida (seperti glukosa dan fruktosa) serta disakarida (seperti sukrosa) yang ditambahkan ke 
-makanan dan minuman oleh produsen, serta gula yang secara alami ada di dalam madu, sirup, jus buah, dan konsentrat jus buah.
-
-(4) Pedoman itu tidak mengacu pada gula alami yang terkandung di dalam buah-buahan, sayuran segar, dan gula alami di dalam susu karena sejauh ini belum ada bukti efek 
-samping dari konsumsi gula tersebut. (5) Menurut WHO, gula tambahan itu biasanya tersembunyi di dalam produk makanan dan minuman olahan, termasuk MBDK. (6) Minuman kemasan 
-atau produk olahan yang dimaksud, menurut Badan Pengawas Obat dan Makanan (BPOM), adalah yang memiliki izin edar dan masa simpan lebih dari tujuh hari. (7) Misalnya, minuman
- soda kaleng yang bisa mengandung 27 gram gula.
-
-(8) Di Indonesia, informasi kandungan gizi, termasuk gula, dalam minuman kemasan itu telah diatur oleh Peraturan Badan Pengawas Obat dan Makanan (BPOM) Nomor 26 Tahun 2021. 
-(9) Gerai yang sedang menjadi sorotan, Es Teh Indonesia, juga sempat membagikan bahwa salah satu menunya, es teh susu nusantara, mengandung 31 gram gula. (10) Sedangkan, 
-minuman boba seperti Chatime mengandung 24 gram gula untuk takaran normal, meski konsumen bisa meminta takaran gula yang lebih sedikit. (11) Peraturan Menteri Kesehatan 
-Nomor 30 Tahun 2013 mewajibkan produsen pangan siap saji yang memiliki lebih dari 250 gerai untuk memberikan informasi kandungan gula, garam, dan lemak serta pesan kesehatan 
-melalui informasi dan promosinya.
-
-(12) Namun, pelaksanaan dan pengawasannya selama ini belum jelas. (13) Banyak industri pangan siap saji yang tidak secara terbuka mencantumkan kandungan gulanya. 
-(14) Selain itu, belum jelas pula sanksi yang dikenakan terhadap gerai-gerai pangan siap saji yang tidak mencantumkan kandungan gula dalam produknya.
+('pbm-004', 'paket1', 'subtest_pbm', 'multiple_choice','(1) Kementerian Kesehatan, mengacu pada pedoman Organisasi Kesehatan Dunia (WHO), direkomendasikan 
+konsumsi gula tambahan harian per orang sebanyak 50 gram atau setara dengan empat sendok makan. (2) WHO bahkan menyatakan bahwa konsumsi gula tambahan di bawah 
+25 gram per hari dapat memberikan manfaat kesehatan yang lebih besar. (3) Gula tambahan yang dimaksud mencakup monosakarida (seperti glukosa dan fruktosa) 
+serta disakarida (seperti sukrosa) yang ditambahkan ke makanan dan minuman oleh produsen, termasuk gula alami dalam madu, sirup, jus buah, dan konsentrat jus buah.
+(4) Pedoman tersebut tidak mencakup gula alami yang terdapat dalam buah-buahan, sayuran segar, serta susu karena hingga saat ini belum ditemukan bukti efek 
+negatif dari konsumsi gula tersebut. (5) Menurut WHO, gula tambahan ini sangat sering sekali tersembunyi dalam makanan dan minuman olahan, termasuk MBDK. 
+(6) Minuman kemasan atau produk olahan yang dimaksud, berdasarkan keterangan Badan Pengawas Obat dan Makanan (BPOM), adalah produk dengan izin edar dan masa 
+simpan lebih dari tujuh hari. (7) Contohnya, minuman soda dalam kaleng dapat mengandung hingga 27 gram gula.
+(8) Di Indonesia, informasi mengenai kandungan gizi dalam minuman kemasan, termasuk kadar gula, telah diatur dalam Peraturan Badan Pengawas Obat dan Makanan 
+(BPOM) Nomor 26 Tahun 2021. (9) Es Teh Indonesia, yang belakangan menjadi sorotan, pernah mengungkapkan bahwa salah satu produknya, yaitu es teh susu nusantara, 
+memiliki kandungan gula sebanyak 31 gram. (10) Sementara itu, minuman boba seperti Chatime mengandung 24 gram gula dalam takaran normal, meskipun pelanggan dapat 
+meminta pengurangan kadar gula. (11) Peraturan Menteri Kesehatan Nomor 30 Tahun 2013 mewajibkan produsen makanan siap saji dengan lebih dari 250 gerai untuk 
+mencantumkan informasi kandungan gula, garam, dan lemak, serta menyertakan pesan kesehatan dalam promosi dan informasi produknya. (12) Namun, implementasi dan 
+pengawasannya masih belum jelas. (13) Banyak produsen makanan siap saji yang tidak secara transparan mencantumkan kadar gula dalam produknya. (14) Selain itu, 
+belum ada kejelasan mengenai sanksi bagi gerai makanan siap saji yang tidak memberikan informasi kandungan gula dalam produknya.
 
 Sumber: BBC, 27 September 2022, Kandungan Gula dalam Minuman Berpemanis Jadi Polemik, Apakah Penerapan Cukai Bisa Jadi Solusi?
 
 Kalimat yang dapat dihilangkan dari teks bacaan tersebut adalah...
 ', NULL, 54, '
-Untuk menghilangkan suatu kalimat dalam teks bacaan, hal yang harus diperhatikan adalah apabila kalimat tersebut dihilangkan, tidak akan merusak paragraf atau bacaan tersebut. 
-Berdasarkan hal tersebut, kalimat yang mungkin dihilangkan dari teks bacaan tersebut adalah kalimat (7).
+Dalam menghapus suatu kalimat dari teks bacaan, penting untuk memastikan bahwa penghapusannya tidak merusak struktur paragraf atau keseluruhan bacaan. Oleh karena itu, 
+kalimat yang dapat dihilangkan tanpa mengganggu kesatuan teks adalah kalimat (7).
 '),
 
-('pbm-005', 'paket1', 'subtest_pbm', 'multiple_choice','(1) Kementerian Kesehatan, diacu pada pedoman Organisasi Kesehatan Dunia (WHO), menganjurkan konsumsi gula 
-tambahan per orang per hari sebesar 50 gram atau empat sendok makan. (2) WHO bahkan mengatakan konsumsi gula tambahan di bawah 25 gram per hari akan memberi manfaat 
-kesehatan tambahan. (3) Gula tambahan yang dimaksud mengacu pada monosakarida (seperti glukosa dan fruktosa) serta disakarida (seperti sukrosa) yang ditambahkan ke 
-makanan dan minuman oleh produsen, serta gula yang secara alami ada di dalam madu, sirup, jus buah, dan konsentrat jus buah.
-
-(4) Pedoman itu tidak mengacu pada gula alami yang terkandung di dalam buah-buahan, sayuran segar, dan gula alami di dalam susu karena sejauh ini belum ada bukti efek 
-samping dari konsumsi gula tersebut. (5) Menurut WHO, gula tambahan itu biasanya tersembunyi di dalam produk makanan dan minuman olahan, termasuk MBDK. (6) Minuman kemasan 
-atau produk olahan yang dimaksud, menurut Badan Pengawas Obat dan Makanan (BPOM), adalah yang memiliki izin edar dan masa simpan lebih dari tujuh hari. (7) Misalnya, minuman
- soda kaleng yang bisa mengandung 27 gram gula.
-
-(8) Di Indonesia, informasi kandungan gizi, termasuk gula, dalam minuman kemasan itu telah diatur oleh Peraturan Badan Pengawas Obat dan Makanan (BPOM) Nomor 26 Tahun 2021. 
-(9) Gerai yang sedang menjadi sorotan, Es Teh Indonesia, juga sempat membagikan bahwa salah satu menunya, es teh susu nusantara, mengandung 31 gram gula. (10) Sedangkan, 
-minuman boba seperti Chatime mengandung 24 gram gula untuk takaran normal, meski konsumen bisa meminta takaran gula yang lebih sedikit. (11) Peraturan Menteri Kesehatan 
-Nomor 30 Tahun 2013 mewajibkan produsen pangan siap saji yang memiliki lebih dari 250 gerai untuk memberikan informasi kandungan gula, garam, dan lemak serta pesan kesehatan 
-melalui informasi dan promosinya.
-
-(12) Namun, pelaksanaan dan pengawasannya selama ini belum jelas. (13) Banyak industri pangan siap saji yang tidak secara terbuka mencantumkan kandungan gulanya. 
-(14) Selain itu, belum jelas pula sanksi yang dikenakan terhadap gerai-gerai pangan siap saji yang tidak mencantumkan kandungan gula dalam produknya.
+('pbm-005', 'paket1', 'subtest_pbm', 'multiple_choice','(1) Kementerian Kesehatan, mengacu pada pedoman Organisasi Kesehatan Dunia (WHO), direkomendasikan 
+konsumsi gula tambahan harian per orang sebanyak 50 gram atau setara dengan empat sendok makan. (2) WHO bahkan menyatakan bahwa konsumsi gula tambahan di bawah 
+25 gram per hari dapat memberikan manfaat kesehatan yang lebih besar. (3) Gula tambahan yang dimaksud mencakup monosakarida (seperti glukosa dan fruktosa) 
+serta disakarida (seperti sukrosa) yang ditambahkan ke makanan dan minuman oleh produsen, termasuk gula alami dalam madu, sirup, jus buah, dan konsentrat jus buah.
+(4) Pedoman tersebut tidak mencakup gula alami yang terdapat dalam buah-buahan, sayuran segar, serta susu karena hingga saat ini belum ditemukan bukti efek 
+negatif dari konsumsi gula tersebut. (5) Menurut WHO, gula tambahan ini sangat sering sekali tersembunyi dalam makanan dan minuman olahan, termasuk MBDK. 
+(6) Minuman kemasan atau produk olahan yang dimaksud, berdasarkan keterangan Badan Pengawas Obat dan Makanan (BPOM), adalah produk dengan izin edar dan masa 
+simpan lebih dari tujuh hari. (7) Contohnya, minuman soda dalam kaleng dapat mengandung hingga 27 gram gula.
+(8) Di Indonesia, informasi mengenai kandungan gizi dalam minuman kemasan, termasuk kadar gula, telah diatur dalam Peraturan Badan Pengawas Obat dan Makanan 
+(BPOM) Nomor 26 Tahun 2021. (9) Es Teh Indonesia, yang belakangan menjadi sorotan, pernah mengungkapkan bahwa salah satu produknya, yaitu es teh susu nusantara, 
+memiliki kandungan gula sebanyak 31 gram. (10) Sementara itu, minuman boba seperti Chatime mengandung 24 gram gula dalam takaran normal, meskipun pelanggan dapat 
+meminta pengurangan kadar gula. (11) Peraturan Menteri Kesehatan Nomor 30 Tahun 2013 mewajibkan produsen makanan siap saji dengan lebih dari 250 gerai untuk 
+mencantumkan informasi kandungan gula, garam, dan lemak, serta menyertakan pesan kesehatan dalam promosi dan informasi produknya. (12) Namun, implementasi dan 
+pengawasannya masih belum jelas. (13) Banyak produsen makanan siap saji yang tidak secara transparan mencantumkan kadar gula dalam produknya. (14) Selain itu, 
+belum ada kejelasan mengenai sanksi bagi gerai makanan siap saji yang tidak memberikan informasi kandungan gula dalam produknya.
 
 Sumber: BBC, 27 September 2022, Kandungan Gula dalam Minuman Berpemanis Jadi Polemik, Apakah Penerapan Cukai Bisa Jadi Solusi?
 
 Pernyataan yang dapat melemahkan argumen paragraf (1) adalah...
 ', NULL, 46, '
-Pernyataan yang melemahkan argumen adalah pernyataan yang bertentangan dengan argumen yang telah dijelaskan dalam teks bacaan. Berdasarkan hal tersebut, pernyataan 
-yang melemahkan argumen paragraf (1) adalah pernyataan opsi (A), dikarenakan dalam paragraf (1) telah disebutkan bahwa mengonsumsi gula tambahan di bawah 25 gram per
-hari akan memberi manfaat kesehatan tambahan. Hal tersebut bertentangan dengan opsi (A), yang menyebutkan bahwa mengonsumsi gula tambahan di atas 25 gram jika tidak 
-dikonsumsi berturut-turut dapat memberi dampak baik.
+Paragraf (1) menekankan bahwa konsumsi gula tambahan sebaiknya tidak lebih dari 50 gram per hari sesuai dengan rekomendasi WHO dan Kementerian Kesehatan. 
+Pernyataan yang melemahkan argumen ini adalah yang menunjukkan bahwa batasan konsumsi gula tersebut tidak selalu berbahaya atau bisa disesuaikan dengan 
+faktor lain seperti aktivitas fisik. Jika ada penelitian yang menyatakan bahwa konsumsi lebih dari 50 gram per hari tidak selalu berdampak negatif, maka hal 
+ini dapat meragukan atau melemahkan rekomendasi yang diberikan dalam paragraf tersebut.
 '),
 
-('pbm-006', 'paket1', 'subtest_pbm', 'multiple_choice','(1) Kementerian Kesehatan, diacu pada pedoman Organisasi Kesehatan Dunia (WHO), menganjurkan konsumsi gula 
-tambahan per orang per hari sebesar 50 gram atau empat sendok makan. (2) WHO bahkan mengatakan konsumsi gula tambahan di bawah 25 gram per hari akan memberi manfaat 
-kesehatan tambahan. (3) Gula tambahan yang dimaksud mengacu pada monosakarida (seperti glukosa dan fruktosa) serta disakarida (seperti sukrosa) yang ditambahkan ke 
-makanan dan minuman oleh produsen, serta gula yang secara alami ada di dalam madu, sirup, jus buah, dan konsentrat jus buah.
-
-(4) Pedoman itu tidak mengacu pada gula alami yang terkandung di dalam buah-buahan, sayuran segar, dan gula alami di dalam susu karena sejauh ini belum ada bukti efek 
-samping dari konsumsi gula tersebut. (5) Menurut WHO, gula tambahan itu biasanya tersembunyi di dalam produk makanan dan minuman olahan, termasuk MBDK. (6) Minuman kemasan 
-atau produk olahan yang dimaksud, menurut Badan Pengawas Obat dan Makanan (BPOM), adalah yang memiliki izin edar dan masa simpan lebih dari tujuh hari. (7) Misalnya, minuman
- soda kaleng yang bisa mengandung 27 gram gula.
-
-(8) Di Indonesia, informasi kandungan gizi, termasuk gula, dalam minuman kemasan itu telah diatur oleh Peraturan Badan Pengawas Obat dan Makanan (BPOM) Nomor 26 Tahun 2021. 
-(9) Gerai yang sedang menjadi sorotan, Es Teh Indonesia, juga sempat membagikan bahwa salah satu menunya, es teh susu nusantara, mengandung 31 gram gula. (10) Sedangkan, 
-minuman boba seperti Chatime mengandung 24 gram gula untuk takaran normal, meski konsumen bisa meminta takaran gula yang lebih sedikit. (11) Peraturan Menteri Kesehatan 
-Nomor 30 Tahun 2013 mewajibkan produsen pangan siap saji yang memiliki lebih dari 250 gerai untuk memberikan informasi kandungan gula, garam, dan lemak serta pesan kesehatan 
-melalui informasi dan promosinya.
-
-(12) Namun, pelaksanaan dan pengawasannya selama ini belum jelas. (13) Banyak industri pangan siap saji yang tidak secara terbuka mencantumkan kandungan gulanya. 
-(14) Selain itu, belum jelas pula sanksi yang dikenakan terhadap gerai-gerai pangan siap saji yang tidak mencantumkan kandungan gula dalam produknya.
+('pbm-006', 'paket1', 'subtest_pbm', 'multiple_choice','(1) Kementerian Kesehatan, mengacu pada pedoman Organisasi Kesehatan Dunia (WHO), direkomendasikan 
+konsumsi gula tambahan harian per orang sebanyak 50 gram atau setara dengan empat sendok makan. (2) WHO bahkan menyatakan bahwa konsumsi gula tambahan di bawah 
+25 gram per hari dapat memberikan manfaat kesehatan yang lebih besar. (3) Gula tambahan yang dimaksud mencakup monosakarida (seperti glukosa dan fruktosa) 
+serta disakarida (seperti sukrosa) yang ditambahkan ke makanan dan minuman oleh produsen, termasuk gula alami dalam madu, sirup, jus buah, dan konsentrat jus buah.
+(4) Pedoman tersebut tidak mencakup gula alami yang terdapat dalam buah-buahan, sayuran segar, serta susu karena hingga saat ini belum ditemukan bukti efek 
+negatif dari konsumsi gula tersebut. (5) Menurut WHO, gula tambahan ini sangat sering sekali tersembunyi dalam makanan dan minuman olahan, termasuk MBDK. 
+(6) Minuman kemasan atau produk olahan yang dimaksud, berdasarkan keterangan Badan Pengawas Obat dan Makanan (BPOM), adalah produk dengan izin edar dan masa 
+simpan lebih dari tujuh hari. (7) Contohnya, minuman soda dalam kaleng dapat mengandung hingga 27 gram gula.
+(8) Di Indonesia, informasi mengenai kandungan gizi dalam minuman kemasan, termasuk kadar gula, telah diatur dalam Peraturan Badan Pengawas Obat dan Makanan 
+(BPOM) Nomor 26 Tahun 2021. (9) Es Teh Indonesia, yang belakangan menjadi sorotan, pernah mengungkapkan bahwa salah satu produknya, yaitu es teh susu nusantara, 
+memiliki kandungan gula sebanyak 31 gram. (10) Sementara itu, minuman boba seperti Chatime mengandung 24 gram gula dalam takaran normal, meskipun pelanggan dapat 
+meminta pengurangan kadar gula. (11) Peraturan Menteri Kesehatan Nomor 30 Tahun 2013 mewajibkan produsen makanan siap saji dengan lebih dari 250 gerai untuk 
+mencantumkan informasi kandungan gula, garam, dan lemak, serta menyertakan pesan kesehatan dalam promosi dan informasi produknya. (12) Namun, implementasi dan 
+pengawasannya masih belum jelas. (13) Banyak produsen makanan siap saji yang tidak secara transparan mencantumkan kadar gula dalam produknya. (14) Selain itu, 
+belum ada kejelasan mengenai sanksi bagi gerai makanan siap saji yang tidak memberikan informasi kandungan gula dalam produknya.
 
 Sumber: BBC, 27 September 2022, Kandungan Gula dalam Minuman Berpemanis Jadi Polemik, Apakah Penerapan Cukai Bisa Jadi Solusi?
 
 Ilustrasi yang tepat untuk menjelaskan bacaan tersebut adalah...
 ', NULL, 54, '
-Untuk menentukan ilustrasi yang tepat untuk suatu teks bacaan, kita harus mampu memahami dan menganalisis teks bacaan dengan baik, mulai dari apa yang dibahas dalam 
-teks dan apa yang ingin ditonjolkan dalam teks. Berdasarkan teks bacaan, dapat kita analisis bahwa penulis ingin menonjolkan produk-produk yang mengandung gula tambahan 
-lebih dari 25 gram. Oleh karena itu, ilustrasi yang tepat untuk teks bacaan adalah data yang menunjukkan produk-produk dengan kandungan gula tambahan lebih dari 25 gram.
+Bacaan tersebut membahas tentang rekomendasi konsumsi gula tambahan berdasarkan pedoman WHO dan Kementerian Kesehatan, serta mencantumkan contoh minuman dengan 
+kandungan gula tinggi. Ilustrasi yang paling tepat adalah yang dapat menggambarkan batas konsumsi gula dan contoh makanan/minuman yang mengandung gula 
+tambahan agar pembaca lebih memahami informasi dalam teks. Diagram yang menunjukkan batas konsumsi gula serta contoh minuman kemasan dan makanan manis akan 
+memperjelas informasi yang disampaikan dalam bacaan.
 '),
 
-('pbm-007', 'paket1', 'subtest_pbm', 'multiple_choice','(1) Kementerian Kesehatan, diacu pada pedoman Organisasi Kesehatan Dunia (WHO), menganjurkan konsumsi gula 
-tambahan per orang per hari sebesar 50 gram atau empat sendok makan. (2) WHO bahkan mengatakan konsumsi gula tambahan di bawah 25 gram per hari akan memberi manfaat 
-kesehatan tambahan. (3) Gula tambahan yang dimaksud mengacu pada monosakarida (seperti glukosa dan fruktosa) serta disakarida (seperti sukrosa) yang ditambahkan ke 
-makanan dan minuman oleh produsen, serta gula yang secara alami ada di dalam madu, sirup, jus buah, dan konsentrat jus buah.
-
-(4) Pedoman itu tidak mengacu pada gula alami yang terkandung di dalam buah-buahan, sayuran segar, dan gula alami di dalam susu karena sejauh ini belum ada bukti efek 
-samping dari konsumsi gula tersebut. (5) Menurut WHO, gula tambahan itu biasanya tersembunyi di dalam produk makanan dan minuman olahan, termasuk MBDK. (6) Minuman kemasan 
-atau produk olahan yang dimaksud, menurut Badan Pengawas Obat dan Makanan (BPOM), adalah yang memiliki izin edar dan masa simpan lebih dari tujuh hari. (7) Misalnya, minuman
- soda kaleng yang bisa mengandung 27 gram gula.
-
-(8) Di Indonesia, informasi kandungan gizi, termasuk gula, dalam minuman kemasan itu telah diatur oleh Peraturan Badan Pengawas Obat dan Makanan (BPOM) Nomor 26 Tahun 2021. 
-(9) Gerai yang sedang menjadi sorotan, Es Teh Indonesia, juga sempat membagikan bahwa salah satu menunya, es teh susu nusantara, mengandung 31 gram gula. (10) Sedangkan, 
-minuman boba seperti Chatime mengandung 24 gram gula untuk takaran normal, meski konsumen bisa meminta takaran gula yang lebih sedikit. (11) Peraturan Menteri Kesehatan 
-Nomor 30 Tahun 2013 mewajibkan produsen pangan siap saji yang memiliki lebih dari 250 gerai untuk memberikan informasi kandungan gula, garam, dan lemak serta pesan kesehatan 
-melalui informasi dan promosinya.
-
-(12) Namun, pelaksanaan dan pengawasannya selama ini belum jelas. (13) Banyak industri pangan siap saji yang tidak secara terbuka mencantumkan kandungan gulanya. 
-(14) Selain itu, belum jelas pula sanksi yang dikenakan terhadap gerai-gerai pangan siap saji yang tidak mencantumkan kandungan gula dalam produknya.
+('pbm-007', 'paket1', 'subtest_pbm', 'multiple_choice','(1) Kementerian Kesehatan, mengacu pada pedoman Organisasi Kesehatan Dunia (WHO), direkomendasikan 
+konsumsi gula tambahan harian per orang sebanyak 50 gram atau setara dengan empat sendok makan. (2) WHO bahkan menyatakan bahwa konsumsi gula tambahan di bawah 
+25 gram per hari dapat memberikan manfaat kesehatan yang lebih besar. (3) Gula tambahan yang dimaksud mencakup monosakarida (seperti glukosa dan fruktosa) 
+serta disakarida (seperti sukrosa) yang ditambahkan ke makanan dan minuman oleh produsen, termasuk gula alami dalam madu, sirup, jus buah, dan konsentrat jus buah.
+(4) Pedoman tersebut tidak mencakup gula alami yang terdapat dalam buah-buahan, sayuran segar, serta susu karena hingga saat ini belum ditemukan bukti efek 
+negatif dari konsumsi gula tersebut. (5) Menurut WHO, gula tambahan ini sangat sering sekali tersembunyi dalam makanan dan minuman olahan, termasuk MBDK. 
+(6) Minuman kemasan atau produk olahan yang dimaksud, berdasarkan keterangan Badan Pengawas Obat dan Makanan (BPOM), adalah produk dengan izin edar dan masa 
+simpan lebih dari tujuh hari. (7) Contohnya, minuman soda dalam kaleng dapat mengandung hingga 27 gram gula.
+(8) Di Indonesia, informasi mengenai kandungan gizi dalam minuman kemasan, termasuk kadar gula, telah diatur dalam Peraturan Badan Pengawas Obat dan Makanan 
+(BPOM) Nomor 26 Tahun 2021. (9) Es Teh Indonesia, yang belakangan menjadi sorotan, pernah mengungkapkan bahwa salah satu produknya, yaitu es teh susu nusantara, 
+memiliki kandungan gula sebanyak 31 gram. (10) Sementara itu, minuman boba seperti Chatime mengandung 24 gram gula dalam takaran normal, meskipun pelanggan dapat 
+meminta pengurangan kadar gula. (11) Peraturan Menteri Kesehatan Nomor 30 Tahun 2013 mewajibkan produsen makanan siap saji dengan lebih dari 250 gerai untuk 
+mencantumkan informasi kandungan gula, garam, dan lemak, serta menyertakan pesan kesehatan dalam promosi dan informasi produknya. (12) Namun, implementasi dan 
+pengawasannya masih belum jelas. (13) Banyak produsen makanan siap saji yang tidak secara transparan mencantumkan kadar gula dalam produknya. (14) Selain itu, 
+belum ada kejelasan mengenai sanksi bagi gerai makanan siap saji yang tidak memberikan informasi kandungan gula dalam produknya.
 
 Sumber: BBC, 27 September 2022, Kandungan Gula dalam Minuman Berpemanis Jadi Polemik, Apakah Penerapan Cukai Bisa Jadi Solusi?
 
 Kalimat (1) dengan kalimat (2) dalam bacaan di atas mempunyai hubungan....
 ', NULL, 46, '
-Untuk melihat hubungan antarkalimat, kita harus mampu memahami informasi yang disampaikan di dalam kalimat. Berdasarkan hal tersebut, dapat kita lihat bahwa 
-antara kalimat (1) dan (2) memiliki hubungan memperinci argumen yang sama.
+Kalimat (1) menyatakan bahwa Kementerian Kesehatan, mengacu pada pedoman WHO, merekomendasikan konsumsi gula tambahan harian per orang sebanyak 50 gram atau setara
+dengan empat sendok makan.
+Kalimat (2) kemudian menyatakan bahwa WHO bahkan menyebutkan konsumsi gula tambahan di bawah 25 gram per hari dapat memberikan manfaat kesehatan yang lebih besar.
+Kalimat (2) memperkuat pernyataan pada kalimat (1) dengan menambahkan informasi bahwa konsumsi gula lebih rendah dari 50 gram (bahkan di bawah 25 gram) dapat memberikan 
+manfaat kesehatan yang lebih baik. Dengan kata lain, kalimat (2) mendukung gagasan utama yang disampaikan dalam kalimat (1).
 '),
 
-('pbm-008', 'paket1', 'subtest_pbm', 'multiple_choice','(1) Kementerian Kesehatan, diacu pada pedoman Organisasi Kesehatan Dunia (WHO), menganjurkan konsumsi gula 
-tambahan per orang per hari sebesar 50 gram atau empat sendok makan. (2) WHO bahkan mengatakan konsumsi gula tambahan di bawah 25 gram per hari akan memberi manfaat 
-kesehatan tambahan. (3) Gula tambahan yang dimaksud mengacu pada monosakarida (seperti glukosa dan fruktosa) serta disakarida (seperti sukrosa) yang ditambahkan ke 
-makanan dan minuman oleh produsen, serta gula yang secara alami ada di dalam madu, sirup, jus buah, dan konsentrat jus buah.
-
-(4) Pedoman itu tidak mengacu pada gula alami yang terkandung di dalam buah-buahan, sayuran segar, dan gula alami di dalam susu karena sejauh ini belum ada bukti efek 
-samping dari konsumsi gula tersebut. (5) Menurut WHO, gula tambahan itu biasanya tersembunyi di dalam produk makanan dan minuman olahan, termasuk MBDK. (6) Minuman kemasan 
-atau produk olahan yang dimaksud, menurut Badan Pengawas Obat dan Makanan (BPOM), adalah yang memiliki izin edar dan masa simpan lebih dari tujuh hari. (7) Misalnya, minuman
- soda kaleng yang bisa mengandung 27 gram gula.
-
-(8) Di Indonesia, informasi kandungan gizi, termasuk gula, dalam minuman kemasan itu telah diatur oleh Peraturan Badan Pengawas Obat dan Makanan (BPOM) Nomor 26 Tahun 2021. 
-(9) Gerai yang sedang menjadi sorotan, Es Teh Indonesia, juga sempat membagikan bahwa salah satu menunya, es teh susu nusantara, mengandung 31 gram gula. (10) Sedangkan, 
-minuman boba seperti Chatime mengandung 24 gram gula untuk takaran normal, meski konsumen bisa meminta takaran gula yang lebih sedikit. (11) Peraturan Menteri Kesehatan 
-Nomor 30 Tahun 2013 mewajibkan produsen pangan siap saji yang memiliki lebih dari 250 gerai untuk memberikan informasi kandungan gula, garam, dan lemak serta pesan kesehatan 
-melalui informasi dan promosinya.
-
-(12) Namun, pelaksanaan dan pengawasannya selama ini belum jelas. (13) Banyak industri pangan siap saji yang tidak secara terbuka mencantumkan kandungan gulanya. 
-(14) Selain itu, belum jelas pula sanksi yang dikenakan terhadap gerai-gerai pangan siap saji yang tidak mencantumkan kandungan gula dalam produknya.
+('pbm-008', 'paket1', 'subtest_pbm', 'multiple_choice','(1) Kementerian Kesehatan, mengacu pada pedoman Organisasi Kesehatan Dunia (WHO), direkomendasikan 
+konsumsi gula tambahan harian per orang sebanyak 50 gram atau setara dengan empat sendok makan. (2) WHO bahkan menyatakan bahwa konsumsi gula tambahan di bawah 
+25 gram per hari dapat memberikan manfaat kesehatan yang lebih besar. (3) Gula tambahan yang dimaksud mencakup monosakarida (seperti glukosa dan fruktosa) 
+serta disakarida (seperti sukrosa) yang ditambahkan ke makanan dan minuman oleh produsen, termasuk gula alami dalam madu, sirup, jus buah, dan konsentrat jus buah.
+(4) Pedoman tersebut tidak mencakup gula alami yang terdapat dalam buah-buahan, sayuran segar, serta susu karena hingga saat ini belum ditemukan bukti efek 
+negatif dari konsumsi gula tersebut. (5) Menurut WHO, gula tambahan ini sangat sering sekali tersembunyi dalam makanan dan minuman olahan, termasuk MBDK. 
+(6) Minuman kemasan atau produk olahan yang dimaksud, berdasarkan keterangan Badan Pengawas Obat dan Makanan (BPOM), adalah produk dengan izin edar dan masa 
+simpan lebih dari tujuh hari. (7) Contohnya, minuman soda dalam kaleng dapat mengandung hingga 27 gram gula.
+(8) Di Indonesia, informasi mengenai kandungan gizi dalam minuman kemasan, termasuk kadar gula, telah diatur dalam Peraturan Badan Pengawas Obat dan Makanan 
+(BPOM) Nomor 26 Tahun 2021. (9) Es Teh Indonesia, yang belakangan menjadi sorotan, pernah mengungkapkan bahwa salah satu produknya, yaitu es teh susu nusantara, 
+memiliki kandungan gula sebanyak 31 gram. (10) Sementara itu, minuman boba seperti Chatime mengandung 24 gram gula dalam takaran normal, meskipun pelanggan dapat 
+meminta pengurangan kadar gula. (11) Peraturan Menteri Kesehatan Nomor 30 Tahun 2013 mewajibkan produsen makanan siap saji dengan lebih dari 250 gerai untuk 
+mencantumkan informasi kandungan gula, garam, dan lemak, serta menyertakan pesan kesehatan dalam promosi dan informasi produknya. (12) Namun, implementasi dan 
+pengawasannya masih belum jelas. (13) Banyak produsen makanan siap saji yang tidak secara transparan mencantumkan kadar gula dalam produknya. (14) Selain itu, 
+belum ada kejelasan mengenai sanksi bagi gerai makanan siap saji yang tidak memberikan informasi kandungan gula dalam produknya.
 
 Sumber: BBC, 27 September 2022, Kandungan Gula dalam Minuman Berpemanis Jadi Polemik, Apakah Penerapan Cukai Bisa Jadi Solusi?
 
 Jika melihat konteks bacaan, maka paragraf yang mungkin ditulis setelah paragraf kedua akan membahas...
 ', NULL, 54, '
-Berdasarkan paragraf kedua, dapat dilihat bahwa paragraf tersebut membahas mengenai produk yang mengandung gula tambahan, dan hal tersebut ditegaskan pula dalam kalimat 
-terakhir paragraf kedua. Oleh karena itu, jika ingin menulis paragraf baru setelah paragraf kedua, hal yang sesuai untuk dibahas adalah produk yang mengandung gula di 
-atas 25 gram.
+Paragraf pertama dan kedua dalam bacaan membahas rekomendasi konsumsi gula tambahan yang dianjurkan oleh WHO dan Kementerian Kesehatan. 
+Setelah membahas batas konsumsi gula, topik yang kemungkinan besar akan dibahas selanjutnya adalah dampak dari konsumsi gula yang melebihi batas tersebut, 
+seperti risiko obesitas, diabetes, dan penyakit lainnya.
+Hal ini akan memberikan kesinambungan dalam pembahasan, dimulai dari rekomendasi, lalu konsekuensi jika batas tersebut dilanggar, sehingga pembaca lebih 
+memahami pentingnya membatasi konsumsi gula.
 '),
 
-('pbm-009', 'paket1', 'subtest_pbm', 'multiple_choice','(1) Pada rute antara Dete dan Ngamo Sidings di Zimbabwe, Elephant Express menawarkan pengalaman safari yang 
-benar-benar unik kepada para tamu. (2) Kami keluar dari Stasiun Dete menuju batas timur laut Taman Nasional Hwange, Zimbabwe. (3) Belasan orang yang bersemangat—sembilan 
-turis, dua masinis, dan satu pemandu safari—menempuh perjalanan dari Air Terjun Victoria ke Dataran Ngamo, sebuah padang rumput yang dipenuhi gajah, tempat hutan akasia 
-yang semakin menipis bertemu dengan hamparan pasir Kalahari yang gersang.
-
-(4) Selama perjalanan, saya menyipitkan mata di tengah terik matahari sambil menyesap minuman gin dan tonik. (5) Menyeimbangkan badan dengan satu kaki dan mencondongkan 
-tubuh ke sisi gerbong kereta pribadi yang dibuat khusus, saya mencari posisi terbaik untuk melihat pemandangan seekor burung yang sedang bertengger di atas kawat. 
-(6) Penumpang lain memperbesar lensa kameranya. (7) Kami melihat sekilas warna biru elektrik, paruh yang panjang, kepala besar, tetapi cahaya matahari membuat proses 
-identifikasi menjadi sulit.
-
-(8) Setelah kereta menambah kecepatan, meninggalkan burung itu, kami berdebat apakah itu seekor burung raja ikan (kingfisher) atau semacam burung pelatuk. 
-(9) Mendengar diskusi kami, salah seorang masinis kereta api mengidentifikasi burung itu sebagai roller berdada ungu (lilac-breasted roller). (10) Lega karena 
-mendapat jawaban, saya menambahkan burung itu ke daftar buku catatan.
+('pbm-009', 'paket1', 'subtest_pbm', 'multiple_choice','(1) Di jalur antara Dete dan Ngamo Sidings di Zimbabwe, "Elephant Express" memberikan pengalaman safari 
+yang sangat istimewa bagi para pengunjung. (2) Kami berangkat dari Stasiun Dete menuju sisi timur laut Taman Nasional Hwange, Zimbabwe. (3) Sebanyak dua belas 
+orang—terdiri dari sembilan turis, dua masinis, dan satu pemandu safari—melakukan perjalanan dari Air Terjun Victoria ke Dataran Ngamo, kawasan padang rumput yang 
+memenuhi kawanan gajah, tempat hutan akasia yang semakin berkurang bertemu dengan pasir kering Kalahari.
+(4) Sepanjang perjalanan, saya menyipitkan mata di bawah terik matahari sambil menikmati gin dan tonic. (5) Dengan bertumpu, pada satu kaki dan sedikit bersandar 
+ke sisi gerbong kereta pribadi yang dirancang khusus, saya mencari sudut terbaik untuk mengamati seekor burung yang bertengger di atas kawat. (6) Beberapa penumpang 
+lain memperbesar lensa kamera mereka. (7) Kami sempat melihat warna biru yang mencolok, paruh yang panjang, dan kepala yang besar, tetapi sinar matahari yang 
+menyilaukan membuatnya sulit untuk dikenali.
+(8) Saat kereta mulai melaju lebih cepat dan meninggalkan burung itu, kami berdiskusi apakah itu burung raja ikan (kingfisher) atau mungkin jenis burung pelatuk. 
+(9) Salah satu masinis, yang mendengar perdebatan kami, mengidentifikasi burung tersebut sebagai roller berdada ungu (lilac-breasted roller). (10) Merasa puas 
+dengan jawabannya, saya segera mencatat burung itu di buku catatan saya.
 
 Sumber: BBC, 3 Desember 2022, Wisata Menikmati Safari Alam Liar Afrika dengan Kereta Api.
 
 Penggunaan tanda baca yang salah ditunjukkan dalam kalimat...
 ', NULL, 46, '
-Penulisan tanda baca yang salah terdapat dalam kalimat (3), yang terletak pada kalimat keterangan aposisi.
-Keterangan aposisi dalam suatu pernyataan dapat ditulis dengan diapit oleh tanda koma atau tanda pisah jika kalimat tersebut merupakan penjelasan di luar bangun kalimat.
+Penulisan tanda baca yang salah terdapat dalam kalimat (5). Koma setelah bertumpu tidak perlu karena frasa bertumpu pada satu kaki dan sedikit bersandar ke sisi 
+gerbong kereta pribadi yang dirancang khusus adalah satu kesatuan yang menerangkan cara subjek melakukan tindakan.
 '),
 
 
-('pbm-010', 'paket1', 'subtest_pbm', 'multiple_choice','(1) Pada rute antara Dete dan Ngamo Sidings di Zimbabwe, Elephant Express menawarkan pengalaman safari yang 
-benar-benar unik kepada para tamu. (2) Kami keluar dari Stasiun Dete menuju batas timur laut Taman Nasional Hwange, Zimbabwe. (3) Belasan orang yang bersemangat—sembilan 
-turis, dua masinis, dan satu pemandu safari—menempuh perjalanan dari Air Terjun Victoria ke Dataran Ngamo, sebuah padang rumput yang dipenuhi gajah, tempat hutan akasia 
-yang semakin menipis bertemu dengan hamparan pasir Kalahari yang gersang.
-
-(4) Selama perjalanan, saya menyipitkan mata di tengah terik matahari sambil menyesap minuman gin dan tonik. (5) Menyeimbangkan badan dengan satu kaki dan mencondongkan 
-tubuh ke sisi gerbong kereta pribadi yang dibuat khusus, saya mencari posisi terbaik untuk melihat pemandangan seekor burung yang sedang bertengger di atas kawat. 
-(6) Penumpang lain memperbesar lensa kameranya. (7) Kami melihat sekilas warna biru elektrik, paruh yang panjang, kepala besar, tetapi cahaya matahari membuat proses 
-identifikasi menjadi sulit.
-
-(8) Setelah kereta menambah kecepatan, meninggalkan burung itu, kami berdebat apakah itu seekor burung raja ikan (kingfisher) atau semacam burung pelatuk. 
-(9) Mendengar diskusi kami, salah seorang masinis kereta api mengidentifikasi burung itu sebagai roller berdada ungu (lilac-breasted roller). (10) Lega karena 
-mendapat jawaban, saya menambahkan burung itu ke daftar buku catatan.
+('pbm-010', 'paket1', 'subtest_pbm', 'multiple_choice','(1) Di jalur antara Dete dan Ngamo Sidings di Zimbabwe, "Elephant Express" memberikan pengalaman safari 
+yang sangat istimewa bagi para pengunjung. (2) Kami berangkat dari Stasiun Dete menuju sisi timur laut Taman Nasional Hwange, Zimbabwe. (3) Sebanyak dua belas 
+orang—terdiri dari sembilan turis, dua masinis, dan satu pemandu safari—melakukan perjalanan dari Air Terjun Victoria ke Dataran Ngamo, kawasan padang rumput yang 
+memenuhi kawanan gajah, tempat hutan akasia yang semakin berkurang bertemu dengan pasir kering Kalahari.
+(4) Sepanjang perjalanan, saya menyipitkan mata di bawah terik matahari sambil menikmati gin dan tonic. (5) Dengan bertumpu, pada satu kaki dan sedikit bersandar 
+ke sisi gerbong kereta pribadi yang dirancang khusus, saya mencari sudut terbaik untuk mengamati seekor burung yang bertengger di atas kawat. (6) Beberapa penumpang 
+lain memperbesar lensa kamera mereka. (7) Kami sempat melihat warna biru yang mencolok, paruh yang panjang, dan kepala yang besar, tetapi sinar matahari yang 
+menyilaukan membuatnya sulit untuk dikenali.
+(8) Saat kereta mulai melaju lebih cepat dan meninggalkan burung itu, kami berdiskusi apakah itu burung raja ikan (kingfisher) atau mungkin jenis burung pelatuk. 
+(9) Salah satu masinis, yang mendengar perdebatan kami, mengidentifikasi burung tersebut sebagai roller berdada ungu (lilac-breasted roller). (10) Merasa puas 
+dengan jawabannya, saya segera mencatat burung itu di buku catatan saya.
 
 Sumber: BBC, 3 Desember 2022, Wisata Menikmati Safari Alam Liar Afrika dengan Kereta Api.
 
-Kalimat (5) memiliki unsur kalimat yang sama dengan...
+Kalimat (10) memiliki unsur kalimat yang sama dengan…
 ', NULL, 54, '
-Kalimat (5) mengandung unsur sebagai berikut:
-Keterangan (K): Menyeimbangkan badan dengan satu kaki dan mencondongkan tubuh ke sisi gerbong kereta pribadi yang dibuat khusus,
-Subjek (S): Saya
-Predikat (P): Mencari
-Objek (O): Posisi terbaik
-Keterangan (K): untuk melihat pemandangan seekor burung yang sedang bertengger di atas kawat
-Sama dengan kalimat pada opsi (A), dengan analisis sebagai berikut:
-Keterangan (K): Dalam rapat perdana,
-Subjek (S): kepala bidang pengawas
-Predikat (P): telah menyampaikan
-Objek (O): aturan terbaru
-Keterangan (K): untuk diberlakukan mulai tahun depan dan seterusnya
+Kalimat (10) mengandung unsur sebagai berikut:
+Keterangan (K): Merasa puas dengan jawabannya,
+Subjek (S): saya
+Predikat (P): segera mencatat
+Objek (O): burung itu
+Keterangan (K): di buku catatan saya.
+
+Opsi (A): K-S-P-O-K
+Opsi (B): S-P-O
+Opsi (C): K-S-P
+Opsi (D): S-P-K
+Opsi (E): S-P-O-K
+
 '),
 
-('pbm-011', 'paket1', 'subtest_pbm', 'multiple_choice','(1) Pada rute antara Dete dan Ngamo Sidings di Zimbabwe, Elephant Express menawarkan pengalaman safari yang 
-benar-benar unik kepada para tamu. (2) Kami keluar dari Stasiun Dete menuju batas timur laut Taman Nasional Hwange, Zimbabwe. (3) Belasan orang yang bersemangat—sembilan 
-turis, dua masinis, dan satu pemandu safari—menempuh perjalanan dari Air Terjun Victoria ke Dataran Ngamo, sebuah padang rumput yang dipenuhi gajah, tempat hutan akasia 
-yang semakin menipis bertemu dengan hamparan pasir Kalahari yang gersang.
-
-(4) Selama perjalanan, saya menyipitkan mata di tengah terik matahari sambil menyesap minuman gin dan tonik. (5) Menyeimbangkan badan dengan satu kaki dan mencondongkan 
-tubuh ke sisi gerbong kereta pribadi yang dibuat khusus, saya mencari posisi terbaik untuk melihat pemandangan seekor burung yang sedang bertengger di atas kawat. 
-(6) Penumpang lain memperbesar lensa kameranya. (7) Kami melihat sekilas warna biru elektrik, paruh yang panjang, kepala besar, tetapi cahaya matahari membuat proses 
-identifikasi menjadi sulit.
-
-(8) Setelah kereta menambah kecepatan, meninggalkan burung itu, kami berdebat apakah itu seekor burung raja ikan (kingfisher) atau semacam burung pelatuk. 
-(9) Mendengar diskusi kami, salah seorang masinis kereta api mengidentifikasi burung itu sebagai roller berdada ungu (lilac-breasted roller). (10) Lega karena 
-mendapat jawaban, saya menambahkan burung itu ke daftar buku catatan.
+('pbm-011', 'paket1', 'subtest_pbm', 'multiple_choice','(1) Di jalur antara Dete dan Ngamo Sidings di Zimbabwe, "Elephant Express" memberikan pengalaman safari 
+yang sangat istimewa bagi para pengunjung. (2) Kami berangkat dari Stasiun Dete menuju sisi timur laut Taman Nasional Hwange, Zimbabwe. (3) Sebanyak dua belas 
+orang—terdiri dari sembilan turis, dua masinis, dan satu pemandu safari—melakukan perjalanan dari Air Terjun Victoria ke Dataran Ngamo, kawasan padang rumput yang 
+memenuhi kawanan gajah, tempat hutan akasia yang semakin berkurang bertemu dengan pasir kering Kalahari.
+(4) Sepanjang perjalanan, saya menyipitkan mata di bawah terik matahari sambil menikmati gin dan tonic. (5) Dengan bertumpu, pada satu kaki dan sedikit bersandar 
+ke sisi gerbong kereta pribadi yang dirancang khusus, saya mencari sudut terbaik untuk mengamati seekor burung yang bertengger di atas kawat. (6) Beberapa penumpang 
+lain memperbesar lensa kamera mereka. (7) Kami sempat melihat warna biru yang mencolok, paruh yang panjang, dan kepala yang besar, tetapi sinar matahari yang 
+menyilaukan membuatnya sulit untuk dikenali.
+(8) Saat kereta mulai melaju lebih cepat dan meninggalkan burung itu, kami berdiskusi apakah itu burung raja ikan (kingfisher) atau mungkin jenis burung pelatuk. 
+(9) Salah satu masinis, yang mendengar perdebatan kami, mengidentifikasi burung tersebut sebagai roller berdada ungu (lilac-breasted roller). (10) Merasa puas 
+dengan jawabannya, saya segera mencatat burung itu di buku catatan saya.
 
 Sumber: BBC, 3 Desember 2022, Wisata Menikmati Safari Alam Liar Afrika dengan Kereta Api.
 
-Kata teridentifikasi pada kalimat (9) harus diperbaiki menjadi...
+Kata memenuhi pada kalimat (3) harus diperbaiki menjadi..
 ', NULL, 46, '
-Kata teridentifikasi dalam kalimat (9) tidak tepat karena konteks kalimat tersebut adalah kalimat aktif transitif, 
-sehingga kata kerja teridentifikasi dapat diperbaiki menjadi mengidentifikasi.
+Kata memenuhi merupakan kata kerja aktif, sedangkan dalam konteks kalimat tersebut, kawasan padang rumput bukanlah subjek yang melakukan tindakan, melainkan mengalami 
+tindakan, sehingga bentuk pasif dipenuhi lebih tepat.
 '),
 
-('pbm-012', 'paket1', 'subtest_pbm', 'multiple_choice','(1) Pada rute antara Dete dan Ngamo Sidings di Zimbabwe, Elephant Express menawarkan pengalaman safari yang 
-benar-benar unik kepada para tamu. (2) Kami keluar dari Stasiun Dete menuju batas timur laut Taman Nasional Hwange, Zimbabwe. (3) Belasan orang yang bersemangat—sembilan 
-turis, dua masinis, dan satu pemandu safari—menempuh perjalanan dari Air Terjun Victoria ke Dataran Ngamo, sebuah padang rumput yang dipenuhi gajah, tempat hutan akasia 
-yang semakin menipis bertemu dengan hamparan pasir Kalahari yang gersang.
-
-(4) Selama perjalanan, saya menyipitkan mata di tengah terik matahari sambil menyesap minuman gin dan tonik. (5) Menyeimbangkan badan dengan satu kaki dan mencondongkan 
-tubuh ke sisi gerbong kereta pribadi yang dibuat khusus, saya mencari posisi terbaik untuk melihat pemandangan seekor burung yang sedang bertengger di atas kawat. 
-(6) Penumpang lain memperbesar lensa kameranya. (7) Kami melihat sekilas warna biru elektrik, paruh yang panjang, kepala besar, tetapi cahaya matahari membuat proses 
-identifikasi menjadi sulit.
-
-(8) Setelah kereta menambah kecepatan, meninggalkan burung itu, kami berdebat apakah itu seekor burung raja ikan (kingfisher) atau semacam burung pelatuk. 
-(9) Mendengar diskusi kami, salah seorang masinis kereta api mengidentifikasi burung itu sebagai roller berdada ungu (lilac-breasted roller). (10) Lega karena 
-mendapat jawaban, saya menambahkan burung itu ke daftar buku catatan.
+('pbm-012', 'paket1', 'subtest_pbm', 'multiple_choice','(1) Di jalur antara Dete dan Ngamo Sidings di Zimbabwe, "Elephant Express" memberikan pengalaman safari 
+yang sangat istimewa bagi para pengunjung. (2) Kami berangkat dari Stasiun Dete menuju sisi timur laut Taman Nasional Hwange, Zimbabwe. (3) Sebanyak dua belas 
+orang—terdiri dari sembilan turis, dua masinis, dan satu pemandu safari—melakukan perjalanan dari Air Terjun Victoria ke Dataran Ngamo, kawasan padang rumput yang 
+memenuhi kawanan gajah, tempat hutan akasia yang semakin berkurang bertemu dengan pasir kering Kalahari.
+(4) Sepanjang perjalanan, saya menyipitkan mata di bawah terik matahari sambil menikmati gin dan tonic. (5) Dengan bertumpu, pada satu kaki dan sedikit bersandar 
+ke sisi gerbong kereta pribadi yang dirancang khusus, saya mencari sudut terbaik untuk mengamati seekor burung yang bertengger di atas kawat. (6) Beberapa penumpang 
+lain memperbesar lensa kamera mereka. (7) Kami sempat melihat warna biru yang mencolok, paruh yang panjang, dan kepala yang besar, tetapi sinar matahari yang 
+menyilaukan membuatnya sulit untuk dikenali.
+(8) Saat kereta mulai melaju lebih cepat dan meninggalkan burung itu, kami berdiskusi apakah itu burung raja ikan (kingfisher) atau mungkin jenis burung pelatuk. 
+(9) Salah satu masinis, yang mendengar perdebatan kami, mengidentifikasi burung tersebut sebagai roller berdada ungu (lilac-breasted roller). (10) Merasa puas 
+dengan jawabannya, saya segera mencatat burung itu di buku catatan saya.
 
 Sumber: BBC, 3 Desember 2022, Wisata Menikmati Safari Alam Liar Afrika dengan Kereta Api.
 
 Pernyataan berikut yang tidak terdapat dalam bacaan adalah...
 ', NULL, 54, '
-Opsi A: Cuaca saat itu sangat terik. → Terdapat dalam kalimat (4).
-Opsi B: Para wisatawan memperdebatkan jenis burung yang sedang bertengger di atas kawat. → Terdapat dalam kalimat (8).
-Opsi C: Hamparan pasir Kalahari yang gersang juga dapat kita temui di tur wisata ini. → Terdapat dalam kalimat (3).
-Opsi D: Pengalaman yang sangat unik dapat kita dapatkan dalam tur "Elephant Express". → Terdapat dalam kalimat (1).
+Opsi A (Benar): Pernyataan ini sesuai dengan kalimat (1) dalam teks: "Elephant Express" memberikan pengalaman safari yang sangat istimewa bagi para pengunjung di jalur antara Dete dan Ngamo Sidings di Zimbabwe.
+Opsi B (Benar): Pernyataan ini sesuai dengan kalimat (3): Sebanyak dua belas orang—terdiri dari sembilan turis, dua masinis, dan satu pemandu safari—melakukan perjalanan dari Air Terjun Victoria ke Dataran Ngamo...
+Opsi C (Benar): Pernyataan ini sesuai dengan kalimat (4): Sepanjang perjalanan, saya menyipitkan mata di bawah terik matahari sambil menikmati gin dan tonik. Selain itu, dalam kalimat (5), penulis juga menyebutkan sedang mencari sudut terbaik untuk mengamati burung.
+Opsi D (Salah): Dalam teks, burung awalnya diperdebatkan apakah itu kingfisher atau burung pelatuk (kalimat 8), tetapi akhirnya masinis mengidentifikasinya sebagai roller berdada ungu (kalimat 9). Pernyataan ini bertentangan dengan teks.
+Opsi E (Benar): Pernyataan ini sesuai dengan kalimat (3): Dataran Ngamo, kawasan padang rumput yang memenuhi kawanan gajah, tempat hutan akasia yang semakin berkurang bertemu dengan pasir kering Kalahari.
 '),
 
-('pbm-013', 'paket1', 'subtest_pbm', 'multiple_choice','(1) Pada rute antara Dete dan Ngamo Sidings di Zimbabwe, Elephant Express menawarkan pengalaman safari yang 
-benar-benar unik kepada para tamu. (2) Kami keluar dari Stasiun Dete menuju batas timur laut Taman Nasional Hwange, Zimbabwe. (3) Belasan orang yang bersemangat—sembilan 
-turis, dua masinis, dan satu pemandu safari—menempuh perjalanan dari Air Terjun Victoria ke Dataran Ngamo, sebuah padang rumput yang dipenuhi gajah, tempat hutan akasia 
-yang semakin menipis bertemu dengan hamparan pasir Kalahari yang gersang.
-
-(4) Selama perjalanan, saya menyipitkan mata di tengah terik matahari sambil menyesap minuman gin dan tonik. (5) Menyeimbangkan badan dengan satu kaki dan mencondongkan 
-tubuh ke sisi gerbong kereta pribadi yang dibuat khusus, saya mencari posisi terbaik untuk melihat pemandangan seekor burung yang sedang bertengger di atas kawat. 
-(6) Penumpang lain memperbesar lensa kameranya. (7) Kami melihat sekilas warna biru elektrik, paruh yang panjang, kepala besar, tetapi cahaya matahari membuat proses 
-identifikasi menjadi sulit.
-
-(8) Setelah kereta menambah kecepatan, meninggalkan burung itu, kami berdebat apakah itu seekor burung raja ikan (kingfisher) atau semacam burung pelatuk. 
-(9) Mendengar diskusi kami, salah seorang masinis kereta api mengidentifikasi burung itu sebagai roller berdada ungu (lilac-breasted roller). (10) Lega karena 
-mendapat jawaban, saya menambahkan burung itu ke daftar buku catatan.
+('pbm-013', 'paket1', 'subtest_pbm', 'multiple_choice','(1) Di jalur antara Dete dan Ngamo Sidings di Zimbabwe, "Elephant Express" memberikan pengalaman safari 
+yang sangat istimewa bagi para pengunjung. (2) Kami berangkat dari Stasiun Dete menuju sisi timur laut Taman Nasional Hwange, Zimbabwe. (3) Sebanyak dua belas 
+orang—terdiri dari sembilan turis, dua masinis, dan satu pemandu safari—melakukan perjalanan dari Air Terjun Victoria ke Dataran Ngamo, kawasan padang rumput yang 
+memenuhi kawanan gajah, tempat hutan akasia yang semakin berkurang bertemu dengan pasir kering Kalahari.
+(4) Sepanjang perjalanan, saya menyipitkan mata di bawah terik matahari sambil menikmati gin dan tonic. (5) Dengan bertumpu, pada satu kaki dan sedikit bersandar 
+ke sisi gerbong kereta pribadi yang dirancang khusus, saya mencari sudut terbaik untuk mengamati seekor burung yang bertengger di atas kawat. (6) Beberapa penumpang 
+lain memperbesar lensa kamera mereka. (7) Kami sempat melihat warna biru yang mencolok, paruh yang panjang, dan kepala yang besar, tetapi sinar matahari yang 
+menyilaukan membuatnya sulit untuk dikenali.
+(8) Saat kereta mulai melaju lebih cepat dan meninggalkan burung itu, kami berdiskusi apakah itu burung raja ikan (kingfisher) atau mungkin jenis burung pelatuk. 
+(9) Salah satu masinis, yang mendengar perdebatan kami, mengidentifikasi burung tersebut sebagai roller berdada ungu (lilac-breasted roller). (10) Merasa puas 
+dengan jawabannya, saya segera mencatat burung itu di buku catatan saya.
 
 Sumber: BBC, 3 Desember 2022, Wisata Menikmati Safari Alam Liar Afrika dengan Kereta Api.
 
 Ilustrasi yang tepat untuk teks bacaan tersebut adalah...
 ', NULL, 46, '
-Untuk menentukan ilustrasi yang tepat untuk suatu teks bacaan, kita harus mampu memahami dan menganalisis teks bacaan dengan baik, mulai dari apa yang dibahas 
-dalam teks dan apa yang ingin ditonjolkan dalam teks.
-Berdasarkan teks bacaan, dapat kita analisis bahwa penulis ingin menonjolkan suasana safari "Elephant Express". Oleh karena itu, ilustrasi yang tepat untuk teks 
-bacaan tersebut adalah gambar pemandangan safari "Elephant Express".
+Teks bacaan menggambarkan perjalanan "Elephant Express", yaitu kereta safari yang membawa penumpang untuk menikmati pengalaman melihat satwa liar di Zimbabwe. 
+Dalam perjalanan ini, penumpang mengamati burung, menikmati gin dan tonik, serta berdiskusi mengenai jenis burung yang mereka lihat.
 '),
 
-('pbm-014', 'paket1', 'subtest_pbm', 'multiple_choice','(1) Pada rute antara Dete dan Ngamo Sidings di Zimbabwe, Elephant Express menawarkan pengalaman safari yang 
-benar-benar unik kepada para tamu. (2) Kami keluar dari Stasiun Dete menuju batas timur laut Taman Nasional Hwange, Zimbabwe. (3) Belasan orang yang bersemangat—sembilan 
-turis, dua masinis, dan satu pemandu safari—menempuh perjalanan dari Air Terjun Victoria ke Dataran Ngamo, sebuah padang rumput yang dipenuhi gajah, tempat hutan akasia 
-yang semakin menipis bertemu dengan hamparan pasir Kalahari yang gersang.
-
-(4) Selama perjalanan, saya menyipitkan mata di tengah terik matahari sambil menyesap minuman gin dan tonik. (5) Menyeimbangkan badan dengan satu kaki dan mencondongkan 
-tubuh ke sisi gerbong kereta pribadi yang dibuat khusus, saya mencari posisi terbaik untuk melihat pemandangan seekor burung yang sedang bertengger di atas kawat. 
-(6) Penumpang lain memperbesar lensa kameranya. (7) Kami melihat sekilas warna biru elektrik, paruh yang panjang, kepala besar, tetapi cahaya matahari membuat proses 
-identifikasi menjadi sulit.
-
-(8) Setelah kereta menambah kecepatan, meninggalkan burung itu, kami berdebat apakah itu seekor burung raja ikan (kingfisher) atau semacam burung pelatuk. 
-(9) Mendengar diskusi kami, salah seorang masinis kereta api mengidentifikasi burung itu sebagai roller berdada ungu (lilac-breasted roller). (10) Lega karena 
-mendapat jawaban, saya menambahkan burung itu ke daftar buku catatan.
+('pbm-014', 'paket1', 'subtest_pbm', 'multiple_choice','(1) Di jalur antara Dete dan Ngamo Sidings di Zimbabwe, "Elephant Express" memberikan pengalaman safari 
+yang sangat istimewa bagi para pengunjung. (2) Kami berangkat dari Stasiun Dete menuju sisi timur laut Taman Nasional Hwange, Zimbabwe. (3) Sebanyak dua belas 
+orang—terdiri dari sembilan turis, dua masinis, dan satu pemandu safari—melakukan perjalanan dari Air Terjun Victoria ke Dataran Ngamo, kawasan padang rumput yang 
+memenuhi kawanan gajah, tempat hutan akasia yang semakin berkurang bertemu dengan pasir kering Kalahari.
+(4) Sepanjang perjalanan, saya menyipitkan mata di bawah terik matahari sambil menikmati gin dan tonic. (5) Dengan bertumpu, pada satu kaki dan sedikit bersandar 
+ke sisi gerbong kereta pribadi yang dirancang khusus, saya mencari sudut terbaik untuk mengamati seekor burung yang bertengger di atas kawat. (6) Beberapa penumpang 
+lain memperbesar lensa kamera mereka. (7) Kami sempat melihat warna biru yang mencolok, paruh yang panjang, dan kepala yang besar, tetapi sinar matahari yang 
+menyilaukan membuatnya sulit untuk dikenali.
+(8) Saat kereta mulai melaju lebih cepat dan meninggalkan burung itu, kami berdiskusi apakah itu burung raja ikan (kingfisher) atau mungkin jenis burung pelatuk. 
+(9) Salah satu masinis, yang mendengar perdebatan kami, mengidentifikasi burung tersebut sebagai roller berdada ungu (lilac-breasted roller). (10) Merasa puas 
+dengan jawabannya, saya segera mencatat burung itu di buku catatan saya.
 
 Sumber: BBC, 3 Desember 2022, Wisata Menikmati Safari Alam Liar Afrika dengan Kereta Api.
 
 Kalimat yang mengandung kata tidak baku ditunjukkan dalam...
 ', NULL, 54, '
-Kalimat yang mengandung kata tidak baku dapat kita temui dalam kalimat (1) teks bacaan tersebut. Kata yang tidak baku dalam kalimat (1) yaitu pada kata 
-"bener-bener", yang seharusnya ditulis sebagai "benar-benar".
+Dalam KBBI, kata yang benar adalah tonik, bukan tonic.
 '),
 
-('pbm-015', 'paket1', 'subtest_pbm', 'multiple_choice','(1) Di Samudra Pasifik Bagian Timur, tiga bentuk berbeda dari lumba-lumba hidung botol umum 
-(Tursiops truncatus) telah diidentifikasi, dengan dugaan bahwa mereka mungkin spesies yang berbeda: pesisir California/Meksiko selatan, lepas pantai 
-beriklim utara, dan lepas pantai Pasifik tropis timur (ETP). (2) Saat ini, hanya satu spesies T. truncatus yang dikenal di wilayah tersebut, dengan dua 
-bentuk pertama digambarkan sebagai ekotipe yang berbeda.
+('pbm-015', 'paket1', 'subtest_pbm', 'multiple_choice','(1) Di Bagian Timur Samudra Pasifik telah diidentifikasi tiga variasi berbeda dari lumba-lumba hidung 
+botol umum (Tursiops truncatus), dengan kemungkinan bahwa mereka merupakan spesies yang berbeda, yaitu populasi pesisir California/Meksiko selatan, populasi 
+lepas pantai di wilayah beriklim utara, dan populasi lepas pantai di Pasifik tropis timur (ETP). (2) Saat ini, hanya satu spesies T. truncatus yang secara resmi 
+dikenali di wilayah tersebut, dengan dua bentuk pertama dikategorikan sebagai Ekotipe yang berbeda.
 
-(3) Tujuan dari penelitian ini adalah untuk meningkatkan pemahaman kita tentang status taksonomi dari bentuk-bentuk yang dijelaskan sebelumnya melalui 
-pemeriksaan ulang diferensiasi morfologinya. (4) Dalam studi baru mereka, para peneliti memeriksa panjang tubuh, jumlah total, dan morfologi tengkorak 
-dari tiga bentuk dengan upaya untuk mengklarifikasi status dan distribusi taksonomi mereka.
+(3) Penelitian ini bertujuan untuk meningkatkan pemahaman mengenai status taksonomi dari bentuk-bentuk tersebut dengan melakukan analisis ulang terhadap perbedaannya 
+secara morfologi. (4) Dalam studi terbaru yang mengevaluasi panjang tubuh, jumlah total, dan karakteristik morfologi tengkorak dari ketiga bentuk tersebut guna 
+memperjelas status dan distribusi taksonominya.
 
 Sumber: National Geographic, 21 Desember 2022, Dunia Hewan: Sub Spesies Baru Lumba-lumba Hidung Botol Diidentifikasi.
 
 Penggunaan huruf kapital salah ditunjukkan dalam kalimat...
 ', NULL, 46, '
-Suatu kalimat yang baik adalah kalimat yang memperhatikan segala aspek dalam penulisannya, termasuk memperhatikan penggunaan huruf kapital yang tepat.
-Berikut analisis kalimat yang tertera pada opsi jawaban:
 Kalimat (1) terdapat kesalahan dalam penulisan kata "Bagian Timur" yang seharusnya tidak kapital, yaitu "bagian timur", dan "Pasifik tropis timur (ETP)" yang 
 seharusnya ditulis dengan awalan huruf kapital, yaitu "Pasifik Tropis Timur (ETP)".
-Kalimat (2) terdapat kesalahan dalam penulisan kata "Wilayah" yang seharusnya tanpa huruf kapital karena bukan menunjukkan geografi, seharusnya "wilayah".
+Kalimat (2) terdapat kesalahan dalam penulisan kata "Ekotipe" yang seharusnya tanpa huruf kapital karena bukan menunjukkan nama atau istilah, seharusnya "ekotipe".
 Kalimat (3) tidak terdapat kesalahan penulisan huruf kapital.
 Kalimat (4) tidak terdapat kesalahan penulisan huruf kapital.
-Oleh karena itu, jawaban paling tepat adalah A. (1) dan (2).
 '),
 
-('pbm-016', 'paket1', 'subtest_pbm', 'multiple_choice','(1) Di Samudra Pasifik Bagian Timur, tiga bentuk berbeda dari lumba-lumba hidung botol umum 
-(Tursiops truncatus) telah diidentifikasi, dengan dugaan bahwa mereka mungkin spesies yang berbeda: pesisir California/Meksiko selatan, lepas pantai 
-beriklim utara, dan lepas pantai Pasifik tropis timur (ETP). (2) Saat ini, hanya satu spesies T. truncatus yang dikenal di wilayah tersebut, dengan dua 
-bentuk pertama digambarkan sebagai ekotipe yang berbeda.
+('pbm-016', 'paket1', 'subtest_pbm', 'multiple_choice','(1) Di Bagian Timur Samudra Pasifik telah diidentifikasi tiga variasi berbeda dari lumba-lumba hidung 
+botol umum (Tursiops truncatus), dengan kemungkinan bahwa mereka merupakan spesies yang berbeda, yaitu populasi pesisir California/Meksiko selatan, populasi 
+lepas pantai di wilayah beriklim utara, dan populasi lepas pantai di Pasifik tropis timur (ETP). (2) Saat ini, hanya satu spesies T. truncatus yang secara resmi 
+dikenali di wilayah tersebut, dengan dua bentuk pertama dikategorikan sebagai Ekotipe yang berbeda.
 
-(3) Tujuan dari penelitian ini adalah untuk meningkatkan pemahaman kita tentang status taksonomi dari bentuk-bentuk yang dijelaskan sebelumnya melalui 
-pemeriksaan ulang diferensiasi morfologinya. (4) Dalam studi baru mereka, para peneliti memeriksa panjang tubuh, jumlah total, dan morfologi tengkorak 
-dari tiga bentuk dengan upaya untuk mengklarifikasi status dan distribusi taksonomi mereka.
+(3) Penelitian ini bertujuan untuk meningkatkan pemahaman mengenai status taksonomi dari bentuk-bentuk tersebut dengan melakukan analisis ulang terhadap perbedaannya 
+secara morfologi. (4) Dalam studi terbaru yang mengevaluasi panjang tubuh, jumlah total, dan karakteristik morfologi tengkorak dari ketiga bentuk tersebut guna 
+memperjelas status dan distribusi taksonominya.
 
 Sumber: National Geographic, 21 Desember 2022, Dunia Hewan: Sub Spesies Baru Lumba-lumba Hidung Botol Diidentifikasi.
 
 Perbaikan yang tepat untuk kalimat (4) adalah...
 ', NULL, 54, '
-Jika dalam soal diminta untuk memperbaiki suatu kalimat, berarti terdapat kesalahan dalam kalimat tersebut yang harus diperbaiki. Berikut analisis kesalahan 
-berdasarkan opsi jawaban:
-Opsi A, Tidak perlu tanda koma setelah kata mereka. Hal ini salah karena kalimat tersebut memerlukan tanda koma setelah kata "mereka" sebagai penanda keterangan di awal kalimat.
-Opsi B, Menghapus konjungsi dengan. Hal ini salah karena konjungsi "dengan" sudah tepat digunakan dalam konteks kalimat tersebut untuk menghubungkan informasi.
-Opsi C, Perlu menambahkan tanda koma setelah kata total. Hal ini salah karena tidak perlu menambahkan tanda koma sebab bukan merupakan pemerincian.
-Opsi D, Membutuhkan subjek. Hal ini benar karena kalimat tersebut membutuhkan subjek setelah kalimat keterangan, sebab langsung dilanjutkan dengan predikat tanpa subjek.
-Opsi E, Tidak perlu perbaikan. Hal ini salah karena terdapat kesalahan dalam kalimat (4) yang harus diperbaiki sebagaimana disebutkan dalam opsi (D).
+Kalimat (4) membutuhkan subjek karena setelah kalimat keteranganlangsung dilanjutkan dengan predikat tanpa subjek.
 '),
 
-('pbm-017', 'paket1', 'subtest_pbm', 'multiple_choice','(1) Di Samudra Pasifik Bagian Timur, tiga bentuk berbeda dari lumba-lumba hidung botol umum 
-(Tursiops truncatus) telah diidentifikasi, dengan dugaan bahwa mereka mungkin spesies yang berbeda: pesisir California/Meksiko selatan, lepas pantai 
-beriklim utara, dan lepas pantai Pasifik tropis timur (ETP). (2) Saat ini, hanya satu spesies T. truncatus yang dikenal di wilayah tersebut, dengan dua 
-bentuk pertama digambarkan sebagai ekotipe yang berbeda.
+('pbm-017', 'paket1', 'subtest_pbm', 'multiple_choice','(1) Di Bagian Timur Samudra Pasifik telah diidentifikasi tiga variasi berbeda dari lumba-lumba hidung 
+botol umum (Tursiops truncatus), dengan kemungkinan bahwa mereka merupakan spesies yang berbeda, yaitu populasi pesisir California/Meksiko selatan, populasi 
+lepas pantai di wilayah beriklim utara, dan populasi lepas pantai di Pasifik tropis timur (ETP). (2) Saat ini, hanya satu spesies T. truncatus yang secara resmi 
+dikenali di wilayah tersebut, dengan dua bentuk pertama dikategorikan sebagai Ekotipe yang berbeda.
 
-(3) Tujuan dari penelitian ini adalah untuk meningkatkan pemahaman kita tentang status taksonomi dari bentuk-bentuk yang dijelaskan sebelumnya melalui 
-pemeriksaan ulang diferensiasi morfologinya. (4) Dalam studi baru mereka, para peneliti memeriksa panjang tubuh, jumlah total, dan morfologi tengkorak 
-dari tiga bentuk dengan upaya untuk mengklarifikasi status dan distribusi taksonomi mereka.
+(3) Penelitian ini bertujuan untuk meningkatkan pemahaman mengenai status taksonomi dari bentuk-bentuk tersebut dengan melakukan analisis ulang terhadap perbedaannya 
+secara morfologi. (4) Dalam studi terbaru yang mengevaluasi panjang tubuh, jumlah total, dan karakteristik morfologi tengkorak dari ketiga bentuk tersebut guna 
+memperjelas status dan distribusi taksonominya.
 
 Sumber: National Geographic, 21 Desember 2022, Dunia Hewan: Sub Spesies Baru Lumba-lumba Hidung Botol Diidentifikasi.
 
 Inti dari kalimat (3) adalah...
 ', NULL, 46, '
-Inti dari suatu kalimat terdiri dari subjek dan predikat, serta boleh menambahkan objek dan pelengkap jika dibutuhkan. Berikut 
-analisis subjek dan predikat pada kalimat (3):
-Tujuan dari penelitian ini (S) adalah (P) untuk meningkatkan pemahaman kita tentang status taksonomi (Pel) dari bentuk-bentuk yang 
-dijelaskan sebelumnya melalui pemeriksaan ulang diferensiasi morfologinya (K).
-
-Oleh karena itu, inti kalimat (3) yang tepat terdapat dalam opsi C, yaitu "Tujuan dari penelitian ini adalah untuk meningkatkan pemahaman kita".
-
-Oleh karena itu, jawaban paling tepat adalah A. (1) dan (2).
+Inti dari suatu kalimat terdiri dari subjek dan predikat, serta boleh menambahkan objek dan pelengkap jika dibutuhkan. Berikut analisis subjek dan 
+predikat pada kalimat (3):
+Penelitian ini (S) bertujuan (P) untuk meningkatkan pemahaman mengenai status taksonomi (Pel) dari bentuk-bentuk tersebut dengan melakukan analisis 
+ulang terhadap perbedaannya secara morfologi (K).
 '),
 
-('pbm-018', 'paket1', 'subtest_pbm', 'multiple_choice','(1) Di Samudra Pasifik Bagian Timur, tiga bentuk berbeda dari lumba-lumba hidung botol umum 
-(Tursiops truncatus) telah diidentifikasi, dengan dugaan bahwa mereka mungkin spesies yang berbeda: pesisir California/Meksiko selatan, lepas pantai 
-beriklim utara, dan lepas pantai Pasifik tropis timur (ETP). (2) Saat ini, hanya satu spesies T. truncatus yang dikenal di wilayah tersebut, dengan dua 
-bentuk pertama digambarkan sebagai ekotipe yang berbeda.
+('pbm-018', 'paket1', 'subtest_pbm', 'multiple_choice','(1) Di Bagian Timur Samudra Pasifik telah diidentifikasi tiga variasi berbeda dari lumba-lumba hidung 
+botol umum (Tursiops truncatus), dengan kemungkinan bahwa mereka merupakan spesies yang berbeda, yaitu populasi pesisir California/Meksiko selatan, populasi 
+lepas pantai di wilayah beriklim utara, dan populasi lepas pantai di Pasifik tropis timur (ETP). (2) Saat ini, hanya satu spesies T. truncatus yang secara resmi 
+dikenali di wilayah tersebut, dengan dua bentuk pertama dikategorikan sebagai Ekotipe yang berbeda.
 
-(3) Tujuan dari penelitian ini adalah untuk meningkatkan pemahaman kita tentang status taksonomi dari bentuk-bentuk yang dijelaskan sebelumnya melalui 
-pemeriksaan ulang diferensiasi morfologinya. (4) Dalam studi baru mereka, para peneliti memeriksa panjang tubuh, jumlah total, dan morfologi tengkorak 
-dari tiga bentuk dengan upaya untuk mengklarifikasi status dan distribusi taksonomi mereka.
-
-Sumber: National Geographic, 21 Desember 2022, Dunia Hewan: Sub Spesies Baru Lumba-lumba Hidung Botol Diidentifikasi.
-
-Dari segi unsur kalimat, kesalahan apa yang ditemukan dalam kalimat (1)...
-', NULL, 54, '
-Berikut analisis kesalahan dalam kalimat (1) berdasarkan opsi jawaban:
-Opsi A, Tidak memiliki subjek. Hal ini salah karena kalimat (1) memiliki subjek, yaitu "tiga bentuk berbeda dari lumba-lumba hidung botol umum (Tursiops truncatus)".
-Opsi B, Tidak memiliki predikat. Hal ini salah karena kalimat (1) memiliki predikat, yaitu "telah diidentifikasi".
-Opsi C, Penulisan keterangan yang tidak tepat. Hal ini benar karena kalimat (1) tidak memisahkan antara unsur keterangan di awal kalimat, yaitu "Di Samudra Pasifik 
-Bagian Timur", yang seharusnya setelah kalimat tersebut diberikan tanda koma agar lebih efektif dan tidak ambigu.
-Opsi D, Penggunaan pelengkap tidak tepat. Hal ini salah karena kalimat (1) membutuhkan pelengkap untuk memberi keterangan lebih lanjut pada kalimat tersebut.
-Opsi E, Tidak ada kesalahan. Hal ini salah karena terdapat kesalahan dalam kalimat (1) seperti yang disebutkan dalam opsi C.
-'),
-
-('pbm-019', 'paket1', 'subtest_pbm', 'multiple_choice','(1) Di Samudra Pasifik Bagian Timur, tiga bentuk berbeda dari lumba-lumba hidung botol umum 
-(Tursiops truncatus) telah diidentifikasi, dengan dugaan bahwa mereka mungkin spesies yang berbeda: pesisir California/Meksiko selatan, lepas pantai 
-beriklim utara, dan lepas pantai Pasifik tropis timur (ETP). (2) Saat ini, hanya satu spesies T. truncatus yang dikenal di wilayah tersebut, dengan dua 
-bentuk pertama digambarkan sebagai ekotipe yang berbeda.
-
-(3) Tujuan dari penelitian ini adalah untuk meningkatkan pemahaman kita tentang status taksonomi dari bentuk-bentuk yang dijelaskan sebelumnya melalui 
-pemeriksaan ulang diferensiasi morfologinya. (4) Dalam studi baru mereka, para peneliti memeriksa panjang tubuh, jumlah total, dan morfologi tengkorak 
-dari tiga bentuk dengan upaya untuk mengklarifikasi status dan distribusi taksonomi mereka.
+(3) Penelitian ini bertujuan untuk meningkatkan pemahaman mengenai status taksonomi dari bentuk-bentuk tersebut dengan melakukan analisis ulang terhadap perbedaannya 
+secara morfologi. (4) Dalam studi terbaru yang mengevaluasi panjang tubuh, jumlah total, dan karakteristik morfologi tengkorak dari ketiga bentuk tersebut guna 
+memperjelas status dan distribusi taksonominya.
 
 Sumber: National Geographic, 21 Desember 2022, Dunia Hewan: Sub Spesies Baru Lumba-lumba Hidung Botol Diidentifikasi.
 
 Pernyataan yang tidak terdapat dalam teks bacaan adalah...
-', NULL, 46, '
-Berikut analisis pernyataan yang tidak tertera dalam teks bacaan:
-Opsi A, Penelitian yang dilakukan untuk meningkatkan pengetahuan masyarakat tentang status taksonomi. Hal ini telah disampaikan dalam kalimat (3).
-Opsi B, Dalam studi baru tersebut, penulis meneliti panjang tubuh total dan morfologi tengkorak. Hal ini telah disampaikan dalam kalimat (4).
-Opsi C, Lumba-lumba hidung botol ditemukan di Samudra Pasifik. Hal ini telah disampaikan dalam kalimat (1).
-Opsi D, Bentuk-bentuk yang dijelaskan sebelumnya melalui pemeriksaan ulang diferensiasi morfologinya. Hal ini telah disampaikan dalam kalimat (3).
-Opsi E, Hanya dua spesies lumba-lumba yang dikenal di wilayah tersebut. Hal ini tidak tertera dalam kalimat mana pun dalam teks bacaan.
+', NULL, 54, '
+Dalam teks, disebutkan bahwa penelitian dilakukan dengan analisis morfologi, bukan analisis genetika. Oleh karena itu, pernyataan pada opsi D tidak terdapat dalam teks, 
+sehingga menjadi jawaban yang benar.
 '),
 
-('pbm-020', 'paket1', 'subtest_pbm', 'multiple_choice','(1) Di Samudra Pasifik Bagian Timur, tiga bentuk berbeda dari lumba-lumba hidung botol umum 
-(Tursiops truncatus) telah diidentifikasi, dengan dugaan bahwa mereka mungkin spesies yang berbeda: pesisir California/Meksiko selatan, lepas pantai 
-beriklim utara, dan lepas pantai Pasifik tropis timur (ETP). (2) Saat ini, hanya satu spesies T. truncatus yang dikenal di wilayah tersebut, dengan dua 
-bentuk pertama digambarkan sebagai ekotipe yang berbeda.
+('pbm-019', 'paket1', 'subtest_pbm', 'multiple_choice','(1) Di Bagian Timur Samudra Pasifik telah diidentifikasi tiga variasi berbeda dari lumba-lumba hidung 
+botol umum (Tursiops truncatus), dengan kemungkinan bahwa mereka merupakan spesies yang berbeda, yaitu populasi pesisir California/Meksiko selatan, populasi 
+lepas pantai di wilayah beriklim utara, dan populasi lepas pantai di Pasifik tropis timur (ETP). (2) Saat ini, hanya satu spesies T. truncatus yang secara resmi 
+dikenali di wilayah tersebut, dengan dua bentuk pertama dikategorikan sebagai Ekotipe yang berbeda.
 
-(3) Tujuan dari penelitian ini adalah untuk meningkatkan pemahaman kita tentang status taksonomi dari bentuk-bentuk yang dijelaskan sebelumnya melalui 
-pemeriksaan ulang diferensiasi morfologinya. (4) Dalam studi baru mereka, para peneliti memeriksa panjang tubuh, jumlah total, dan morfologi tengkorak 
-dari tiga bentuk dengan upaya untuk mengklarifikasi status dan distribusi taksonomi mereka.
+(3) Penelitian ini bertujuan untuk meningkatkan pemahaman mengenai status taksonomi dari bentuk-bentuk tersebut dengan melakukan analisis ulang terhadap perbedaannya 
+secara morfologi. (4) Dalam studi terbaru yang mengevaluasi panjang tubuh, jumlah total, dan karakteristik morfologi tengkorak dari ketiga bentuk tersebut guna 
+memperjelas status dan distribusi taksonominya.
+
+Sumber: National Geographic, 21 Desember 2022, Dunia Hewan: Sub Spesies Baru Lumba-lumba Hidung Botol Diidentifikasi.
+
+Dari segi unsur kalimat, kesalahan apa yang ditemukan dalam kalimat (1)...
+', NULL, 46, '
+Diperlukan tanda koma setelah "Samudra Pasifik" agar penulisan keterangan menjadi lebih tepat. Frasa "Di bagian timur Samudra Pasifik" merupakan keterangan tempat 
+yang cukup panjang. Dalam kaidah tanda baca bahasa Indonesia, jika keterangan tempat atau keterangan lainnya berada di awal kalimat dan cukup panjang, maka harus 
+diikuti koma sebelum masuk ke inti kalimat (subjek dan predikat).
+'),
+
+('pbm-020', 'paket1', 'subtest_pbm', 'multiple_choice','(1) Di Bagian Timur Samudra Pasifik telah diidentifikasi tiga variasi berbeda dari lumba-lumba hidung 
+botol umum (Tursiops truncatus), dengan kemungkinan bahwa mereka merupakan spesies yang berbeda, yaitu populasi pesisir California/Meksiko selatan, populasi 
+lepas pantai di wilayah beriklim utara, dan populasi lepas pantai di Pasifik tropis timur (ETP). (2) Saat ini, hanya satu spesies T. truncatus yang secara resmi 
+dikenali di wilayah tersebut, dengan dua bentuk pertama dikategorikan sebagai Ekotipe yang berbeda.
+
+(3) Penelitian ini bertujuan untuk meningkatkan pemahaman mengenai status taksonomi dari bentuk-bentuk tersebut dengan melakukan analisis ulang terhadap perbedaannya 
+secara morfologi. (4) Dalam studi terbaru yang mengevaluasi panjang tubuh, jumlah total, dan karakteristik morfologi tengkorak dari ketiga bentuk tersebut guna 
+memperjelas status dan distribusi taksonominya.
 
 Sumber: National Geographic, 21 Desember 2022, Dunia Hewan: Sub Spesies Baru Lumba-lumba Hidung Botol Diidentifikasi.
 
 Penggunaan tanda baca yang tidak tepat ditunjukkan dalam kalimat...
 ', NULL, 54, '
-Suatu kalimat yang baik adalah kalimat yang memperhatikan segala aspek dalam penulisannya, termasuk memperhatikan tanda baca yang tepat.
-Kalimat (2), (3), dan (4) telah menggunakan tanda baca dengan benar.
-Kalimat (1) menggunakan tanda baca yang salah, yaitu pada penggunaan tanda koma.
-Perbaikan kalimat (1):
-"Di Samudra Pasifik bagian timur, tiga bentuk berbeda dari lumba-lumba hidung botol umum (Tursiops truncatus) telah diidentifikasi dengan dugaan bahwa 
-mereka mungkin spesies yang berbeda: pesisir California/Meksiko selatan, lepas pantai beriklim utara, dan lepas pantai Pasifik Tropis Timur (ETP)."
+Koma setelah Pasifik diperlukan karena frasa "di Bagian Timur Samudra Pasifik" adalah keterangan tempat yang cukup panjang, sehingga penggunaan koma membantu memperjelas 
+struktur kalimat.
 '),
 
 ('pk-001', 'paket1', 'subtest_pk', 'multiple_choice', 'Empat buah data memiliki median 12, berapakah nilai rata-ratanya?
@@ -3288,41 +3240,41 @@ INSERT INTO pilihan_pilihan_ganda (pilihan_pilihan_ganda_id, kode_soal, pilihan,
 ('pu-030-d', 'pu-030', '0.4', FALSE),
 ('pu-030-e', 'pu-030', '0.2', FALSE),
 -- Multiple choice for subtest_ppu
-('ppu-001-a', 'ppu-001', 'Lionel Messi mendapat banyak pujian dari suporter.', FALSE),
-('ppu-001-b', 'ppu-001', 'Laga Argentina vs Kroasia menjadi sorotan.', FALSE),
-('ppu-001-c', 'ppu-001', 'Lionel Messi mendapat apresiasi dalam laga Argentina vs Kroasia.', TRUE),
-('ppu-001-d', 'ppu-001', 'Messi membuat lawan tak berdaya.', FALSE),
-('ppu-001-e', 'ppu-001', 'Penampilan terbaik Lionel Messi di laga Piala Dunia 2022.', FALSE),
+('ppu-001-a', 'ppu-001', 'Penampilan Lionel Messi mendapatkan banyak pujian dari suporter.', FALSE),
+('ppu-001-b', 'ppu-001', 'Pertandingan antara Argentina dan Kroasia mendapat perhatian luas.', FALSE),
+('ppu-001-c', 'ppu-001', 'Penampilan Lionel Messi dalam pertandingan antara Argentina dan Kroasia mendapat pujian.', TRUE),
+('ppu-001-d', 'ppu-001', 'Messi menunjukkan aksinya sehingga membuat lawan tak berkutik.', FALSE),
+('ppu-001-e', 'ppu-001', 'Messi tampil gemilang di laga semifinal Piala Dunia 2022.', FALSE),
 
 ('ppu-002-a', 'ppu-002', '4', FALSE),
 ('ppu-002-b', 'ppu-002', '7', FALSE),
 ('ppu-002-c', 'ppu-002', '10', FALSE),
-('ppu-002-d', 'ppu-002', '11', FALSE),
-('ppu-002-e', 'ppu-002', '16', TRUE),
+('ppu-002-d', 'ppu-002', '16', TRUE),
+('ppu-002-e', 'ppu-002', '19', FALSE),
 
-('ppu-003-a', 'ppu-003', 'Josko Gvardiol mendapat penilaian baik selama Piala Dunia 2022.', FALSE),
-('ppu-003-b', 'ppu-003', 'Messi berlari mendekati kotak penalti.', TRUE),
-('ppu-003-c', 'ppu-003', 'Kawalan ketat Josko Gvardiol terhadap Messi.', FALSE),
-('ppu-003-d', 'ppu-003', 'Bek Kroasia mendekati kotak penalti.', FALSE),
-('ppu-003-e', 'ppu-003', 'Messi mendapat penilaian baik.', FALSE),
+('ppu-003-a', 'ppu-003', 'Josko Gvardiol mendapat pujian selama Piala Dunia 2022.', FALSE),
+('ppu-003-b', 'ppu-003', 'Messi berlari menuju kotak penalti.', TRUE),
+('ppu-003-c', 'ppu-003', 'Gvardiol melakukan pertahanan ketat terhadap Messi.', FALSE),
+('ppu-003-d', 'ppu-003', 'Bek Kroasia menunjukkan performa yang baik.', FALSE),
+('ppu-003-e', 'ppu-003', 'Messi mendapatkan dukungan dari rekan setimnya.', FALSE),
 
 ('ppu-004-a', 'ppu-004', 'Lionel Messi berhasil mengecoh Gvardiol.', FALSE),
 ('ppu-004-b', 'ppu-004', 'Lionel Messi sempat berhenti sebelum memasuki kotak penalti', FALSE),
-('ppu-004-c', 'ppu-004', 'Lionel Messi mencetak satu gol.', FALSE),
-('ppu-004-d', 'ppu-004', 'Alvarez tidak mengalami kesulitan saat menyepak bola masuk ke gawang.', FALSE),
-('ppu-004-e', 'ppu-004', 'Suporter memberi pujian kepada Alvarez karena memperoleh dua gol', TRUE),
+('ppu-004-c', 'ppu-004', 'Suporter memberi pujian kepada Alvarez karena memperoleh dua gol.', TRUE),
+('ppu-004-d', 'ppu-004', 'Lionel Messi mencetak satu gol.', FALSE),
+('ppu-004-e', 'ppu-004', 'Alvarez tidak mengalami kesulitan saat menyarangkan bola ke dalam gawang', FALSE),
 
 ('ppu-005-a', 'ppu-005', 'Menunjukkan permasalahan yang berbeda.', FALSE),
 ('ppu-005-b', 'ppu-005', 'Merupakan orientasi dari paragraf kedua.', FALSE),
-('ppu-005-c', 'ppu-005', 'Keduanya saling membuktikan argumentasi.', TRUE),
-('ppu-005-d', 'ppu-005', 'Sudut pandangan berbeda dari permasalahan yang sama.', FALSE),
-('ppu-005-e', 'ppu-005', 'Memberikan argumentasi solusi terkait permasalahan dalam bacaan.', FALSE),
+('ppu-005-c', 'ppu-005', 'Keduanya saling mendukung argumentasi tentang peran aktif Messi.', TRUE),
+('ppu-005-d', 'ppu-005', 'Menampilkan perspektif berbeda tentang peran Messi.', FALSE),
+('ppu-005-e', 'ppu-005', 'Memberikan solusi atas kekurangan tim.', FALSE),
 
-('ppu-006-a', 'ppu-006', 'Mengubah penyerang menjadi menyerang dalam kalimat (9).', FALSE),
-('ppu-006-b', 'ppu-006', 'Mengubah mengarah menjadi mengarahkan dalam kalimat (10).', FALSE),
-('ppu-006-c', 'ppu-006', 'Mengubah gerakan menjadi pergerakan dalam kalimat (14).', FALSE),
-('ppu-006-d', 'ppu-006', 'Mengubah mentrobos menjadi menerobos dalam kalimat (15).', TRUE),
-('ppu-006-e', 'ppu-006', 'Mengubah diunggah menjadi di-upload dalam kalimat (19).', FALSE),
+('ppu-006-a', 'ppu-006', 'Gocekan menjadi menggocek dalam kalimat (7).', FALSE),
+('ppu-006-b', 'ppu-006', 'Mengarah menjadi mengarahkan dalam kalimat (10).', FALSE),
+('ppu-006-c', 'ppu-006', 'Gerakan menjadi pergerakan dalam kalimat (14).', FALSE),
+('ppu-006-d', 'ppu-006', 'Mentrobos menjadi menerobos dalam kalimat (15).', TRUE),
+('ppu-006-e', 'ppu-006', 'Mengunggah menjadi meng-upload dalam kalimat (19).', FALSE),
 
 ('ppu-007-a', 'ppu-007', '1', TRUE),
 ('ppu-007-b', 'ppu-007', '2', FALSE),
@@ -3330,23 +3282,23 @@ INSERT INTO pilihan_pilihan_ganda (pilihan_pilihan_ganda_id, kode_soal, pilihan,
 ('ppu-007-d', 'ppu-007', '4', FALSE),
 ('ppu-007-e', 'ppu-007', '7', FALSE),
 
-('ppu-008-a', 'ppu-008', 'Pasar rakyat di Indonesia selalu dicitrakan sebagai tempat yang kumuh.', FALSE),
-('ppu-008-b', 'ppu-008', 'Pasar rakyat di Indonesia menjadi sumber kemacetan lalu lintas.', FALSE),
-('ppu-008-c', 'ppu-008', 'Pasar rakyat yang nyaman memerlukan perlakuan khusus dalam pengelolaan, pengembangan, dan pelestariannya.', TRUE),
+('ppu-008-a', 'ppu-008', 'Pasar rakyat sering dicitrakan sebagai tempat yang kumuh.', FALSE),
+('ppu-008-b', 'ppu-008', 'Pasar merupakan institusi sosial yang menyediakan tatanan siap pakai.', FALSE),
+('ppu-008-c', 'ppu-008', 'Pasar rakyat yang nyaman, diperlukan perlakuan khusus dalam pengelolaan, pengembangan, dan pelestariannya.', TRUE),
 ('ppu-008-d', 'ppu-008', 'Masyarakat melihat pasar rakyat sebagai tempat yang tidak nyaman dan kompetitif.', FALSE),
 ('ppu-008-e', 'ppu-008', 'Pasar rakyat di Indonesia berpotensi menjadi sumber kluster penyebaran pandemi.', FALSE),
 
-('ppu-009-a', 'ppu-009', 'Lalu', FALSE),
+('ppu-009-a', 'ppu-009', 'Melalui', FALSE),
 ('ppu-009-b', 'ppu-009', 'Dengan', TRUE),
 ('ppu-009-c', 'ppu-009', 'Kemudian', FALSE),
 ('ppu-009-d', 'ppu-009', 'Sehingga', FALSE),
 ('ppu-009-e', 'ppu-009', 'Dan', FALSE),
 
-('ppu-010-a', 'ppu-010', 'Pertalian', FALSE),
-('ppu-010-b', 'ppu-010', 'Rangkaian ikatan', FALSE),
-('ppu-010-c', 'ppu-010', 'Rangkaian proses', TRUE),
-('ppu-010-d', 'ppu-010', 'Deret', FALSE),
-('ppu-010-e', 'ppu-010', 'Kegiatan kekuasaan', FALSE),
+('ppu-010-a', 'ppu-010', 'Esensial', FALSE),
+('ppu-010-b', 'ppu-010', 'Sebagai tambahan', FALSE),
+('ppu-010-c', 'ppu-010', 'Bagian yang dapat dipisahkan', FALSE),
+('ppu-010-d', 'ppu-010', 'Bagian yang tidak dapat dipisahkan', TRUE),
+('ppu-010-e', 'ppu-010', 'Pelengkap', FALSE),
 
 ('ppu-011-a', 'ppu-011', '13', FALSE),
 ('ppu-011-b', 'ppu-011', '11', FALSE),
@@ -3360,41 +3312,41 @@ INSERT INTO pilihan_pilihan_ganda (pilihan_pilihan_ganda_id, kode_soal, pilihan,
 ('ppu-012-d', 'ppu-012', '9', FALSE),
 ('ppu-012-e', 'ppu-012', '13', TRUE),
 
-('ppu-013-a', 'ppu-013', 'Keberhasilan suatu pasar dapat kita lihat dari kondisi pasar yang ramai dengan aktivitas ekonomi dan sosial', TRUE),
-('ppu-013-b', 'ppu-013', 'Lebih dari 52 juta orang atau hampir 19% dari populasi total penduduk Indonesia beraktivitas di pasar.', FALSE),
-('ppu-013-c', 'ppu-013', 'Pasar rakyat memiliki fungsi strategis dan kedekatan dengan aspek sosial dan budaya masyarakat.', FALSE),
-('ppu-013-d', 'ppu-013', 'Pasar rakyat memiliki kekhasan, seperti adanya aktivitas tawar menawar yang tidak dimiliki oleh pasar modern, pusat perbelanjaan, maupun toko swalayan.', FALSE),
-('ppu-013-e', 'ppu-013', 'Terdapat 14.182 pasar rakyat dengan 13 juta lebih pedagang yang beraktivitas di dalamnya.', FALSE),
+('ppu-013-a', 'ppu-013', 'Keberhasilan suatu pasar dapat diukur dari keramaian aktivitas ekonomi dan sosial yang terjadi di sana', TRUE),
+('ppu-013-b', 'ppu-013', 'Aktivitas di pasar melibatkan lebih dari 52 juta orang, atau hampir 19% dari total penduduk Indonesia.', FALSE),
+('ppu-013-c', 'ppu-013', 'Pasar rakyat memegang peranan strategis serta memiliki hubungan erat dengan aspek sosial dan budaya masyarakat.', FALSE),
+('ppu-013-d', 'ppu-013', 'Pasar rakyat memiliki keunikan, contohnya proses tawar-menawar yang tidak ditemui di pasar modern, pusat perbelanjaan, maupun toko swalayan.', FALSE),
+('ppu-013-e', 'ppu-013', 'Terdapat 14.182 pasar rakyat yang menampung aktivitas lebih dari 13 juta pedagang.', FALSE),
 
 ('ppu-014-a', 'ppu-014', 'Pasar rakyat memerlukan pembenahan dalam konteks revitalisasi. Hal ini dikarenakan maraknya pertumbuhan pusat perbelanjaan dan toko swalayan yang menawarkan sarana dan prasarana yang nyaman.', FALSE),
-('ppu-014-b', 'ppu-014', 'Pasar rakyat adalah sarana interaksi sosial budaya dan pengembangan ekonomi masyarakat yang dikelola oleh pemerintah, swasta, dan lainnya. Saat ini, pasar rakyat menghadapi tantangan karena konsumen lebih memilih berbelanja di pusat perbelanjaan dan toko swalayan lantaran lebih nyaman. Oleh karena itu, pasar rakyat perlu dibenah untuk menghadapi tantangan ini.', TRUE),
+('ppu-014-b', 'ppu-014', 'Pasar rakyat merupakan wadah transaksi dan interaksi sosial budaya yang memiliki peran penting dalam distribusi barang, PAD, dan penciptaan lapangan kerja, namun kini menghadapi tantangan dari pasar modern seperti  konsumen yang lebih memilih berbelanja di pusat perbelanjaan dan toko swalayan lantaran lebih nyaman, sehingga pasar rakyat memerlukan revitalisasi untuk menghadapi tantangan ini.', TRUE),
 ('ppu-014-c', 'ppu-014', 'Pasar rakyat merupakan salah satu bagian dari rantai pemasaran dalam distribusi barang kebutuhan pokok, sumber Pendapatan Asli Daerah (PAD), serta lapangan kerja yang lebih luas. Namun sayangnya, seiring berkembangnya pusat perbelanjaan dan toko swalayan, pasar rakyat menghadapi tantangan terutama dari sisi sarana dan prasarana, yang mengakibatkan menurunnya jumlah konsumen atau pengunjung.', FALSE),
 ('ppu-014-d', 'ppu-014', 'Pasar tradisional atau yang lebih dikenal sebagai pasar rakyat adalah pusat pertemuan antara penjual dan pembeli melakukan transaksi, serta menjadi sarana interaksi sosial budaya dan pengembangan ekonomi masyarakat.', FALSE),
 ('ppu-014-e', 'ppu-014', 'Tidak heran apabila saat ini pasar rakyat mengalami banyak tantangan karena hadirnya pusat perbelanjaan lain dan swalayan yang memberikan kenyamanan dan fasilitas yang baik bagi konsumen.', FALSE),
 
-('ppu-015-a', 'ppu-015', 'Pasar rakyat menghadapi tantangan terutama dari sisi sarana dan prasarana.', FALSE),
-('ppu-015-b', 'ppu-015', 'Pasar rakyat memiliki fungsi strategis dan kedekatan dengan aspek sosial dan budaya masyarakat.', FALSE),
+('ppu-015-a', 'ppu-015', 'Pasar rakyat menghadapi tantangan terutama dari sisi sarana dan prasarana yang kurang memadai.', FALSE),
+('ppu-015-b', 'ppu-015', 'Pasar rakyat memiliki fungsi strategis dan kedekatan dengan aspek sosial budaya masyarakat.', FALSE),
 ('ppu-015-c', 'ppu-015', 'Pasar modern memberikan fasilitas yang nyaman dan proses tawar menawar kepada konsumen.', TRUE),
 ('ppu-015-d', 'ppu-015', 'Pasar modern menjadi pilihan masyarakat saat ini sehingga menurunkan konsumen berkunjung ke pasar tradisional.', FALSE),
-('ppu-015-e', 'ppu-015', 'Pasar rakyat sering mendapat citra buruk dari masyarakat.', FALSE),
+('ppu-015-e', 'ppu-015', 'Survei menunjukkan bahwa terdapat 14.182 pasar rakyat dengan lebih dari 13 juta pedagang.', FALSE),
 
-('ppu-016-a', 'ppu-016', 'Terakses', FALSE),
-('ppu-016-b', 'ppu-016', 'Mudah diakses', FALSE),
-('ppu-016-c', 'ppu-016', 'Dapat diakses', FALSE),
-('ppu-016-d', 'ppu-016', 'Belum diakses', FALSE),
-('ppu-016-e', 'ppu-016', 'Tidak dapat diakses', TRUE),
+('ppu-016-a', 'ppu-016', 'Terpusat', FALSE),
+('ppu-016-b', 'ppu-016', 'Tersebar', TRUE),
+('ppu-016-c', 'ppu-016', 'Terkonsentrasi', FALSE),
+('ppu-016-d', 'ppu-016', 'Terintegrasi', FALSE),
+('ppu-016-e', 'ppu-016', 'Mengelompok', FALSE),
 
-('ppu-017-a', 'ppu-017', 'Media lelang online untuk UMKM oleh Ditjen Kekayaan Negara.', FALSE),
-('ppu-017-b', 'ppu-017', 'Digipay selaku marketplace belanja pemerintah yang dikelola oleh Ditjen Perbendaharaan.', FALSE),
-('ppu-017-c', 'ppu-017', 'Fasilitas akses pembiayaan yang berada dalam pengelolaan Ditjen Perbendaharaan.', FALSE),
-('ppu-017-d', 'ppu-017', 'Fasilitas perpajakan bagi UMKM yang dalam pengelolaan Ditjen Pajak.', FALSE),
-('ppu-017-e', 'ppu-017', 'Beberapa program pemberdayaan UMKM dalam lingkup Kementerian Keuangan.', TRUE),
+('ppu-017-a', 'ppu-017', 'Pentingnya mengintegrasikan program pemberdayaan UMKM yang tersebar di berbagai unit Kementerian Keuangan.', FALSE),
+('ppu-017-b', 'ppu-017', 'Tersedianya program pemberdayaan UMKM yang komprehensif di lingkungan Kementerian Keuangan.', FALSE),
+('ppu-017-c', 'ppu-017', 'Terbitnya Keputusan Menteri Keuangan Nomor 396 Tahun 2022 sebagai upaya penyatuan seluruh program UMKM menjadi satu kesatuan terpadu.', TRUE),
+('ppu-017-d', 'ppu-017', 'Tantangan koordinasi antar unit dalam melaksanakan program pemberdayaan UMKM.', FALSE),
+('ppu-017-e', 'ppu-017', 'Peran lembaga pembiayaan dalam mendukung program pemberdayaan UMKM.', FALSE),
 
-('ppu-018-a', 'ppu-018', 'Pemberdayaan UMKM membutuhkan sinergi berbagai pihak.', TRUE),
-('ppu-018-b', 'ppu-018', 'Pemerintah Pusat bersentuhan dengan program-program pemberdayaan UMKM.', FALSE),
-('ppu-018-c', 'ppu-018', 'Dalam lingkup yang lebih luas, pemberdayaan UMKM membutuhkan sinergi.', FALSE),
-('ppu-018-d', 'ppu-018', 'Sinergi berbagai pihak dari tingkat Pemerintah Pusat, Pemerintah Daerah, Lembaga Pembiayaan, dan pihak-pihak lainnya.', FALSE),
-('ppu-018-e', 'ppu-018', 'UMKM memerlukan program-program pemberdayaan UMKM.', FALSE),
+('ppu-018-a', 'ppu-018', 'Pemberdayaan UMKM membutuhkan kolaborasi dari berbagai pihak.', TRUE),
+('ppu-018-b', 'ppu-018', 'Pemerintah Pusat terlibat dalam program pemberdayaan UMKM.', FALSE),
+('ppu-018-c', 'ppu-018', 'Secara luas, pemberdayaan UMKM memerlukan kerja sama yang intens.', FALSE),
+('ppu-018-d', 'ppu-018', 'Kerjasama antara Pemerintah Pusat, Pemerintah Daerah, Lembaga Pembiayaan, dan pihak terkait adalah kunci pemberdayaan UMKM.', FALSE),
+('ppu-018-e', 'ppu-018', 'UMKM harus mendapatkan berbagai program pendukung pemberdayaan.', FALSE),
 
 ('ppu-019-a', 'ppu-019', 'Pemberdayaan UMKM', TRUE),
 ('ppu-019-b', 'ppu-019', 'Kementerian Keuangan', FALSE),
@@ -3403,22 +3355,22 @@ INSERT INTO pilihan_pilihan_ganda (pilihan_pilihan_ganda_id, kode_soal, pilihan,
 ('ppu-019-e', 'ppu-019', 'Ditjen Kekayaan Negara', FALSE),
 
 ('ppu-020-a', 'ppu-020', 'Ditindaklanjuti menjadi ditindak lanjuti pada kalimat (4).', FALSE),
-('ppu-020-b', 'ppu-020', 'Seluruh dapat dihilangkan pada kalimat (1).', TRUE),
-('ppu-020-c', 'ppu-020', 'Mengesampingkan menjadi mengenyampingkan pada kalimat (8).', FALSE),
+('ppu-020-b', 'ppu-020', 'Kata Seluruh dapat dihilangkan pada kalimat (1).', TRUE),
+('ppu-020-c', 'ppu-020', 'Mengesampingkan menjadi menyampingkan pada kalimat (8).', FALSE),
 ('ppu-020-d', 'ppu-020', 'Di situ-situ menjadi disitu pada kalimat (10).', FALSE),
 ('ppu-020-e', 'ppu-020', 'Di antaranya menjadi diantaranya pada kalimat (2).', FALSE),
 -- Multiple choice for subtest_pbm
-('pbm-001-a', 'pbm-001', 'Menganjurkan seharusnya dianjurkan.', FALSE),
+('pbm-001-a', 'pbm-001', 'Direkomendasikan seharusnya merekomendasikan.', TRUE),
 ('pbm-001-b', 'pbm-001', 'Partikel per seharusnya tidak ditulis terpisah.', FALSE),
-('pbm-001-c', 'pbm-001', 'Kata hari seharusnya ditulis kapital.', FALSE),
-('pbm-001-d', 'pbm-001', 'Diacu seharusnya mengacu.', TRUE),
+('pbm-001-c', 'pbm-001', 'WHO seharusnya ditulis miring.', FALSE),
+('pbm-001-d', 'pbm-001', 'Mengacu seharusnya diacu.', FALSE),
 ('pbm-001-e', 'pbm-001', 'Angka seharusnya ditulis huruf.', FALSE),
 
-('pbm-002-a', 'pbm-002', 'Yang', FALSE),
-('pbm-002-b', 'pbm-002', 'Kandungan', FALSE),
-('pbm-002-c', 'pbm-002', 'Siap', FALSE),
-('pbm-002-d', 'pbm-002', 'Industri', TRUE),
-('pbm-002-e', 'pbm-002', 'Terbuka', FALSE),
+('pbm-002-a', 'pbm-002', 'Ini', FALSE),
+('pbm-002-b', 'pbm-002', 'Dalam', FALSE),
+('pbm-002-c', 'pbm-002', 'Dan', FALSE),
+('pbm-002-d', 'pbm-002', 'Sekali', TRUE),
+('pbm-002-e', 'pbm-002', 'Tambahan', FALSE),
 
 ('pbm-003-a', 'pbm-003', 'Tertera', FALSE),
 ('pbm-003-b', 'pbm-003', 'Terkandung', TRUE),
@@ -3432,64 +3384,64 @@ INSERT INTO pilihan_pilihan_ganda (pilihan_pilihan_ganda_id, kode_soal, pilihan,
 ('pbm-004-d', 'pbm-004', '7', TRUE),
 ('pbm-004-e', 'pbm-004', '8', FALSE),
 
-('pbm-005-a', 'pbm-005', 'Mengonsumsi gula tambahan di atas 25 gram jika tidak dikonsumsi berturut-turut dapat memberi dampak baik.', TRUE),
-('pbm-005-b', 'pbm-005', 'Gula tambahan adalah gula yang biasanya terdapat pada minuman kaleng.', FALSE),
-('pbm-005-c', 'pbm-005', 'Minuman kaleng lebih baik dihindari apalagi minuman kaleng yang mengandung gula di atas 25 gram.', FALSE),
-('pbm-005-d', 'pbm-005', 'Tidak salahnya sejak dini kita mengontrol konsumsi gula di bawah 25 gram untuk memberikan kesehatan tambahan.', FALSE),
-('pbm-005-e', 'pbm-005', 'Minuman kaleng memang sangat nikmat tetapi kita sebagai konsumen harus cerdas, ingin memilih kenikmatan sementara atau efek ke kesehatan tubuh jangka panjang.', FALSE),
+('pbm-005-a', 'pbm-005', 'WHO merekomendasikan batas konsumsi gula tambahan untuk mengurangi risiko obesitas dan penyakit tidak menular.', FALSE),
+('pbm-005-b', 'pbm-005', 'Banyak negara telah menerapkan kebijakan pembatasan konsumsi gula tambahan sesuai dengan anjuran WHO.', FALSE),
+('pbm-005-c', 'pbm-005', 'Beberapa penelitian menunjukkan bahwa konsumsi gula tambahan lebih dari 50 gram per hari tidak selalu berdampak negatif pada kesehatan jika diimbangi dengan aktivitas fisik yang cukup.', TRUE),
+('pbm-005-d', 'pbm-005', 'Gula tambahan tidak memiliki manfaat bagi tubuh selain sebagai sumber energi.', FALSE),
+('pbm-005-e', 'pbm-005', 'WHO menyatakan bahwa konsumsi gula tambahan di bawah 25 gram per hari memberikan manfaat kesehatan yang lebih besar.', FALSE),
 
-('pbm-006-a', 'pbm-006', 'Data yang menunjukkan produk-produk mengandung gula tambahan lebih dari 25 gram.', TRUE),
-('pbm-006-b', 'pbm-006', 'Video produsen yang menambahkan produknya gula tambahan lebih dari 25 gram.', FALSE),
-('pbm-006-c', 'pbm-006', 'Kurva tanggapan konsumen terhadap produk cepat saji mengandung gula lebih dari 25 gram.', FALSE),
-('pbm-006-d', 'pbm-006', 'Bagan yang menunjukkan produk yang layak konsumsi dan tidak layak konsumsi.', FALSE),
-('pbm-006-e', 'pbm-006', 'Video WHO terkait larangan mengonsumsi gula tambahan lebih dari 25 gram.', FALSE),
+('pbm-006-a', 'pbm-006', 'Gambar seorang anak sedang mengonsumsi es teh manis di warung makan.', FALSE),
+('pbm-006-b', 'pbm-006', 'Foto berbagai jenis gula, seperti gula pasir, madu, dan sirup.', FALSE),
+('pbm-006-c', 'pbm-006', 'Diagram yang menunjukkan batas konsumsi gula tambahan per hari dan contoh makanan/minuman dengan kandungan gula tinggi.', TRUE),
+('pbm-006-d', 'pbm-006', 'Ilustrasi seseorang sedang membaca label kandungan gizi di kemasan minuman.', FALSE),
+('pbm-006-e', 'pbm-006', 'Grafik yang menunjukkan peningkatan konsumsi gula di Indonesia dari tahun ke tahun.', FALSE),
 
-('pbm-007-a', 'pbm-007', 'Memperinci argumen', TRUE),
-('pbm-007-b', 'pbm-007', 'Pokok permasalahan yang berbeda', FALSE),
-('pbm-007-c', 'pbm-007', 'Memperluas permasalahan', FALSE),
-('pbm-007-d', 'pbm-007', 'Tidak berhubungan sama sekali', FALSE),
-('pbm-007-e', 'pbm-007', 'Gagasan yang bertentangan', FALSE),
+('pbm-007-a', 'pbm-007', 'Kalimat (2) menyanggah pernyataan dalam kalimat (1).', FALSE),
+('pbm-007-b', 'pbm-007', 'Kalimat (2) memperkuat pernyataan dalam kalimat (1).', TRUE),
+('pbm-007-c', 'pbm-007', 'Kalimat (2) menjelaskan lebih rinci pernyataan dalam kalimat (1).', FALSE),
+('pbm-007-d', 'pbm-007', 'Kalimat (2) memberikan contoh dari pernyataan dalam kalimat (1).', FALSE),
+('pbm-007-e', 'pbm-007', 'Kalimat (2) mengalihkan pembahasan dari kalimat (1).', FALSE),
 
-('pbm-008-a', 'pbm-008', 'Produk yang aman dikonsumsi bagi setiap kalangan.', FALSE),
-('pbm-008-b', 'pbm-008', 'Cara mengetahui produk rendah gula.', FALSE),
-('pbm-008-c', 'pbm-008', 'Produk yang mengandung gula rendah.', FALSE),
-('pbm-008-d', 'pbm-008', 'Kebijakan bagi produsen siap saji yang menyediakan produk dengan kandungan gula di atas 25 gram.', FALSE),
-('pbm-008-e', 'pbm-008', 'Produk yang mengandung gula di atas 25 gram.', TRUE),
+('pbm-008-a', 'pbm-008', 'Cara membaca label kandungan gula pada kemasan makanan.', FALSE),
+('pbm-008-b', 'pbm-008', 'Perbandingan kebijakan pembatasan konsumsi gula di berbagai negara.', FALSE),
+('pbm-008-c', 'pbm-008', 'Dampak konsumsi gula berlebih terhadap kesehatan.', TRUE),
+('pbm-008-d', 'pbm-008', 'Proses produksi gula tambahan dalam industri makanan.', FALSE),
+('pbm-008-e', 'pbm-008', 'Sejarah regulasi konsumsi gula oleh WHO sejak pertama kali diterbitkan.', FALSE),
 
 ('pbm-009-a', 'pbm-009', '1', FALSE),
 ('pbm-009-b', 'pbm-009', '2', FALSE),
-('pbm-009-c', 'pbm-009', '3', TRUE),
+('pbm-009-c', 'pbm-009', '3', FALSE),
 ('pbm-009-d', 'pbm-009', '4', FALSE),
-('pbm-009-e', 'pbm-009', '5', FALSE),
+('pbm-009-e', 'pbm-009', '5', TRUE),
 
-('pbm-010-a', 'pbm-010', 'Dalam rapat perdana, kepala bidang pengawas telah menyampaikan aturan terbaru untuk diberlakukan mulai tahun depan dan seterusnya.', TRUE),
-('pbm-010-b', 'pbm-010', 'Hari Natal dan tahun baru tinggal menghitung hari, orang-orang siap memenuhi tempat wisata.', FALSE),
-('pbm-010-c', 'pbm-010', 'Perlu diingat, dalam menyambut tahun baru, keamanan dan ketertiban harus dipenuhi.', FALSE),
-('pbm-010-d', 'pbm-010', 'Karena kondisi tidak menentu, banyak sekali agen yang harus dibatalkan.', FALSE),
-('pbm-010-e', 'pbm-010', 'Karena Covid-19, segala rencana yang sudah direncanakan sebelumnya berubah drastis.', FALSE),
+('pbm-010-a', 'pbm-010', 'Di balik jendela kaca yang berembun, seorang gadis kecil mengamati kucing berbulu putih yang tengah meringkuk di sudut ruangan dengan penuh rasa ingin tahu.', TRUE),
+('pbm-010-b', 'pbm-010', 'Ayah membacakan cerita petualangan yang penuh kejutan kepada adik sebelum tidur.', FALSE),
+('pbm-010-c', 'pbm-010', 'Dengan langkah tergesa-gesa, pria itu meninggalkan stasiun tanpa menoleh ke belakang.', FALSE),
+('pbm-010-d', 'pbm-010', 'Burung camar melayang tinggi di atas laut yang berkilauan diterpa cahaya senja.', FALSE),
+('pbm-010-e', 'pbm-010', 'Seorang fotografer mengabadikan momen langka seekor elang yang sedang mengepakkan sayapnya di puncak tebing curam.', FALSE),
 
-('pbm-011-a', 'pbm-011', 'Mengidentifikasi', TRUE),
-('pbm-011-b', 'pbm-011', 'Diidentifikasi', FALSE),
-('pbm-011-c', 'pbm-011', 'Identifikasi', FALSE),
-('pbm-011-d', 'pbm-011', 'Teridentifikasikan', FALSE),
-('pbm-011-e', 'pbm-011', 'Beridentifikasi', FALSE),
+('pbm-011-a', 'pbm-011', 'Penuhkan', FALSE),
+('pbm-011-b', 'pbm-011', 'Berpenuhan', FALSE),
+('pbm-011-c', 'pbm-011', 'Memenuhkan', FALSE),
+('pbm-011-d', 'pbm-011', 'Dipenuhi', TRUE),
+('pbm-011-e', 'pbm-011', 'Terpenuhi', FALSE),
 
-('pbm-012-a', 'pbm-012', 'Cuaca saat itu sangat terik.', FALSE),
-('pbm-012-b', 'pbm-012', 'Para wisatawan memperdebatkan jenis burung yang sedang bertengger di atas kawat.', FALSE),
-('pbm-012-c', 'pbm-012', 'Hamparan pasir Kalahari yang gersang juga dapat kita temui di tur wisata ini.', FALSE),
-('pbm-012-d', 'pbm-012', 'Pengalaman yang sangat unik dapat kita dapatkan dalam tur "Elephant Express".', FALSE),
-('pbm-012-e', 'pbm-012', '"Elephant Express" menawarkan pengalaman pertunjukan gajah khas masyarakat Zimbabwe.', TRUE),
+('pbm-012-a', 'pbm-012', 'Elephant Express memberikan pengalaman safari di jalur antara Dete dan Ngamo Sidings.', FALSE),
+('pbm-012-b', 'pbm-012', 'Sebanyak dua belas orang—terdiri dari sembilan turis, dua masinis, dan satu pemandu safari—melakukan perjalanan dari Air Terjun Victoria ke Dataran Ngamo.', FALSE),
+('pbm-012-c', 'pbm-012', 'Sepanjang perjalanan, penumpang menikmati minuman sambil mengamati burung di sekitar jalur kereta.', FALSE),
+('pbm-012-d', 'pbm-012', 'Salah satu masinis mengidentifikasi burung yang diamati sebagai burung raja ikan (kingfisher)".', TRUE),
+('pbm-012-e', 'pbm-012', 'Dataran Ngamo adalah kawasan padang rumput yang memenuhi kawanan gajah, tempat hutan akasia yang semakin berkurang bertemu dengan pasir kering Kalahari.', FALSE),
 
-('pbm-013-a', 'pbm-013', 'Data jumlah spesies di kawasan yang ditawarkan "Elephant Express".', FALSE),
-('pbm-013-b', 'pbm-013', 'Gambar pemandangan safari "Elephant Express".', TRUE),
-('pbm-013-c', 'pbm-013', 'Diagram spesies langka di Zimbabwe.', FALSE),
-('pbm-013-d', 'pbm-013', 'Video tanggapan pelancong yang ikut berwisata di Zimbabwe.', FALSE),
-('pbm-013-e', 'pbm-013', 'Kurva tingkat wisatawan yang tertarik dengan "Elephant Express".', FALSE),
+('pbm-013-a', 'pbm-013', 'Sebuah kereta modern yang melaju di tengah kota besar dengan gedung pencakar langit di sekitarnya".', FALSE),
+('pbm-013-b', 'pbm-013', 'Sebuah kelompok turis sedang berjalan kaki di hutan belantara sambil mengamati burung dengan teropong".', FALSE),
+('pbm-013-c', 'pbm-013', 'Sebuah kereta safari khusus dengan penumpang yang mengamati burung dan menikmati minuman di bawah terik matahari.', TRUE),
+('pbm-013-d', 'pbm-013', 'Seekor burung raja udang yang bertengger di atas kawat dengan latar belakang air terjun yang deras.', FALSE),
+('pbm-013-e', 'pbm-013', 'Seorang pemandu safari sedang menjelaskan tentang flora dan fauna di Taman Nasional Hwange sambil menunjuk ke arah padang rumput luas".', FALSE),
 
-('pbm-014-a', 'pbm-014', '1', TRUE),
+('pbm-014-a', 'pbm-014', '1', FALSE),
 ('pbm-014-b', 'pbm-014', '2', FALSE),
 ('pbm-014-c', 'pbm-014', '3', FALSE),
-('pbm-014-d', 'pbm-014', '6', FALSE),
+('pbm-014-d', 'pbm-014', '4', TRUE),
 ('pbm-014-e', 'pbm-014', '7', FALSE),
 
 ('pbm-015-a', 'pbm-015', '(1) dan (2)', TRUE),
@@ -3499,28 +3451,28 @@ INSERT INTO pilihan_pilihan_ganda (pilihan_pilihan_ganda_id, kode_soal, pilihan,
 ('pbm-015-e', 'pbm-015', '(3) dan (4)', FALSE),
 
 ('pbm-016-a', 'pbm-016', 'Tidak perlu tanda koma setelah kata mereka.', FALSE),
-('pbm-016-b', 'pbm-016', 'Menghapus konjungsi dengan.', FALSE),
+('pbm-016-b', 'pbm-016', 'Membutuhkan subjek.', TRUE),
 ('pbm-016-c', 'pbm-016', 'Perlu menambahkan tanda koma setelah kata total.', FALSE),
-('pbm-016-d', 'pbm-016', 'Membutuhkan subjek.', TRUE),
+('pbm-016-d', 'pbm-016', 'Menghapus konjungsi dengan.', FALSE),
 ('pbm-016-e', 'pbm-016', 'Tidak perlu perbaikan.', FALSE),
 
-('pbm-017-a', 'pbm-017', 'Pemeriksaan ulang diferensiasi morfologi.', FALSE),
-('pbm-017-b', 'pbm-017', 'Pemahaman kita tentang status taksonomi dari bentuk-bentuk yang dijelaskan.', FALSE),
-('pbm-017-c', 'pbm-017', 'Tujuan dari penelitian ini adalah untuk meningkatkan pemahaman kita.', TRUE),
-('pbm-017-d', 'pbm-017', 'Tujuan dari penelitian ini.', FALSE),
-('pbm-017-e', 'pbm-017', 'Bentuk-bentuk yang dijelaskan sebelumnya.', FALSE),
+('pbm-017-a', 'pbm-017', 'Penelitian ini bertujuan untuk meningkatkan pemahaman.', TRUE),
+('pbm-017-b', 'pbm-017', 'Meningkatkan pemahaman mengenai status taksonomi.', FALSE),
+('pbm-017-c', 'pbm-017', 'Melakukan analisis ulang terhadap perbedaan.', FALSE),
+('pbm-017-d', 'pbm-017', 'Penelitian untuk pemahaman mengenai status taksonomi.', FALSE),
+('pbm-017-e', 'pbm-017', 'Pemahaman mengenai status taksonomi dari analisis perbedaan morfologi.', FALSE),
 
-('pbm-018-a', 'pbm-018', 'Tidak memiliki subjek.', FALSE),
-('pbm-018-b', 'pbm-018', 'Tidak memiliki predikat.', FALSE),
-('pbm-018-c', 'pbm-018', 'Penulisan keterangan yang tidak tepat.', TRUE),
-('pbm-018-d', 'pbm-018', 'Penggunaan pelengkap tidak tepat.', FALSE),
-('pbm-018-e', 'pbm-018', 'Tidak ada kesalahan.', FALSE),
+('pbm-018-a', 'pbm-018', 'Terdapat tiga variasi berbeda dari lumba-lumba hidung botol di Samudra Pasifik bagian timur.', FALSE),
+('pbm-018-b', 'pbm-018', 'Dua dari tiga bentuk lumba-lumba dikategorikan sebagai ekotipe yang berbeda.', FALSE),
+('pbm-018-c', 'pbm-018', 'Penelitian ini dilakukan untuk meneliti kembali status taksonomi ketiga bentuk lumba-lumba tersebut.', FALSE),
+('pbm-018-d', 'pbm-018', 'Studi terbaru menggunakan analisis genetika untuk mengidentifikasi perbedaan ketiga populasi lumba-lumba.', TRUE),
+('pbm-018-e', 'pbm-018', 'Salah satu populasi lumba-lumba hidung botol ditemukan di perairan tropis Pasifik timur (ETP).', FALSE),
 
-('pbm-019-a', 'pbm-019', 'Penelitian yang dilakukan untuk meningkatkan pengetahuan masyarakat tentang status taksonomi.', FALSE),
-('pbm-019-b', 'pbm-019', 'Dalam studi baru tersebut, penulis meneliti panjang tubuh total dan morfologi tengkorak.', FALSE),
-('pbm-019-c', 'pbm-019', 'Lumba-lumba hidung botol ditemukan di Samudra Pasifik.', FALSE),
-('pbm-019-d', 'pbm-019', 'Bentuk-bentuk yang dijelaskan sebelumnya melalui pemeriksaan ulang diferensiasi morfologinya.', FALSE),
-('pbm-019-e', 'pbm-019', 'Hanya dua spesies lumba-lumba yang dikenal di wilayah tersebut.', TRUE),
+('pbm-019-a', 'pbm-019', 'Tidak memiliki subjek.', FALSE),
+('pbm-019-b', 'pbm-019', 'Tidak memiliki predikat.', FALSE),
+('pbm-019-c', 'pbm-019', 'Penulisan keterangan yang tidak tepat.', TRUE),
+('pbm-019-d', 'pbm-019', 'Penggunaan pelengkap tidak tepat.', FALSE),
+('pbm-019-e', 'pbm-019', 'Tidak ada kesalahan.', FALSE),
 
 ('pbm-020-a', 'pbm-020', '1', TRUE),
 ('pbm-020-b', 'pbm-020', '2', FALSE),
@@ -3953,12 +3905,6 @@ INSERT INTO uraian (uraian_id, kode_soal, jawaban) VALUES
 ('pk-009-ur', 'pk-009', '17'),
 ('pk-011-ur', 'pk-011', '1'),
 ('pk-015-ur', 'pk-015', '1'),
-
-('ppu-003-ur', 'ppu-003', 'William Shakespeare wrote Hamlet.'),
-('pbm-003-ur', 'pbm-003', '299,792,458 meters per second.'),
-('pk-003-ur', 'pk-003', 'Photosynthesis is the process by which plants convert sunlight into energy.'),
-('lbi-003-ur', 'lbi-003', 'An idiom is a phrase with a meaning different from its literal meaning.'),
-('lbe-003-ur', 'lbe-003', 'The Spanish translation of "apple" is "manzana".'),
 
 ('pm-006-ur', 'pm-006', '64'),
 ('pm-008-ur', 'pm-008', '48'),

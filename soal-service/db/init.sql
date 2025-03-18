@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS minat_bakat_pilihan (
     pilihan_id VARCHAR(36) PRIMARY KEY,
     kode_soal VARCHAR(36) NOT NULL,
     text_pilihan TEXT NOT NULL,
-    divisi VARCHAR(20) CHECK (divisi IN ('frontend', 'backend', 'mobapps', 'uiux', 'dsai', 'cysec', 'gamedev')),
+    divisi VARCHAR(20) CHECK (divisi IN ('frontend', 'backend', 'mobapps', 'uiux', 'dsai', 'cysec', 'gamedev', 'cp')),
     FOREIGN KEY (kode_soal) REFERENCES minat_bakat_soal(kode_soal) ON DELETE CASCADE
 );
 

@@ -21,6 +21,11 @@ func NewMinatBakatService(minatBakatRepo repositories.MbRepo) MinatBakatService 
 }
 
 func (s *minatBakatService) ProcessMinatBakatAnswers(userID int, answers []models.MinatBakatAnswers) (string, error) {
+	existingAttempt, _ := s.minatBakatRepo.GetMinatBakatFromUserID(userID)
+	if existingAttempt != nil {
+		logger.LogError(errors.New("user already has minat bakat attempt"), "User already has minat bakat attempt", map[string]interface{}{"layer": "service", "operation": "ProcessMinatBakatAnswers"})
+		return "", errors.New("user already has minat bakat attempt")
+	}
 	counts := make(map[string]int)
 
 	for _, answer := range answers {
