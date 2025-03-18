@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import RemainingTime from '@/components/tryout/remaining-time'
 import SmallStyledCard from '@/components/tryout/small-styled-card'
 import { cn } from '@/lib/utils'

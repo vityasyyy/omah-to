@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { SOAL_URL, MINAT_BAKAT_URL, PUBLIC_MINAT_BAKAT_URL, PUBLIC_SOAL_URL } from "@/types/url";
 
 export const getMbUrl = (isPublic?: boolean) => {
@@ -39,7 +40,6 @@ export const submitMbAnswers = async (answers: any, isPublic?: boolean, accessTo
         body: JSON.stringify(answers),
     });
     if (!res.ok) {
-        const errJSON = await res.json();
         throw new Error("Failed to submit answers");
     }
     

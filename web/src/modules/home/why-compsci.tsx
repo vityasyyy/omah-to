@@ -1,7 +1,6 @@
 import * as motion from 'motion/react-client'
 import BoldUnderline from '@/components/bold-underline'
 import Container from '@/components/container'
-import { VariantProps } from 'class-variance-authority'
 import Heading, { HeadingSpan } from '@/components/home/heading'
 import SoftCircle from '@/components/soft-circle'
 

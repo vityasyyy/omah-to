@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { ChevronUp, ChevronDown } from 'lucide-react'
 import Container from "@/components/container"
 import Heading, { HeadingSpan } from "@/components/home/heading";

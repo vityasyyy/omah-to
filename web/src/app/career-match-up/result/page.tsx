@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react'
 import { getMbAttempt } from '@/lib/fetch/mb-fetch'
 import ResultClient from './ResultClient'
@@ -100,47 +101,36 @@ export default async function CareerMatchUpResult() {
     }
 
     return (
-      <div className='mx-auto w-full pb-16'>
-        <div className='px-4 py-5'>
-          <BackButton />
-        </div>
-        <div className='px-4'>
-          <div className='mb-8 flex flex-col p-4 gap-6'>
-            <div className='flex flex-col items-center lg:flex-row'>
-              <div className='relative mb-6'>
-                <div className='absolute -inset-4 rounded-full bg-blue-100 opacity-70'></div>
-                <Image
-                  src={`/assets/divisions/${dominantCareer}.webp`}
-                  alt='Career Icon'
-                  width={100}
-                  height={100}
-                  className='relative z-10 w-[540px] lg:w-[968px]'
-                />
-              </div>
-              <div className='px-10 flex flex-col'>
-                <h1 className='mb-2 text-center lg:text-justify lg:text-2xl text-lg'>
-                  Karier yang sesuai untukmu adalah
-                </h1>
-                <h2 className='mb-4 text-center lg:text-justify text-2xl font-bold text-blue-600'>
-                  {results.dominantCareerTitle}
-                </h2>
-
-                {/* Description with better readability for mobile */}
-                <div className='text-sm lg:text-base leading-relaxed text-gray-700'>
-                  <p className='mb-4'>{results.fullDescription}</p>
-                  <p>
-                    Bayangkan kalau aplikasi favoritmu tampilannya berantakan,
-                    susah dinavigasi, atau tombolnya tidak responsif! Itulah
-                    kenapa masalah UI/UX sangat penting! Desain yang baik bisa
-                    meningkatkan kepuasan pengguna, membuat orang-orang lebih
-                    lama menggunakan aplikasi, dan bahkan membantu bisnis
-                    berkembang. Kalau kamu suka desain, tertarik dengan perilaku
-                    manusia, dan ingin menciptakan pengalaman digital yang lebih
-                    baik, UI/UX bisa jadi jalur karier yang seru buatmu! Di era
-                    digital ini, peran UI/UX semakin dibutuhkan untuk
-                    menciptakan produk yang lebih manusiawi dan menarik.
-                  </p>
-                </div>
+      <div className="p-8">
+        <h1 className="text-3xl font-bold mb-6">Your Career Match Result</h1>
+        <div className="p-6 bg-white rounded-lg shadow-md">
+          <h2 className="text-2xl font-semibold mb-4">
+            Your dominant career path is: <span className="text-primary">{results.dominantCareerTitle || results.dominantCareer}</span>
+          </h2>
+          <p className="mb-4">
+            Based on your answers, we&apos;ve identified that you have a strong inclination towards careers in the {results.dominantCareerTitle || results.dominantCareer} field.
+          </p>
+          <div className="mt-6">
+            <h3 className="text-xl font-medium mb-2">What this means for you:</h3>
+            <p>{results.description}</p>
+          </div>
+          {results.careerScores && (
+            <div className="mt-8">
+              <h3 className="text-xl font-medium mb-3">Your Career Compatibility:</h3>
+              <div className="space-y-3">
+                {Object.entries(results.careerScores).map(([career, score]: [string, any]) => (
+                  <div key={career} className="flex items-center">
+                    <div className="w-1/3 font-medium">{careerDescriptions[career.toLowerCase()]?.title || career}:</div>
+                    <div className="w-2/3">
+                      <div className="bg-gray-200 rounded-full h-4 w-full">
+                        <div 
+                          className="bg-primary h-4 rounded-full" 
+                          style={{ width: `${Math.round(score * 100)}%` }}
+                        ></div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>

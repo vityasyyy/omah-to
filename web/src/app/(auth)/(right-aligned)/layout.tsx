@@ -1,4 +1,3 @@
-import BlurCard from '@/components/blur-card'
 import Image from 'next/image'
 
 const AuthRightAlignedLayout = ({

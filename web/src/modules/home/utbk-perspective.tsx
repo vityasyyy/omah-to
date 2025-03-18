@@ -7,9 +7,7 @@ import {
   CarouselContent,
   CarouselItem,
 } from '@/components/ui/carousel'
-import Autoplay from 'embla-carousel-autoplay'
 import Image from 'next/image'
-import { useRef } from 'react'
 
 const UtbkPerspective = () => {
   // const plugin = useRef(Autoplay({ delay: 2000, stopOnInteraction: true }))
@@ -69,7 +67,6 @@ const Card = ({
   subtitle = 'CS23 Universitas Gadjah Mada',
   score,
   description = 'Lorem ipsum dolor sit amet, blablabla',
-  src = '/placeholder.png',
 }: {
   title?: string
   subtitle?: string

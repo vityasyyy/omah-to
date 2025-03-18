@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import React from 'react'
 import Image from 'next/image'
 import {ArrowUpRight, X} from 'lucide-react'
@@ -13,7 +15,6 @@ import katex from 'katex'
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -23,7 +24,6 @@ import {
   AlertDialog,
   AlertDialogCancel,
   AlertDialogContent,
-  AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
@@ -100,7 +100,6 @@ interface StatisticProps {
 const Statistic = ({ userScores, userAnswers, totalRank }: StatisticProps) => {
   const totalSkorSemua = userScores.reduce((sum, score) => sum + score.score, 0)
   const totalSkor = totalSkorSemua / userScores.length
-  const totalBenar = userAnswers.filter(answer => answer.is_correct).length
 
   // Create statistics data
   const statisticsData = userScores.map(score => {

@@ -1,0 +1,62 @@
+# Build stage
+FROM node:23-alpine3.21 AS build
+
+# Set the working directory inside the container
+WORKDIR /app
+
+# Install pnpm
+RUN npm i -g pnpm
+
+# Copy only package files for efficient caching
+COPY package.json pnpm-lock.yaml ./
+
+# Install dependencies
+RUN corepack enable && pnpm install --frozen-lockfile
+
+# Copy the rest of the frontend code
+COPY . .
+
+# Build the application
+RUN pnpm build
+
+# Production stage
+FROM node:23-alpine3.21 AS production
+
+# Set working directory
+WORKDIR /app
+
+# Set NODE_ENV
+ENV NODE_ENV=production
+
+# Install pnpm
+RUN npm i -g pnpm && \
+    # Create non-root user for security
+    addgroup -g 1001 -S nodejs && \
+    adduser -S nextjs -u 1001 && \
+    # Make sure the app directory is owned by the non-root user
+    chown -R nextjs:nodejs /app
+
+# Copy only necessary files from build stage
+COPY --from=build --chown=nextjs:nodejs /app/package.json /app/pnpm-lock.yaml ./
+COPY --from=build --chown=nextjs:nodejs /app/.next ./.next
+COPY --from=build --chown=nextjs:nodejs /app/public ./public
+COPY --from=build --chown=nextjs:nodejs /app/next.config.ts ./next.config.ts
+
+# If you have environment files, copy them too
+# COPY --from=build --chown=nextjs:nodejs /app/.env.production ./
+
+# Install production dependencies only
+RUN corepack enable && pnpm install --frozen-lockfile --prod
+
+# Switch to non-root user
+USER nextjs
+
+# Expose the default Next.js port
+EXPOSE 3000
+
+# Add health check
+HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \
+  CMD wget --no-verbose --tries=1 --spider http://localhost:3000/ || exit 1
+
+# Start the production server
+CMD ["pnpm", "start"]

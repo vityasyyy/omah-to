@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import StyledCard from '@/components/tryout/styled-card'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import {

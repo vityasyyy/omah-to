@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
 import StyledCard from '@/components/tryout/styled-card';
@@ -56,6 +57,37 @@ const AnswerCard = ({ time, currentSubtest, variant = 'multiple_choice', soalSem
   const currentSoal = soalSemua[clampedNumber - 1];
   const isLastQuestion = clampedNumber === totalQuestions;
 
+
+  // Submission handler
+  const submitAllAnswers = useCallback(async () => {
+    if (hasSubmitted) return;
+
+    try {
+      setSubmitting(true);
+      setSyncStatus('syncing');
+      
+      const answersToSubmit = Object.values(answers);
+      const result = await progressTryout(answersToSubmit, '', true);
+
+      localStorage.removeItem(localStorageKey);
+      setHasSubmitted(true);
+      if (timerRef.current) clearInterval(timerRef.current);
+      if (currentSubtest === "subtest_pm"){
+        router.push('/tryout')  
+      } else {
+        router.push('/tryout/intro')
+      }
+      alert('Answers submitted successfully!')
+      return result;
+    } catch (error) {
+      console.error('Submission error:', error);
+      alert('Submission failed. Please try again.');
+      throw error;
+    } finally {
+      setSubmitting(false);
+      setSyncStatus('idle');
+    }
+  }, [answers, hasSubmitted, localStorageKey, currentSubtest, router]);
   // Time limit handler
   useEffect(() => {
     if (!timeLimit) return;
@@ -83,8 +115,13 @@ const AnswerCard = ({ time, currentSubtest, variant = 'multiple_choice', soalSem
     };
 
     timerRef.current = setInterval(checkTime, 1000);
-    return () => { timerRef.current && clearInterval(timerRef.current) };
-  }, [timeLimit, hasSubmitted, isGracePeriod]);
+    return () => {
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+      }
+    };
+    
+  }, [timeLimit, hasSubmitted, isGracePeriod, submitAllAnswers]);
 
   // Sync logic
   const syncWithServer = useCallback(async (force = false) => {
@@ -156,36 +193,6 @@ const AnswerCard = ({ time, currentSubtest, variant = 'multiple_choice', soalSem
     });
   }, [localStorageKey, isGracePeriod]);
 
-  // Submission handler
-  const submitAllAnswers = useCallback(async () => {
-    if (hasSubmitted) return;
-
-    try {
-      setSubmitting(true);
-      setSyncStatus('syncing');
-      
-      const answersToSubmit = Object.values(answers);
-      const result = await progressTryout(answersToSubmit, '', true);
-
-      localStorage.removeItem(localStorageKey);
-      setHasSubmitted(true);
-      if (timerRef.current) clearInterval(timerRef.current);
-      if (currentSubtest === "subtest_pm"){
-        router.push('/tryout')  
-      } else {
-        router.push('/tryout/intro')
-      }
-      alert('Answers submitted successfully!')
-      return result;
-    } catch (error) {
-      console.error('Submission error:', error);
-      alert('Submission failed. Please try again.');
-      throw error;
-    } finally {
-      setSubmitting(false);
-      setSyncStatus('idle');
-    }
-  }, [answers, hasSubmitted, localStorageKey, currentSubtest, router]);
 
   // Format time remaining for display
   const formatTimeRemaining = (seconds: number) => {
@@ -222,7 +229,7 @@ const AnswerCard = ({ time, currentSubtest, variant = 'multiple_choice', soalSem
           <div className="bg-amber-100 border-l-4 border-amber-500 text-amber-700 p-4 mb-4 flex items-center">
             <Clock className="mr-2" size={20} />
             <div>
-              <strong>Time's up!</strong> You now have {formatTimeRemaining(graceTimeRemaining)} remaining to submit your answers.
+              <strong>Time&apos;s up!</strong> You now have {formatTimeRemaining(graceTimeRemaining)} remaining to submit your answers.
               All answers are locked. Please review and submit.
             </div>
           </div>
@@ -348,7 +355,6 @@ const MultipleChoice = ({
 };
 
 const TextAnswer = ({ 
-  soal,
   savedAnswer,
   onAnswerChange,
   disabled = false

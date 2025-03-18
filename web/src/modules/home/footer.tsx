@@ -1,7 +1,6 @@
 import Container from '@/components/container'
 import Logo from '@/components/home/logo'
 import { Instagram, Mail, Phone } from 'lucide-react'
-import Image from 'next/image'
 
 const CONTACTS = [
   {

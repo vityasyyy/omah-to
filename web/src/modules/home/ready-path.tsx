@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import Heading, { HeadingSpan } from '@/components/home/heading'
 import SoftCircle from '@/components/soft-circle'
-import * as motion from 'motion/react-client'
+
 
 const ReadyPath = () => {
   return (
