@@ -1,5 +1,6 @@
 import Container from '@/components/container'
 import Navbar from '@/components/home/navbar'
+import Footer from '@/modules/home/footer'
 
 const CareerMatchUpLayout = ({
   children,
@@ -14,14 +15,16 @@ const CareerMatchUpLayout = ({
       <main>
         <Navbar />
         {children}
+        <Footer />
       </main>
     )
   }
 
   return (
-    <main className='bg-secondary-new-500 min-h-screen'>
+    <main className='min-h-screen'>
       <Navbar />
       <Container>{children}</Container>
+      <Footer />
     </main>
   )
 }

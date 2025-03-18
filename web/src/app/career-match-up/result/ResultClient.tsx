@@ -8,40 +8,40 @@ interface ResultClientProps {
 
 export default function ResultClient({ action }: ResultClientProps) {
   const router = useRouter()
-
+  
   useEffect(() => {
     // Clean up any remaining localStorage items
     localStorage.removeItem('careerMatchAnswers')
   }, [])
-
+  
   if (action === 'error') {
     return (
-      <button 
+      <button
         onClick={() => router.push('/career-match-up')}
-        className="px-4 py-2 bg-primary text-white rounded-md"
+        className="px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors"
       >
-        Return to Test
+        Kembali ke Test
       </button>
     )
   }
-
+  
   if (action === 'no-results') {
     return (
-      <button 
+      <button
         onClick={() => router.push('/career-match-up')}
-        className="px-4 py-2 bg-primary text-white rounded-md"
+        className="px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors"
       >
-        Take the Test
+        Ikuti Test
       </button>
     )
   }
-
+  
   return (
-    <button 
+    <button
       onClick={() => router.push('/')}
-      className="px-6 py-2 bg-primary text-white rounded-md hover:bg-primary-dark transition-colors"
+      className="px-8 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors shadow-md"
     >
-      Return to Dashboard
+      Kembali ke Dashboard
     </button>
   )
 }
