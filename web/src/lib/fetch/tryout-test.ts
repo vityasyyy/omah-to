@@ -1,6 +1,5 @@
 import { SOAL_URL, TRYOUT_URL, PUBLIC_TRYOUT_URL, PUBLIC_SOAL_URL } from "@/types/url";
 import { Jawaban } from "@/types/types";
-import { redirect } from "next/navigation";
 
 export const getTryoutUrl = (isPublic?: boolean) => {
   return isPublic ? PUBLIC_TRYOUT_URL : TRYOUT_URL;
