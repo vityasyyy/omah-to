@@ -18,7 +18,12 @@ export async function middleware(request: NextRequest) {
   
   // Add paths under tryout/* (but not /tryout exactly)
   const currentPath = request.nextUrl.pathname;
-  const isTryoutSubpath = currentPath.startsWith('/tryout/') && currentPath !== '/tryout/';
+  
+  // Special case: tryout/pembahasan requires authentication, other tryout/ paths are public
+  const isTryoutPembahasan = currentPath.startsWith('/tryout/pembahasan');
+  const isTryoutSubpath = currentPath.startsWith('/tryout/') && 
+                          currentPath !== '/tryout/' && 
+                          !isTryoutPembahasan;
   
   // Check if current path is public
   const isPublicPath = publicPaths.some(path => currentPath.startsWith(path)) || isTryoutSubpath;

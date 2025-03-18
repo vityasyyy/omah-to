@@ -65,6 +65,7 @@ const StartCard = ({ status }: { status: 'none' | 'ongoing' | 'finished' }) => {
           {/* Conditional Button Rendering */}
           {status === 'none' && <StartButton />}
           {status === 'ongoing' && <ResumeButton />}
+          {status === 'finished' && <PembahasanButton />}
         </section>
       </main>
     </StyledCard>
@@ -93,15 +94,17 @@ const StartButton = () => {
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>
-            Mulai Tryout?
+          <div className="flex items-center justify-between">
+            <AlertDialogTitle>
+              Mulai Tryout?
+            </AlertDialogTitle>
             <AlertDialogCancel
               asChild
               className='my-auto h-auto border-none p-1'
             >
               <X className='text-neutral-500' />
             </AlertDialogCancel>
-          </AlertDialogTitle>
+          </div>
           <AlertDialogDescription>
             Tryout akan dimulai tanpa jeda untuk 7 subtest dengan jangka waktu
             selama 195 menit, semoga berhasil!
@@ -128,6 +131,20 @@ const ResumeButton = () => {
       onClick={() => router.push('/tryout/intro')}
     >
       Lanjutkan Tryout
+    </Button>
+  );
+};
+
+const PembahasanButton = () => {
+  const router = useRouter();
+
+  return (
+    <Button
+      variant="secondary"
+      className="mt-auto self-end px-6"
+      onClick={() => router.push('/tryout/pembahasan')}
+    >
+      Lihat Pembahasan
     </Button>
   );
 };

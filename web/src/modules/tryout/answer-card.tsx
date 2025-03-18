@@ -95,8 +95,6 @@ const AnswerCard = ({ time, currentSubtest, variant = 'multiple_choice', soalSem
       const answers: LocalAnswer[] = JSON.parse(savedAnswers);
       const answersObj = Object.values(answers);
       const answersToSync = force ? answersObj : answersObj.filter(a => !a.synced);
-      console.log("RAW answersObj", answersObj);
-      console.log('Syncing answers:', answersToSync);
       if (!answersToSync.length && !force) return;
 
       setSyncStatus('syncing');
