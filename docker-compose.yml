@@ -43,24 +43,24 @@ services:
         ports:
             - ${AUTH_SERVICE_PORT}:${AUTH_SERVICE_PORT}
 
-# Soal service
-# Database for the soal service
-soal-service-db:
-    image: postgres:17.2-alpine
-    env_file:
-        - soal-service/.env
-    volumes:
-        - ./soal-service/db/init.sql:/docker-entrypoint-initdb.d/init.sql # init script
-        - ./soal-service/db/soal.sql:/docker-entrypoint-initdb.d/soal.sql # soal script
-        - ./soal-service/db/minatbakat.sql:/docker-entrypoint-initdb.d/minatbakat.sql # minatbakat script
-        - soal-data:/var/lib/postgresql/data
-    networks:
-        - omahtryout-network
-    healthcheck:
-        test: ["CMD-SHELL", "pg_isready -U omahTryOut -d soal_service_db"]
-        interval: 5s
-        timeout: 5s
-        retries: 5
+    # Soal service
+    # Database for the soal service
+    soal-service-db:
+        image: postgres:17.2-alpine
+        env_file:
+            - soal-service/.env
+        volumes:
+            - ./soal-service/db/init.sql:/docker-entrypoint-initdb.d/init.sql # init script
+            - ./soal-service/db/soal.sql:/docker-entrypoint-initdb.d/soal.sql # soal script
+            - ./soal-service/db/minatbakat.sql:/docker-entrypoint-initdb.d/minatbakat.sql # minatbakat script
+            - soal-data:/var/lib/postgresql/data
+        networks:
+            - omahtryout-network
+        healthcheck:
+            test: ["CMD-SHELL", "pg_isready -U omahTryOut -d soal_service_db"]
+            interval: 5s
+            timeout: 5s
+            retries: 5
 
     # API for the soal service
     soal-service-api:
