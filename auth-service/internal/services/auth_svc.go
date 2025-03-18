@@ -81,13 +81,23 @@ func (s *authService) LoginUser(email, password string) (string, string, error) 
 func (s *authService) RequestPasswordReset(email string) error {
 	// create a new errgroup to run multiple goroutines concurrently
 	var g errgroup.Group
-
+	user, err := s.authRepo.GetUserByEmail(email)
+	if err != nil {
+		logger.LogError(err, "Failed to get user by email", map[string]interface{}{"layer": "service", "operation": "RequestPasswordReset"})
+		return errors.New("failed to get user by email")
+	}
+	if user == nil {
+		logger.LogError(err, "User not found", map[string]interface{}{"layer": "service", "operation": "RequestPasswordReset"})
+		return errors.New("user not found")
+	}
 	// create the reset token and expirtion time using the utils
 	resetToken, resetTokenExpiredAt, err := utils.CreateResetToken()
 	if err != nil {
 		logger.LogError(err, "Failed to generate reset tokens", map[string]interface{}{"layer": "service", "operation": "RequestPasswordReset"})
 		return errors.New("failed to generate reset tokens")
 	}
+	// generate resetLink using resetToken
+	resetLink := "http://localhost:3000/forgot-password/" + resetToken
 
 	// run the goroutines concurrently
 	// blacklist the token that is associated with the email, so that when user is requesting password reset, the token is blacklisted
@@ -110,7 +120,7 @@ func (s *authService) RequestPasswordReset(email string) error {
 
 	// email the user the reset link, using the email utils
 	g.Go(func() error {
-		if err := utils.SendPasswordResetEmail(email, resetToken); err != nil {
+		if err := utils.SendPasswordResetEmail(email, resetLink); err != nil {
 			logger.LogError(err, "Failed to send password reset email", map[string]interface{}{"layer": "service", "operation": "RequestPasswordReset"})
 			return errors.New("failed to send password reset email")
 		}
