@@ -1,11 +1,14 @@
-'use client'
-
 import Container from '@/components/container'
 import Navbar from '@/components/home/navbar'
-import { usePathname } from 'next/navigation'
-const CareerMatchUpLayout = ({ children }: { children: React.ReactNode }) => {
-  const pathname = usePathname()
 
+const CareerMatchUpLayout = ({
+  children,
+  params,
+}: {
+  children: React.ReactNode
+  params: { slug?: string[] }
+}) => {
+  const pathname = params?.slug ? `/${params.slug.join('/')}` : '/'
   if (pathname === '/career-match-up/result') {
     return (
       <main>
@@ -14,6 +17,7 @@ const CareerMatchUpLayout = ({ children }: { children: React.ReactNode }) => {
       </main>
     )
   }
+
   return (
     <main className='bg-secondary-new-500 min-h-screen'>
       <Navbar />
