@@ -1,5 +1,5 @@
-
 'use client'
+import { useState } from 'react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
@@ -23,7 +23,9 @@ const formSchema = z.object({
 })
 
 const ForgotPasswordForm = () => {
-  // 1. Define your form.
+  const [message, setMessage] = useState<string | null>(null)
+  const [variant, setVariant] = useState<'success' | 'error' | null>(null)
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -31,11 +33,29 @@ const ForgotPasswordForm = () => {
     },
   })
 
-  // 2. Define a submit handler.
-  const handleLogin = (values: z.infer<typeof formSchema>) => {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values)
+  const handleLogin = async (values: z.infer<typeof formSchema>) => {
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_AUTH_URL}/user/request-password-reset`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email: values.email }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setMessage(`${data.error}`);
+        setVariant('error');
+        return;
+      }
+      console.log('Success:', data);
+      setMessage(`${data}`);
+      setVariant('success');
+    } catch (error: any) {
+      console.error('Error:', error);
+      setMessage(`${error.message}`);
+      setVariant('error');
+    }
   }
 
   return (
@@ -61,6 +81,11 @@ const ForgotPasswordForm = () => {
         <Button type='submit' variant={`tertiary`} className='mt-8 w-full max-w-xs self-center'>
           Kirim Email
         </Button>
+        {message && (
+          <p style={{ color: variant === 'success' ? 'green' : 'red' }}>
+            {message}
+          </p>
+        )}
       </form>
     </Form>
   )
