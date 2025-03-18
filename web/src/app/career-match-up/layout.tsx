@@ -24,7 +24,6 @@ const CareerMatchUpLayout = ({
     <main className='min-h-screen'>
       <Navbar />
       <Container>{children}</Container>
-      <Footer />
     </main>
   )
 }
