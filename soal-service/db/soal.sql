@@ -212,11 +212,11 @@ Pola gambar 2 adalah:
 
 ('pu-016', 'paket1', 'subtest_pu', 'multiple_choice', 'Tentukan bilangan yang tepat pada segitiga berikut!', NULL, 33, '
 Pola gambar 1 adalah:
-15 \\times 20 = 300
-300 \\div 30 = 10
+15 x 20 = 300
+300 / 30 = 10
 Pola gambar 2 adalah:
-22 \\times 38 = 836
-836 \\div 44 = 19
+22 x 38 = 836
+836 / 44 = 19
 '),
 
 ('pu-017', 'paket1', 'subtest_pu', 'multiple_choice', '\\[
@@ -247,15 +247,15 @@ a = 1, b = 2, c = 3, d = 4
 a + b + c + d = 12
 a + c = d - b
 b = c - a
-d \\div c = a \\div b
+d / c = a / b
 Untuk menjawab soal tersebut, bisa menggunakan cara cepat dengan mengambil salah satu syaratnya. Jika masih kurang, coba gunakan dua syarat.
 Misalnya: b = c - a
 Syarat tersebut sesuai dengan opsi A dan D:
 Opsi A (1236), apabila b = c - a, maka 3 - 1 = 2.
 Opsi D (2136), apabila b = c - a, maka 3 - 2 = 1.
 Selanjutnya, gunakan syarat lain, misalnya d/c = a/b:
-Opsi A (1236), apabila d \\div c = a / b, maka 6 \\div 3 = 1 \\div 2. Opsi A tidak sesuai.
-Opsi D (2136), apabila d \\div c = a / b, maka 6 \\div 3 = 2 \\div 1. Opsi D sesuai.
+Opsi A (1236), apabila d / c = a / b, maka 6 / 3 = 1 / 2. Opsi A tidak sesuai.
+Opsi D (2136), apabila d / c = a / b, maka 6 / 3 = 2 / 1. Opsi D sesuai.
 Jadi, opsi D (2136) merupakan jawaban yang tepat.
 '),
 
@@ -355,38 +355,34 @@ Pola tersebut adalah pola Fibonacci. Jadi pola selanjutnya adalah pola yang terb
 '),
 
 ('pu-027', 'paket1', 'subtest_pu', 'multiple_choice', '5, 6, 12, 9, 13, 65, 59, 66, ...', NULL, 33, '5, 6, 12, 9, 13, 65, 59, 66, ...
-Pola dalam barisan ini yaitu + 1, \\times 2, - 3, + 4, \\times 5, - 6, + 7, \\times 8.
-Jadi, pola selanjutnya yaitu 66 \\times 8 = 528
+Pola dalam barisan ini yaitu + 1, x 2, - 3, + 4, x 5, - 6, + 7, x 8.
+Jadi, pola selanjutnya yaitu 66 x 8 = 528
 '),
 
 ('pu-028', 'paket1', 'subtest_pu', 'multiple_choice', 'Nilai 16% dari 625 adalah...', NULL, 33, 'Perhitungan ini didapatkan dengan mengalikan 625 dengan 16%.
-= 625 \\times \\frac{16}{100}
+= 625 x (16/100)
 = 100
 '),
 
-('pu-029', 'paket1', 'subtest_pu', 'multiple_choice', '(11.11 \\times (0.001)^4) \\times n = 1111, n adalah...', NULL, 33, '\\[
+('pu-029', 'paket1', 'subtest_pu', 'multiple_choice', '(11.11 x (0.001)^4) x n = 1111, n adalah...', NULL, 33, '\\[
 11.11 \\times (0,001)^4 \\times n = 1111
 \\]
-
 \\[
 1111 \\times 10^{-2} \\times (10^{-3})^4 \\times n = 1111
 \\]
-
 \\[
 1111 \\times 10^{-2} \\times 10^{-12} \\times n = 1111
 \\]
-
 \\[
 1111 \\times 10^{-14} \\times n = 1111
 \\]
-
 \\[
 n = 10^{14}
 \\]
 '),
 
 ('pu-030', 'paket1', 'subtest_pu', 'multiple_choice', 'Delapan anak membentuk dua kelompok bermain, masing-masing terdiri dari empat anak. Rata-rata usia kelompok pertama adalah 5,5 tahun, sedangkan rata-rata usia kelompok kedua adalah 6 tahun. Jika satu anak dari setiap kelompok ditukarkan, maka rata-rata usia kedua kelompok akan menjadi sama. Berapakah selisih usia antara kedua anak yang ditukarkan?', NULL, 33, 'Jumlah umur kelompok A: 5,5 \\times 4 = 22
-Jumlah umur kelompok B: 6 \\times 4 = 24
+Jumlah umur kelompok B: 6 x 4 = 24
 Agar rata-rata kedua kelompok menjadi sama, jumlah umur harus seimbang setelah pertukaran.
 Selisih usia antara kedua anak yang ditukarkan harus 1 tahun agar total usia di setiap kelompok menjadi 23 tahun dengan rata-rata 5.75 tahun.
 '),
@@ -1439,27 +1435,24 @@ Pernyataan (2)
 \\[
 Q_1 + Q_3 = 44
 \\]
-
 \\[
 Q_1 + Q_3 = \\frac{a + b}{2} + \\frac{c + d}{2}
 \\]
-
 \\[
 44 = \\frac{a + b + c + d}{2}
 \\]
-
 \\[
 88 = a + b + c + d
 \\]
-Rata-rata = \\frac{a + b + c + d}{4} = \\frac{88}{4} = 22
+Rata-rata = (a+b+c+d) / 4 = 88 / 4 = 22
 Pernyataan (2) saja cukup.
 '),
 
 ('pk-002', 'paket1', 'subtest_pk', 'short_answer', 'Rata-rata dari 6 bilangan adalah 15, dan jumlah dari 4 bilangan pertama adalah 50. Berapakah rata-rata dari 2 bilangan lainnya?', NULL, 10, 'Rata-rata 6 bilangan: 15
-Maka, jumlah total 6 bilangan: 6 \\times 15 = 90
+Maka, jumlah total 6 bilangan: 6 x 15 = 90
 Jumlah 4 bilangan pertama: 50
 Maka, jumlah 2 bilangan lainnya: 90 - 50 = 40
-Rata-rata 2 bilangan lainnya: 40 \\div 2 = 20
+Rata-rata 2 bilangan lainnya: 40 / 2 = 20
 '),
 
 ('pk-003', 'paket1', 'subtest_pk', 'multiple_choice', 'Jika titik R(1, r) memenuhi (x + y)^2 + y = 11, maka nilai r yang memenuhi adalah...
@@ -1567,28 +1560,24 @@ Substitusi a = 4, b = 2, c = 3, dan d = -5:
 = 17'),
 
 ('pk-010', 'paket1', 'subtest_pk', 'multiple_choice', 'Perbandingan kecepatan mengetik Andre dan Daffa adalah 4 : 7. Jika Andre mengetik 320 kata dalam 5 menit berapa waktu yang diperlukan Daffa untuk mengetik 1680 kata?', NULL, 10, '
-Kecepatan Andre = \\frac{320}{5} = 64 kata/menit
-Kecepatan Rina = \\frac{7}{4} \\times 64 = 112 kata/menit
-Waktu Daffa =  \\frac{1680}{112} = 15 menit'),
+Kecepatan Andre = 320/5 = 64 kata/menit
+Kecepatan Rina = 7/4 x 64 = 112 kata/menit
+Waktu Daffa =  1680/112 = 15 menit'),
 
 ('pk-011', 'paket1', 'subtest_pk', 'short_answer', 'Barisan 22, (x - 5), 10, 4, -2, ... merupakan barisan aritmatika. Berapakah rata-rata delapan suku pertama barisan di atas?', NULL, 10, '
 \\[
 S_n = \\frac{n}{2} \\left( 2a + (n - 1)b \\right)
 \\]
-
 \\[
 S_8 = \\frac{8}{2} \\left( 2 \\times 22 + (8 - 1) \\times (-6) \\right)
 \\]
-
 \\[
 S_8 = 4(44 - 42)
 \\]
-
 \\[
 S_8 = 8
 \\]
-
-Rata-rata delapan suku pertama = \\frac{8}{8} = 1
+Rata-rata delapan suku pertama = 8/8 = 1
 '),
 
 ('pk-012', 'paket1', 'subtest_pk', 'multiple_choice', 'Sebuah lahan berbentuk persegi panjang akan ditanami pohon di sekelilingnya. Jarak antara setiap pohon adalah 4 meter. Berapa banyak pohon yang diperlukan?
@@ -1597,7 +1586,7 @@ Tentukan apakah pernyataan berikut cukup untuk menjawab pertanyaan.
 2) Keliling lahan 240 m
 ', NULL, 10, '
 1) Saja tidak cukup karena panjang dan lebar tanah tidak diketahui.
-2) Saja cukup katena banyak pohon 240 \\div 4 = 60 pohon.
+2) Saja cukup katena banyak pohon 240 / 4 = 60 pohon.
 '),
 
 ('pk-013', 'paket1', 'subtest_pk', 'multiple_choice', 'Diberikan 4 bangun datar:
@@ -1631,25 +1620,21 @@ dan memenuhi
 \\]
 untuk suatu bilangan real q dan r.
 Berdasarkan informasi yang diberikan, manakah hubungan antara kuantitas P dan Q berikut yang benar?
-P: q \\times r
+P: q x r
 Q: 30
 ', NULL, 10, '
 \\[
 A^{-1} = \\begin{bmatrix} 2 & 1 \\\\ 3 & 1 \\end{bmatrix}
 \\]
-
 \\[
 \\begin{bmatrix} q & 5 \\\\ -2 & -2 \\end{bmatrix} A = \\begin{bmatrix} 3 & 2 \\\\ r & 2 \\end{bmatrix}
 \\]
-
 \\[
 \\begin{bmatrix} q & 5 \\\\ -2 & -2 \\end{bmatrix} = \\begin{bmatrix} 3 & 2 \\\\ r & 2 \\end{bmatrix} A^{-1}
 \\]
-
 \\[
 \\begin{bmatrix} q & 5 \\\\ -2 & -2 \\end{bmatrix} = \\begin{bmatrix} 3 & 2 \\\\ r & 2 \\end{bmatrix} \\begin{bmatrix} 2 & 1 \\\\ 3 & 1 \\end{bmatrix}
 \\]
-
 \\[
 \\begin{bmatrix} q & 5 \\\\ -2 & -2 \\end{bmatrix} = \\begin{bmatrix} 12 & 5 \\\\ 2r+6 & r+2 \\end{bmatrix}
 \\]
@@ -1657,7 +1642,7 @@ A^{-1} = \\begin{bmatrix} 2 & 1 \\\\ 3 & 1 \\end{bmatrix}
 q = 12
 r + 2 = -2
 r = -4
-P = q \\times r = 12 \\times -4 = -48
+P = q x r = 12 x -4 = -48
 '),
 
 ('pk-015', 'paket1', 'subtest_pk', 'short_answer', 'Diketahui matriks:
@@ -1667,17 +1652,16 @@ P = q \\times r = 12 \\times -4 = -48
 = \\begin{bmatrix} 0 & 6 \\\\ -6 & 6 \\end{bmatrix}
 \\]
 Nilai 2x + 3y adalah...
-', NULL, 10, '\\[
+', NULL, 10, '
+\\[
 3 \\left( \\begin{bmatrix} 1 & x \\\\ 2 & 4 \\end{bmatrix} 
 \\begin{bmatrix} y & 3 \\\\ -1 & x \\end{bmatrix} \\right) 
 = \\begin{bmatrix} 0 & 6 \\\\ -6 & 6 \\end{bmatrix}
 \\]
-
 \\[
 3 \\begin{bmatrix} y - x & 3 + x^2 \\\\ 2y - 4 & 6 + 4x \\end{bmatrix} 
 = \\begin{bmatrix} 0 & 6 \\\\ -6 & 6 \\end{bmatrix}
 \\]
-
 3(6 + 4x) = 6 
 18 + 12x = 6
 12x = -12
@@ -2775,9 +2759,9 @@ log 2 ≈ 0,3
 
 Model matematika mana yang paling sesuai untuk menggambarkan pertumbuhan jumlah kucing liar P(t) dalam t bulan?
 ', NULL, 47, 'Karena pertumbuhan bersifat eksponensial dengan faktor pertumbuhan 25% per bulan, maka model yang sesuai adalah:
-P(t) = P_0 \\times (1 + r)^t
+P(t) = P_0 x (1 + r)^t
 Dengan P_0 = 40 dan r = 0,25, maka:
-P(t) = 40 \\times 1,25^t
+P(t) = 40 x 1,25^t
 '),
 
 ('pm-002', 'paket1', 'subtest_pm', 'multiple_choice', 'Di kota Metra, yang merupakan kawasan urban dengan kepadatan penduduk tinggi, muncul permasalahan terkait pertumbuhan populasi kucing liar. Awalnya, hanya terdapat 40 ekor kucing liar yang berkeliaran di sekitar kota untuk mencari makanan di tempat sampah dan sudut-sudut jalan. Namun, dalam beberapa bulan terakhir, jumlah kucing liar tersebut mengalami peningkatan drastis dengan laju pertumbuhan eksponensial sebesar 25% per bulan.
@@ -2794,8 +2778,8 @@ log 4,5 ≈ 0,65
 log 2 ≈ 0,3
 
 Berapa jumlah kucing liar setelah 4 bulan?
-', NULL, 53, 'P(4) = 40 \\times 1,25^4
-P(4) = 40 \\times 2.44
+', NULL, 53, 'P(4) = 40 x 1,25^4
+P(4) = 40 x 2.44
 P(4) ≈ 98
 '),
 
@@ -2813,10 +2797,10 @@ log 4,5 ≈ 0,65
 log 2 ≈ 0,3
 
 Berapa lama waktu yang dibutuhkan agar jumlah kucing liar mencapai 160 ekor?
-', NULL, 47, '160 = 40 \\times 1,25^t
+', NULL, 47, '160 = 40 x 1,25^t
 4 = 1,25^t
 log 4 = t log 1,25
-0,6 ≈ t \\times 0,1
+0,6 ≈ t x 0,1
 t ≈ 6
 '),
 
@@ -2834,17 +2818,17 @@ log 4,5 ≈ 0,65
 log 2 ≈ 0,3
 
 Jika dalam beberapa bulan jumlah kucing meningkat menjadi empat kali lipat dari jumlah awal saat t = 0, berapa nilai t?
-', NULL, 53, '160 = 40 \\times 1,25^t
+', NULL, 53, '160 = 40 x 1,25^t
 4 = 1,25^t
 log 4 = t log 1,25
-0,6 ≈ t \\times 0,1
+0,6 ≈ t x 0,1
 t ≈ 6
 '),
 
 ('pm-005', 'paket1', 'subtest_pm', 'multiple_choice', 'Di sebuah laboratorium penelitian, seorang ilmuwan bernama Dr. Arif sedang meneliti pertumbuhan koloni bakteri dengan tingkat reproduksi yang sangat cepat. Bakteri ini memiliki kemampuan membelah diri setiap jam, di mana setiap bakteri tunggal akan membelah menjadi 4 bakteri baru. 
 Berdasarkan pertumbuhan bakteri yang dijelaskan, model matematika yang paling sesuai untuk menggambarkan jumlah bakteri setelah t jam adalah...', NULL, 47, 'Setiap bakteri membelah menjadi 4 bakteri baru setiap jam.
 Artinya, jika awalnya ada 1 bakteri, maka jumlahnya setelah t jam adalah:
-P(t) = 1 \\times 4^t = 4^t
+P(t) = 1 x 4^t = 4^t
 Sehingga, model pertumbuhan bakteri yang tepat adalah P(t) = 4^t.
 '),
 
@@ -2898,24 +2882,21 @@ Gunakan rumus kuadratik:
 \\[
 t = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}, dengan a = -4, b = 8, dan c = 48.
 \\]
-
 \\[
 t = \\frac{-8 \\pm \\sqrt{8^2 - 4(-4)(48)}}{2(-4)}
 = \\frac{-8 \\pm \\sqrt{832}}{-8}
 = \\frac{-8 \\pm 28.84}{-8}
 \\]
-
 \\[
 t_1 = -2.61 dan t_2 = 4.61
 \\]
-
 Jadi, waktu saat roket kembali ke tanah adalah sekitar 5 menit.
 '),
 
 ('pm-011', 'paket1', 'subtest_pm', 'multiple_choice', 'Seorang tukang ojek bernama Pak Budi menetapkan tarif tetap sebesar Rp6.000 untuk perjalanan pertama sejauh 2 km atau kurang. Setelah itu, setiap tambahan 1 km akan dikenakan biaya Rp2.500. 
 Berapa biaya yang harus dibayar oleh seorang penumpang jika perjalanan yang ditempuh sejauh 5 km?', NULL, 47, 'Perjalanan 2 km pertama dikenakan biaya Rp6.000
 Sisa perjalanan = 5 km - 2 km = 3 km
-Biaya tambahan: 3 \\times Rp2.500 = Rp7.500
+Biaya tambahan: 3 x Rp2.500 = Rp7.500
 Total biaya: Rp6.000 + Rp7.500 = Rp13.500
 '),
 
@@ -2923,13 +2904,13 @@ Total biaya: Rp6.000 + Rp7.500 = Rp13.500
 Berapa biaya yang harus dibayar oleh seorang penumpang jika perjalanan yang ditempuh sejauh x km?', NULL, 53, '2 km pertama Rp6.000
 Sisa perjalanan setelah 2 km dikenakan biaya tambahan
 Sehingga rumusnya:
-Total biaya = Rp6.000 + (x - 2) \\times Rp2.500
+Total biaya = Rp6.000 + (x - 2) x Rp2.500
 '),
 
 ('pm-013', 'paket1', 'subtest_pm', 'short_answer', 'Seorang tukang ojek bernama Pak Budi menetapkan tarif tetap sebesar Rp6.000 untuk perjalanan pertama sejauh 2 km atau kurang. Setelah itu, setiap tambahan 1 km akan dikenakan biaya Rp2.500. 
 Jarak yang dapat ditempuh dengan membayar biaya total sebesar Rp16.000 adalah ... km', NULL, 47, 'Diketahui total biaya Rp16.000, maka:
-Rp6.000 + (x - 2) \\times Rp2.500 = Rp16.000
-(x - 2) \\times Rp2.500 = Rp10.000
+Rp6.000 + (x - 2) x Rp2.500 = Rp16.000
+(x - 2) x Rp2.500 = Rp10.000
 x - 2 = 4
 x = 6 km
 '),
@@ -2937,16 +2918,16 @@ x = 6 km
 ('pm-014', 'paket1', 'subtest_pm', 'true_false', 'Seorang tukang ojek bernama Pak Budi menetapkan tarif tetap sebesar Rp6.000 untuk perjalanan pertama sejauh 2 km atau kurang. Setelah itu, setiap tambahan 1 km akan dikenakan biaya Rp2.500. 
 Tentukan nilai kebenaran dari pernyataan berikut dengan memilih "Benar" atau "Salah"!', NULL, 53, '
 1) Salah
-4 km → Rp6.000 + (4 - 2) \\times Rp2.500 = Rp11.000
-5 km → Rp6.000 + (5 - 2) \\times Rp2.500 = Rp13.500
+4 km → Rp6.000 + (4 - 2) x Rp2.500 = Rp11.000
+5 km → Rp6.000 + (5 - 2) x Rp2.500 = Rp13.500
 2) Benar
 1 km tambahan = Rp2.500
 2 km tambahan = Rp5.000
 3) Salah
 1 km tetap dihitung sebagai tarif minimum 2 km (Rp6.000)
 4) Benar
-Total biaya Rp6.000 + (x - 2) \\times Rp2.500 = Rp21.000
-(x - 2) \\times Rp2.500 = Rp15.000
+Total biaya Rp6.000 + (x - 2) x Rp2.500 = Rp21.000
+(x - 2) x Rp2.500 = Rp15.000
 x - 2 = 6
 x = 8
 '),
@@ -2964,9 +2945,9 @@ dengan h(t) dalam cm.
 
 Batu akan mencapai ketinggian maksimum sebesar ... cm.
 ', NULL, 53, 'Waktu saat mencapai ketinggian maksimum diperoleh dari rumus sumbu simetri parabola:
-t = \\frac{-b}{2a}
+t = -b / 2a
 dengan a = -3 dan b = 60:
-t = -60 \\div (2(-3)) = 60 \\div 6 = 10 detik
+t = -60 / (2(-3)) = 60 / 6 = 10 detik
 Ketinggian maksimum diperoleh dengan mensubstitusi t = 10 ke dalam fungsi:
 h(10) = -3(10)^2 + 60(10)
 h(10) = -300 + 600 = 300 cm
@@ -3001,7 +2982,6 @@ Total soal dalam 7 hari pertama dihitung dengan rumus jumlah barisan aritmetika:
 \\[
 S_n = \\frac{n}{2} \\times \\left( 2a + (n - 1) \\times b \\right)
 \\]
-
 \\[
 S_7 = \\frac{7}{2} \\times \\left( 2(120) + (7 - 1) \\times 6 \\right)
 = \\frac{7}{2} \\times (240 + 36) 
@@ -3021,23 +3001,18 @@ Jika Lina konsisten dengan pola latihannya, dan memiliki target awal untuk menye
 \\[
 500 = \\frac{n}{2} \\times \\left( 2(120) + (n - 1) \\times 6 \\right)
 \\]
-
 \\[
 500 = \\frac{n}{2} \\times (240 + 6n - 6)
 \\]
-
 \\[
 1000 = n(234 + 6n)
 \\]
-
 \\[
 6n^2 + 234n - 1000 = 0
 \\]
-
 \\[
 n_1 = -42.89
 \\]
-
 \\[
 n_2 = 3.89 \\approx 4
 \\]'),
@@ -3050,9 +3025,9 @@ Latihan yang ia kerjakan cukup menantang, tetapi Lina selalu berusaha dengan tek
 
 Jika Lina konsisten dengan pola latihannya, Lina akan mampu mengerjakan 300 soal dalam satu hari pada hari ke- ...
 ', NULL, 53, 'Untuk mencari hari ke-n di mana Lina mengerjakan 300 soal dalam sehari:
-a + (n - 1) \\times b = 300
-120 + (n - 1) \\times 6 = 300
-(n - 1) \\times 6 = 180
+a + (n - 1) x b = 300
+120 + (n - 1) x 6 = 300
+(n - 1) x 6 = 180
 n - 1 = 30
 n = 31
 Jadi, pada hari ke-31, Lina mengerjakan 300 soal dalam sehari.
