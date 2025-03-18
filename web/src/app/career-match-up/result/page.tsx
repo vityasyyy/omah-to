@@ -112,7 +112,7 @@ export default async function CareerMatchUpResult() {
           </p>
           <div className="mt-6">
             <h3 className="text-xl font-medium mb-2">What this means for you:</h3>
-            <p>{results.description}</p>
+            <p>{results.shortDescription}</p>
           </div>
           {results.careerScores && (
             <div className="mt-8">
@@ -133,10 +133,9 @@ export default async function CareerMatchUpResult() {
                 ))}
               </div>
             </div>
-          </div>
-          
+          )}
           <div>
-                       {' '}
+            {' '}
             <Enthusiasts
               dominantCareer={
                 dominantCareer.toUpperCase()
@@ -146,7 +145,7 @@ export default async function CareerMatchUpResult() {
           </div>
         </div>
       </div>
-    )
+      )
   } catch (error) {
     console.error('Error fetching results:', error)
     return (

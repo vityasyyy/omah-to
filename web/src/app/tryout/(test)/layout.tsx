@@ -28,7 +28,6 @@ const TryoutLayout = async ({ children }: { children: React.ReactNode }) => {
   const grace = 30_000;
   const adjustedTimeLimit = new Date(new Date(timeLimit).getTime() - grace);
   const subtestSekarang = currentSubtest.data.subtest_sekarang;
-  const user = await fetchUserClient(accessToken);
   const soal = await getSoal(
     currentSubtest.data.subtest_sekarang,
     tryoutToken,
@@ -40,7 +39,7 @@ const TryoutLayout = async ({ children }: { children: React.ReactNode }) => {
     <main className='bg-neutral-25 min-h-screen'>
       <Container>
         <TopBar />
-        <TryoutStatus time={adjustedTimeLimit} title={subtestSekarang} user={user}/>
+        <TryoutStatus time={adjustedTimeLimit} title={subtestSekarang}/>
         <NumberCarousel totalQuestions={panjangSoal} />
         <TryoutDataProvider currentSubtest={subtestSekarang} value={soal} time={adjustedTimeLimit}>{children}</TryoutDataProvider>
       </Container>

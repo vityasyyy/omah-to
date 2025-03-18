@@ -14,14 +14,14 @@ const subtestTitles: Record<string, string> = {
   subtest_pm: 'Penalaran Matematika',
 };
 
-const TryoutStatus = ({ title, time, user }: { title: string, time: Date, user: any }) => {
+const TryoutStatus = ({ title, time }: { title: string, time: Date }) => {
   const displayTitle = subtestTitles[title] || title;
   return (
     <>
       <main className='flex gap-2 md:gap-6'>
         <RemainingTime time={time} className='w-full shrink md:shrink-0 md:w-fit' />
         <TitleCard title={displayTitle} className='hidden md:flex' />
-        <ProfileCard user={user} className='w-full shrink md:w-fit md:shrink-0' />
+        <ProfileCard className='w-full shrink md:w-fit md:shrink-0' />
       </main>
       <TitleCard title={title} className='md:hidden' />
     </>
@@ -45,7 +45,7 @@ const TitleCard = ({
   )
 }
 
-const ProfileCard = ({ user, className }: { user: any, className?: string }) => {
+const ProfileCard = ({ className }: { className?: string }) => {
   return (
     <SmallStyledCard className={cn('gap-3 overflow-hidden', className)}>
       <section
@@ -54,7 +54,7 @@ const ProfileCard = ({ user, className }: { user: any, className?: string }) => 
         )}
       ></section>
       <h1 className='overflow-hidden text-ellipsis whitespace-nowrap'>
-        {user.username}
+        Ongoing Tryout
       </h1>
     </SmallStyledCard>
   )
