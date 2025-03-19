@@ -1,7 +1,6 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import RemainingTime from '@/components/tryout/remaining-time'
 import SmallStyledCard from '@/components/tryout/small-styled-card'
+import { User } from '@/lib/types/types';
 import { cn } from '@/lib/utils'
 
 const subtestTitles: Record<string, string> = {
@@ -14,14 +13,14 @@ const subtestTitles: Record<string, string> = {
   subtest_pm: 'Penalaran Matematika',
 };
 
-const TryoutStatus = ({ title, time }: { title: string, time: Date }) => {
+const TryoutStatus = ({ title, time, user }: { title: string, time: Date, user?: User }) => {
   const displayTitle = subtestTitles[title] || title;
   return (
     <>
       <main className='flex gap-2 md:gap-6'>
         <RemainingTime time={time} className='w-full shrink md:shrink-0 md:w-fit' />
         <TitleCard title={displayTitle} className='hidden md:flex' />
-        <ProfileCard className='w-full shrink md:w-fit md:shrink-0' />
+        <ProfileCard user={user} className='w-full shrink md:w-fit md:shrink-0' />
       </main>
       <TitleCard title={title} className='md:hidden' />
     </>
@@ -45,7 +44,7 @@ const TitleCard = ({
   )
 }
 
-const ProfileCard = ({ className }: { className?: string }) => {
+const ProfileCard = ({ className, user }: { className?: string, user?: User }) => {
   return (
     <SmallStyledCard className={cn('gap-3 overflow-hidden', className)}>
       <section
@@ -54,7 +53,7 @@ const ProfileCard = ({ className }: { className?: string }) => {
         )}
       ></section>
       <h1 className='overflow-hidden text-ellipsis whitespace-nowrap'>
-        Ongoing Tryout
+        {user?.username || 'LeBron James'}
       </h1>
     </SmallStyledCard>
   )

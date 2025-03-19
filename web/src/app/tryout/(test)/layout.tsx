@@ -1,13 +1,13 @@
 import Container from '@/components/container'
 import TopBar from '@/components/tryout/top-bar'
+import { getFinishedAttempt } from '@/lib/fetch/tryout-page'
 import { getCurrentTryout, getSoal, syncTryout } from '@/lib/fetch/tryout-test'
 import NumberCarousel from '@/modules/tryout/number-carousel'
 import TryoutStatus from '@/modules/tryout/tryout-status'
 import { cookies } from 'next/headers'
-import { TryoutDataProvider } from './tryout-context'
-import { fetchUserClient } from '@/lib/auth/fetch_user'
 import { redirect } from 'next/navigation'
-import { getFinishedAttempt } from '@/lib/fetch/tryout-page'
+import { TryoutDataProvider } from './tryout-context'
+import { fetchUser } from '@/lib/auth/fetch_user'
 
 const TryoutLayout = async ({ children }: { children: React.ReactNode }) => {
   const tryoutToken = (await cookies()).get('tryout_token')?.value as string;
@@ -34,12 +34,13 @@ const TryoutLayout = async ({ children }: { children: React.ReactNode }) => {
     false,
     true
   );
+  const user = await fetchUser()
   const panjangSoal = soal.length;
   return (
     <main className='bg-neutral-25 min-h-screen'>
       <Container>
         <TopBar />
-        <TryoutStatus time={adjustedTimeLimit} title={subtestSekarang}/>
+        <TryoutStatus user={user} time={adjustedTimeLimit} title={subtestSekarang}/>
         <NumberCarousel totalQuestions={panjangSoal} />
         <TryoutDataProvider currentSubtest={subtestSekarang} value={soal} time={adjustedTimeLimit}>{children}</TryoutDataProvider>
       </Container>

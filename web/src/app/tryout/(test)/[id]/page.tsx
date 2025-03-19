@@ -138,10 +138,8 @@ const LatexRenderer = ({ content }: { content: string }) => {
   };
 
   return (
-    <div className="w-full">
-      <div className="px-4 py-3 border border-neutral-200 rounded-md whitespace-pre-wrap">
+    <div className="w-full whitespace-pre-wrap">
         {renderWithLatex()}
-      </div>
     </div>
   );
 };
