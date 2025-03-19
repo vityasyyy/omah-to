@@ -17,19 +17,20 @@
  * @throws Will throw an error if the fetch request fails
  */
 import { headers } from 'next/headers'
+import { User } from '../types/types'
 
-export async function fetchUser() {
+export async function fetchUser() : Promise<User> {
   const headersList = await headers()
   const username = headersList.get('x-user-username')
   const email = headersList.get('x-user-email')
-  const asalSekolah = headersList.get('x-user-asal_sekolah')
-  const id = headersList.get('x-user-id')
+  const asal_sekolah = headersList.get('x-user-asal_sekolah')
+  const user_id = headersList.get('x-user-id')
 
-  if (!username || !email || !asalSekolah || !id) {
+  if (!username || !email || !asal_sekolah || !user_id) {
     return null
   }
 
-  return { username, email, asalSekolah, id }
+  return { username, email, asal_sekolah, user_id }
 }
 
 export const fetchUserClient = async (accessToken?: string) => {

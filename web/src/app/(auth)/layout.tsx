@@ -5,7 +5,8 @@ const AuthLayout = async ({ children }: { children?: React.ReactNode }) => {
   const user = await fetchUser()
   if (user) redirect('/')
 
-  return <main className='bg-primary-100 md:h-screen'>{children}</main>
+  return <main className='bg-primary-100 md:h-screen'>
+    {children}</main>
 }
 
 export default AuthLayout

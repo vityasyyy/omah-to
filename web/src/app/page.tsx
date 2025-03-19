@@ -7,19 +7,21 @@ import CompsciDivisions from '@/modules/home/compsci-divisions'
 import ReadyPath from '@/modules/home/ready-path'
 import UtbkPerspective from '@/modules/home/utbk-perspective'
 import Inspiration from '@/modules/home/inspiration'
-// import TryoutResult from '@/modules/tryout/tryout-result'
+import { Suspense } from 'react'
 
 export default function Home() {
   return (
     <>
-      <Navbar />
+      <Suspense fallback={<>Loading...</>}>
+        <Navbar />
+      </Suspense>
       <Hero />
       <WhyCompsci />
       <CompsciDivisions />
       <Inspiration />
       <UtbkPerspective />
       <SubjectSemester />
-      <ReadyPath/>
+      <ReadyPath />
       {/* <TryoutResult /> ini buat ngetes */}
       <Footer />
     </>

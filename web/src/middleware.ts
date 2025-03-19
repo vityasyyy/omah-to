@@ -1,111 +1,137 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 // middleware.ts
-import { NextResponse } from 'next/server';
-import type { NextRequest } from 'next/server';
+import { NextResponse } from 'next/server'
+import type { NextRequest } from 'next/server'
 
 function setHeaders(response: NextResponse, userData: any) {
-  response.headers.set('x-user-id', userData.user_id);
-  response.headers.set('x-user-asal_sekolah', userData.asal_sekolah);
-  response.headers.set('x-user-username', userData.username);
-  response.headers.set('x-user-email', userData.email);
+  response.headers.set('x-user-id', userData.user_id)
+  response.headers.set('x-user-asal_sekolah', userData.asal_sekolah)
+  response.headers.set('x-user-username', userData.username)
+  response.headers.set('x-user-email', userData.email)
 }
 
 export async function middleware(request: NextRequest) {
-  const accessToken = request.cookies.get('access_token')?.value;
-  const refreshToken = request.cookies.get('refresh_token')?.value;
-  
-  // Define public paths that don't require authentication
-  const publicPaths = ['/login', '/register', '/forgot-password'];
-  
-  // Add paths under tryout/* (but not /tryout exactly)
-  const currentPath = request.nextUrl.pathname;
-  
-  // Special case: tryout/pembahasan requires authentication, other tryout/ paths are public
-  const isTryoutPembahasan = currentPath.startsWith('/tryout/pembahasan');
-  const isTryoutSubpath = currentPath.startsWith('/tryout/') && 
-                          currentPath !== '/tryout/' && 
-                          !isTryoutPembahasan;
-  
-  // Check if current path is public
-  const isPublicPath = publicPaths.some(path => currentPath.startsWith(path)) || isTryoutSubpath;
-  
-  // Allow access to public paths without authentication
-  if (isPublicPath) {
-    return NextResponse.next();
+  const currentPath = request.nextUrl.pathname
+
+  // Define path patterns
+  const authRequiredPaths = [
+    '/dashboard',
+    '/profile',
+    '/settings',
+    '/tryout$',
+    '/tryout/pembahasan',
+  ]
+
+  const publicPaths = ['/', '/login', '/register', '/forgot-password']
+
+  // Check if path requires authentication
+  const requiresAuth = authRequiredPaths.some((path) =>
+    path.endsWith('$')
+      ? currentPath === path.slice(0, -1)
+      : currentPath.startsWith(path)
+  )
+
+  // Check if path is explicitly public
+  const isPublicPath = publicPaths.some((path) => currentPath.startsWith(path))
+
+  // Special case for tryout paths (all are public except /tryout and /tryout/pembahasan)
+  const isTryoutPath = currentPath.startsWith('/tryout/')
+  const isPublicTryoutPath =
+    isTryoutPath && !currentPath.startsWith('/tryout/pembahasan')
+
+  // Create default response
+  const response = NextResponse.next()
+
+  // Skip token validation for public paths if not needed
+  if ((isPublicPath || isPublicTryoutPath) && !requiresAuth) {
+    return response
   }
-  
-  // If no tokens exist, redirect to login
-  if (!accessToken && !refreshToken) {
-    return NextResponse.redirect(new URL('/login', request.url));
+
+  // Check for tokens
+  const accessToken = request.cookies.get('access_token')?.value
+  const refreshToken = request.cookies.get('refresh_token')?.value
+
+  // If no tokens exist and authentication is required, redirect to login
+  if (!accessToken && !refreshToken && requiresAuth) {
+    return NextResponse.redirect(new URL('/login', request.url))
   }
-  
-  // Rest of your middleware code remains the same...
-  // Check if access token is valid
+
+  // Process authentication - try access token first
   if (accessToken) {
     try {
       const res = await fetch(`${process.env.AUTH_URL}/auth/validateprofile`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          'Cookie': `access_token=${accessToken}`
+          Cookie: `access_token=${accessToken}`,
         },
-        credentials: 'include'
-      });
-      
+        credentials: 'include',
+      })
+
       if (res.ok) {
-        // Token is valid, allow access
-        const response = NextResponse.next();
-        const userData = await res.json();
-        setHeaders(response, userData);
-        return response;
+        const userData = await res.json()
+        setHeaders(response, userData)
+        return response
       }
     } catch (error) {
-      console.error('Access token validation error:', error);
+      console.error('Access token validation error:', error)
     }
   }
-  
-  // Access token is invalid, try refresh token if available
+
+  // Try refresh token if access token failed
   if (refreshToken) {
     try {
       const res = await fetch(`${process.env.AUTH_URL}/user/refresh`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          'Cookie': `refresh_token=${refreshToken}`
+          Cookie: `refresh_token=${refreshToken}`,
         },
-        credentials: 'include'
-      });
-      
+        credentials: 'include',
+      })
+
       if (res.ok) {
-        const resBody = await res.json();
-        // Extract new tokens from response
-        const setCookieHeader = res.headers.get('set-cookie');
+        const resBody = await res.json()
+        const setCookieHeader = res.headers.get('set-cookie')
         if (!setCookieHeader) {
-          return NextResponse.redirect(new URL('/login', request.url));
+          if (!requiresAuth) return response
+          return NextResponse.redirect(new URL('/login', request.url))
         }
-        
-        // Create response that will continue to the requested page
-        const response = NextResponse.next();
-        
-        // Forward the Set-Cookie header from the auth service
-        response.headers.set('Set-Cookie', setCookieHeader);
-        setHeaders(response, resBody);
-        return response;
+
+        response.headers.set('Set-Cookie', setCookieHeader)
+        setHeaders(response, resBody)
+        return response
       }
     } catch (error) {
-      console.error('Refresh token error:', error);
+      console.error('Refresh token error:', error)
     }
   }
-  
-  // If all validation attempts fail, redirect to login
-  return NextResponse.redirect(new URL('/login', request.url));
+
+  // If authentication failed but path doesn't require auth, allow access
+  if (!requiresAuth) {
+    return response
+  }
+
+  // Otherwise redirect to login
+  return NextResponse.redirect(new URL('/login', request.url))
 }
 
-// Configure which paths the middleware runs on
+// Configure middleware to run only on routes that might need authentication or user data
 export const config = {
   matcher: [
-    // Apply to all routes except public assets, api routes, and specific public pages
-    '/((?!_next/static|_next/image|favicon.ico|api/refresh-token|api/public|login|register).*)'
-  ]
-};
+    // Specific auth required paths
+    '/dashboard/:path*',
+    '/profile/:path*',
+    '/settings/:path*',
+    '/tryout',
+    '/tryout/pembahasan/:path*',
+
+    // Public paths that might need user data
+    '/',
+    '/login',
+    '/register',
+    '/forgot-password',
+    '/tryout/:path*',
+  ],
+}

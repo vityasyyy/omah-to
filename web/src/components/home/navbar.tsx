@@ -8,24 +8,15 @@ import {
   SheetTrigger,
 } from '@/components/ui/sheet'
 import { fetchUser } from '@/lib/auth/fetch_user'
+import { User } from '@/lib/types/types'
 import { cn } from '@/lib/utils'
-import { LogOut, Menu } from 'lucide-react'
+import { Menu } from 'lucide-react'
 import Link from 'next/link'
 import Container from '../container'
 import { Button, buttonVariants } from '../ui/button'
 import Logo from './logo'
 import NavbarResolver from './navbar-resolver'
-import Image from 'next/image'
-import { User } from '@/lib/types/types'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '../ui/dropdown-menu'
-import { cookies } from 'next/headers'
+import ProfileButton from './profile-button'
 
 const NAV_ITEMS = [
   {
@@ -40,8 +31,6 @@ const NAV_ITEMS = [
 
 const Navbar = async () => {
   const user = await fetchUser()
-  const cookieStore = await cookies()
-  const foo = cookieStore.getAll()
   const isSignedIn = user !== null
 
   return (
@@ -50,10 +39,9 @@ const Navbar = async () => {
         <Container className='h-20 flex-row items-center justify-between gap-8'>
           <Logo />
           {JSON.stringify(user)}
-          {JSON.stringify(foo)}
 
-          <DesktopNavigation signedIn={isSignedIn} />
-          <MobileNavigation />
+          <DesktopNavigation signedIn={isSignedIn} user={user} />
+          <MobileNavigation signedIn={isSignedIn} user={user} />
         </Container>
       </main>
 
@@ -62,7 +50,13 @@ const Navbar = async () => {
   )
 }
 
-const DesktopNavigation = ({ signedIn = false }: { signedIn: boolean }) => (
+const DesktopNavigation = ({
+  signedIn = false,
+  user,
+}: {
+  signedIn: boolean
+  user?: User
+}) => (
   <main className='hidden gap-8 md:flex'>
     {NAV_ITEMS.map((nav, i) => (
       <Link href={nav.href} key={i}>
@@ -73,7 +67,7 @@ const DesktopNavigation = ({ signedIn = false }: { signedIn: boolean }) => (
     ))}
 
     {signedIn ? (
-      <></>
+      <ProfileButton user={user} />
     ) : (
       <Link href={`/register`}>
         <Button variant={`tertiary`} className='px-8 hover:cursor-pointer'>
@@ -84,7 +78,13 @@ const DesktopNavigation = ({ signedIn = false }: { signedIn: boolean }) => (
   </main>
 )
 
-const MobileNavigation = () => (
+const MobileNavigation = ({
+  signedIn = false,
+  user,
+}: {
+  signedIn: boolean
+  user?: User
+}) => (
   <main className='flex md:hidden'>
     <Sheet>
       <SheetTrigger asChild>
@@ -108,76 +108,43 @@ const MobileNavigation = () => (
             ))}
           </section>
           <section className='flex flex-col gap-2'>
-            <SheetClose asChild>
-              <Link
-                href={`/register`}
-                className={buttonVariants({ variant: 'tertiary' })}
-              >
-                Daftar
-              </Link>
-            </SheetClose>
-            <SheetClose asChild>
-              <Link
-                href={'/login'}
-                className={cn(
-                  buttonVariants({ variant: 'blur' }),
-                  'text-primary-700 shadow-none'
-                )}
-              >
-                Masuk
-              </Link>
-            </SheetClose>
+            {signedIn ? (
+                <SheetClose asChild>
+                  <Link
+                    href={`/register`}
+                    className={cn(buttonVariants({ variant: 'destructive' }), 'bg-error-400 text-white')}
+                  >
+                    Logout
+                  </Link>
+                </SheetClose>
+            ) : (
+              <>
+                <SheetClose asChild>
+                  <Link
+                    href={`/register`}
+                    className={buttonVariants({ variant: 'tertiary' })}
+                  >
+                    Daftar
+                  </Link>
+                </SheetClose>
+                <SheetClose asChild>
+                  <Link
+                    href={'/login'}
+                    className={cn(
+                      buttonVariants({ variant: 'blur' }),
+                      'text-primary-700 shadow-none'
+                    )}
+                  >
+                    Masuk
+                  </Link>
+                </SheetClose>
+              </>
+            )}
           </section>
         </main>
       </SheetContent>
     </Sheet>
   </main>
 )
-
-const ProfileButton = (props: User) => {
-  return (
-    <DropdownMenu>
-      <DropdownMenuTrigger tabIndex={-1}>
-        <div className='relative size-8 overflow-clip rounded-full bg-neutral-200'>
-          <Image
-            src={`/avatar.jpg`}
-            alt='Profile Picture'
-            fill
-            sizes='20%'
-            className='object-cover'
-          />
-        </div>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent className='-translate-x-8'>
-        <DropdownMenuLabel>My Account</DropdownMenuLabel>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem
-          onClick={async () => {
-            const res = await fetch(
-              `${process.env.NEXT_PUBLIC_AUTH_URL}/auth/validateprofile`,
-              {
-                credentials: 'include',
-              }
-            )
-
-            if (res.ok) {
-              console.log('success:', res)
-            } else {
-              console.log('error')
-            }
-          }}
-        >
-          Validate Profile
-        </DropdownMenuItem>
-        <DropdownMenuItem
-          onClick={() => {}}
-          className='text-error-400 hover:text-error-400!'
-        >
-          <LogOut className='text-error-400' /> Log Out
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
-  )
-}
 
 export default Navbar
