@@ -77,7 +77,7 @@ const Hero = () => {
             variants={containerVariants}
             initial='hidden'
             animate='visible'
-            className='z-10 flex w-full max-w-none flex-col gap-2 self-center pt-4 md:pb-12 md:max-w-lg md:gap-6 md:py-0'
+            className='z-10 flex w-full max-w-none flex-col gap-2 self-center pt-4 md:max-w-lg md:gap-6 md:py-0 md:pb-12'
           >
             <motion.div
               variants={childVariants}
@@ -98,7 +98,7 @@ const Hero = () => {
           </motion.div>
 
           {/* images */}
-          <div className='relative flex w-full justify-center items-center'>
+          <div className='relative flex w-full items-center justify-center'>
             {/* person */}
             <Image
               src={`/bron.png`}
@@ -144,11 +144,11 @@ const Card = ({
   <StyledCard
     title={title}
     variant='blue'
-    className='w-full justify-between h-full border-2 *:text-black!'
+    className='h-full w-full justify-between border-2 *:text-black!'
   >
-    <section className='-mt-2 flex h-full justify-between flex-col gap-4 text-start'>
+    <section className='-mt-2 flex h-full flex-col justify-between gap-4 text-start'>
       {/* text and cta */}
-      <p className='text-sm font-light min-h-12'>{description}</p>
+      <p className='min-h-12 text-sm font-light'>{description}</p>
       <Link
         href={href}
         className={cn(

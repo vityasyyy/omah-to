@@ -2,7 +2,7 @@
 
 import React from 'react'
 import Image from 'next/image'
-import {ArrowUpRight, X} from 'lucide-react'
+import { ArrowUpRight, X } from 'lucide-react'
 import Container from '@/components/container'
 import { Button } from '@/components/ui/button'
 import StyledCard from '@/components/tryout/styled-card'
@@ -29,16 +29,9 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
+import * as motion from 'motion/react-client'
+import { SUBTESTS } from '@/lib/helpers/subtests'
 
-const subtestTitles: Record<string, string> = {
-  subtest_pu: 'Pengetahuan Umum',
-  subtest_ppu: 'Pengetahuan dan Pemahaman Umum',
-  subtest_pbm: 'Pengetahuan Membaca dan Menulis',
-  subtest_pk: 'Pengetahuan Kuantitatif',
-  subtest_lbi: 'Literasi Bahasa Indonesia',
-  subtest_lbe: 'Literasi Bahasa Inggris',
-  subtest_pm: 'Penalaran Matematika',
-};
 interface TryoutResultProps {
   userScores: {
     subtest: string
@@ -55,38 +48,70 @@ interface TryoutResultProps {
   totalRank?: number
 }
 
-const TryoutResult = ({ userScores, userAnswers, totalRank }: TryoutResultProps) => {
+const TryoutResult = ({
+  userScores,
+  userAnswers,
+  totalRank,
+}: TryoutResultProps) => {
   // Group answers by subtest
-  const groupedAnswers = userAnswers.reduce((acc, answer) => {
-    const key = answer.subtest
-    if (!acc[key]) {
-      acc[key] = []
-    }
-    acc[key].push({
-      no: acc[key].length + 1,
-      jawaban: answer.text_pilihan || answer.user_answer,
-      pembahasan: answer.pembahasan,
-      isCorrect: answer.is_correct
-    })
-    return acc
-  }, {} as Record<string, Array<{ no: number, jawaban: string, pembahasan: string, isCorrect: boolean }>>)
+  const groupedAnswers = userAnswers.reduce(
+    (acc, answer) => {
+      const key = answer.subtest
+      if (!acc[key]) {
+        acc[key] = []
+      }
+      acc[key].push({
+        no: acc[key].length + 1,
+        jawaban: answer.text_pilihan || answer.user_answer,
+        pembahasan: answer.pembahasan,
+        isCorrect: answer.is_correct,
+      })
+      return acc
+    },
+    {} as Record<
+      string,
+      Array<{
+        no: number
+        jawaban: string
+        pembahasan: string
+        isCorrect: boolean
+      }>
+    >
+  )
 
   return (
     <Container>
-      <h1 className='text-primary-900 mt-9 mb-4.5 text-center text-2xl font-bold md:mb-7'>
+      <motion.h1
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ type: 'tween', duration: 0.2 }}
+        className='text-primary-900 mt-9 mb-4.5 text-center text-2xl font-bold md:mb-7'
+      >
         Hasil TryOut
-      </h1>
-      <Statistic userScores={userScores} userAnswers={userAnswers} totalRank={totalRank} />
-      <div className='space-y-6'>
-        {Object.entries(groupedAnswers).map(([subtest, qna]) => (
-          <Pembahasan
-            key={subtest}
-            title={`Jawaban ${subtestTitles[subtest] || subtest}`}
-            subtest={subtest}
-            qnaData={qna}
-          />
-        ))}
-      </div>
+      </motion.h1>
+
+      <motion.main
+        initial={{ opacity: 0, y: 5 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ type: 'tween', duration: 0.2 }}
+        className='flex flex-col gap-4'
+      >
+        <Statistic
+          userScores={userScores}
+          userAnswers={userAnswers}
+          totalRank={totalRank}
+        />
+        <div className='space-y-6'>
+          {Object.entries(groupedAnswers).map(([subtest, qna]) => (
+            <Pembahasan
+              key={subtest}
+              title={`Jawaban`}
+              subtest={SUBTESTS[subtest]?.title}
+              qnaData={qna}
+            />
+          ))}
+        </div>
+      </motion.main>
     </Container>
   )
 }
@@ -102,16 +127,18 @@ const Statistic = ({ userScores, userAnswers, totalRank }: StatisticProps) => {
   const totalSkor = totalSkorSemua / userScores.length
 
   // Create statistics data
-  const statisticsData = userScores.map(score => {
-    const subtestAnswers = userAnswers.filter(answer => answer.subtest === score.subtest)
+  const statisticsData = userScores.map((score) => {
+    const subtestAnswers = userAnswers.filter(
+      (answer) => answer.subtest === score.subtest
+    )
     return {
       subtest: score.subtest,
-      jml_benar: subtestAnswers.filter(answer => answer.is_correct).length,
-      skor: score.score
+      jml_benar: subtestAnswers.filter((answer) => answer.is_correct).length,
+      skor: score.score,
     }
   })
 
-// In your component
+  // In your component
   return (
     <div className='grid w-full grid-cols-1 gap-6 xl:grid-cols-4'>
       <div className='col-span-3 grid w-full grid-cols-1 gap-4 md:grid-cols-2 xl:col-span-1 xl:grid-cols-1'>
@@ -137,12 +164,11 @@ const Statistic = ({ userScores, userAnswers, totalRank }: StatisticProps) => {
         </ResultTable>
         <section className='border-primary-500 bg-primary-900 relative h-48 rounded-xl border p-4 text-white *:text-left md:h-auto xl:h-48'>
           <p className='text-2xl font-bold sm:text-3xl 2xl:text-4xl'>
-            Kamu 
-            <br className='xl:hidden' />
-            {' '}Keren!
+            Kamu
+            <br className='xl:hidden' /> Keren!
           </p>
           <br className='hidden 2xl:block' />
-          <p className='text-sm font-light mr-52'>
+          <p className='mr-52 text-sm font-light'>
             Perjuangkan nilaimu, dan sampai jumpa di Universitas Gadjah Mada
           </p>
           <Image
@@ -177,7 +203,9 @@ const ResultTable = (props: ResultTableProps) => {
       <header className='flex h-fit w-full justify-between pb-2 text-sm font-bold text-white md:text-base'>
         <span>{props.title || 'Title'}</span>
         {props.subtest && (
-          <span className='text-neutral-500'>Subtest: {subtestTitles[props.subtest] || props.subtest}</span>
+          <span className='text-neutral-500'>
+            Subtest: {SUBTESTS[props.subtest]?.title || props.subtest}
+          </span>
         )}
       </header>
 
@@ -188,7 +216,6 @@ const ResultTable = (props: ResultTableProps) => {
     </main>
   )
 }
-
 
 interface PembahasanProps {
   title?: string
@@ -202,7 +229,12 @@ interface PembahasanProps {
   }>
 }
 
-const Pembahasan = ({ title, className, subtest, qnaData }: PembahasanProps) => (
+const Pembahasan = ({
+  title,
+  className,
+  subtest,
+  qnaData,
+}: PembahasanProps) => (
   <StyledCard title={title} className={className} subtest={subtest}>
     <ScrollArea className='h-full w-full overflow-hidden rounded-lg border border-neutral-200'>
       <Table>
@@ -216,8 +248,15 @@ const Pembahasan = ({ title, className, subtest, qnaData }: PembahasanProps) => 
         <TableBody>
           {qnaData.map((data, index) => (
             <TableRow key={index}>
-              <TableCell className='text-center font-medium'>{data.no}</TableCell>
-              <TableCell className={cn('w-full text-left', data.isCorrect ? 'text-green-600' : 'text-red-600')}>
+              <TableCell className='text-center font-medium'>
+                {data.no}
+              </TableCell>
+              <TableCell
+                className={cn(
+                  'w-full text-left',
+                  data.isCorrect ? 'text-green-600' : 'text-red-600'
+                )}
+              >
                 {data.jawaban}
               </TableCell>
               <TableCell className='w-24 text-center'>
@@ -234,152 +273,158 @@ const Pembahasan = ({ title, className, subtest, qnaData }: PembahasanProps) => 
 const LatexRenderer = ({ content }: { content: string }) => {
   // Early return if the content is empty
   if (!content) {
-    return null;
+    return null
   }
 
   // Properly normalize the LaTeX content from database
   const normalizeLatex = (latex: string) => {
     return latex
       .replace(/\\\\/g, '\\') // Convert \\ to \ for LaTeX commands
-      .replace(/[""]/g, '"'); // Fix curly quotes
-  };
+      .replace(/[""]/g, '"') // Fix curly quotes
+  }
 
   // Function to render the content with LaTeX
   const renderWithLatex = () => {
     // Normalize content coming from the database
-    let normalizedContent = normalizeLatex(content);
-    
+    let normalizedContent = normalizeLatex(content)
+
     // Step 1: Process block LaTeX expressions
     // Match block LaTeX surrounded by \[ \] or $$...$$
-    const blockLatexRegex = /(\\\[([\s\S]*?)\\\]|\$\$([\s\S]*?)\$\$)/g;
-    let processedContent = normalizedContent;
-    let blockLatexMatches: string[] = [];
-    let blockMatch;
-    
+    const blockLatexRegex = /(\\\[([\s\S]*?)\\\]|\$\$([\s\S]*?)\$\$)/g
+    let processedContent = normalizedContent
+    let blockLatexMatches: string[] = []
+    let blockMatch
+
     // Extract all block LaTeX and replace with placeholders
     while ((blockMatch = blockLatexRegex.exec(normalizedContent)) !== null) {
-      const fullMatch = blockMatch[0];
-      const latexContent = blockMatch[2] || blockMatch[3]; // Get the content inside delimiters
-      
+      const fullMatch = blockMatch[0]
+      const latexContent = blockMatch[2] || blockMatch[3] // Get the content inside delimiters
+
       // Add to matches array and replace with placeholder
-      blockLatexMatches.push(latexContent);
+      blockLatexMatches.push(latexContent)
       processedContent = processedContent.replace(
-        fullMatch, 
+        fullMatch,
         `[BLOCK_LATEX_${blockLatexMatches.length - 1}]`
-      );
+      )
     }
-    
+
     // Step 2: Process inline LaTeX expressions
     // Match inline LaTeX surrounded by \( \) or $...$
-    const inlineLatexRegex = /(\\\(([\s\S]*?)\\\)|\$([\s\S]*?)\$)/g;
-    let inlineLatexMatches: string[] = [];
-    let inlineMatch;
-    
+    const inlineLatexRegex = /(\\\(([\s\S]*?)\\\)|\$([\s\S]*?)\$)/g
+    let inlineLatexMatches: string[] = []
+    let inlineMatch
+
     // Extract all inline LaTeX and replace with placeholders
     while ((inlineMatch = inlineLatexRegex.exec(processedContent)) !== null) {
-      const fullMatch = inlineMatch[0];
-      const latexContent = inlineMatch[2] || inlineMatch[3]; // Get the content inside delimiters
-      
+      const fullMatch = inlineMatch[0]
+      const latexContent = inlineMatch[2] || inlineMatch[3] // Get the content inside delimiters
+
       // Add to matches array and replace with placeholder
-      inlineLatexMatches.push(latexContent);
+      inlineLatexMatches.push(latexContent)
       processedContent = processedContent.replace(
-        fullMatch, 
+        fullMatch,
         `[INLINE_LATEX_${inlineLatexMatches.length - 1}]`
-      );
+      )
     }
-    
+
     // Step 3: Render each piece and replace placeholders
     // Convert text parts and placeholders to JSX elements
-    const parts = processedContent.split(/(\[BLOCK_LATEX_\d+\]|\[INLINE_LATEX_\d+\])/g);
-    
+    const parts = processedContent.split(
+      /(\[BLOCK_LATEX_\d+\]|\[INLINE_LATEX_\d+\])/g
+    )
+
     return parts.map((part, index) => {
       // Check if this part is a placeholder
-      const blockMatch = part.match(/\[BLOCK_LATEX_(\d+)\]/);
+      const blockMatch = part.match(/\[BLOCK_LATEX_(\d+)\]/)
       if (blockMatch) {
-        const idx = parseInt(blockMatch[1]);
-        const formula = blockLatexMatches[idx];
-        
+        const idx = parseInt(blockMatch[1])
+        const formula = blockLatexMatches[idx]
+
         try {
           const html = katex.renderToString(formula, {
             throwOnError: false,
             displayMode: true,
-            output: 'html'
-          });
-          
+            output: 'html',
+          })
+
           return (
-            <div 
-            key={`block-${index}`}
-            // Reduce margin from my-2 (8px) to my-1 (4px)
-            className="my-0 overflow-x-auto"
-            dangerouslySetInnerHTML={{ __html: html }}
-          />
-          );
+            <div
+              key={`block-${index}`}
+              // Reduce margin from my-2 (8px) to my-1 (4px)
+              className='my-0 overflow-x-auto'
+              dangerouslySetInnerHTML={{ __html: html }}
+            />
+          )
         } catch (error) {
-          console.error("Block LaTeX rendering error:", error);
+          console.error('Block LaTeX rendering error:', error)
           return (
-            <div key={`block-${index}`} className="my-2 text-red-500">
+            <div key={`block-${index}`} className='my-2 text-red-500'>
               {`$$${formula}$$`}
-              <div className="text-xs mt-1 text-gray-500">
+              <div className='mt-1 text-xs text-gray-500'>
                 (LaTeX rendering failed)
               </div>
             </div>
-          );
+          )
         }
       }
-      
-      const inlineMatch = part.match(/\[INLINE_LATEX_(\d+)\]/);
+
+      const inlineMatch = part.match(/\[INLINE_LATEX_(\d+)\]/)
       if (inlineMatch) {
-        const idx = parseInt(inlineMatch[1]);
-        const formula = inlineLatexMatches[idx];
-        
+        const idx = parseInt(inlineMatch[1])
+        const formula = inlineLatexMatches[idx]
+
         try {
           const html = katex.renderToString(formula, {
             throwOnError: false,
             displayMode: false,
-            output: 'html'
-          });
-          
+            output: 'html',
+          })
+
           return (
-            <span 
+            <span
               key={`inline-${index}`}
               dangerouslySetInnerHTML={{ __html: html }}
             />
-          );
+          )
         } catch (error) {
-          console.error("Inline LaTeX rendering error:", error);
+          console.error('Inline LaTeX rendering error:', error)
           return (
-            <span key={`inline-${index}`} className="text-red-500">
+            <span key={`inline-${index}`} className='text-red-500'>
               {`$${formula}$`}
             </span>
-          );
+          )
         }
       }
-      
+
       // Regular text
-      return part ? <span key={`text-${index}`}>{part}</span> : null;
-    });
-  };
+      return part ? <span key={`text-${index}`}>{part}</span> : null
+    })
+  }
 
   return (
-    <div className="w-full">
-      <div className="px-4 py-3 border border-neutral-200 rounded-md whitespace-pre-wrap">
+    <div className='w-full'>
+      <div className='rounded-md border border-neutral-200 px-4 py-3 whitespace-pre-wrap'>
         {renderWithLatex()}
       </div>
     </div>
-  );
-};
-
-
+  )
+}
 
 const PembahasanButton = ({ data }: { data: any }) => {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
         <span>
-          <Button variant='pembahasan' className='md:block hidden self-center text-white'>
+          <Button
+            variant='pembahasan'
+            className='hidden self-center text-white md:block'
+          >
             Lihat Pembahasan
           </Button>
-          <Button variant='pembahasan' className='md:hidden self-center text-white'>
+          <Button
+            variant='pembahasan'
+            className='self-center text-white md:hidden'
+          >
             <ArrowUpRight strokeWidth={3} />
           </Button>
         </span>
@@ -396,7 +441,7 @@ const PembahasanButton = ({ data }: { data: any }) => {
             </AlertDialogCancel>
           </AlertDialogTitle>
           {/* Using div with same styling as AlertDialogDescription to avoid nesting div in p */}
-          <div className="text-black font-light text-sm dark:text-neutral-400 whitespace-pre-wrap">
+          <div className='text-sm font-light whitespace-pre-wrap text-black dark:text-neutral-400'>
             <LatexRenderer content={data.pembahasan} />
           </div>
         </AlertDialogHeader>
@@ -438,9 +483,15 @@ const StatisticTable = ({ data, className }: StatisticTableProps) => {
             <TableBody>
               {leftData.map((data) => (
                 <TableRow key={data.subtest}>
-                  <TableCell className='font-medium'>{subtestTitles[data.subtest] || data.subtest}</TableCell>
-                  <TableCell className='text-center'>{data.jml_benar}</TableCell>
-                  <TableCell className='text-center'>{data.skor.toFixed(1)}</TableCell>
+                  <TableCell className='font-medium'>
+                    {SUBTESTS[data.subtest]?.title || data.subtest}
+                  </TableCell>
+                  <TableCell className='text-center'>
+                    {data.jml_benar}
+                  </TableCell>
+                  <TableCell className='text-center'>
+                    {data.skor.toFixed(1)}
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -458,15 +509,23 @@ const StatisticTable = ({ data, className }: StatisticTableProps) => {
             <TableBody>
               {rightData.map((data) => (
                 <TableRow key={data.subtest}>
-                  <TableCell className='font-medium'>{subtestTitles[data.subtest] || data.subtest}</TableCell>
-                  <TableCell className='text-center'>{data.jml_benar}</TableCell>
-                  <TableCell className='text-center'>{data.skor.toFixed(1)}</TableCell>
+                  <TableCell className='font-medium'>
+                    {SUBTESTS[data.subtest]?.title}
+                  </TableCell>
+                  <TableCell className='text-center'>
+                    {data.jml_benar}
+                  </TableCell>
+                  <TableCell className='text-center'>
+                    {data.skor.toFixed(1)}
+                  </TableCell>
                 </TableRow>
               ))}
               <TableRow className='bg-gray-100 font-bold'>
                 <TableCell className='text-center'>Total</TableCell>
                 <TableCell className='text-center'>{totalBenar}</TableCell>
-                <TableCell className='text-center'>{totalSkor.toFixed(1)}</TableCell>
+                <TableCell className='text-center'>
+                  {totalSkor.toFixed(1)}
+                </TableCell>
               </TableRow>
             </TableBody>
           </Table>
@@ -478,4 +537,4 @@ const StatisticTable = ({ data, className }: StatisticTableProps) => {
 
 // Keep existing PembahasanButton implementation
 
-export default TryoutResult;
+export default TryoutResult

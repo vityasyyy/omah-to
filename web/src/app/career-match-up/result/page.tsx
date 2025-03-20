@@ -7,7 +7,6 @@ import Image from 'next/image'
 import BackButton from '@/modules/career-match-up/back-button'
 import Enthusiasts from '@/modules/career-match-up/enthusiasts'
 
-
 // Career path descriptions mapping
 const careerDescriptions: Record<
   string,
@@ -101,51 +100,62 @@ export default async function CareerMatchUpResult() {
     }
 
     return (
-      <div className="p-8">
-        <h1 className="text-3xl font-bold mb-6">Your Career Match Result</h1>
-        <div className="p-6 bg-white rounded-lg shadow-md">
-          <h2 className="text-2xl font-semibold mb-4">
-            Your dominant career path is: <span className="text-primary">{results.dominantCareerTitle || results.dominantCareer}</span>
+      <div className='p-8'>
+        <h1 className='mb-6 text-3xl font-bold'>Your Career Match Result</h1>
+        <div className='rounded-lg bg-white p-6 shadow-md'>
+          <h2 className='mb-4 text-2xl font-semibold'>
+            Your dominant career path is:{' '}
+            <span className='text-primary'>
+              {results.dominantCareerTitle || results.dominantCareer}
+            </span>
           </h2>
-          <p className="mb-4">
-            Based on your answers, we&apos;ve identified that you have a strong inclination towards careers in the {results.dominantCareerTitle || results.dominantCareer} field.
+          <p className='mb-4'>
+            Based on your answers, we&apos;ve identified that you have a strong
+            inclination towards careers in the{' '}
+            {results.dominantCareerTitle || results.dominantCareer} field.
           </p>
-          <div className="mt-6">
-            <h3 className="text-xl font-medium mb-2">What this means for you:</h3>
+          <div className='mt-6'>
+            <h3 className='mb-2 text-xl font-medium'>
+              What this means for you:
+            </h3>
             <p>{results.shortDescription}</p>
           </div>
           {results.careerScores && (
-            <div className="mt-8">
-              <h3 className="text-xl font-medium mb-3">Your Career Compatibility:</h3>
-              <div className="space-y-3">
-                {Object.entries(results.careerScores).map(([career, score]: [string, any]) => (
-                  <div key={career} className="flex items-center">
-                    <div className="w-1/3 font-medium">{careerDescriptions[career.toLowerCase()]?.title || career}:</div>
-                    <div className="w-2/3">
-                      <div className="bg-gray-200 rounded-full h-4 w-full">
-                        <div 
-                          className="bg-primary h-4 rounded-full" 
-                          style={{ width: `${Math.round(score * 100)}%` }}
-                        ></div>
+            <div className='mt-8'>
+              <h3 className='mb-3 text-xl font-medium'>
+                Your Career Compatibility:
+              </h3>
+              <div className='space-y-3'>
+                {Object.entries(results.careerScores).map(
+                  ([career, score]: [string, any]) => (
+                    <div key={career} className='flex items-center'>
+                      <div className='w-1/3 font-medium'>
+                        {careerDescriptions[career.toLowerCase()]?.title ||
+                          career}
+                        :
+                      </div>
+                      <div className='w-2/3'>
+                        <div className='h-4 w-full rounded-full bg-gray-200'>
+                          <div
+                            className='bg-primary h-4 rounded-full'
+                            style={{ width: `${Math.round(score * 100)}%` }}
+                          ></div>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  )
+                )}
               </div>
             </div>
           )}
           <div>
             {' '}
-            <Enthusiasts
-              dominantCareer={
-                dominantCareer.toUpperCase()
-              }
-            />
-                     {' '}
+            <Enthusiasts dominantCareer={dominantCareer.toUpperCase()} />       
+             {' '}
           </div>
         </div>
       </div>
-      )
+    )
   } catch (error) {
     console.error('Error fetching results:', error)
     return (

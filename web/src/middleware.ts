@@ -12,52 +12,34 @@ function setHeaders(response: NextResponse, userData: any) {
 }
 
 export async function middleware(request: NextRequest) {
-  const currentPath = request.nextUrl.pathname
-
-  // Define path patterns
-  const authRequiredPaths = [
-    '/dashboard',
-    '/profile',
-    '/settings',
-    '/tryout$',
-    '/tryout/pembahasan',
-  ]
-
-  const publicPaths = ['/', '/login', '/register', '/forgot-password']
-
-  // Check if path requires authentication
-  const requiresAuth = authRequiredPaths.some((path) =>
-    path.endsWith('$')
-      ? currentPath === path.slice(0, -1)
-      : currentPath.startsWith(path)
-  )
-
-  // Check if path is explicitly public
-  const isPublicPath = publicPaths.some((path) => currentPath.startsWith(path))
-
-  // Special case for tryout paths (all are public except /tryout and /tryout/pembahasan)
-  const isTryoutPath = currentPath.startsWith('/tryout/')
-  const isPublicTryoutPath =
-    isTryoutPath && !currentPath.startsWith('/tryout/pembahasan')
-
-  // Create default response
-  const response = NextResponse.next()
-
-  // Skip token validation for public paths if not needed
-  if ((isPublicPath || isPublicTryoutPath) && !requiresAuth) {
-    return response
-  }
-
-  // Check for tokens
   const accessToken = request.cookies.get('access_token')?.value
   const refreshToken = request.cookies.get('refresh_token')?.value
 
-  // If no tokens exist and authentication is required, redirect to login
-  if (!accessToken && !refreshToken && requiresAuth) {
-    return NextResponse.redirect(new URL('/login', request.url))
-  }
+  // Define public paths that don't require authentication
+  const publicPaths = ['/', '/login', '/register', '/forgot-password']
 
-  // Process authentication - try access token first
+  // Add paths under tryout/* (but not /tryout exactly)
+  const currentPath = request.nextUrl.pathname
+
+  // Special case: tryout/pembahasan requires authentication, other tryout/ paths are public
+  const isTryoutPembahasan = currentPath.startsWith('/tryout/pembahasan')
+  const isTryoutSubpath =
+    currentPath.startsWith('/tryout/') &&
+    currentPath !== '/tryout/' &&
+    !isTryoutPembahasan
+
+  // Check if current path is public
+  const isPublicPath =
+    publicPaths.some(
+      (path) =>
+        currentPath === path || (path !== '/' && currentPath.startsWith(path))
+    ) || isTryoutSubpath
+
+  // If we have tokens, try to validate and set headers regardless of path
+  let userData = null
+  let validAuth = false
+
+  // Check if access token is valid
   if (accessToken) {
     try {
       const res = await fetch(`${process.env.AUTH_URL}/auth/validateprofile`, {
@@ -67,10 +49,25 @@ export async function middleware(request: NextRequest) {
           Cookie: `access_token=${accessToken}`,
         },
         credentials: 'include',
+        // next: {
+        //   revalidate: 60
+        // }
       })
 
       if (res.ok) {
-        const userData = await res.json()
+        // Token is valid, get user data and set headers
+        userData = await res.json()
+        validAuth = true
+
+        // If on a public path, still set headers but allow access
+        if (isPublicPath) {
+          const response = NextResponse.next()
+          setHeaders(response, userData)
+          return response
+        }
+
+        // For protected paths, continue with valid auth
+        const response = NextResponse.next()
         setHeaders(response, userData)
         return response
       }
@@ -79,8 +76,8 @@ export async function middleware(request: NextRequest) {
     }
   }
 
-  // Try refresh token if access token failed
-  if (refreshToken) {
+  // If access token failed, try refresh token
+  if (!validAuth && refreshToken) {
     try {
       const res = await fetch(`${process.env.AUTH_URL}/user/refresh`, {
         method: 'GET',
@@ -93,14 +90,22 @@ export async function middleware(request: NextRequest) {
 
       if (res.ok) {
         const resBody = await res.json()
+        userData = resBody
+        validAuth = true
+
+        // Extract new tokens from response
         const setCookieHeader = res.headers.get('set-cookie')
         if (!setCookieHeader) {
-          if (!requiresAuth) return response
+          if (isPublicPath) return NextResponse.next()
           return NextResponse.redirect(new URL('/login', request.url))
         }
 
+        // Create response that will continue to the requested page
+        const response = NextResponse.next()
+
+        // Forward the Set-Cookie header from the auth service
         response.headers.set('Set-Cookie', setCookieHeader)
-        setHeaders(response, resBody)
+        setHeaders(response, userData)
         return response
       }
     } catch (error) {
@@ -108,30 +113,19 @@ export async function middleware(request: NextRequest) {
     }
   }
 
-  // If authentication failed but path doesn't require auth, allow access
-  if (!requiresAuth) {
-    return response
+  // If authentication failed but path is public, allow access without auth
+  if (isPublicPath) {
+    return NextResponse.next()
   }
 
-  // Otherwise redirect to login
+  // Otherwise, redirect to login
   return NextResponse.redirect(new URL('/login', request.url))
 }
 
-// Configure middleware to run only on routes that might need authentication or user data
+// Configure which paths the middleware runs on
 export const config = {
   matcher: [
-    // Specific auth required paths
-    '/dashboard/:path*',
-    '/profile/:path*',
-    '/settings/:path*',
-    '/tryout',
-    '/tryout/pembahasan/:path*',
-
-    // Public paths that might need user data
-    '/',
-    '/login',
-    '/register',
-    '/forgot-password',
-    '/tryout/:path*',
+    // Apply to all routes except public assets, api routes, and specific public pages
+    '/((?!_next/static|_next/image|favicon.ico|api/refresh-token|api/public).*)',
   ],
 }

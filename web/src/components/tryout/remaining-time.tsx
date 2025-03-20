@@ -4,13 +4,19 @@ import SmallStyledCard from './small-styled-card'
 import { useEffect, useState } from 'react'
 
 const formatTime = (time: number) => {
-  const hours = Math.floor(time / 3600).toString().padStart(2, '0')
-  const minutes = Math.floor((time % 3600) / 60).toString().padStart(2, '0')
-  const seconds = Math.floor(time % 60).toString().padStart(2, '0')
+  const hours = Math.floor(time / 3600)
+    .toString()
+    .padStart(2, '0')
+  const minutes = Math.floor((time % 3600) / 60)
+    .toString()
+    .padStart(2, '0')
+  const seconds = Math.floor(time % 60)
+    .toString()
+    .padStart(2, '0')
   return `${hours}:${minutes}:${seconds}`
 }
 
-const RemainingTime = (props: { time: Date | string, className?: string }) => {
+const RemainingTime = (props: { time: Date | string; className?: string }) => {
   const [remaining, setRemaining] = useState(0)
 
   useEffect(() => {
@@ -29,7 +35,9 @@ const RemainingTime = (props: { time: Date | string, className?: string }) => {
   }, [props.time])
 
   return (
-    <SmallStyledCard className={cn('text-nowrap text-error-700', props.className)}>
+    <SmallStyledCard
+      className={cn('text-error-700 text-nowrap', props.className)}
+    >
       Time: {formatTime(remaining)}
     </SmallStyledCard>
   )

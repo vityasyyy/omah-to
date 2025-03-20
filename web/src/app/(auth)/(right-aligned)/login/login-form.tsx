@@ -1,6 +1,6 @@
 'use client'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Eye, EyeOff } from 'lucide-react'
+import { Eye, EyeOff, LoaderCircle } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -17,18 +17,20 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import Link from 'next/link'
+import { toast } from 'sonner'
 
 const formSchema = z.object({
   email: z.string().email({
-    message: 'Please enter a valid email address.',
+    message: 'Silakan masukkan alamat email yang valid.', // Please enter a valid email address.
   }),
   password: z.string().min(8, {
-    message: 'Password must be at least 8 characters.',
+    message: 'Kata sandi harus minimal 8 karakter.', // Password must be at least 8 characters.
   }),
 })
 
 const LoginForm = () => {
   const router = useRouter()
+  const [loading, setLoading] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -40,6 +42,7 @@ const LoginForm = () => {
   })
 
   const handleLogin = async (values: z.infer<typeof formSchema>) => {
+    setLoading(true)
     try {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_AUTH_URL}/user/login`,
@@ -52,16 +55,25 @@ const LoginForm = () => {
           body: JSON.stringify(values),
         }
       )
-      console.log('signedin');
 
       if (!response.ok) {
         const errorData = await response.json()
-        throw new Error(errorData.message || 'Login failed')
+        toast.error('Login gagal. ', {
+          description:
+            'Email atau kata sandi tidak valid. Mohon periksa kredensial Anda.',
+        })
+        setLoading(false)
+
+        return
       }
+
       router.push('/')
       // Redirect or handle successful login here
     } catch (error) {
-      console.error('Login error:', error)
+      toast.error('Login gagal. ', {
+        description: 'Ups! Terjadi kesalahan jaringan. Silahkan coba lagi.',
+      })
+      setLoading(false)
     }
   }
 
@@ -78,7 +90,7 @@ const LoginForm = () => {
             <FormItem>
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input placeholder='email@email.com' {...field} />
+                <Input autoFocus placeholder='email@email.com' {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -109,6 +121,7 @@ const LoginForm = () => {
               </FormControl>
               <Link
                 href={`/forgot-password`}
+                tabIndex={-1}
                 className='text-xs font-medium underline underline-offset-2'
               >
                 Lupa Password
@@ -120,10 +133,18 @@ const LoginForm = () => {
 
         <Button
           type='submit'
+          disabled={loading}
           variant={`tertiary`}
           className='mt-8 w-full max-w-xs self-center'
         >
-          Masuk
+          {loading ? (
+            <>
+              <LoaderCircle className='animate-spin' />
+              Loading...
+            </>
+          ) : (
+            'Masuk'
+          )}
         </Button>
       </form>
     </Form>

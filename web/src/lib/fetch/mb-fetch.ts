@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { SOAL_URL, MINAT_BAKAT_URL, PUBLIC_MINAT_BAKAT_URL, PUBLIC_SOAL_URL } from "@/types/url";
+import { SOAL_URL, MINAT_BAKAT_URL, PUBLIC_MINAT_BAKAT_URL, PUBLIC_SOAL_URL } from "@/lib/types/url";
 
 export const getMbUrl = (isPublic?: boolean) => {
     return isPublic ? PUBLIC_MINAT_BAKAT_URL : MINAT_BAKAT_URL;

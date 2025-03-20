@@ -73,9 +73,7 @@ const Card = (props: {
   index: number
 }) => {
   return (
-    <main
-      className='border-primary-100 flex flex-col items-center gap-4 overflow-clip rounded-lg border-4 bg-white p-6 text-center sm:h-full'
-    >
+    <main className='border-primary-100 flex flex-col items-center gap-4 overflow-clip rounded-lg border-4 bg-white p-6 text-center sm:h-full'>
       <section className='relative size-30 self-center sm:size-36'>
         <Image
           src={props.img}

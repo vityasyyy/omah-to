@@ -18,8 +18,8 @@ const ProfileCard = async ({ user }: { user: User }) => {
           </section>
 
           <section className='flex flex-col gap-1'>
-            <h1 className='text-[19px] text-black'>{user.username}</h1>
-            <h2 className='text-sm'>{user.asal_sekolah}</h2>
+            <h1 className='text-[19px] text-black'>{user?.username}</h1>
+            <h2 className='text-sm'>{user?.asal_sekolah}</h2>
           </section>
         </main>
       </StyledCard>

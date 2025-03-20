@@ -5,37 +5,54 @@ import ProfileCard from '@/modules/tryout/dashboard/profile-card'
 import RankingCard from '@/modules/tryout/dashboard/ranking-card'
 import StartCard from '@/modules/tryout/dashboard/start-card'
 
-import { cookies } from 'next/headers'
-import { getSubtestsScore, getLeaderboard } from '@/lib/fetch/tryout-page'
 import { fetchUser } from '@/lib/auth/fetch_user'
-import { getOngoingAttempt, getFinishedAttempt } from '@/lib/fetch/tryout-page'
-const TryOutPage = async () => {
-  const cookieStore = await cookies();
-  const accessToken = cookieStore.get('access_token')?.value as string;
-  const subtestsScore = await getSubtestsScore(accessToken);
-  const leaderboard = await getLeaderboard(accessToken);
-  const userData = await fetchUser();
-  const ongoing = await getOngoingAttempt(accessToken);
-  const finished = await getFinishedAttempt(accessToken);
-  return (
-    <main className='bg-neutral-50 min-h-screen'>
-      <Container>
-        <TopBar />
+import {
+  getFinishedAttempt,
+  getLeaderboard,
+  getOngoingAttempt,
+  getSubtestsScore,
+} from '@/lib/fetch/tryout-page'
+import { cookies } from 'next/headers'
+import * as motion from 'motion/react-client'
 
-        <section className='flex flex-col-reverse gap-4 md:grid md:grid-cols-4'>
-          <StartCard status={ongoing ? 'ongoing' : finished ? 'finished' : 'none'}/>
-          <ProfileCard user={{
-            username: userData.username,
-            asal_sekolah: userData.asalSekolah,
-            user_id: Number(userData.id),
-            email: userData.email
-          }}/>
-        </section>
-        <section className='grid gap-4 grid-cols-1 md:grid-cols-2'>
-          <HistoryCard score={subtestsScore}/>
-          <RankingCard leaderboard={leaderboard}/>
-        </section>
-      </Container>
+const TryOutPage = async () => {
+  const cookieStore = await cookies()
+  const accessToken = cookieStore.get('access_token')?.value as string
+  const subtestsScore = await getSubtestsScore(accessToken)
+  const leaderboard = await getLeaderboard(accessToken)
+  const user = await fetchUser()
+  const ongoing = await getOngoingAttempt(accessToken)
+  const finished = await getFinishedAttempt(accessToken)
+
+  return (
+    <main className='min-h-screen bg-neutral-50'>
+      <motion.main
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ type: 'tween', duration: 0.2 }}
+      >
+        <Container>
+          <TopBar />
+
+          <motion.main
+            initial={{ opacity: 0, y: 5 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ type: 'tween', duration: 0.2 }}
+            className='flex flex-col gap-4'
+          >
+            <section className='flex flex-col-reverse gap-4 md:grid md:grid-cols-4'>
+              <StartCard
+                status={ongoing ? 'ongoing' : finished ? 'finished' : 'none'}
+              />
+              <ProfileCard user={user} />
+            </section>
+            <section className='grid grid-cols-1 gap-4 md:grid-cols-2'>
+              <HistoryCard score={subtestsScore} />
+              <RankingCard leaderboard={leaderboard} />
+            </section>
+          </motion.main>
+        </Container>
+      </motion.main>
     </main>
   )
 }

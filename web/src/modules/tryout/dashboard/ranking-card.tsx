@@ -18,7 +18,6 @@ const HistoryCard = async ({
   leaderboard: LeaderboardResponse
 }) => {
   const hasData = leaderboard?.data && leaderboard?.data?.length > 0
-  console.log('LEADERBOARD', leaderboard)
   return (
     <StyledCard title='Ranking'>
       <ScrollArea className='h-[300px] w-full overflow-hidden rounded-xl border border-neutral-200'>

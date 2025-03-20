@@ -17,7 +17,7 @@ const ProfileButton = ({ user }: { user?: User }) => {
       <DropdownMenuTrigger tabIndex={-1}>
         <div className='relative size-8 overflow-clip rounded-full bg-neutral-200'>
           <Image
-            src={`/avatar.jpg`}
+            src={`/avatar.webp`}
             alt='Profile Picture'
             fill
             sizes='20%'

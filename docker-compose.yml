@@ -31,7 +31,7 @@ services:
             timeout: 5s
             retries: 5
 
-    # API for the auth service
+        # API for the auth service
     auth-service-api:
         build: ./auth-service
         env_file:
@@ -39,7 +39,7 @@ services:
             - .env
         depends_on:
             auth-service-db:
-                condition: service_healthy  # Ensure DB is ready
+                condition: service_healthy # Ensure DB is ready
         networks:
             - omahtryout-network
         ports:
@@ -70,7 +70,7 @@ services:
             - .env
         depends_on:
             soal-service-db:
-                condition: service_healthy  # Ensure DB is ready
+                condition: service_healthy # Ensure DB is ready
         networks:
             - omahtryout-network
         ports:
@@ -92,7 +92,7 @@ services:
             interval: 5s
             timeout: 5s
             retries: 5
-    
+
     # API for the tryout service
     tryout-service-api:
         build: ./tryout-service
@@ -101,12 +101,12 @@ services:
             - .env
         depends_on:
             tryout-service-db:
-                condition: service_healthy  # Ensure DB is ready
+                condition: service_healthy # Ensure DB is ready
         networks:
             - omahtryout-network
         ports:
             - ${TRYOUT_SERVICE_PORT}:${TRYOUT_SERVICE_PORT}
-  
+
     # Minat bakat service
     minat-bakat-service-db:
         image: postgres:17.2-alpine
@@ -118,7 +118,11 @@ services:
         networks:
             - omahtryout-network
         healthcheck:
-            test: ["CMD-SHELL", "pg_isready -U omahTryOut -d minat-bakat_service_db"]
+            test:
+                [
+                    "CMD-SHELL",
+                    "pg_isready -U omahTryOut -d minat-bakat_service_db",
+                ]
             interval: 5s
             timeout: 5s
             retries: 5
@@ -131,7 +135,7 @@ services:
             - .env
         depends_on:
             minat-bakat-service-db:
-                condition: service_healthy  # Ensure DB is ready
+                condition: service_healthy # Ensure DB is ready
         networks:
             - omahtryout-network
         ports:

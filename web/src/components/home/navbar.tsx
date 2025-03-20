@@ -7,7 +7,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '@/components/ui/sheet'
-import { fetchUser } from '@/lib/auth/fetch_user'
+import { fetchUser } from '@/app/fetch_user'
 import { User } from '@/lib/types/types'
 import { cn } from '@/lib/utils'
 import { Menu } from 'lucide-react'
@@ -38,7 +38,6 @@ const Navbar = async () => {
       <main className='border-primary-100 fixed inset-x-0 top-0 z-50 border-b-2 bg-white/60 backdrop-blur-md'>
         <Container className='h-20 flex-row items-center justify-between gap-8'>
           <Logo />
-          {JSON.stringify(user)}
 
           <DesktopNavigation signedIn={isSignedIn} user={user} />
           <MobileNavigation signedIn={isSignedIn} user={user} />
@@ -109,14 +108,17 @@ const MobileNavigation = ({
           </section>
           <section className='flex flex-col gap-2'>
             {signedIn ? (
-                <SheetClose asChild>
-                  <Link
-                    href={`/register`}
-                    className={cn(buttonVariants({ variant: 'destructive' }), 'bg-error-400 text-white')}
-                  >
-                    Logout
-                  </Link>
-                </SheetClose>
+              <SheetClose asChild>
+                <Link
+                  href={`/register`}
+                  className={cn(
+                    buttonVariants({ variant: 'destructive' }),
+                    'bg-error-400 text-white'
+                  )}
+                >
+                  Logout
+                </Link>
+              </SheetClose>
             ) : (
               <>
                 <SheetClose asChild>

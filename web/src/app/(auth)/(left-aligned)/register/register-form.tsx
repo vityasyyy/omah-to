@@ -10,31 +10,36 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { LoaderCircle } from 'lucide-react'
 import { useRouter } from 'next/navigation'
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { toast } from 'sonner'
 import { z } from 'zod'
 
 const formSchema = z
   .object({
     email: z.string().email({
-      message: 'Please enter a valid email address.',
+      message: 'Silakan masukkan alamat email yang valid.', // Please enter a valid email address.
     }),
     nama_user: z.string().min(2, {
-      message: 'Name must be at least 2 characters.',
+      message: 'Nama harus minimal 2 karakter.', // Name must be at least 2 characters.
     }),
     password: z.string().min(8, {
-      message: 'Password must be at least 8 characters.',
+      message: 'Kata sandi harus minimal 8 karakter.', // Password must be at least 8 characters.
     }),
-    confirm_password: z.string().min(8),
+    confirm_password: z.string().min(8, {
+      message: 'Kata sandi harus minimal 8 karakter.', // Password must be at least 8 characters.
+    }),
     asal_sekolah: z.string().min(3, {
-      message: 'Asal Sekolah must be at least 3 characters.',
+      message: 'Asal Sekolah harus minimal 3 karakter.', // Asal Sekolah must be at least 3 characters.
     }),
   })
   .superRefine(({ confirm_password, password }, ctx) => {
     if (confirm_password !== password) {
       ctx.addIssue({
         code: 'custom',
-        message: 'Passwords do not match',
+        message: 'Kata sandi tidak cocok.', // Passwords do not match
         path: ['confirm_password'],
       })
     }
@@ -42,6 +47,7 @@ const formSchema = z
 
 const RegisterForm = () => {
   const router = useRouter()
+  const [loading, setLoading] = useState(false)
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -56,6 +62,7 @@ const RegisterForm = () => {
 
   const handleLogin = async (values: z.infer<typeof formSchema>) => {
     try {
+      setLoading(true)
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_AUTH_URL}/user/register`,
         {
@@ -69,11 +76,19 @@ const RegisterForm = () => {
       )
 
       if (!response.ok) {
-        throw new Error(`Login failed: ${response.statusText}`)
+        toast.error('Gagal membuat akun', {
+          description: 'Invalid field(s)',
+        })
+        setLoading(false)
+
+        return
       }
       router.push('/login')
     } catch (error) {
-      console.error('Login error:', error)
+      toast.error('Gagal membuat akun', {
+        description: 'Ups! Terjadi kesalahan jaringan. Silahkan coba lagi.',
+      })
+      setLoading(false)
     }
   }
 
@@ -90,7 +105,7 @@ const RegisterForm = () => {
             <FormItem>
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input placeholder='email@email.com' {...field} />
+                <Input autoFocus placeholder='email@email.com' {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -159,10 +174,18 @@ const RegisterForm = () => {
         />
         <Button
           type='submit'
+          disabled={loading}
           variant={`tertiary`}
           className='mt-8 w-full max-w-xs self-center'
         >
-          Daftar
+          {loading ? (
+            <>
+              <LoaderCircle className='animate-spin' />
+              Loading...
+            </>
+          ) : (
+            'Daftar'
+          )}
         </Button>
       </form>
     </Form>

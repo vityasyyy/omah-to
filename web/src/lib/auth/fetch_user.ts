@@ -16,8 +16,18 @@
  * @returns {Promise<any | null>} User profile data if request succeeds, null otherwise
  * @throws Will throw an error if the fetch request fails
  */
-import { headers } from 'next/headers'
+import { cookies, headers } from 'next/headers'
 import { User } from '../types/types'
+
+export const getAccessToken = async () => {
+  const cookieStore = await cookies()
+  return cookieStore.get('access_token')?.value as string
+}
+
+export const getRefreshToken = async () => {
+  const cookieStore = await cookies()
+  return cookieStore.get('refresh_token')?.value as string
+}
 
 export async function fetchUser() : Promise<User> {
   const headersList = await headers()
