@@ -168,7 +168,7 @@ const TryoutPage = ({ params }: { params: Promise<{ id: number }> }) => {
     >
       {/* Question Section */}
       <StyledCard title='Soal' className='lg:col-span-2'>
-        <section className='h-96 overflow-y-scroll'>
+        <section className='h-96 overflow-y-auto'>
           {currentSoal.text_soal && (
             <LatexRenderer content={currentSoal.text_soal} />
           )}

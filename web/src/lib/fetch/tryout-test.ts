@@ -80,14 +80,10 @@ export const syncTryout = async (
   })
 
   if (!res.ok) {
-    // throw new Error(
-    //   'Failed to sync tryout data, u exceed the time limit, start over the tryout'
-    // )
-    // toast.error('Waktu subtes habis', {
-    //   description:
-    //     'Sepertinya anda belum submit jawaban subtes. Silahkan coba tryout lagi.',
-    // })
     redirect('/tryout')
+    throw new Error(
+      'Failed to sync tryout data, u exceed the time limit, start over the tryout'
+    )
   }
 
   return res.json()
@@ -113,6 +109,7 @@ export const progressTryout = async (
   })
 
   if (!res.ok) {
+    redirect('/tryout')
     throw new Error(
       'Failed to progress tryout data, u exceed the time limit, start over the tryout'
     )

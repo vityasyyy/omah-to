@@ -9,6 +9,7 @@ import { redirect } from 'next/navigation'
 import { TryoutDataProvider } from './tryout-context'
 import { fetchUser } from '@/app/fetch_user'
 import * as motion from 'motion/react-client'
+import { toast } from 'sonner'
 
 const TryoutLayout = async ({ children }: { children: React.ReactNode }) => {
   const tryoutToken = (await cookies()).get('tryout_token')?.value as string
@@ -23,6 +24,9 @@ const TryoutLayout = async ({ children }: { children: React.ReactNode }) => {
   }
   const syncData = await syncTryout([], tryoutToken)
   if (syncData == null) {
+    toast.error('Gagal menyimpan jawaban Tryout', {
+      description: 'Silahkan mengulangi Tryout.'
+    })
     redirect('/tryout')
   }
   const timeLimit = syncData.data.time_limit

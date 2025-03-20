@@ -1,6 +1,3 @@
-import { ArrowLeft, X } from 'lucide-react'
-import BackLink from '../back-link'
-import { Button } from '../ui/button'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -12,6 +9,9 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
+import { ArrowLeft, X } from 'lucide-react'
+import Link from 'next/link'
+import { Button } from '../ui/button'
 
 type TopBarProps = {
   variant?: 'default' | 'ghost'
@@ -20,7 +20,7 @@ type TopBarProps = {
 const TopBar = ({ variant = 'default' }: TopBarProps) => {
   return (
     <main className='flex flex-row justify-between gap-8'>
-      <BackLink>
+      <Link href={variant === 'default' ? '/' : '/tryout'}>
         <Button
           variant={variant === 'ghost' ? 'ghost' : 'card'}
           className={`hover:cursor-pointer ${variant === 'ghost' ? 'text-white' : ''}`}
@@ -28,7 +28,7 @@ const TopBar = ({ variant = 'default' }: TopBarProps) => {
           <ArrowLeft className='h-4 w-4' />
           Kembali
         </Button>
-      </BackLink>
+      </Link>
 
       <LogOutButton variant={variant} />
     </main>

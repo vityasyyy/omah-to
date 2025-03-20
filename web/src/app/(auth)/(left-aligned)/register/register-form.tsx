@@ -77,7 +77,7 @@ const RegisterForm = () => {
 
       if (!response.ok) {
         toast.error('Gagal membuat akun', {
-          description: 'Invalid field(s)',
+          description: `${response}`,
         })
         setLoading(false)
 
