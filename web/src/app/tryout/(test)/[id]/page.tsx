@@ -172,10 +172,7 @@ const TryoutPage = ({ params }: { params: Promise<{ id: number }> }) => {
           {currentSoal.text_soal && (
             <LatexRenderer content={currentSoal.text_soal} />
           )}
-        </section>
-      </StyledCard>
-
-      {currentSoal.path_gambar_soal && (
+          {currentSoal.path_gambar_soal && (
         <Image
           src={currentSoal.path_gambar_soal}
           alt='Question Image'
@@ -184,6 +181,9 @@ const TryoutPage = ({ params }: { params: Promise<{ id: number }> }) => {
           className='rounded-lg'
         />
       )}
+        </section>
+      </StyledCard>
+
       {/* Answer Section */}
       <AnswerCard
         time={time}
