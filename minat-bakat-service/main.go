@@ -9,6 +9,7 @@ import (
 	"minat-bakat-service/internal/services"
 	"minat-bakat-service/internal/utils"
 	"os"
+	"strings"
 	"time"
 
 	"github.com/gin-contrib/cors"
@@ -20,6 +21,17 @@ import (
 )
 
 func main() {
+	corsURLs := os.Getenv("CORS_URL")
+	allowedOrigins := strings.Split(corsURLs, ",")
+	logger.InitLogger()
+
+	// Set Gin mode early before creating the engine
+	if os.Getenv("ENVIRONMENT") == "production" {
+		gin.SetMode(gin.ReleaseMode)
+	} else {
+		gin.SetMode(gin.DebugMode) // Explicitly set debug mode if not in production
+	}
+
 	logger.InitLogger()
 	dbURL := os.Getenv("DB_URL")
 	db, err := sqlx.Connect("postgres", dbURL)
@@ -32,17 +44,19 @@ func main() {
 	mbService := services.NewMinatBakatService(mbRepo)
 	mbHandler := handlers.NewMinatBakatHandler(mbService)
 
-	if os.Getenv("ENVIRONMENT") == "production" {
-		gin.SetMode(gin.ReleaseMode)
-	}
-	r := gin.Default()
+	// Use gin.New() instead of gin.Default() to avoid warning about middleware already attached
+	r := gin.New()
+
+	// Manually add the Logger and Recovery middleware
+	r.Use(gin.Recovery())
 
 	r.Use(utils.ReqLoggingMiddleware()) // Request logging middleware
 	r.Use(securityHeadersMiddleware())  // Security headers middleware
+	r.SetTrustedProxies([]string{"0.0.0.0/0"})
 
 	// CORS middleware
 	r.Use(cors.New(cors.Config{
-		AllowOrigins:     []string{"http://localhost:3000"}, // change to a specific origin later
+		AllowOrigins:     allowedOrigins, // change to a specific origin later
 		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE"},
 		AllowHeaders:     []string{"Content-Type", "Authorization"},
 		ExposeHeaders:    []string{"Content-Length", "Authorization", "Content-Type"},
@@ -59,11 +73,12 @@ func main() {
 	if port == "" {
 		port = "8084"
 	}
+
+	logger.Log.Info().Msg("Server started successfully")
+
 	if err := r.Run(":" + port); err != nil {
 		logger.Log.Fatal().Err(err).Msg("Failed to start the server")
 	}
-
-	logger.Log.Info().Msg("Server started successfully")
 }
 
 // securityHeadersMiddleware adds security headers to all responses

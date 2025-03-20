@@ -33,6 +33,7 @@ CONCERN UNTUK FRONTEND:
 
 TODO PROD:
     -ganti domain cookies 
+    -ganti cors, add trust proxies, creating engine instance, log sampling, add corsURL
     -env jadiin secret variable nanti pas cloud
     -set up cloudinary buat image soal
     -cloud run

@@ -4,6 +4,7 @@ import (
 	"os"
 	"path/filepath"
 	"runtime"
+	"time"
 
 	"github.com/rs/zerolog"
 )
@@ -21,14 +22,25 @@ func InitLogger() {
 		zerolog.SetGlobalLevel(zerolog.DebugLevel)
 	}
 
+	// Create a sampler for log entries
+	// This configuration:
+	// - Keeps the first N logs (initial burst)
+	// - After that, samples logs at the given interval (1 out of every M)
+	sampler := &zerolog.BurstSampler{
+		Burst:       5,                             // Allow first 5 messages without sampling
+		Period:      300 * time.Second,             // Reset counter every 30 seconds
+		NextSampler: &zerolog.BasicSampler{N: 100}, // After burst, sample 1 in 50 messages
+	}
+
 	// Check if running in Cloud Run (no need for file logging)
-	if os.Getenv("K_SERVICE") != "" {
-		// Cloud Run detected → Log only to stdout/stderr
-		Log = zerolog.New(os.Stdout).With().
+	if os.Getenv("ENVIRONMENT") != "production" {
+		// Cloud Run detected → Log only to stdout/stderr with sampling
+		Log = zerolog.New(os.Stdout).Sample(sampler).With().
 			Timestamp().
 			Str("service", "auth-service").
 			Logger()
 
+		// Don't sample error logs to ensure all errors are captured
 		ErrorLog = zerolog.New(os.Stderr).With().
 			Timestamp().
 			Str("service", "auth-service").
@@ -44,11 +56,12 @@ func InitLogger() {
 		multiAppWriter := zerolog.MultiLevelWriter(os.Stdout, appLogFile)
 		multiErrorWriter := zerolog.MultiLevelWriter(os.Stderr, errorLogFile)
 
-		Log = zerolog.New(multiAppWriter).With().
+		Log = zerolog.New(multiAppWriter).Sample(sampler).With().
 			Timestamp().
 			Str("service", "auth-service").
 			Logger()
 
+		// Don't sample error logs
 		ErrorLog = zerolog.New(multiErrorWriter).With().
 			Timestamp().
 			Str("service", "auth-service").
