@@ -1,3 +1,4 @@
+'use client'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -12,6 +13,9 @@ import {
 import { ArrowLeft, X } from 'lucide-react'
 import Link from 'next/link'
 import { Button } from '../ui/button'
+import { toast } from 'sonner'
+import { useRouter } from 'next/navigation'
+import LogOutDialog from '../log-out-dialog'
 
 type TopBarProps = {
   variant?: 'default' | 'ghost'
@@ -41,43 +45,13 @@ type LogOutButtonProps = {
 
 const LogOutButton = ({ variant = 'default' }: LogOutButtonProps) => {
   return (
-    <AlertDialog>
-      <AlertDialogTrigger asChild>
-        <Button
-          variant={variant === 'ghost' ? 'destructiveGhost' : 'destructive'}
-        >
-          Logout
-        </Button>
-      </AlertDialogTrigger>
-      <AlertDialogContent>
-        <AlertDialogHeader>
-          <AlertDialogTitle>
-            Apakah anda yakin?
-            <AlertDialogCancel
-              asChild
-              className='my-auto h-auto border-none p-1'
-            >
-              <X className='text-neutral-500' />
-            </AlertDialogCancel>
-          </AlertDialogTitle>
-          <AlertDialogDescription>
-            This action cannot be undone. This will permanently delete your
-            account and remove your data from our servers.
-          </AlertDialogDescription>
-        </AlertDialogHeader>
-        <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction asChild>
-            <Button
-              variant={'destructive'}
-              className='text-error-600! hover:bg-error-400! hover:cursor-pointer hover:text-white!'
-            >
-              Logout
-            </Button>
-          </AlertDialogAction>
-        </AlertDialogFooter>
-      </AlertDialogContent>
-    </AlertDialog>
+    <LogOutDialog>
+      <Button
+        variant={variant === 'ghost' ? 'destructiveGhost' : 'destructive'}
+      >
+        Logout
+      </Button>
+    </LogOutDialog>
   )
 }
 

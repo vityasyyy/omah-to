@@ -10,6 +10,7 @@ import {
 } from '../ui/dropdown-menu'
 import { User } from '@/lib/types/types'
 import { LogOut } from 'lucide-react'
+import LogOutDialog from '../log-out-dialog'
 
 const ProfileButton = ({ user }: { user?: User }) => {
   return (
@@ -28,12 +29,16 @@ const ProfileButton = ({ user }: { user?: User }) => {
       <DropdownMenuContent className='-translate-x-8'>
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem
-          onClick={() => {}}
-          className='text-error-400 hover:text-error-400!'
-        >
-          <LogOut className='text-error-400' /> Log Out
-        </DropdownMenuItem>
+        <LogOutDialog>
+          <DropdownMenuItem
+            className='text-error-400 hover:text-error-400!'
+            onSelect={(e) => {
+              e.preventDefault()
+            }}
+          >
+            <LogOut className='text-error-400' /> Log Out
+          </DropdownMenuItem>
+        </LogOutDialog>
       </DropdownMenuContent>
     </DropdownMenu>
   )

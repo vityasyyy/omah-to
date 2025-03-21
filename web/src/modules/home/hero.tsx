@@ -9,6 +9,7 @@ import { Book } from 'lucide-react'
 import Image from 'next/image'
 import Heading, { HeadingSpan } from '@/components/home/heading'
 import SoftCircle from '@/components/soft-circle'
+import { fetchUser } from '@/app/fetch_user'
 
 const CARD_ITEMS = [
   {
@@ -68,7 +69,9 @@ const cardContainerVariants = {
 //   },
 // }
 
-const Hero = () => {
+const Hero = async () => {
+  const user = await fetchUser()
+
   return (
     <main className='bg-white'>
       <Container className='flex flex-col gap-0 py-8 text-center text-black md:py-10 md:text-start'>
@@ -79,6 +82,11 @@ const Hero = () => {
             animate='visible'
             className='z-10 flex w-full max-w-none flex-col gap-2 self-center pt-4 md:max-w-lg md:gap-6 md:py-0 md:pb-12'
           >
+            {user && (
+              <motion.h2 variants={childVariants} className='mb-1 sm:-mb-2 text-lg'>
+                Hello, <span className='font-bold'>{user.username}</span>!
+              </motion.h2>
+            )}
             <motion.div
               variants={childVariants}
               className='text-2xl font-normal text-balance md:text-3xl'
