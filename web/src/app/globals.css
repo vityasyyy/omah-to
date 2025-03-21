@@ -44,7 +44,7 @@
   --color-primary-new-800: #ededf8;
   --color-primary-new-900: #e6e6f5;
 
-  --color-secondary: #0479CE;
+  --color-secondary: #0479ce;
   --color-secondary-25: #fcfcfd;
   --color-secondary-50: #f8fafc;
   --color-secondary-100: #eef2f6;
@@ -97,7 +97,7 @@
   --radius-sm: calc(var(--radius) - 4px);
 
   --breakpoint-xl: 1192px;
-  --breakpoint-xxl: 1384px
+  --breakpoint-xxl: 1384px;
 }
 
 /*
@@ -116,11 +116,13 @@
   ::file-selector-button {
     border-color: var(--color-gray-200, currentColor);
   }
-}
 
-@layer base {
   :root {
     --radius: 0.5rem;
+  }
+
+  ::selection {
+    background: var(--color-primary-200);
   }
 }
 
@@ -141,4 +143,10 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+}
+
+@layer utilities {
+  .font-lora {
+    font-family: var(--font-lora);
+  }
 }

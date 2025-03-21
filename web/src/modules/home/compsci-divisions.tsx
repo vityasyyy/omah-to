@@ -80,7 +80,7 @@ const Card = (props: {
           alt='division logo'
           fill
           sizes='50%'
-          className='object-cover'
+          className='object-cover select-none'
         />
       </section>
       <section className='space-y-2 sm:space-y-0'>

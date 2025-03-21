@@ -1,10 +1,10 @@
-import { Lora, Plus_Jakarta_Sans } from "next/font/google";
+import { Lora, Plus_Jakarta_Sans } from 'next/font/google'
 
 export const plusJakartaSans = Plus_Jakarta_Sans({
-	subsets: ["latin"],
-});
+  subsets: ['latin'],
+})
 
 export const lora = Lora({
-    subsets: ["latin"],
-    variable: '--lora'
+  subsets: ['latin'],
+  variable: '--font-lora',
 })

@@ -141,7 +141,7 @@ const Statistic = ({ userScores, userAnswers, totalRank }: StatisticProps) => {
   // In your component
   return (
     <div className='grid w-full grid-cols-1 gap-6 xl:grid-cols-4'>
-      <div className='col-span-3 grid w-full grid-cols-1 gap-4 md:grid-cols-2 xl:col-span-1 xl:grid-cols-1'>
+      <div className='col-span-3 grid w-full grid-cols-1 gap-4 md:grid-cols-1 xl:col-span-1'>
         <ResultTable title='Hasil'>
           <div className='grid grid-cols-2 gap-2.5 *:text-center'>
             <div className='rounded-lg bg-white'>

@@ -54,7 +54,9 @@ const AnswerCard = ({
   )
   const [lastSynced, setLastSynced] = useState<Date | null>(null)
   const [submitting, setSubmitting] = useState(false)
-  
+  const [isGracePeriod, setIsGracePeriod] = useState(false)
+  const [graceTimeRemaining, setGraceTimeRemaining] = useState<number>(5 * 60) // 5 minutes in seconds
+
   // Use the time prop directly as timeLimit instead of state
   const timeLimit = time ? time.getTime() : null
 
@@ -83,51 +85,59 @@ const AnswerCard = ({
       } else {
         router.push('/tryout/intro')
       }
-      toast.success('Jawaban berhasil disimpan!', {
-        position: 'bottom-left'
-      })
+      alert('Answers submitted successfully!')
       return result
     } catch (error) {
       console.error('Submission error:', error)
-      toast.error('Submission failed. Please try again.', {
-        position: 'bottom-left'
-      })
+      alert('Submission failed. Please try again.')
+      throw error
     } finally {
       setSubmitting(false)
       setSyncStatus('idle')
     }
   }, [answers, hasSubmitted, localStorageKey, currentSubtest, router])
-
-  // Time limit handler - simplified to just submit when time is up
+  // Time limit handler
   useEffect(() => {
     if (!timeLimit) return
 
     const checkTime = () => {
-      if (Date.now() >= timeLimit && !hasSubmitted) {
-        // Show notification toast once
-        toast.warning('Waktu habis! Jawaban otomatis dikumpulkan.', {
+      if (Date.now() >= timeLimit && !hasSubmitted && !isGracePeriod) {
+        // Enter grace period
+        setIsGracePeriod(true)
+        if (timerRef.current) clearInterval(timerRef.current)
+
+        // Tampilkan notifikasi toast saat memasuki masa tenggang
+        toast.warning('Waktu hampir habis!', {
+          description: `Anda memiliki ${formatTimeRemaining(
+            graceTimeRemaining
+          )} tersisa. Pastikan jawaban sudah dicek ulang.`,
           position: 'bottom-left',
         })
-        
-        // Submit answers immediately when time is up
-        submitAllAnswers();
-        
-        // Clean up timer
-        if (timerRef.current) clearInterval(timerRef.current);
+
+        // Mulai hitung mundur masa tenggang
+        timerRef.current = setInterval(() => {
+          setGraceTimeRemaining((prev) => {
+            if (prev <= 1) {
+              // Kirim otomatis saat masa tenggang berakhir
+              submitAllAnswers()
+              setHasSubmitted(true)
+              if (timerRef.current) clearInterval(timerRef.current)
+              return 0
+            }
+            return prev - 1
+          })
+        }, 1000)
       }
     }
-
-    // Check immediately on mount
     checkTime()
 
-    // Set up the interval for periodic checking
-    const intervalId = setInterval(checkTime, 1000)
-
+    timerRef.current = setInterval(checkTime, 1000)
     return () => {
-      if (intervalId) clearInterval(intervalId)
-      if (timerRef.current) clearInterval(timerRef.current)
+      if (timerRef.current) {
+        clearInterval(timerRef.current)
+      }
     }
-  }, [timeLimit, hasSubmitted, submitAllAnswers])
+  }, [timeLimit, hasSubmitted, isGracePeriod, submitAllAnswers])
 
   // Sync logic
   const syncWithServer = useCallback(
@@ -187,8 +197,8 @@ const AnswerCard = ({
   // Answer handling
   const updateAnswer = useCallback(
     (kodeSoal: string, jawaban: string | null) => {
-      // Allow answer updates as long as not submitted
-      if (hasSubmitted) return
+      // Don't allow answer updates during grace period
+      if (isGracePeriod) return
 
       setAnswers((prev) => {
         const updated = {
@@ -212,7 +222,7 @@ const AnswerCard = ({
         return updated
       })
     },
-    [localStorageKey, hasSubmitted]
+    [localStorageKey, isGracePeriod]
   )
 
   // Format time remaining for display
@@ -234,7 +244,7 @@ const AnswerCard = ({
       savedAnswer: answers[currentSoal.kode_soal]?.jawaban || null,
       onAnswerChange: (value: string) =>
         updateAnswer(currentSoal.kode_soal, value),
-      disabled: hasSubmitted, // Disable inputs after submission
+      disabled: isGracePeriod, // Disable inputs during grace period
     }
 
     switch (variant) {
@@ -252,11 +262,11 @@ const AnswerCard = ({
   return (
     <StyledCard title='Jawaban' className='relative gap-1'>
       <main className='flex h-full flex-col'>
-        <section className='mb-8 h-96 overflow-y-auto'>
+        <section className='mb-8 h-96 overflow-y-scroll'>
           {renderQuestionComponent()}
         </section>
 
-        <section className='absolute pt-2 inset-x-4 bottom-4 grid grid-cols-2 gap-2 bg-white'>
+        <section className='absolute inset-x-4 bottom-4 grid grid-cols-2 gap-2 bg-white'>
           <Link
             href={
               clampedNumber > 1 ? `${basePath}/${clampedNumber - 1}` : pathname
@@ -264,7 +274,7 @@ const AnswerCard = ({
             className={cn(
               buttonVariants({ variant: 'secondaryOutline' }),
               'border-[1.5px]',
-              (clampedNumber === 1 || hasSubmitted) &&
+              (clampedNumber === 1 || isGracePeriod) &&
                 'pointer-events-none opacity-50'
             )}
             replace
@@ -273,7 +283,19 @@ const AnswerCard = ({
             Back
           </Link>
 
-          {isLastQuestion ? (
+          {isGracePeriod ? (
+            <button
+              onClick={submitAllAnswers}
+              disabled={submitting || syncStatus === 'syncing'}
+              className={cn(
+                buttonVariants({ variant: 'secondary' }),
+                'flex items-center justify-center gap-2'
+              )}
+            >
+              <Check size={16} />
+              {submitting ? 'Submitting...' : 'Submit All'}
+            </button>
+          ) : isLastQuestion ? (
             <button
               disabled={true}
               className={cn(
@@ -281,15 +303,15 @@ const AnswerCard = ({
                 'flex cursor-not-allowed items-center justify-center gap-2'
               )}
             >
-              Wait for Time to End
               <Clock size={16} />
+              Wait for Time to End
             </button>
           ) : (
             <Link
               href={`${basePath}/${clampedNumber + 1}`}
               className={cn(
                 buttonVariants({ variant: 'secondary' }),
-                hasSubmitted && 'pointer-events-none opacity-50'
+                isGracePeriod && 'pointer-events-none opacity-50'
               )}
               replace
             >
@@ -330,7 +352,7 @@ const MultipleChoice = ({
   }
 
   return (
-    <div className='mt-2 mb-4'>
+    <div className='mb-4 mt-2'>
       {soal.pilihan_ganda?.map((option: any, idx: number) => (
         <button
           key={option.soal_pilihan_ganda_id}

@@ -101,7 +101,7 @@ const Hero = () => {
           <div className='relative flex w-full items-center justify-center'>
             {/* person */}
             <Image
-              src={`/bron.png`}
+              src={`/assets/hero.webp`}
               alt='OmahTO Hero Image'
               width={350}
               height={250}

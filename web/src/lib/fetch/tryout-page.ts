@@ -11,6 +11,7 @@ export const getSubtestsScore = async (
       Cookie: `access_token=${accessToken}`,
     },
     credentials: 'include',
+    next: { revalidate: 3600 },
   })
   if (res.ok) {
     const responseJSON = await res.json()
@@ -29,6 +30,7 @@ export const getLeaderboard = async (
       Cookie: `access_token=${accessToken}`,
     },
     credentials: 'include',
+    next: { revalidate: 3600 },
   })
   if (res.ok) {
     const responseJSON = await res.json()

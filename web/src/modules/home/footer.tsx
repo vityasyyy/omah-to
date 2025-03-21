@@ -1,6 +1,13 @@
 import Container from '@/components/container'
 import Logo from '@/components/home/logo'
 import { Instagram, Mail, Phone } from 'lucide-react'
+import Image from 'next/image'
+import Link from 'next/link'
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from '@/components/ui/hover-card'
 
 const CONTACTS = [
   {
@@ -25,7 +32,34 @@ const Footer = () => {
           <InfoSection />
           <ContactSection />
         </section>
-        <div className='mt-4 flex h-16 w-full items-center justify-center bg-white'></div>
+        <div className='mt-4 flex h-16 w-full items-center justify-center bg-white'>
+          <HoverCard>
+            <HoverCardTrigger asChild>
+              <Link
+                href='https://omahti.web.id'
+                target='_blank'
+                rel='noopener noreferrer'
+              >
+                <Image
+                  src='/assets/omahti.png'
+                  alt='OmahTI Logo'
+                  width={83}
+                  height={28}
+                  sizes='100%'
+                  className='mx-auto h-[28px] w-[83px]'
+                />
+              </Link>
+            </HoverCardTrigger>
+            <HoverCardContent className='w-80 text-sm'>
+              <div className='space-y-1'>
+                <h4 className='font-semibold'>
+                  OmahTI (Organisasi Mahasiswa Ahli Teknologi Informasi)
+                </h4>
+                <p>An IT organization based in Gadjah Mada University.</p>
+              </div>
+            </HoverCardContent>
+          </HoverCard>
+        </div>
       </Container>
     </main>
   )
