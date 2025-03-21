@@ -10,7 +10,7 @@ export const DIVISIONS = [
     },
     {
         name: 'Back End',
-        img: '/assets/divisions/back_end.webp',
+        img: '/assets/divisions/backend.webp',
         description: 'tubi verba arcana resonant inter columnas memoriae. In aethere suspenso inter chaos et ordinem, conceptus ignoti efflorescunt sicut flores siderum, formantes nexus incomprehensibiles inter finitum et infinitum. Quisquis intrat hanc aulam cogitationis, detegit scripturas vetustatis.'
     },
     {
@@ -35,7 +35,7 @@ export const DIVISIONS = [
     },
     {
         name: 'Front End',
-        img: '/assets/divisions/front_end.webp',
+        img: '/assets/divisions/frontend.webp',
         description: 'tubi verba arcana resonant inter columnas memoriae. In aethere suspenso inter chaos et ordinem, conceptus ignoti efflorescunt sicut flores siderum, formantes nexus incomprehensibiles inter finitum et infinitum. Quisquis intrat hanc aulam cogitationis, detegit scripturas vetustatis.'
     },
 ]

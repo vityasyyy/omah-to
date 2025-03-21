@@ -57,7 +57,7 @@ const LogOutDialog = ({ children }: { children: React.ReactNode }) => {
               <X className='text-neutral-500' />
             </AlertDialogCancel>
           </AlertDialogTitle>
-          <AlertDialogDescription>
+          <AlertDialogDescription className='text-justify sm:text-start leading-6'>
             Anda akan keluar dari akun Anda. Semua data sesi akan dihapus dan
             Anda perlu login kembali untuk mengakses fitur-fitur yang memerlukan
             autentikasi. Apakah Anda yakin ingin melanjutkan?

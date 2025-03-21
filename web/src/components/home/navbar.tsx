@@ -17,6 +17,7 @@ import { Button, buttonVariants } from '../ui/button'
 import Logo from './logo'
 import NavbarResolver from './navbar-resolver'
 import ProfileButton from './profile-button'
+import LogOutDialog from '../log-out-dialog'
 
 const NAV_ITEMS = [
   {
@@ -108,17 +109,16 @@ const MobileNavigation = ({
           </section>
           <section className='flex flex-col gap-2'>
             {signedIn ? (
-              <SheetClose asChild>
-                <Link
-                  href={`/register`}
+              <LogOutDialog>
+                <button
                   className={cn(
                     buttonVariants({ variant: 'destructive' }),
                     'bg-error-400 text-white'
                   )}
                 >
                   Logout
-                </Link>
-              </SheetClose>
+                </button>
+              </LogOutDialog>
             ) : (
               <>
                 <SheetClose asChild>

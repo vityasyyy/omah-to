@@ -85,11 +85,15 @@ const AnswerCard = ({
       } else {
         router.push('/tryout/intro')
       }
-      alert('Answers submitted successfully!')
+      toast.success('Jawaban berhasil dikumpulkan!', {
+        position: 'bottom-left',  
+      })
       return result
     } catch (error) {
       console.error('Submission error:', error)
-      alert('Submission failed. Please try again.')
+      toast.error('Jawaban gagal dikumpulkan. Silahkan coba lagi.', {
+        position: 'bottom-left',  
+      })
       throw error
     } finally {
       setSubmitting(false)
@@ -107,10 +111,8 @@ const AnswerCard = ({
         if (timerRef.current) clearInterval(timerRef.current)
 
         // Tampilkan notifikasi toast saat memasuki masa tenggang
-        toast.warning('Waktu hampir habis!', {
-          description: `Anda memiliki ${formatTimeRemaining(
-            graceTimeRemaining
-          )} tersisa. Pastikan jawaban sudah dicek ulang.`,
+        toast.warning('Waktu sudah habis!', {
+          description: `Silahkan kumpulkan jawaban agar bisa lanjut ke subtes selanjutnya.`,
           position: 'bottom-left',
         })
 
@@ -292,8 +294,8 @@ const AnswerCard = ({
                 'flex items-center justify-center gap-2'
               )}
             >
+              {submitting ? 'Memproses...' : 'Lanjut Subtes'}
               <Check size={16} />
-              {submitting ? 'Submitting...' : 'Submit All'}
             </button>
           ) : isLastQuestion ? (
             <button
@@ -303,8 +305,8 @@ const AnswerCard = ({
                 'flex cursor-not-allowed items-center justify-center gap-2'
               )}
             >
+              Menunggu waktu habis
               <Clock size={16} />
-              Wait for Time to End
             </button>
           ) : (
             <Link

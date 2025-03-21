@@ -1,6 +1,6 @@
 import Container from '@/components/container'
 import Logo from '@/components/home/logo'
-import { Instagram, Mail, Phone } from 'lucide-react'
+import { Instagram, Link2, Mail, Phone } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import {
@@ -50,9 +50,10 @@ const Footer = () => {
                 />
               </Link>
             </HoverCardTrigger>
-            <HoverCardContent className='w-80 text-sm'>
+            <HoverCardContent className='flex gap-3 w-80 text-sm'>
+              <Link2 />
               <div className='space-y-1'>
-                <h4 className='font-semibold'>
+                <h4 className='font-semibold underline'>
                   OmahTI (Organisasi Mahasiswa Ahli Teknologi Informasi)
                 </h4>
                 <p>An IT organization based in Gadjah Mada University.</p>
