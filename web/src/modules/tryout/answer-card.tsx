@@ -14,11 +14,19 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog'
-import { buttonVariants } from '@/components/ui/button'
+import { Button, buttonVariants } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
 import { progressTryout, syncTryout } from '@/lib/fetch/tryout-test'
 import { cn } from '@/lib/utils'
-import { ArrowLeft, ArrowRight, Check, Clock, LoaderCircle } from 'lucide-react'
+import {
+  ArrowLeft,
+  ArrowRight,
+  Check,
+  Clock,
+  LoaderCircle,
+  Square,
+  SquareCheckBig,
+} from 'lucide-react'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { useCallback, useEffect, useRef, useState } from 'react'
@@ -321,8 +329,8 @@ const AnswerCard = ({
                 </>
               ) : (
                 <>
-                  Lanjut Subtes Berikutnya{' '}
-                  {formatTimeRemaining(graceTimeRemaining)}
+                  Lanjut Subtes Berikutnya (
+                  {formatTimeRemaining(graceTimeRemaining)})
                   <ArrowRight className='group-hover:translate-x-1' />
                 </>
               )}
@@ -333,7 +341,7 @@ const AnswerCard = ({
 
       <StyledCard title='Jawaban' className='relative gap-1'>
         <main className='flex h-full flex-col'>
-          <section className='mt-2 mb-8 h-96 overflow-y-scroll'>
+          <section className='mt-2 mb-8 h-96 w-full overflow-y-scroll'>
             {renderQuestionComponent()}
           </section>
 
@@ -475,15 +483,13 @@ const TextAnswer = ({
   }
 
   return (
-    <div className='mb-4'>
-      <Textarea
-        placeholder='Ketik jawabanmu disini'
-        value={text}
-        onChange={handleChange}
-        disabled={disabled}
-        className={disabled ? 'cursor-not-allowed opacity-80' : ''}
-      />
-    </div>
+    <Textarea
+      placeholder='Ketik jawabanmu disini'
+      value={text}
+      onChange={handleChange}
+      disabled={disabled}
+      className={`w-full ${disabled ? 'cursor-not-allowed opacity-80' : ''}`}
+    />
   )
 }
 
@@ -553,38 +559,47 @@ const TrueFalse = ({
   }
 
   return (
-    <div className='mb-4 flex flex-col gap-4'>
-      {soal.true_false?.map((option: any) => {
+    <div className='flex flex-col gap-1'>
+      {soal.true_false?.map((option: any, idx: number) => {
         const isTrue = trueAnswerIds.includes(option.soal_true_false_id)
 
         return (
           <div
             key={option.soal_true_false_id}
-            className='flex items-center gap-4'
+            className={`flex w-full items-center justify-between gap-4 rounded-lg border-b border-neutral-200 px-4 py-4 text-start font-semibold text-black transition-colors ease-in-out ${disabled ? 'cursor-not-allowed opacity-80' : ''}`}
           >
-            <span className='w-40'>{option.pilihan_tf}</span>
+            <div className='flex gap-4 text-black'>
+              <h2 className='font-bold self-center'>{String.fromCharCode(97 + idx)}.</h2>
+              <h1>{option.pilihan_tf}</h1>
+            </div>
 
-            <button
-              type='button'
-              onClick={() => handleSelect(option.soal_true_false_id, true)}
-              className={`rounded border px-4 py-2 ${
-                isTrue ? 'bg-primary-500 text-white' : 'bg-white'
-              } ${disabled ? 'cursor-not-allowed opacity-70' : ''}`}
-              disabled={disabled}
-            >
-              True
-            </button>
+            <div className='flex gap-4'>
+              <Button
+                onClick={() => handleSelect(option.soal_true_false_id, true)}
+                variant='ghost'
+                size='icon'
+                className='relative hover:bg-transparent'
+                disabled={disabled}
+              >
+                {isTrue ? <SquareCheckBig /> : <Square />}
+                <span className='absolute -top-2 text-xs font-light text-neutral-800'>
+                  Benar
+                </span>
+              </Button>
 
-            <button
-              type='button'
-              onClick={() => handleSelect(option.soal_true_false_id, false)}
-              className={`rounded border px-4 py-2 ${
-                !isTrue ? 'bg-primary-500 text-white' : 'bg-white'
-              } ${disabled ? 'cursor-not-allowed opacity-70' : ''}`}
-              disabled={disabled}
-            >
-              False
-            </button>
+              <Button
+                onClick={() => handleSelect(option.soal_true_false_id, false)}
+                variant='ghost'
+                size='icon'
+                className='relative hover:bg-transparent'
+                disabled={disabled}
+              >
+                {!isTrue ? <SquareCheckBig /> : <Square />}
+                <span className='absolute -top-2 text-xs font-light text-neutral-800'>
+                  Salah
+                </span>
+              </Button>
+            </div>
           </div>
         )
       })}

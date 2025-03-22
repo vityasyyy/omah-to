@@ -42,7 +42,7 @@ const TryOutPage = async () => {
           >
             <section className='flex flex-col-reverse gap-4 md:grid md:grid-cols-4'>
               <StartCard
-                status={ongoing ? 'ongoing' : finished ? 'finished' : 'none'}
+                status={finished ? 'finished' : ongoing ? 'ongoing' : 'none'}
               />
               <ProfileCard user={user} />
             </section>

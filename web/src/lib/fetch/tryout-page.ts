@@ -66,8 +66,6 @@ export const getFinishedAttempt = async (accessToken: string) => {
       Cookie: `access_token=${accessToken}`,
     },
     credentials: 'include',
-    cache: 'force-cache', // Cache response by default
-    next: { revalidate: 3600 }, // Revalidate every 1 hour (3600s)
   })
   if (res.ok) {
     const responseJSON = await res.json()
