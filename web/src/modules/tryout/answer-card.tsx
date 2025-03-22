@@ -1,17 +1,29 @@
+/**
+ * @description Component ini dibuat oleh AI (VIBE CODING) jadi expect error somewhere (kurang optimal).
+ */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 
 import StyledCard from '@/components/tryout/styled-card'
-import { ArrowLeft, ArrowRight, Check, Clock } from 'lucide-react'
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-import { useState, useEffect, useCallback, useRef } from 'react'
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog'
 import { buttonVariants } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
-import { cn } from '@/lib/utils'
 import { progressTryout, syncTryout } from '@/lib/fetch/tryout-test'
-import { useRouter } from 'next/navigation'
+import { cn } from '@/lib/utils'
+import { ArrowLeft, ArrowRight, Check, Clock, LoaderCircle } from 'lucide-react'
+import Link from 'next/link'
+import { usePathname, useRouter } from 'next/navigation'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { toast } from 'sonner'
+
 type Variant = 'multiple_choice' | 'true_false' | 'uraian'
 
 interface AnswerCardProps {
@@ -55,7 +67,8 @@ const AnswerCard = ({
   const [lastSynced, setLastSynced] = useState<Date | null>(null)
   const [submitting, setSubmitting] = useState(false)
   const [isGracePeriod, setIsGracePeriod] = useState(false)
-  const [graceTimeRemaining, setGraceTimeRemaining] = useState<number>(5 * 60) // 5 minutes in seconds
+  const [graceTimeRemaining, setGraceTimeRemaining] = useState<number>(1 * 60) // 1 minutes in seconds
+  const [dialogOpen, setDialogOpen] = useState(false)
 
   // Use the time prop directly as timeLimit instead of state
   const timeLimit = time ? time.getTime() : null
@@ -65,6 +78,13 @@ const AnswerCard = ({
   const clampedNumber = Math.min(Math.max(currentNumber, 1), totalQuestions)
   const currentSoal = soalSemua[clampedNumber - 1]
   const isLastQuestion = clampedNumber === totalQuestions
+
+  // Format time remaining for display
+  const formatTimeRemaining = (seconds: number) => {
+    const mins = Math.floor(seconds / 60)
+    const secs = seconds % 60
+    return `${mins}:${secs < 10 ? '0' : ''}${secs}`
+  }
 
   // Submission handler
   const submitAllAnswers = useCallback(async () => {
@@ -86,54 +106,65 @@ const AnswerCard = ({
         router.push('/tryout/intro')
       }
       toast.success('Jawaban berhasil dikumpulkan!', {
-        position: 'bottom-left',  
+        position: 'bottom-left',
       })
       return result
     } catch (error) {
+      localStorage.clear()
       console.error('Submission error:', error)
-      toast.error('Jawaban gagal dikumpulkan. Silahkan coba lagi.', {
-        position: 'bottom-left',  
-      })
-      throw error
+      toast.error(
+        'Jawaban gagal dikumpulkan. Waktu pengumpulan sudah habis, tryout akan diulang.',
+        {
+          position: 'bottom-left',
+        }
+      )
+      router.push('/tryout')
     } finally {
       setSubmitting(false)
       setSyncStatus('idle')
     }
   }, [answers, hasSubmitted, localStorageKey, currentSubtest, router])
+
   // Time limit handler
   useEffect(() => {
     if (!timeLimit) return
 
     const checkTime = () => {
-      if (Date.now() >= timeLimit && !hasSubmitted && !isGracePeriod) {
-        // Enter grace period
-        setIsGracePeriod(true)
-        if (timerRef.current) clearInterval(timerRef.current)
+      const now = Date.now()
+      const gracePeriodStart = timeLimit
+      const gracePeriodEnd = timeLimit + 1 * 60 * 1000 // 1 minute grace period
 
-        // Tampilkan notifikasi toast saat memasuki masa tenggang
-        toast.warning('Waktu sudah habis!', {
-          description: `Silahkan kumpulkan jawaban agar bisa lanjut ke subtes selanjutnya.`,
-          position: 'bottom-left',
-        })
+      // If we're past the time limit but before grace period ends
+      if (now >= gracePeriodStart && now < gracePeriodEnd && !hasSubmitted) {
+        // Enter grace period if not already in it
+        if (!isGracePeriod) {
+          setIsGracePeriod(true)
+          setDialogOpen(true)
 
-        // Mulai hitung mundur masa tenggang
-        timerRef.current = setInterval(() => {
-          setGraceTimeRemaining((prev) => {
-            if (prev <= 1) {
-              // Kirim otomatis saat masa tenggang berakhir
-              submitAllAnswers()
-              setHasSubmitted(true)
-              if (timerRef.current) clearInterval(timerRef.current)
-              return 0
-            }
-            return prev - 1
+          // Show toast notification when entering grace period
+          toast.warning('Waktu sudah habis!', {
+            description: `Anda berada di masa tenggang selama 1 menit. Silahkan kumpulkan jawaban.`,
+            position: 'bottom-left',
+            duration: 5000,
           })
-        }, 1000)
+        }
+
+        // Calculate and update grace time remaining
+        const remainingMs = Math.max(0, gracePeriodEnd - now)
+        const remainingSec = Math.ceil(remainingMs / 1000)
+        setGraceTimeRemaining(remainingSec)
+      }
+      // If grace period has ended and hasn't submitted
+      else if (now >= gracePeriodEnd && !hasSubmitted) {
+        setGraceTimeRemaining(0)
+        // Optional: Auto-submit when grace period ends
+        submitAllAnswers()
       }
     }
-    checkTime()
 
+    checkTime()
     timerRef.current = setInterval(checkTime, 1000)
+
     return () => {
       if (timerRef.current) {
         clearInterval(timerRef.current)
@@ -178,6 +209,11 @@ const AnswerCard = ({
       } catch (error) {
         console.error('Sync error:', error)
         setSyncStatus('error')
+        toast.error('Gagal mensinkronisasi Tryout', {
+          description:
+            'Sepertinya terdapat masalah jaringan atau anda tidak mengumpulkan jawaban subtes. Silahkan ulang Tryout.',
+          position: 'bottom-left',
+        })
       }
     },
     [localStorageKey]
@@ -227,13 +263,6 @@ const AnswerCard = ({
     [localStorageKey, isGracePeriod]
   )
 
-  // Format time remaining for display
-  const formatTimeRemaining = (seconds: number) => {
-    const mins = Math.floor(seconds / 60)
-    const secs = seconds % 60
-    return `${mins}:${secs < 10 ? '0' : ''}${secs}`
-  }
-
   // Render helpers
   const renderQuestionComponent = () => {
     if (!currentSoal)
@@ -262,68 +291,109 @@ const AnswerCard = ({
   }
 
   return (
-    <StyledCard title='Jawaban' className='relative gap-1'>
-      <main className='flex h-full flex-col'>
-        <section className='mb-8 h-96 overflow-y-scroll'>
-          {renderQuestionComponent()}
-        </section>
-
-        <section className='absolute inset-x-4 bottom-4 grid grid-cols-2 gap-2 bg-white'>
-          <Link
-            href={
-              clampedNumber > 1 ? `${basePath}/${clampedNumber - 1}` : pathname
-            }
-            className={cn(
-              buttonVariants({ variant: 'secondaryOutline' }),
-              'border-[1.5px]',
-              (clampedNumber === 1 || isGracePeriod) &&
-                'pointer-events-none opacity-50'
-            )}
-            replace
-          >
-            <ArrowLeft />
-            Back
-          </Link>
-
-          {isGracePeriod ? (
-            <button
+    <>
+      <AlertDialog
+        open={dialogOpen && isGracePeriod}
+        onOpenChange={setDialogOpen}
+      >
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Waktu Habis!</AlertDialogTitle>
+            <AlertDialogDescription>
+              Waktu mengerjakan sudah habis. Silahkan kumpulkan jawaban untuk
+              melanjutkan ke subtes berikutnya. Jika jawaban tidak dikumpulkan,
+              tryout akan dianggap tidak valid.
+              {/* <div className='mt-2 text-center font-bold text-red-500'>
+                {formatTimeRemaining(graceTimeRemaining)}
+              </div> */}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogAction
               onClick={submitAllAnswers}
               disabled={submitting || syncStatus === 'syncing'}
-              className={cn(
-                buttonVariants({ variant: 'secondary' }),
-                'flex items-center justify-center gap-2'
-              )}
+              className='group w-full'
             >
-              {submitting ? 'Memproses...' : 'Lanjut Subtes'}
-              <Check size={16} />
-            </button>
-          ) : isLastQuestion ? (
-            <button
-              disabled={true}
-              className={cn(
-                buttonVariants({ variant: 'secondary' }),
-                'flex cursor-not-allowed items-center justify-center gap-2'
+              {submitting ? (
+                <>
+                  <LoaderCircle className='animate-spin' />
+                  Memproses...
+                </>
+              ) : (
+                <>
+                  Lanjut Subtes Berikutnya{' '}
+                  {formatTimeRemaining(graceTimeRemaining)}
+                  <ArrowRight className='group-hover:translate-x-1' />
+                </>
               )}
-            >
-              Menunggu waktu habis
-              <Clock size={16} />
-            </button>
-          ) : (
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
+      <StyledCard title='Jawaban' className='relative gap-1'>
+        <main className='flex h-full flex-col'>
+          <section className='mt-2 mb-8 h-96 overflow-y-scroll'>
+            {renderQuestionComponent()}
+          </section>
+
+          <section className='absolute inset-x-4 bottom-4 grid grid-cols-2 gap-2 bg-white'>
             <Link
-              href={`${basePath}/${clampedNumber + 1}`}
+              href={
+                clampedNumber > 1
+                  ? `${basePath}/${clampedNumber - 1}`
+                  : pathname
+              }
               className={cn(
-                buttonVariants({ variant: 'secondary' }),
-                isGracePeriod && 'pointer-events-none opacity-50'
+                buttonVariants({ variant: 'secondaryOutline' }),
+                'border-[1.5px]',
+                (clampedNumber === 1 || isGracePeriod) &&
+                  'pointer-events-none opacity-50'
               )}
               replace
             >
-              Next
-              <ArrowRight />
+              <ArrowLeft />
+              Back
             </Link>
-          )}
-        </section>
-      </main>
-    </StyledCard>
+
+            {isGracePeriod ? (
+              <button
+                onClick={() => setDialogOpen(true)}
+                className={cn(
+                  buttonVariants({ variant: 'secondary' }),
+                  'flex items-center justify-center gap-2'
+                )}
+              >
+                Lanjut Subtes
+                <Check size={16} />
+              </button>
+            ) : isLastQuestion ? (
+              <button
+                disabled={true}
+                className={cn(
+                  buttonVariants({ variant: 'secondary' }),
+                  'flex cursor-not-allowed items-center justify-center gap-2'
+                )}
+              >
+                <Clock size={16} />
+              </button>
+            ) : (
+              <Link
+                href={`${basePath}/${clampedNumber + 1}`}
+                className={cn(
+                  buttonVariants({ variant: 'secondary' }),
+                  isGracePeriod && 'pointer-events-none opacity-50'
+                )}
+                replace
+              >
+                Next
+                <ArrowRight />
+              </Link>
+            )}
+          </section>
+        </main>
+      </StyledCard>
+    </>
   )
 }
 
@@ -354,7 +424,7 @@ const MultipleChoice = ({
   }
 
   return (
-    <div className='mb-4 mt-2'>
+    <div className=''>
       {soal.pilihan_ganda?.map((option: any, idx: number) => (
         <button
           key={option.soal_pilihan_ganda_id}

@@ -8,6 +8,7 @@ import Image from 'next/image'
 import 'katex/dist/katex.min.css' // Import KaTeX styles
 import katex from 'katex' // Import katex for rendering
 import * as motion from 'motion/react-client'
+import { redirect } from 'next/navigation'
 
 const LatexRenderer = ({ content }: { content: string }) => {
   // Early return if the content is empty
@@ -152,7 +153,7 @@ const TryoutPage = ({ params }: { params: Promise<{ id: number }> }) => {
   const { value: soal, time, currentSubtest } = useTryoutData()
   const currentSoal = soal[id - 1]
 
-  if (!currentSoal) return <p>Loading...</p> // Prevent errors if soal is not ready
+  if (!currentSoal) redirect('/tryout/1')
 
   // Determine question type
   let variant: 'multiple_choice' | 'true_false' | 'uraian' = 'multiple_choice'
@@ -173,14 +174,14 @@ const TryoutPage = ({ params }: { params: Promise<{ id: number }> }) => {
             <LatexRenderer content={currentSoal.text_soal} />
           )}
           {currentSoal.path_gambar_soal && (
-        <Image
-          src={currentSoal.path_gambar_soal}
-          alt='Question Image'
-          width={500}
-          height={300}
-          className='rounded-lg'
-        />
-      )}
+            <Image
+              src={currentSoal.path_gambar_soal}
+              alt='Question Image'
+              width={500}
+              height={300}
+              className='rounded-lg'
+            />
+          )}
         </section>
       </StyledCard>
 

@@ -49,9 +49,6 @@ export async function middleware(request: NextRequest) {
           Cookie: `access_token=${accessToken}`,
         },
         credentials: 'include',
-        // next: {
-        //   revalidate: 60
-        // }
       })
 
       if (res.ok) {

@@ -51,7 +51,7 @@ export const getSoal = async (
       Cookie: `${keren}=${token}`,
     },
     credentials: 'include',
-    cache: 'force-cache'
+    cache: 'force-cache',
   })
   if (!res.ok) {
     throw new Error('Failed to fetch soal')
@@ -80,9 +80,8 @@ export const syncTryout = async (
   })
 
   if (!res.ok) {
-    redirect('/tryout')
-    throw new Error(
-      'Failed to sync tryout data, u exceed the time limit, start over the tryout'
+    throw Error(
+      'Anda tidak mengumpulkan jawaban tepat waktu, silahkan mulai ulang Tryout.'
     )
   }
 
@@ -109,9 +108,8 @@ export const progressTryout = async (
   })
 
   if (!res.ok) {
-    redirect('/tryout')
     throw new Error(
-      'Failed to progress tryout data, u exceed the time limit, start over the tryout'
+      'Gagal memprogres Tryout, waktu pengumpulan sudah habis.'
     )
   }
 

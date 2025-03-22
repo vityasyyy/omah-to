@@ -14,7 +14,7 @@ import { toast } from 'sonner'
 
 const IntroPage = async () => {
   const tryoutToken = (await cookies()).get('tryout_token')?.value as string
-  console.log('token: ', tryoutToken);
+  console.log('token: ', tryoutToken)
   const res = await fetch(`${process.env.TRYOUT_URL}/sync/current`, {
     method: 'GET',
     headers: {
@@ -22,18 +22,21 @@ const IntroPage = async () => {
       Cookie: `tryout_token=${tryoutToken}`,
     },
   })
-  console.log('res: ', res);
 
-  const syncData = await syncTryout([], tryoutToken)
-
-  if (syncData == null) {
-    toast.error('Gagal Mengerjakan Tryout', {
-      description: `Error backend`,
+  let timeLimit
+  try {
+    const syncData = await syncTryout([], tryoutToken)
+    timeLimit = syncData.data.time_limit
+  } catch (error) {
+    console.error('Error:', error)
+    toast.error('Gagal mensinkronisasi Tryout', {
+      description:
+        'Sepertinya terdapat masalah jaringan atau anda tidak mengumpulkan jawaban subtes. Silahkan ulang Tryout.',
+      position: 'bottom-left',
     })
     redirect('/tryout')
   }
 
-  const timeLimit = syncData.data.time_limit
   const grace = 30_000
   const adjustedTimeLimit = new Date(new Date(timeLimit).getTime() - grace)
 

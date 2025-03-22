@@ -14,7 +14,7 @@ const TryoutStatus = ({
   time: Date
   user?: User
 }) => {
-  const displayTitle =  SUBTESTS[title].title
+  const displayTitle = SUBTESTS[title].title
 
   return (
     <>
@@ -43,7 +43,10 @@ const TitleCard = ({
 }) => {
   return (
     <SmallStyledCard
-      className={cn('text-primary-900 w-full text-center shrink text-base', className)}
+      className={cn(
+        'text-primary-900 w-full shrink text-center text-base',
+        className
+      )}
     >
       {title}
     </SmallStyledCard>
@@ -65,7 +68,7 @@ const ProfileCard = ({
         )}
       >
         <Image
-          src={`/avatar.webp`}
+          src={`/assets/profile/avatar.webp`}
           alt='Profile Picture'
           fill
           sizes='20%'
@@ -73,7 +76,7 @@ const ProfileCard = ({
         />
       </section>
       <h1 className='overflow-hidden text-ellipsis whitespace-nowrap'>
-        {user?.username || 'LeBron James'}
+        {user?.username || 'Nama Siswa'}
       </h1>
     </SmallStyledCard>
   )

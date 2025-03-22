@@ -30,7 +30,7 @@ const TryoutLayout = async ({ children }: { children: React.ReactNode }) => {
     redirect('/tryout')
   }
   const timeLimit = syncData.data.time_limit
-  const grace = 30_000
+  const grace = 60_000
   const adjustedTimeLimit = new Date(new Date(timeLimit).getTime() - grace)
   const subtestSekarang = currentSubtest.data.subtest_sekarang
   const soal = await getSoal(
