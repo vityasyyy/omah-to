@@ -46,13 +46,17 @@ interface TryoutResultProps {
     kode_soal: string
   }[]
   totalRank?: number
+  //
 }
 
 const TryoutResult = ({
   userScores,
   userAnswers,
   totalRank,
+  // jumlah_peserta,
 }: TryoutResultProps) => {
+const jumlah_peserta = 100;
+
   // Group answers by subtest
   const groupedAnswers = userAnswers.reduce(
     (acc, answer) => {
@@ -100,6 +104,7 @@ const TryoutResult = ({
           userScores={userScores}
           userAnswers={userAnswers}
           totalRank={totalRank}
+          jumlah_peserta={jumlah_peserta}
         />
         <div className='space-y-6'>
           {Object.entries(groupedAnswers).map(([subtest, qna]) => (
@@ -120,9 +125,10 @@ interface StatisticProps {
   userScores: TryoutResultProps['userScores']
   userAnswers: TryoutResultProps['userAnswers']
   totalRank?: number
+  jumlah_peserta: number
 }
 
-const Statistic = ({ userScores, userAnswers, totalRank }: StatisticProps) => {
+const Statistic = ({ userScores, userAnswers, totalRank, jumlah_peserta }: StatisticProps) => {
   const totalSkorSemua = userScores.reduce((sum, score) => sum + score.score, 0)
   const totalSkor = totalSkorSemua / userScores.length
 
@@ -149,7 +155,9 @@ const Statistic = ({ userScores, userAnswers, totalRank }: StatisticProps) => {
                 <p className='text-primary-900 text-[3rem] font-bold sm:text-[4rem]'>
                   {totalSkor.toFixed(1)}
                 </p>
-                Total Skor
+                <p className='text-xs mb-1'>/1000</p>
+                <hr />
+                <p className='font-bold text-xs mt-1'>Total Skor</p>
               </div>
             </div>
             <div className='rounded-lg bg-white'>
@@ -157,7 +165,9 @@ const Statistic = ({ userScores, userAnswers, totalRank }: StatisticProps) => {
                 <p className='text-primary-900 text-[3rem] font-bold sm:text-[4rem]'>
                   {totalRank ? totalRank.toFixed(1) : 'N/A'}
                 </p>
-                Peringkat
+                <p className='text-xs mb-1'>{jumlah_peserta}</p>
+                <hr />
+                <p className='font-bold text-xs mt-1'>Peringkat</p>
               </div>
             </div>
           </div>
@@ -210,7 +220,7 @@ const ResultTable = (props: ResultTableProps) => {
       </header>
 
       {/* content goes here */}
-      <div className='mb-2 h-full text-sm font-bold text-white md:text-base'>
+      <div className='mb-2 h-fit text-sm font-bold text-white md:text-base'>
         {props.children}
       </div>
     </main>
