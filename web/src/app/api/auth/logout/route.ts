@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from 'next/server'
 export async function POST(_req: NextRequest) {
   try {
     const cookieStore = await cookies()
-    const token = cookieStore.get('access_token')?.value
+    const token = cookieStore.get('refresh_token')?.value
 
     // clear cookies before communicating to auth service
     cookieStore.delete('access_token')
@@ -16,7 +16,7 @@ export async function POST(_req: NextRequest) {
           method: 'POST',
           credentials: 'include',
           headers: {
-            Authorization: `Bearer ${token}`,
+            Cookie: `refresh_token=${token}`, 
             'Content-Type': 'application/json',
           },
 
