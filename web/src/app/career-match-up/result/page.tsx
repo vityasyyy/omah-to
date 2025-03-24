@@ -3,8 +3,6 @@ import React from 'react'
 import { getMbAttempt } from '@/lib/fetch/mb-fetch'
 import ResultClient from './ResultClient'
 import { cookies } from 'next/headers'
-import Image from 'next/image'
-import BackButton from '@/modules/career-match-up/back-button'
 import Enthusiasts from '@/modules/career-match-up/enthusiasts'
 
 // Career path descriptions mapping

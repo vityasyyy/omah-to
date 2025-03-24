@@ -57,7 +57,6 @@ const LoginForm = () => {
       )
 
       if (!response.ok) {
-        const errorData = await response.json()
         toast.error('Login gagal. ', {
           description:
             'Email atau kata sandi tidak valid. Mohon periksa kredensial Anda.',
@@ -69,7 +68,7 @@ const LoginForm = () => {
 
       router.push('/')
       // Redirect or handle successful login here
-    } catch (error) {
+    } catch (_error) {
       toast.error('Login gagal. ', {
         description: 'Ups! Terjadi kesalahan jaringan. Silahkan coba lagi.',
       })

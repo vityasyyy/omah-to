@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 import { useTryoutData } from '@/app/tryout/(test)/tryout-context'
 import SmallStyledCard from '@/components/tryout/small-styled-card'
@@ -18,14 +19,9 @@ interface AnswerPayload {
   jawaban: string | null
 }
 
-interface LocalAnswer extends AnswerPayload {
-  updatedAt: number
-  synced: boolean
-}
-
 const NumberCarousel = ({ totalQuestions }: { totalQuestions: number }) => {
   const pathname = usePathname()
-  const { value: soal, time, currentSubtest } = useTryoutData()
+  const { value: soal } = useTryoutData()
   let currentNumber = Number(pathname.slice(pathname.lastIndexOf('/') + 1))
   const [savedAnswers, setSavedAnswers] = useState<Record<string, any>>({})
 

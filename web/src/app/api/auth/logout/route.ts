@@ -1,7 +1,7 @@
 import { cookies } from 'next/headers'
 import { NextRequest, NextResponse } from 'next/server'
 
-export async function POST(req: NextRequest) {
+export async function POST(_req: NextRequest) {
   try {
     const cookieStore = await cookies()
     const token = cookieStore.get('access_token')?.value
@@ -12,22 +12,23 @@ export async function POST(req: NextRequest) {
 
     if (token) {
       try {
-        const response = await fetch(`${process.env.AUTH_URL}/auth/logout`, {
+        await fetch(`${process.env.AUTH_URL}/auth/logout`, {
           method: 'POST',
           credentials: 'include',
           headers: {
             Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json',
           },
+
         })
-      } catch (error) {
+      } catch (_error) {
         console.error('A network error occurred. Failed to notify server about logout.')
         // even if ts fails we still continue wit da process 💯💯
       }
     }
 
     return NextResponse.json({ message: 'Logged out successfully' })
-  } catch (error) {
+  } catch (_error) {
     return NextResponse.json({ error: 'Failed to logout' }, { status: 500 })
   }
 }

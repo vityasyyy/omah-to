@@ -26,13 +26,13 @@ const LatexRenderer = ({ content }: { content: string }) => {
   // Function to render the content with LaTeX
   const renderWithLatex = () => {
     // Normalize content coming from the database
-    let normalizedContent = normalizeLatex(content)
+    const normalizedContent = normalizeLatex(content)
 
     // Step 1: Process block LaTeX expressions
     // Match block LaTeX surrounded by \[ \] or $$...$$
     const blockLatexRegex = /(\\\[([\s\S]*?)\\\]|\$\$([\s\S]*?)\$\$)/g
     let processedContent = normalizedContent
-    let blockLatexMatches: string[] = []
+    const blockLatexMatches: string[] = []
     let blockMatch
 
     // Extract all block LaTeX and replace with placeholders
@@ -51,7 +51,7 @@ const LatexRenderer = ({ content }: { content: string }) => {
     // Step 2: Process inline LaTeX expressions
     // Match inline LaTeX surrounded by \( \) or $...$
     const inlineLatexRegex = /(\\\(([\s\S]*?)\\\)|\$([\s\S]*?)\$)/g
-    let inlineLatexMatches: string[] = []
+    const inlineLatexMatches: string[] = []
     let inlineMatch
 
     // Extract all inline LaTeX and replace with placeholders

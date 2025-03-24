@@ -80,7 +80,6 @@ const DesktopNavigation = ({
 
 const MobileNavigation = ({
   signedIn = false,
-  user,
 }: {
   signedIn: boolean
   user?: User

@@ -1,20 +1,7 @@
 'use client'
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from '@/components/ui/alert-dialog'
-import { ArrowLeft, X } from 'lucide-react'
+import { ArrowLeft } from 'lucide-react'
 import Link from 'next/link'
 import { Button } from '../ui/button'
-import { toast } from 'sonner'
-import { useRouter } from 'next/navigation'
 import LogOutDialog from '../log-out-dialog'
 
 type TopBarProps = {

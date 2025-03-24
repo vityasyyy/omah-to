@@ -72,7 +72,6 @@ const AnswerCard = ({
   const [syncStatus, setSyncStatus] = useState<'idle' | 'syncing' | 'error'>(
     'idle'
   )
-  const [lastSynced, setLastSynced] = useState<Date | null>(null)
   const [submitting, setSubmitting] = useState(false)
   const [isGracePeriod, setIsGracePeriod] = useState(false)
   const [graceTimeRemaining, setGraceTimeRemaining] = useState<number>(1 * 60) // 1 minutes in seconds
@@ -212,7 +211,6 @@ const AnswerCard = ({
           return merged
         })
 
-        setLastSynced(new Date())
         setSyncStatus('idle')
       } catch (error) {
         console.error('Sync error:', error)

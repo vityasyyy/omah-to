@@ -1,6 +1,6 @@
 'use client'
 import Container from '@/components/container'
-import Heading, { HeadingSpan } from '@/components/home/heading'
+import Heading from '@/components/home/heading'
 import {
   Carousel,
   CarouselApi,
@@ -17,7 +17,6 @@ import { useEffect, useState } from 'react'
 const Enthusiasts = ({dominantCareer} : {dominantCareer : string}) => {
   const [api, setApi] = useState<CarouselApi>()
   const [current, setCurrent] = useState(0)
-  const [count, setCount] = useState(0)
 
   useEffect(() => {
     if (!api) {
@@ -25,7 +24,6 @@ const Enthusiasts = ({dominantCareer} : {dominantCareer : string}) => {
     }
 
     api.scrollTo(1)
-    setCount(api.scrollSnapList().length)
     setCurrent(api.selectedScrollSnap() + 1)
 
     api.on('select', () => {

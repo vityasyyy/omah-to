@@ -5,8 +5,6 @@ import {
   PUBLIC_SOAL_URL,
 } from '@/lib/types/url'
 import { Jawaban } from '@/lib/types/types'
-import { redirect } from 'next/navigation'
-import { toast } from 'sonner'
 
 export const getTryoutUrl = (isPublic?: boolean) => {
   return isPublic ? PUBLIC_TRYOUT_URL : TRYOUT_URL

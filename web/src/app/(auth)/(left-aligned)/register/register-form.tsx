@@ -84,7 +84,7 @@ const RegisterForm = () => {
         return
       }
       router.push('/login')
-    } catch (error) {
+    } catch (_error) {
       toast.error('Gagal membuat akun', {
         description: 'Ups! Terjadi kesalahan jaringan. Silahkan coba lagi.',
       })
