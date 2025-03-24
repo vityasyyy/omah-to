@@ -22,17 +22,15 @@ const LogOutDialog = ({ children }: { children: React.ReactNode }) => {
   const handleLogout = async () => {
     const toastId = toast.loading('Memproses logout...')
     try {
-      const res = await fetch('/api/auth/logout', {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_AUTH_URL}/auth/logout`, {
         method: 'POST',
-        credentials: 'include',
+        credentials: 'include', // Ensure cookies are sent
       })
-
+  
       if (!res.ok) {
-        throw new Error(
-          'A network error occurred. Failed to notify server about logout.'
-        )
+        throw new Error('Failed to logout from the backend.')
       }
-
+  
       toast.dismiss(toastId)
       toast.success('Berhasil keluar dari akun.')
       router.push('/')
