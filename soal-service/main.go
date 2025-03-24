@@ -40,6 +40,16 @@ func main() {
 	}
 	defer db.Close()
 
+	// Add these connection pool settings
+	db.SetMaxOpenConns(10)                  // Limit max open connections
+	db.SetMaxIdleConns(5)                   // Keep some connections in the pool
+	db.SetConnMaxLifetime(30 * time.Minute) // Recycle connections periodically
+	db.SetConnMaxIdleTime(5 * time.Minute)  // Close idle connections
+
+	// Consider adding a ping check to verify connection
+	if err := db.Ping(); err != nil {
+		logger.Log.Fatal().Err(err).Msg("Failed to ping database")
+	}
 	soalRepo := repositories.NewSoalRepo(db)
 	soalService := services.NewSoalService(soalRepo)
 	soalHandler := handlers.NewSoalHandler(soalService)

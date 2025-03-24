@@ -11,6 +11,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+var cookieDomain = os.Getenv("COOKIE_DOMAIN")
+
 func ValidateToAuthApi() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		accessToken, err := c.Cookie("access_token")
@@ -122,8 +124,9 @@ func IssueTryOutToken(userID, attemptID int, accessToken string) (string, error)
 	return tokenResponse.TryoutToken, nil
 }
 
+// SetTryoutTokenCookie sets the tryout token cookie
 func SetTryoutTokenCookie(c *gin.Context, tryoutToken string) error {
-	c.SetCookie("tryout_token", tryoutToken, 200*60, "/", "", true, true)
+	c.SetCookie("tryout_token", tryoutToken, 200*60, "/", cookieDomain, true, true)
 	return nil
 }
 
