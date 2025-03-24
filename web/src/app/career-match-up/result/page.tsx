@@ -1,4 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+export const dynamic = "force-dynamic";
+
 import React from 'react'
 import { getMbAttempt } from '@/lib/fetch/mb-fetch'
 import ResultClient from './ResultClient'
