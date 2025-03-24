@@ -49,8 +49,7 @@ const ForgotPasswordForm = () => {
         setVariant('error');
         return;
       }
-      console.log('Success:', data);
-      setMessage(`${data}`);
+      setMessage(`${data.message}`);
       setVariant('success');
     } catch (error: any) {
       console.error('Error:', error);

@@ -1,12 +1,12 @@
 package services
 
 import (
-	"errors"
-
 	"auth-service/internal/logger"
 	"auth-service/internal/models"
 	"auth-service/internal/repositories"
 	"auth-service/internal/utils"
+	"errors"
+	"os"
 
 	"golang.org/x/sync/errgroup"
 )
@@ -97,7 +97,12 @@ func (s *authService) RequestPasswordReset(email string) error {
 		return errors.New("failed to generate reset tokens")
 	}
 	// generate resetLink using resetToken
-	resetLink := "http://localhost:3000/forgot-password/" + resetToken
+	var resetLink string
+	if os.Getenv("ENVIRONMENT") == "production" {
+		resetLink = "https://tryout.omahti.web.id/forgot-password/" + resetToken
+	} else {
+		resetLink = "http://localhost:3000/forgot-password/" + resetToken
+	}
 
 	// run the goroutines concurrently
 	// blacklist the token that is associated with the email, so that when user is requesting password reset, the token is blacklisted
