@@ -35,5 +35,5 @@ func GetCookie(c *gin.Context, name string) (string, error) {
 }
 
 func ClearCookie(c *gin.Context, name string) {
-	SetCookie(c, name, "", -1, "/", "", true, true)
+	SetCookie(c, name, "", -1, "/", cookieDomain, true, true)
 }
