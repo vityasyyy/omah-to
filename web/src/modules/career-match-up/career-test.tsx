@@ -117,6 +117,7 @@ const CareerMatchUpTest = ({
 
       // Redirect to result page
       router.push('/career-match-up/result')
+      router.refresh()
     } catch (error) {
       console.error('Submission error:', error)
       // Still attempt to redirect

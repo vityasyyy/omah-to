@@ -67,6 +67,7 @@ const LoginForm = () => {
       }
 
       router.push('/')
+      router.refresh()
       // Redirect or handle successful login here
     } catch (_error) {
       toast.error('Login gagal. ', {
