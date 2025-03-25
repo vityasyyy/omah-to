@@ -34,6 +34,7 @@ const LogOutDialog = ({ children }: { children: React.ReactNode }) => {
       toast.dismiss(toastId)
       toast.success('Berhasil keluar dari akun.')
       router.push('/')
+      router.refresh()
     } catch (error) {
       toast.dismiss(toastId)
       console.error('Logout error: ', error)

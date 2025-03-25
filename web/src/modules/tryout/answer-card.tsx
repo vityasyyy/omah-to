@@ -109,8 +109,10 @@ const AnswerCard = ({
       if (timerRef.current) clearInterval(timerRef.current)
       if (currentSubtest === 'subtest_pm') {
         router.push('/tryout')
+        router.refresh()
       } else {
         router.push('/tryout/intro')
+        router.refresh()
       }
       toast.success('Jawaban berhasil dikumpulkan!', {
         position: 'bottom-left',
@@ -126,6 +128,7 @@ const AnswerCard = ({
         }
       )
       router.push('/tryout')
+      router.refresh()
     } finally {
       setSubmitting(false)
       setSyncStatus('idle')
