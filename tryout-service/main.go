@@ -2,8 +2,11 @@ package main
 
 import (
 	"context"
+	"net/http"
 	"os"
+	"os/signal"
 	"strings"
+	"syscall"
 	"time"
 	"tryout-service/internal/handlers"
 	"tryout-service/internal/logger"
@@ -21,35 +24,47 @@ import (
 )
 
 func main() {
-	corsURLs := os.Getenv("CORS_URL")
-	allowedOrigins := strings.Split(corsURLs, ",")
+	// Initialize logger early
 	logger.InitLogger()
 
-	// Set Gin mode early before creating the engine
-	if os.Getenv("ENVIRONMENT") == "production" {
-		gin.SetMode(gin.ReleaseMode)
-	} else {
-		gin.SetMode(gin.DebugMode) // Explicitly set debug mode if not in production
-	}
+	// Set up context for graceful shutdown
+	ctx, stop := signal.NotifyContext(context.Background(),
+		os.Interrupt,
+		syscall.SIGTERM,
+		syscall.SIGINT,
+		syscall.SIGQUIT,
+	)
+	defer stop()
 
-	logger.InitLogger()
+	// Database connection
 	dbURL := os.Getenv("DB_URL")
 	db, err := sqlx.Connect("postgres", dbURL)
 	if err != nil {
 		logger.Log.Fatal().Err(err).Msg("Failed to connect to the database")
 	}
-	defer db.Close()
 
-	// Add these connection pool settings
-	db.SetMaxOpenConns(10)                  // Limit max open connections
-	db.SetMaxIdleConns(5)                   // Keep some connections in the pool
-	db.SetConnMaxLifetime(30 * time.Minute) // Recycle connections periodically
-	db.SetConnMaxIdleTime(5 * time.Minute)  // Close idle connections
+	// Enhanced connection pool settings
+	db.SetMaxOpenConns(10)
+	db.SetMaxIdleConns(5)
+	db.SetConnMaxLifetime(30 * time.Minute)
+	db.SetConnMaxIdleTime(5 * time.Minute)
 
-	// Consider adding a ping check to verify connection
+	// Ping check
 	if err := db.Ping(); err != nil {
 		logger.Log.Fatal().Err(err).Msg("Failed to ping database")
 	}
+
+	// Rest of your existing setup remains the same...
+	corsURLs := os.Getenv("CORS_URL")
+	allowedOrigins := strings.Split(corsURLs, ",")
+
+	if os.Getenv("ENVIRONMENT") == "production" {
+		gin.SetMode(gin.ReleaseMode)
+	} else {
+		gin.SetMode(gin.DebugMode)
+	}
+
+	// Setup repositories and services
 	soalServiceURL := os.Getenv("SOAL_SERVICE_URL")
 
 	tryoutRepo := repositories.NewTryoutRepo(db)
@@ -63,19 +78,16 @@ func main() {
 	tryoutHandler := handlers.NewTryoutHandler(tryoutService)
 	pageHandler := handlers.NewPageHandler(pageService)
 
-	// Use gin.New() instead of gin.Default() to avoid warning about middleware already attached
+	// Gin router setup
 	r := gin.New()
-
-	// Manually add the Logger and Recovery middleware
 	r.Use(gin.Recovery())
-
-	r.Use(utils.ReqLoggingMiddleware()) // Request logging middleware
-	r.Use(securityHeadersMiddleware())  // Security headers middleware
+	r.Use(utils.ReqLoggingMiddleware())
+	r.Use(securityHeadersMiddleware())
 	r.SetTrustedProxies([]string{"0.0.0.0/0"})
 
 	// CORS middleware
 	r.Use(cors.New(cors.Config{
-		AllowOrigins:     allowedOrigins, // change to a specific origin later
+		AllowOrigins:     allowedOrigins,
 		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE"},
 		AllowHeaders:     []string{"Content-Type", "Authorization"},
 		ExposeHeaders:    []string{"Content-Length", "Authorization", "Content-Type"},
@@ -83,21 +95,51 @@ func main() {
 		MaxAge:           12 * time.Hour,
 	}))
 
-	r.Use(rateLimiterMiddleware())             // Rate limiter middleware
-	r.Use(requestSizeLimitMiddleware(2 << 20)) // Request size limit middleware (2MB)
-	r.Use(timeoutMiddleware(20 * time.Second)) // Timeout middleware
+	r.Use(rateLimiterMiddleware())
+	r.Use(requestSizeLimitMiddleware(2 << 20))
+	r.Use(timeoutMiddleware(20 * time.Second))
 
 	routes.InitializeRoutes(r, tryoutHandler, pageHandler)
+
+	// Server configuration
 	port := os.Getenv("PORT")
 	if port == "" {
-		port = "8083"
+		port = "8081"
 	}
 
-	logger.Log.Info().Msg("Server started successfully")
-
-	if err := r.Run(":" + port); err != nil {
-		logger.Log.Fatal().Err(err).Msg("Failed to start the server")
+	// Create a server with more controlled shutdown
+	srv := &http.Server{
+		Addr:    ":" + port,
+		Handler: r,
 	}
+
+	// Start server in a goroutine
+	go func() {
+		logger.Log.Info().Msg("Server starting on port " + port)
+		if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
+			logger.Log.Fatal().Err(err).Msg("Server failed to start")
+		}
+	}()
+
+	// Wait for interrupt signal to gracefully shutdown
+	<-ctx.Done()
+	stop()
+
+	// Create a context with a timeout for graceful shutdown
+	shutdownCtx, cancelShutdown := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancelShutdown()
+
+	// Attempt graceful shutdown
+	if err := srv.Shutdown(shutdownCtx); err != nil {
+		logger.Log.Error().Err(err).Msg("Server shutdown error")
+	}
+
+	// Close database connection
+	if err := db.Close(); err != nil {
+		logger.Log.Error().Err(err).Msg("Database connection close error")
+	}
+
+	logger.Log.Info().Msg("Server and database shutdown completed")
 }
 
 // securityHeadersMiddleware adds security headers to all responses
