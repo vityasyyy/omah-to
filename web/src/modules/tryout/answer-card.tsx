@@ -28,7 +28,7 @@ import {
   SquareCheckBig,
 } from 'lucide-react'
 import Link from 'next/link'
-import { usePathname, useRouter } from 'next/navigation'
+import { redirect, usePathname, useRouter } from 'next/navigation'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { toast } from 'sonner'
 
@@ -134,14 +134,14 @@ const AnswerCard = ({
 
   // Time limit handler
   useEffect(() => {
-    if (!timeLimit) return
-
+    if (!timeLimit || isNaN(timeLimit)) return;
+    if (timeLimit == 0) router.push(`/tryout/${currentNumber}`);
     const checkTime = () => {
       const now = Date.now()
-      const gracePeriodStart = timeLimit
-      const gracePeriodEnd = timeLimit + 1 * 60 * 1000 // 1 minute grace period
-
-      // If we're past the time limit but before grace period ends
+      const gracePeriodStart = timeLimit;
+      const gracePeriodEnd = timeLimit + 1 * 60 * 1000; // 1 minute grace period
+      const fiveSecondsBeforeGracePeriodEnd = gracePeriodEnd - 5000;
+      // Only enter grace period if current time is past the time limit
       if (now >= gracePeriodStart && now < gracePeriodEnd && !hasSubmitted) {
         // Enter grace period if not already in it
         if (!isGracePeriod) {
@@ -162,10 +162,15 @@ const AnswerCard = ({
         setGraceTimeRemaining(remainingSec)
       }
       // If grace period has ended and hasn't submitted
-      else if (now >= gracePeriodEnd && !hasSubmitted) {
+      else if (now >= fiveSecondsBeforeGracePeriodEnd && !hasSubmitted) {
         setGraceTimeRemaining(0)
         // Optional: Auto-submit when grace period ends
         submitAllAnswers()
+      }
+      // If we're still within the normal time limit, reset grace period if it was somehow activated
+      else if (now < gracePeriodStart && isGracePeriod) {
+        setIsGracePeriod(false)
+        setDialogOpen(false)
       }
     }
 
@@ -231,7 +236,7 @@ const AnswerCard = ({
       const savedAnswers = localStorage.getItem(localStorageKey)
       if (savedAnswers) setAnswers(JSON.parse(savedAnswers))
 
-      const interval = setInterval(syncWithServer, 10000)
+      const interval = setInterval(syncWithServer, 120000) // Sync every 2 minutes
       return () => clearInterval(interval)
     } catch (error) {
       console.error('Initial load error:', error)
