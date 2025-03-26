@@ -12,12 +12,12 @@ import {
 } from '@/components/ui/tryout-carousel'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { useState, useEffect, useCallback } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
-interface AnswerPayload {
-  kode_soal: string
-  jawaban: string | null
-}
+// interface AnswerPayload {
+//   kode_soal: string
+//   jawaban: string | null
+// }
 
 const NumberCarousel = ({ totalQuestions }: { totalQuestions: number }) => {
   const pathname = usePathname()

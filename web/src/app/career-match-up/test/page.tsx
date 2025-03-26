@@ -4,7 +4,7 @@ import React from 'react'
 import { getMbSoal, getMbAttempt } from '@/lib/fetch/mb-fetch'
 import { redirect } from 'next/navigation'
 
-async function page() {
+async function Page() {
   const cookieStore = await cookies()
   const accessToken = cookieStore.get('access_token')?.value
   const attempt = await getMbAttempt(accessToken, false)
@@ -29,4 +29,4 @@ async function page() {
   }
 }
 
-export default page
+export default Page

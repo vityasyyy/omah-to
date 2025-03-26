@@ -1,5 +1,7 @@
 'use client'
+import { LogOut } from 'lucide-react'
 import Image from 'next/image'
+import LogOutDialog from '../log-out-dialog'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -8,11 +10,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '../ui/dropdown-menu'
-import { User } from '@/lib/types/types'
-import { LogOut } from 'lucide-react'
-import LogOutDialog from '../log-out-dialog'
 
-const ProfileButton = ({ user }: { user?: User }) => {
+const ProfileButton = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger tabIndex={-1}>

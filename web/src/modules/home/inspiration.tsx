@@ -5,13 +5,12 @@ import Heading, { HeadingSpan } from '@/components/home/heading'
 import { ALUMNI } from '@/lib/helpers/alumni'
 
 const Inspiration = () => {
-
   return (
     <Container className='my-20 gap-10 md:gap-16'>
       <Heading className='self-center text-center'>
         Inspirasi dari Para Ahli <HeadingSpan> Computer Science </HeadingSpan>
       </Heading>
-      <AlumniCarousel alumni={ALUMNI} />
+      <AlumniCarousel alumni={ALUMNI.filter((alumni) => alumni.main)} />
     </Container>
   )
 }

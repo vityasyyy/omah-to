@@ -65,10 +65,10 @@ const ResetPasswordPage = () => {
         description: `${data.message}`,
       })
       router.push('/login')
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Error:', error)
       toast.error('Gagal mereset password', {
-        description: `${error.message}`,
+        description: `${error instanceof Error ? error.message : 'Terjadi kesalahan jaringan. Silahkan coba lagi.'}`,
       })
     } finally {
       setPending(false)
@@ -76,10 +76,8 @@ const ResetPasswordPage = () => {
   }
 
   return (
-    <div className='flex flex-col min-h-screen w-full items-center justify-center'>
-      <h1 className='text-2xl font-bold md:mb-6 md:text-4xl'>
-        Lupa Password
-      </h1>
+    <div className='flex min-h-screen w-full flex-col items-center justify-center'>
+      <h1 className='text-2xl font-bold md:mb-6 md:text-4xl'>Lupa Password</h1>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}

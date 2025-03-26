@@ -67,7 +67,7 @@ const DesktopNavigation = ({
     ))}
 
     {signedIn ? (
-      <ProfileButton user={user} />
+      <ProfileButton />
     ) : (
       <Link href={`/register`}>
         <Button variant={`tertiary`} className='px-8 hover:cursor-pointer'>

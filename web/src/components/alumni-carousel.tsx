@@ -7,7 +7,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from '@/components/ui/carousel'
-import { Alumni, ALUMNI } from '@/lib/helpers/alumni'
+import { Alumni } from '@/lib/helpers/alumni'
 import { ChevronDown } from 'lucide-react'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
@@ -50,17 +50,11 @@ const AlumniCarousel = ({ alumni }: { alumni: Alumni[] }) => {
 
 const Card = ({
   name,
-  img,
+  slug,
   title,
   education,
   description,
-}: {
-  name: string
-  img: string
-  title: string
-  education: string
-  description: string
-}) => {
+}: Alumni) => {
   const [isExpanded, setIsExpanded] = useState(false)
 
   return (
@@ -82,7 +76,7 @@ const Card = ({
 
         {/* image + overlay */}
         <Image
-          src={`/assets/alumni/${img}.webp`}
+          src={`/assets/alumni/${slug}.webp`}
           alt={name}
           className='z-0 object-cover select-none'
           sizes='50%'
@@ -96,7 +90,7 @@ const Card = ({
       >
         {/* text */}
         <div
-          className={`line-clamp-6 overflow-hidden text-justify text-sm transition-all duration-300 ease-in-out ${
+          className={`line-clamp-6 select-none hover:cursor-default overflow-hidden text-justify text-sm transition-all duration-300 ease-in-out ${
             isExpanded ? 'max-h-[150px] opacity-100' : 'max-h-0 opacity-0'
           }`}
         >

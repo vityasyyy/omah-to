@@ -68,7 +68,7 @@ const CompsciDivisions = () => {
 
 const Card = (props: {
   name: string
-  img: string
+  slug: string
   description: string
   index: number
 }) => {
@@ -76,7 +76,7 @@ const Card = (props: {
     <main className='border-primary-100 flex flex-col items-center gap-4 overflow-clip rounded-lg border-4 bg-white p-6 text-center sm:h-full'>
       <section className='relative size-30 self-center sm:size-36'>
         <Image
-          src={props.img}
+          src={`/assets/divisions/${props.slug}.webp`}
           alt='division logo'
           fill
           sizes='50%'

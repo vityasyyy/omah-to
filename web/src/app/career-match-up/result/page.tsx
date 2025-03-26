@@ -8,22 +8,6 @@ import { cookies } from 'next/headers'
 import Enthusiasts from '@/modules/career-match-up/enthusiasts'
 import { DIVISIONS } from '@/lib/helpers/divisions'
 
-// Create a mapping of division slugs to their career information
-const careerDescriptions = DIVISIONS.reduce(
-  (acc, division) => {
-    acc[division.slug] = {
-      title: division.name,
-      description: division.career.description || '',
-      fullDescription: division.career.fullDescription || '',
-    }
-    return acc
-  },
-  {} as Record<
-    string,
-    { title: string; description: string; fullDescription: string }
-  >
-)
-
 export default async function CareerMatchUpResult() {
   try {
     const cookieStore = await cookies()
@@ -45,25 +29,27 @@ export default async function CareerMatchUpResult() {
       )
     }
 
-    // Extract the dominant career and add title and description
+    // Extract the dominant career and find its information from DIVISIONS
     const dominantCareer = attemptData.bakat_user || ''
-    const careerInfo = careerDescriptions[dominantCareer.toLowerCase()] || {
-      title: dominantCareer,
-      description: `You show great potential in the ${dominantCareer} field.`,
-      fullDescription: `Continue exploring opportunities in this area to develop your skills further.`,
-    }
+    const careerDivision = DIVISIONS.find(
+      (div) => div.slug === dominantCareer.toLowerCase()
+    )
 
     const results = {
       ...attemptData,
-      dominantCareerTitle: careerInfo.title,
-      shortDescription: careerInfo.description,
-      fullDescription: careerInfo.fullDescription,
+      dominantCareerTitle: careerDivision?.name || dominantCareer,
+      shortDescription:
+        careerDivision?.career.description ||
+        `You show great potential in the ${dominantCareer} field.`,
+      fullDescription:
+        careerDivision?.career.fullDescription ||
+        `Continue exploring opportunities in this area to develop your skills further.`,
     }
 
     return (
       <div className='p-8'>
         <h1 className='mb-6 text-3xl font-bold'>Your Career Match Result</h1>
-        <div className='rounded-lg bg-white p-6 shadow-md'>
+        <div className='rounded-lg text-justify bg-white p-6 shadow-md'>
           <h2 className='mb-4 text-2xl font-semibold'>
             Your dominant career path is:{' '}
             <span className='text-primary'>
@@ -71,9 +57,7 @@ export default async function CareerMatchUpResult() {
             </span>
           </h2>
           <p className='mb-4'>
-            Based on your answers, we&apos;ve identified that you have a strong
-            inclination towards careers in the{' '}
-            {results.dominantCareerTitle || results.dominantCareer} field.
+            {results.fullDescription}
           </p>
           <div className='mt-6'>
             <h3 className='mb-2 text-xl font-medium'>
@@ -88,23 +72,26 @@ export default async function CareerMatchUpResult() {
               </h3>
               <div className='space-y-3'>
                 {Object.entries(results.careerScores).map(
-                  ([career, score]: [string, any]) => (
-                    <div key={career} className='flex items-center'>
-                      <div className='w-1/3 font-medium'>
-                        {careerDescriptions[career.toLowerCase()]?.title ||
-                          career}
-                        :
-                      </div>
-                      <div className='w-2/3'>
-                        <div className='h-4 w-full rounded-full bg-gray-200'>
-                          <div
-                            className='bg-primary h-4 rounded-full'
-                            style={{ width: `${Math.round(score * 100)}%` }}
-                          ></div>
+                  ([career, score]: [string, any]) => {
+                    const divisionInfo = DIVISIONS.find(
+                      (div) => div.slug === career.toLowerCase()
+                    )
+                    return (
+                      <div key={career} className='flex items-center'>
+                        <div className='w-1/3 font-medium'>
+                          {divisionInfo?.name || career}:
+                        </div>
+                        <div className='w-2/3'>
+                          <div className='h-4 w-full rounded-full bg-gray-200'>
+                            <div
+                              className='bg-primary h-4 rounded-full'
+                              style={{ width: `${Math.round(score * 100)}%` }}
+                            ></div>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  )
+                    )
+                  }
                 )}
               </div>
             </div>
