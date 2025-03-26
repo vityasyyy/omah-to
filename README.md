@@ -1,6 +1,6 @@
 # OmahTO
 
-OmahTI Tryout Website for prospective students preparing for SNBT 2025.
+OmahTI Tryout Website for prospective students preparing for SNBT 2025
 
 ---
 
