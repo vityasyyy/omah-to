@@ -1,67 +1,28 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic'
 
 import React from 'react'
 import { getMbAttempt } from '@/lib/fetch/mb-fetch'
 import ResultClient from './ResultClient'
 import { cookies } from 'next/headers'
 import Enthusiasts from '@/modules/career-match-up/enthusiasts'
+import { DIVISIONS } from '@/lib/helpers/divisions'
 
-// Career path descriptions mapping
-const careerDescriptions: Record<
-  string,
-  { title: string; description: string; fullDescription: string }
-> = {
-  frontend: {
-    title: 'Front-End Development',
-    description: 'You show strong aptitude for Front-End Development.',
-    fullDescription:
-      'This field focuses on creating intuitive and responsive user interfaces for websites and applications. Your creativity combined with technical skills could help you build engaging digital experiences that users love to interact with.',
+// Create a mapping of division slugs to their career information
+const careerDescriptions = DIVISIONS.reduce(
+  (acc, division) => {
+    acc[division.slug] = {
+      title: division.name,
+      description: division.career.description || '',
+      fullDescription: division.career.fullDescription || '',
+    }
+    return acc
   },
-  backend: {
-    title: 'Back-End Development',
-    description:
-      'Your results indicate you would excel in Back-End Development.',
-    fullDescription:
-      'This role focuses on server-side logic, databases, and application architecture. Your analytical thinking and problem-solving abilities would be valuable in building robust systems that power modern applications.',
-  },
-  mobapps: {
-    title: 'Mobile App Development',
-    description: 'You demonstrate natural talent for Mobile App Development.',
-    fullDescription:
-      "This specialization involves creating applications for smartphones and tablets. Your attention to detail and user-focused mindset could help you build mobile solutions that improve people's daily lives.",
-  },
-  uiux: {
-    title: 'UI/UX Design',
-    description: 'Your results suggest you have a strong eye for UI/UX Design.',
-    fullDescription:
-      'Pernah nggak sih kamu pakai aplikasi atau website yang bikin betah karena tampilannya menarik dan fungsionalitasnya nyaman? Itulah sebabnya bahwa jadi UI/UX Designer! UI (User Interface) berfokus pada bagaimana sebuah aplikasi atau website terlihat: mulai dari warna, ikon, font, hingga tata letak. Sementara itu, UX (User Experience) memastikan pengalaman pengguna tetap nyaman, mudah, dan intuitif, sehingga orang-orang nggak kebingungan saat menggunakannya.',
-  },
-  dsai: {
-    title: 'Data Science & AI',
-    description: 'You show great potential in Data Science & AI.',
-    fullDescription:
-      'This cutting-edge field uses statistics, machine learning, and programming to extract insights from data and build intelligent systems. Your analytical skills and pattern recognition abilities would be valuable in solving complex problems using data-driven approaches.',
-  },
-  cysec: {
-    title: 'Cyber Security',
-    description: 'You demonstrate aptitude for Cyber Security.',
-    fullDescription:
-      'This critical field involves protecting digital systems and data from threats. Your analytical mindset and detail-oriented approach would be assets in identifying vulnerabilities and implementing robust security measures.',
-  },
-  gamedev: {
-    title: 'Game Development',
-    description: 'Your results indicate strong potential in Game Development.',
-    fullDescription:
-      'This creative field combines programming, art, and storytelling to create interactive entertainment experiences. Your imagination and technical skills could help you build immersive worlds that captivate players.',
-  },
-  cp: {
-    title: 'Competitive Programming',
-    description: 'You show exceptional talent for Competitive Programming.',
-    fullDescription:
-      'This field tests your ability to solve complex algorithmic problems efficiently. Your logical thinking and problem-solving skills would be valuable in competitions and in roles that require algorithmic optimization.',
-  },
-}
+  {} as Record<
+    string,
+    { title: string; description: string; fullDescription: string }
+  >
+)
 
 export default async function CareerMatchUpResult() {
   try {
@@ -150,8 +111,7 @@ export default async function CareerMatchUpResult() {
           )}
           <div>
             {' '}
-            <Enthusiasts dominantCareer={dominantCareer.toUpperCase()} />       
-             {' '}
+            <Enthusiasts dominantCareer={dominantCareer.toUpperCase()} />{' '}
           </div>
         </div>
       </div>

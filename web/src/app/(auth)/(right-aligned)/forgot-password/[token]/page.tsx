@@ -1,87 +1,142 @@
 'use client'
-import React from 'react'
-import { useRouter, useParams } from 'next/navigation'
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { z } from 'zod'
 import { Button } from '@/components/ui/button'
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useParams, useRouter } from 'next/navigation'
+import { useForm } from 'react-hook-form'
+import { z } from 'zod'
+import { LoaderCircle } from 'lucide-react'
+import { toast } from 'sonner'
+import { useState } from 'react'
 
 const formSchema = z
-	.object({
-		password: z.string().min(6, 'Password must be at least 6 characters.'),
-		confirm: z.string().min(6, 'Confirm password must be at least 6 characters.'),
-	})
-	.refine((data) => data.password === data.confirm, {
-		message: "Passwords don't match",
-		path: ['confirm'],
-	})
+  .object({
+    password: z.string().min(8, 'Kata sandi harus minimal 8 karakter.'),
+    confirm: z.string().min(8, 'Kata sandi harus minimal 8 karakter.'),
+  })
+  .refine((data) => data.password === data.confirm, {
+    message: 'Kata sandi tidak cocok.',
+    path: ['confirm'],
+  })
 
 const ResetPasswordPage = () => {
-	const router = useRouter()
-	const { token } = useParams()
-	const form = useForm<z.infer<typeof formSchema>>({
-		resolver: zodResolver(formSchema),
-		defaultValues: { password: '', confirm: '' },
-	})
+  const router = useRouter()
+  const { token } = useParams()
+  const [pending, setPending] = useState(false)
 
-	const onSubmit = async (values: z.infer<typeof formSchema>) => {
-		try {
-			const res = await fetch(`${process.env.NEXT_PUBLIC_AUTH_URL}/user/reset-password`, {
-				method: 'POST',
-				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify({
-					reset_token: token,
-					new_password: values.password,
-				}),
-			})
-            if (!res.ok) {
-                console.error('Failed to reset password')
-            }
-			router.push('/login') // redirect after success
-		} catch (error) {
-			console.error('Error:', error)
-		}
-	}
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: { password: '', confirm: '' },
+  })
 
-	return (
-		<div className="flex justify-center items-center min-h-screen">
-			<Form {...form}>
-				<form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-4">
-					<FormField
-						control={form.control}
-						name="password"
-						render={({ field }) => (
-							<FormItem>
-								<FormLabel>New Password</FormLabel>
-								<FormControl>
-									<Input type="password" placeholder="New Password" {...field} />
-								</FormControl>
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
-					<FormField
-						control={form.control}
-						name="confirm"
-						render={({ field }) => (
-							<FormItem>
-								<FormLabel>Confirm New Password</FormLabel>
-								<FormControl>
-									<Input type="password" placeholder="Confirm Password" {...field} />
-								</FormControl>
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
-					<Button type="submit" variant="default">
-						Reset Password
-					</Button>
-				</form>
-			</Form>
-		</div>
-	)
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    try {
+      setPending(true)
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_AUTH_URL}/user/reset-password`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            reset_token: token,
+            new_password: values.password,
+          }),
+        }
+      )
+      const data = await res.json()
+
+      if (!res.ok) {
+        toast.error('Gagal mereset password', {
+          description: `${data.error}`,
+        })
+        return
+      }
+
+      toast.success('Password berhasil direset', {
+        description: `${data.message}`,
+      })
+      router.push('/login')
+    } catch (error: any) {
+      console.error('Error:', error)
+      toast.error('Gagal mereset password', {
+        description: `${error.message}`,
+      })
+    } finally {
+      setPending(false)
+    }
+  }
+
+  return (
+    <div className='flex flex-col min-h-screen w-full items-center justify-center'>
+      <h1 className='text-2xl font-bold md:mb-6 md:text-4xl'>
+        Lupa Password
+      </h1>
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className='flex w-full max-w-lg flex-col gap-4 text-left'
+        >
+          <FormField
+            control={form.control}
+            name='password'
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>New Password</FormLabel>
+                <FormControl>
+                  <Input
+                    type='password'
+                    placeholder='New Password'
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name='confirm'
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Confirm New Password</FormLabel>
+                <FormControl>
+                  <Input
+                    type='password'
+                    placeholder='Confirm Password'
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <Button
+            type='submit'
+            variant='tertiary'
+            disabled={pending}
+            className='mt-8 w-full max-w-xs items-center self-center'
+          >
+            {pending ? (
+              <>
+                <LoaderCircle className='animate-spin' />
+                Loading...
+              </>
+            ) : (
+              'Reset Password'
+            )}
+          </Button>
+        </form>
+      </Form>
+    </div>
+  )
 }
 
 export default ResetPasswordPage

@@ -20,7 +20,7 @@ const CONTACTS = [
   },
   {
     icon: <Instagram strokeWidth={2} className='size-5' />,
-    text: '@xxxx',
+    text: '@omahti_ugm',
   },
 ]
 

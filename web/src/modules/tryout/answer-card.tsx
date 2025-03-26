@@ -137,13 +137,13 @@ const AnswerCard = ({
 
   // Time limit handler
   useEffect(() => {
-    if (!timeLimit || isNaN(timeLimit)) return;
-    if (timeLimit == 0) router.push(`/tryout/${currentNumber}`);
+    if (!timeLimit || isNaN(timeLimit)) return
+    if (timeLimit == 0) router.push(`/tryout/${currentNumber}`)
     const checkTime = () => {
       const now = Date.now()
-      const gracePeriodStart = timeLimit;
-      const gracePeriodEnd = timeLimit + 1 * 60 * 1000; // 1 minute grace period
-      const fiveSecondsBeforeGracePeriodEnd = gracePeriodEnd - 5000;
+      const gracePeriodStart = timeLimit
+      const gracePeriodEnd = timeLimit + 1 * 60 * 1000 // 1 minute grace period
+      const fiveSecondsBeforeGracePeriodEnd = gracePeriodEnd - 5000
       // Only enter grace period if current time is past the time limit
       if (now >= gracePeriodStart && now < gracePeriodEnd && !hasSubmitted) {
         // Enter grace period if not already in it
@@ -512,13 +512,28 @@ const TrueFalse = ({
   disabled?: boolean
 }) => {
   // Track only the IDs of options that are marked as TRUE
-  const [trueAnswerIds, setTrueAnswerIds] = useState<string[]>([])
-  const prevAnswerRef = useRef<string | null>(null)
+  const [trueAnswerIds, setTrueAnswerIds] = useState<string[]>(() => {
+    // Initialize from savedAnswer immediately during state initialization
+    if (!savedAnswer) return []
 
-  // Initialize from saved answer
+    try {
+      return savedAnswer.split(',').filter(Boolean)
+    } catch (error) {
+      console.error('Error parsing saved true/false answers:', error)
+      return []
+    }
+  })
+
+  // Track last processed savedAnswer to avoid circular updates
+  const lastProcessedAnswer = useRef(savedAnswer)
+
+  // Update when savedAnswer changes (e.g., when navigating back to this question)
   useEffect(() => {
-    if (savedAnswer === prevAnswerRef.current) return
-    prevAnswerRef.current = savedAnswer
+    // Skip if this savedAnswer was already processed or is the same as our current state
+    if (savedAnswer === lastProcessedAnswer.current) return
+
+    // Update our ref with the current savedAnswer
+    lastProcessedAnswer.current = savedAnswer
 
     if (!savedAnswer) {
       setTrueAnswerIds([])
@@ -526,7 +541,6 @@ const TrueFalse = ({
     }
 
     try {
-      // Parse the comma-separated list of IDs
       const ids = savedAnswer.split(',').filter(Boolean)
       setTrueAnswerIds(ids)
     } catch (error) {
@@ -535,20 +549,26 @@ const TrueFalse = ({
     }
   }, [savedAnswer])
 
-  // Sync answers with parent component
+  // Use a ref to track outgoing answers to prevent circular updates
+  const lastEmittedAnswer = useRef<string | null>(null)
+
+  // Sync answers with parent component immediately when selections change
   useEffect(() => {
-    // Skip initial render when nothing is selected and no previous answer
-    if (trueAnswerIds.length === 0 && !prevAnswerRef.current) return
-
     // Create a comma-separated list of IDs that are marked as true
-    const newAnswer = trueAnswerIds.join(',')
+    const newAnswer = trueAnswerIds.length > 0 ? trueAnswerIds.join(',') : null
 
-    // Only update if different from previous
-    if (newAnswer !== prevAnswerRef.current) {
-      prevAnswerRef.current = newAnswer
-      onAnswerChange(newAnswer)
-    }
-  }, [trueAnswerIds, onAnswerChange])
+    // Skip if the new answer is the same as what we last sent to parent
+    if (newAnswer === lastEmittedAnswer.current) return
+
+    // Also skip if our state exactly matches the savedAnswer from parent
+    if (newAnswer === savedAnswer) return
+
+    // Update our ref with what we're about to send
+    lastEmittedAnswer.current = newAnswer
+
+    // Update parent with new answer
+    onAnswerChange(newAnswer || '') // Convert null to empty string to fix type error
+  }, [trueAnswerIds, onAnswerChange, savedAnswer])
 
   const handleSelect = (optionId: string, isTrue: boolean) => {
     if (disabled) return
@@ -575,7 +595,9 @@ const TrueFalse = ({
             className={`flex w-full items-center justify-between gap-4 rounded-lg border-b border-neutral-200 px-4 py-4 text-start font-semibold text-black transition-colors ease-in-out ${disabled ? 'cursor-not-allowed opacity-80' : ''}`}
           >
             <div className='flex gap-4 text-black'>
-              <h2 className='font-bold self-center'>{String.fromCharCode(97 + idx)}.</h2>
+              <h2 className='self-center font-bold'>
+                {String.fromCharCode(97 + idx)}.
+              </h2>
               <h1>{option.pilihan_tf}</h1>
             </div>
 

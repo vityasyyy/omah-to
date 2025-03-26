@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 'use client'
-import { useState } from 'react'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
@@ -16,6 +16,8 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import { LoaderCircle } from 'lucide-react'
+import { toast } from 'sonner'
 
 const formSchema = z.object({
   email: z.string().email({
@@ -25,7 +27,7 @@ const formSchema = z.object({
 
 const ForgotPasswordForm = () => {
   const [message, setMessage] = useState<string | null>(null)
-  const [variant, setVariant] = useState<'success' | 'error' | null>(null)
+  const [pending, setPending] = useState(false)
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -36,25 +38,34 @@ const ForgotPasswordForm = () => {
 
   const handleLogin = async (values: z.infer<typeof formSchema>) => {
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_AUTH_URL}/user/request-password-reset`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email: values.email }),
-      });
-      const data = await res.json();
+      setPending(true)
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_AUTH_URL}/user/request-password-reset`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ email: values.email }),
+        }
+      )
+      const data = await res.json()
       if (!res.ok) {
-        setMessage(`${data.error}`);
-        setVariant('error');
-        return;
+        toast.error('Gagal mengirim email', {
+          description: `${data.error}`,
+        })
+        return
       }
-      setMessage(`${data.message}`);
-      setVariant('success');
+      toast.success('Email berhasil dikirim', {
+        description: `${data.message}`,
+      })
     } catch (error: any) {
-      console.error('Error:', error);
-      setMessage(`${error.message}`);
-      setVariant('error');
+      console.error('Error:', error)
+      toast.error('Gagal mengirim email', {
+        description: `${error.message}`,
+      })
+    } finally {
+      setPending(false)
     }
   }
 
@@ -78,14 +89,21 @@ const ForgotPasswordForm = () => {
           )}
         />
 
-        <Button type='submit' variant={`tertiary`} className='mt-8 w-full max-w-xs self-center'>
-          Kirim Email
+        <Button
+          type='submit'
+          variant={`tertiary`}
+          disabled={pending}
+          className='mt-8 w-full max-w-xs items-center self-center'
+        >
+          {pending ? (
+            <>
+              <LoaderCircle className='animate-spin' />
+              Loading...
+            </>
+          ) : (
+            'Kirim Email'
+          )}
         </Button>
-        {message && (
-          <p style={{ color: variant === 'success' ? 'green' : 'red' }}>
-            {message}
-          </p>
-        )}
       </form>
     </Form>
   )
