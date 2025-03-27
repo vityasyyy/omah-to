@@ -30,7 +30,7 @@ const AlumniCarousel = ({ alumni }: { alumni: Alumni[] }) => {
   }, [api])
   return (
     <Carousel setApi={setApi} className='w-full bg-transparent'>
-      <CarouselContent className='relative z-10 -ml-2 bg-transparent px-4 pb-10 md:px-10 md:-ml-[3vw]'>
+      <CarouselContent className='relative z-10 -ml-1.5 bg-transparent px-4 pb-10 md:px-10 md:-ml-[3vw]'>
         {alumni.map((alumni, index) => (
           <CarouselItem
             key={index}
