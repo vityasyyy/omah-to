@@ -1,7 +1,7 @@
 'use client'
 import StyledCard from '@/components/tryout/styled-card'
 import { Button, buttonVariants } from '@/components/ui/button'
-import { Layers, X } from 'lucide-react'
+import { Book, CircleAlert, CircleX, Clock, Layers, X } from 'lucide-react'
 import Image from 'next/image'
 import {
   AlertDialog,
@@ -25,24 +25,24 @@ const POINTS = [
     title: '7 Subtest UTBK',
   },
   {
-    icon: <Layers className='h-4 w-4' />,
-    title: '7 Subtest UTBK',
+    icon: <Clock className='h-4 w-4' />,
+    title: '195 Menit tanpa jeda',
   },
   {
-    icon: <Layers className='h-4 w-4' />,
-    title: '7 Subtest UTBK',
+    icon: <Book className='h-4 w-4' />,
+    title: 'Penilaian serta kunci di akhir pengerjaan',
   },
   {
-    icon: <Layers className='h-4 w-4' />,
-    title: '7 Subtest UTBK',
+    icon: <CircleAlert className='h-4 w-4' />,
+    title: 'Pastikan membaca soal dengan teliti',
   },
   {
-    icon: <Layers className='h-4 w-4' />,
-    title: '7 Subtest UTBK',
+    icon: <CircleX className='h-4 w-4' />,
+    title: 'Peserta tidak bisa keluar hingga semua sesi selesai atau waktu habis',
   },
   {
-    icon: <Layers className='h-4 w-4' />,
-    title: '7 Subtest UTBK',
+    icon: <CircleX className='h-4 w-4' />,
+    title: 'Dilarang bekerja sama, membuka situs lain, atau pakai perangkat lain',
   },
 ]
 
