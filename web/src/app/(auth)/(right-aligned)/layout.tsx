@@ -1,3 +1,6 @@
+import BackLink from '@/components/back-link'
+import { Button } from '@/components/ui/button'
+import { ChevronLeft } from 'lucide-react'
 import Image from 'next/image'
 
 const AuthRightAlignedLayout = ({
@@ -17,7 +20,14 @@ const AuthRightAlignedLayout = ({
           />
       </section>
       <section className='flex h-full z-10 flex-col items-center justify-center gap-6 rounded-t-2xl bg-white p-6  text-center md:overflow-y-auto md:rounded-l-2xl md:rounded-tr-none md:p-8'>
+        <BackLink className='w-full max-w-lg mx-auto mb-auto flex justify-start'>
+          <Button variant='outline' className='border-primary-200 items-center'>
+            <ChevronLeft className='size-4' /> Kembali
+          </Button>
+        </BackLink>
         {children}
+        {/* stupid thing that makes the layout work DONT DELETE  */}
+        <div className='mb-auto' />
       </section>
     </main>
   )

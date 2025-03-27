@@ -31,17 +31,38 @@ export const getRefreshToken = async () => {
 }
 
 export async function fetchUser(): Promise<User> {
+  // First try to get user from headers
   const headersList = await headers()
   const username = headersList.get('x-user-username')
   const email = headersList.get('x-user-email')
   const asal_sekolah = headersList.get('x-user-asal_sekolah')
   const user_id = headersList.get('x-user-id')
 
-  if (!username || !email || !asal_sekolah || !user_id) {
-    return null
+  // If headers have the user data, return it
+  if (username && email && asal_sekolah && user_id) {
+    return { username, email, asal_sekolah, user_id }
   }
 
-  return { username, email, asal_sekolah, user_id }
+  // If headers don't have user data, try to fetch directly
+  try {
+    const accessToken = await getAccessToken()
+    if (accessToken) {
+      const userData = await fetchUserClient(accessToken)
+      if (userData) {
+        return {
+          username: userData.username,
+          email: userData.email,
+          asal_sekolah: userData.asal_sekolah,
+          user_id: userData.user_id,
+        }
+      }
+    }
+  } catch (error) {
+    console.error('Error fetching user data:', error)
+  }
+
+  // If all attempts fail, return null
+  return null
 }
 
 export const fetchUserClient = async (accessToken?: string) => {

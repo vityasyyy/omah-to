@@ -12,11 +12,11 @@ import {
 const CONTACTS = [
   {
     icon: <Phone strokeWidth={2} className='size-5' />,
-    text: '(+62)800-000-000',
+    text: '(+62) 899-0221-068',
   },
   {
     icon: <Mail strokeWidth={2} className='size-5' />,
-    text: 'xxx@gmail.com',
+    text: 'omahti.mipa@ugm.ac.id',
   },
   {
     icon: <Instagram strokeWidth={2} className='size-5' />,
@@ -75,13 +75,10 @@ const InfoSection = () => {
       {/* body text */}
       <div className='space-y-4 text-sm text-balance'>
         <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque alias
-          nam perferendis, nihil voluptatem explicabo veniam aspernatur fugiat
-          fugit sunt totam qui neque quam ipsam doloribus rerum facere quas
-          ipsum?
+          OmahTI - Organisasi Mahasiswa Ahli Teknologi Informasi. Berkomitmen membantu calon mahasiswa dalam persiapan seleksi masuk kampus. Mari wujudkan masa depanmu bersama kami!
         </p>
 
-        <p>@ 2025 XX</p>
+        <p>@ 2025 OmahTI UGM</p>
       </div>
     </main>
   )

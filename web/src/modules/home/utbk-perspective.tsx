@@ -45,7 +45,7 @@ const Card = (props: UtbkStudent) => {
         {/* image */}
         <div className='relative aspect-square h-16 overflow-clip rounded-md'>
           <Image
-            src={`/assets/utbk/${props.slug}.webp`}
+            src={`/assets/utbk/${props.slug}.webp` || '/assets/utbk/placeholder.webp'}
             alt='CS Student Image'
             fill
             sizes='30%'

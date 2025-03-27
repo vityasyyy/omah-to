@@ -4,8 +4,9 @@ import { lora, plusJakartaSans } from '@/lib/fonts'
 import { Toaster } from 'sonner'
 
 export const metadata: Metadata = {
-  title: 'omah-to',
-  description: 'by omahti',
+  title: 'OmahTOBK',
+  description:
+    'OmahTOBK adalah platform pembelajaran online yang bertujuan untuk membantu calon mahasiswa dalam persiapan seleksi masuk kampus. Mari wujudkan masa depanmu bersama kami!',
 }
 
 export default function RootLayout({

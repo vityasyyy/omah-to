@@ -1,13 +1,14 @@
 'use client'
+import { cn } from '@/lib/utils'
 import { useRouter } from 'next/navigation'
 
-const BackLink = ({ children }: { children?: React.ReactNode }) => {
+const BackLink = ({ children, className }: { children?: React.ReactNode, className?: string }) => {
   const router = useRouter()
   const handleBack = () => {
     router.back()
   }
 
-  return <div onClick={handleBack}>{children}</div>
+  return <div onClick={handleBack} className={cn(className)}>{children}</div>
 }
 
 export default BackLink

@@ -52,7 +52,7 @@ const StartCard = ({ status }: { status: 'none' | 'ongoing' | 'finished' }) => {
       <main className='flex h-full flex-col gap-6 md:flex-row'>
         <section className='relative h-24 w-full overflow-hidden rounded-xl md:aspect-6/7 md:h-auto md:max-w-[22rem]'>
           <Image
-            src={`/hero.jpg`}
+            src={`/assets/subtests/ppu.webp`}
             alt='TryOut'
             fill
             sizes='50%'
