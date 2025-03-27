@@ -30,7 +30,7 @@ CONCERN UNTUK FRONTEND:
 - tiap abis start tryout, sync ke db, tiap abis next progress fetch subtest_selanjutnya dr response buat dikirim ke soal service. 
 - setiap open page kalo masih ada tryout token, sync ama db dulu
 - kalo time limit udah up tapi user kebuang, gimana yah... 
-inshaAllah
+inshaAllah..
 TODO PROD:
     -ganti domain cookies 
     -ganti cors, add trust proxies, creating engine instance, log sampling, add corsURL
