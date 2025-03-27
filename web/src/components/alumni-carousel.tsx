@@ -30,17 +30,19 @@ const AlumniCarousel = ({ alumni }: { alumni: Alumni[] }) => {
   }, [api])
   return (
     <Carousel setApi={setApi} className='w-full bg-transparent'>
-      <CarouselContent className='relative z-10 -ml-[3vw] bg-transparent px-10 pb-10'>
-        <CarouselItem className='basis-[5%] sm:basis-[0%]' />
+      <CarouselContent className='relative z-10 -ml-2 bg-transparent px-4 pb-10 md:px-10 md:-ml-[3vw]'>
         {alumni.map((alumni, index) => (
           <CarouselItem
             key={index}
-            className={`basis-[90%] pl-[3vw] transition-all ease-in-out sm:basis-1/2 md:basis-1/3 lg:basis-1/4 ${current !== index + 2 && 'scale-80 sm:scale-100'}`}
+            className={`
+              basis-[95%] sm:basis-[45%] md:basis-1/3 lg:basis-1/4 pl-2 md:pl-[3vw] 
+              transition-all ease-in-out 
+              ${current !== index + 1 ? 'scale-90 sm:scale-95 md:scale-100' : 'scale-100'}
+            `}
           >
             <Card {...alumni} />
           </CarouselItem>
         ))}
-        <CarouselItem className='basis-[5%] sm:basis-[0%]' />
       </CarouselContent>
       <CarouselPrevious className='left-0 z-10 2xl:-left-10' />
       <CarouselNext className='right-0 z-10 2xl:-right-10' />
@@ -106,7 +108,7 @@ const Card = ({
           <span className='overflow-hidden text-xs font-semibold text-ellipsis whitespace-nowrap'>
             {isExpanded
               ? 'Click untuk menutup'
-              : 'Click untuk baca lebih lanjut'}
+              : 'Click untuk baca'}
           </span>
         </button>
       </section>

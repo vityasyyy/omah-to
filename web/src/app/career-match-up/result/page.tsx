@@ -7,6 +7,7 @@ import ResultClient from './ResultClient'
 import { cookies } from 'next/headers'
 import Enthusiasts from '@/modules/career-match-up/enthusiasts'
 import { DIVISIONS } from '@/lib/helpers/divisions'
+import Container from '@/components/container'
 
 export default async function CareerMatchUpResult() {
   try {
@@ -47,61 +48,54 @@ export default async function CareerMatchUpResult() {
     }
 
     return (
-      <div className='p-8'>
+      <Container>
         <h1 className='mb-6 text-3xl font-bold'>Your Career Match Result</h1>
-        <div className='rounded-lg text-justify bg-white p-6 shadow-md'>
-          <h2 className='mb-4 text-2xl font-semibold'>
-            Your dominant career path is:{' '}
-            <span className='text-primary'>
-              {results.dominantCareerTitle || results.dominantCareer}
-            </span>
-          </h2>
-          <p className='mb-4'>
-            {results.fullDescription}
-          </p>
-          <div className='mt-6'>
-            <h3 className='mb-2 text-xl font-medium'>
-              What this means for you:
+        <h2 className='mb-4 text-2xl font-semibold'>
+          Your dominant career path is:{' '}
+          <span className='text-primary'>
+            {results.dominantCareerTitle || results.dominantCareer}
+          </span>
+        </h2>
+        <p className='mb-4'>{results.fullDescription}</p>
+        <div className='mt-6'>
+          <h3 className='mb-2 text-xl font-medium'>What this means for you:</h3>
+          <p>{results.shortDescription}</p>
+        </div>
+        {results.careerScores && (
+          <div className='mt-8'>
+            <h3 className='mb-3 text-xl font-medium'>
+              Your Career Compatibility:
             </h3>
-            <p>{results.shortDescription}</p>
-          </div>
-          {results.careerScores && (
-            <div className='mt-8'>
-              <h3 className='mb-3 text-xl font-medium'>
-                Your Career Compatibility:
-              </h3>
-              <div className='space-y-3'>
-                {Object.entries(results.careerScores).map(
-                  ([career, score]: [string, any]) => {
-                    const divisionInfo = DIVISIONS.find(
-                      (div) => div.slug === career.toLowerCase()
-                    )
-                    return (
-                      <div key={career} className='flex items-center'>
-                        <div className='w-1/3 font-medium'>
-                          {divisionInfo?.name || career}:
-                        </div>
-                        <div className='w-2/3'>
-                          <div className='h-4 w-full rounded-full bg-gray-200'>
-                            <div
-                              className='bg-primary h-4 rounded-full'
-                              style={{ width: `${Math.round(score * 100)}%` }}
-                            ></div>
-                          </div>
+            <div className='space-y-3'>
+              {Object.entries(results.careerScores).map(
+                ([career, score]: [string, any]) => {
+                  const divisionInfo = DIVISIONS.find(
+                    (div) => div.slug === career.toLowerCase()
+                  )
+                  return (
+                    <div key={career} className='flex items-center'>
+                      <div className='w-1/3 font-medium'>
+                        {divisionInfo?.name || career}:
+                      </div>
+                      <div className='w-2/3'>
+                        <div className='h-4 w-full rounded-full bg-gray-200'>
+                          <div
+                            className='bg-primary h-4 rounded-full'
+                            style={{ width: `${Math.round(score * 100)}%` }}
+                          ></div>
                         </div>
                       </div>
-                    )
-                  }
-                )}
-              </div>
+                    </div>
+                  )
+                }
+              )}
             </div>
-          )}
-          <div>
-            {' '}
-            <Enthusiasts dominantCareer={dominantCareer.toUpperCase()} />{' '}
           </div>
+        )}
+        <div>
+          <Enthusiasts dominantCareer={dominantCareer.toUpperCase()} />
         </div>
-      </div>
+      </Container>
     )
   } catch (error) {
     console.error('Error fetching results:', error)
