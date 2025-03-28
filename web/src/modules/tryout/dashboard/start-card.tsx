@@ -44,6 +44,10 @@ const POINTS = [
     icon: <CircleX className='h-4 w-4' />,
     title: 'Dilarang bekerja sama, membuka situs lain, atau pakai perangkat lain',
   },
+  {
+    icon: <CircleX className='h-4 w-4' />,
+    title: 'Tryout hanya dapat dilakukan satu kali, menggunakan hanya satu perangkat/device',
+  },
 ]
 
 const StartCard = ({ status }: { status: 'none' | 'ongoing' | 'finished' }) => {
