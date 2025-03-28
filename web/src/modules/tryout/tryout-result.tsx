@@ -451,7 +451,7 @@ const PembahasanButton = ({ data }: { data: any }) => {
             </AlertDialogCancel>
           </AlertDialogTitle>
           {/* Using div with same styling as AlertDialogDescription to avoid nesting div in p */}
-          <div className='text-sm font-light whitespace-pre-wrap text-black dark:text-neutral-400'>
+          <div className='text-sm font-light whitespace-pre-wrap text-black dark:text-neutral-400 overflow-scroll'>
             <LatexRenderer content={data.pembahasan} />
           </div>
         </AlertDialogHeader>
