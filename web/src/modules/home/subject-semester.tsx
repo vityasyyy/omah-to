@@ -147,7 +147,7 @@ const SubjectSemester = () => {
                   {/* Semester List Left */}
                   <div
                     className={`border-primary-100 overflow-hidden rounded-b-lg shadow-md transition-all duration-700 ease-in-out ${
-                      isOpen ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'
+                      isOpen ? 'opacity-100' : 'max-h-0 opacity-0'
                     }`}
                   >
                     <div className='border-primary-100 rounded-b-lg border-2 px-4 py-2 shadow-md'>
@@ -209,7 +209,7 @@ const SubjectSemester = () => {
                   {/* Semester List Right */}
                   <div
                     className={`border-primary-100 overflow-hidden rounded-b-lg shadow-md transition-all duration-700 ease-in-out ${
-                      isOpen ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'
+                      isOpen ? 'opacity-100' : 'max-h-0 opacity-0'
                     }`}
                   >
                     <div className='border-primary-100 rounded-b-lg border-2 px-4 py-2 text-black shadow-md'>
