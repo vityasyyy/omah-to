@@ -439,7 +439,7 @@ const PembahasanButton = ({ data }: { data: any }) => {
           </Button>
         </span>
       </AlertDialogTrigger>
-      <AlertDialogContent>
+      <AlertDialogContent className='w-auto'>
         <AlertDialogHeader>
           <AlertDialogTitle>
             Pembahasan Soal Nomor {data.no}
