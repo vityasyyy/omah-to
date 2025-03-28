@@ -153,7 +153,7 @@ const Statistic = ({ userScores, userAnswers, totalRank, jumlah_peserta }: Stati
             <div className='rounded-lg bg-white'>
               <div className='px-auto pt-1 pb-1 font-medium text-black'>
                 <p className='text-primary-900 text-[3rem] font-bold sm:text-[4rem]'>
-                  {totalSkor.toFixed(1)}
+                  {Math.round(totalSkor)}
                 </p>
                 <p className='text-xs mb-1'>/1000</p>
                 <hr />
@@ -163,7 +163,7 @@ const Statistic = ({ userScores, userAnswers, totalRank, jumlah_peserta }: Stati
             <div className='rounded-lg bg-white'>
               <div className='px-auto pt-1 pb-1 font-medium text-black'>
                 <p className='text-primary-900 text-[3rem] font-bold sm:text-[4rem]'>
-                  {totalRank ? totalRank.toFixed(1) : 'N/A'}
+                  {totalRank ? totalRank : 'N/A'}
                 </p>
                 <p className='text-xs mb-1'>{jumlah_peserta}</p>
                 <hr />
