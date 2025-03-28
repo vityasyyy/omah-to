@@ -10,57 +10,72 @@ export const getSoalUrl = (isPublic?: boolean) => {
 };
 
 export const getMbSoal = async (accessToken?: string, isPublic?: boolean) => {
-    const soalUrl = getSoalUrl(isPublic);
-    const res = await fetch(`${soalUrl}/soal/minat-bakat`, {
-        method: "GET",
-        headers: {
-        "Content-Type": "application/json",
-        "Cookie": `access_token=${accessToken}`
-        },
-        cache: "force-cache",
-        next: {revalidate: 3600},
-        credentials: "include",
-    });
-    if (!res.ok) {
+    try {
+        const soalUrl = getSoalUrl(isPublic);
+        const res = await fetch(`${soalUrl}/soal/minat-bakat`, {
+            method: "GET",
+            headers: {
+            "Content-Type": "application/json",
+            "Cookie": `access_token=${accessToken}`
+            },
+            cache: "force-cache",
+            next: {revalidate: 3600},
+            credentials: "include",
+        });
+        if (!res.ok) {
+            throw new Error("Failed to fetch soal");
+        }
+        
+        return res.json();
+    } catch (error) {
+        console.error('Error fetching MB soal:', error);
         throw new Error("Failed to fetch soal");
     }
-    
-    return res.json();
 }
 
 export const submitMbAnswers = async (answers: any, isPublic?: boolean, accessToken?: string) => {
-    const mbUrl = getMbUrl(isPublic);
-    const res = await fetch(`${mbUrl}/minat-bakat/process`, {
-        method: "POST",
-        headers: {
-        "Content-Type": "application/json",
-        "Cookie": `access_token=${accessToken}`
-        },
-        credentials: "include",
-        body: JSON.stringify(answers),
-    });
-    if (!res.ok) {
+    try {
+        const mbUrl = getMbUrl(isPublic);
+        const res = await fetch(`${mbUrl}/minat-bakat/process`, {
+            method: "POST",
+            headers: {
+            "Content-Type": "application/json",
+            "Cookie": `access_token=${accessToken}`
+            },
+            credentials: "include",
+            body: JSON.stringify(answers),
+        });
+        if (!res.ok) {
+            throw new Error("Failed to submit answers");
+        }
+        
+        return res.json();
+    } catch (error) {
+        console.error('Error submitting MB answers:', error);
         throw new Error("Failed to submit answers");
     }
-    
-    return res.json();
 }
 
 export const getMbAttempt = async (accessToken?: string, isPublic?: boolean) => {
-    const mbUrl = getMbUrl(isPublic);
-    const res = await fetch(`${mbUrl}/minat-bakat/attempt`, {
-        method: "GET",
-        headers: {
-        "Content-Type": "application/json",
-        "Cookie": `access_token=${accessToken}`
-        },
-        credentials: "include",
-        cache: "force-cache",
-        next: {revalidate: 3600}
-    });
-    if (res.ok) {
-        const responseJSON = await res.json();
-        return responseJSON;
+    try {
+        const mbUrl = getMbUrl(isPublic);
+        const res = await fetch(`${mbUrl}/minat-bakat/attempt`, {
+            method: "GET",
+            headers: {
+            "Content-Type": "application/json",
+            "Cookie": `access_token=${accessToken}`
+            },
+            credentials: "include",
+            cache: "force-cache",
+            next: {revalidate: 3600}
+        });
+        if (res.ok) {
+            const responseJSON = await res.json();
+            return responseJSON;
+        }
+        return null;
+    } catch (error) {
+        console.error('Error fetching MB attempt:', error);
+        return null;
     }
-    return null;
 }
