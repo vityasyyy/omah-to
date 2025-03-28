@@ -136,15 +136,6 @@ export const ALUMNI: Alumni[] = [
       'Seorang VP of Engineering di Bukit Vista Hospitality Services, sebuah perusahaan yang menggabungkan teknologi dengan industri perhotelan untuk mengoptimalkan manajemen properti dan pengalaman tamu. Berperan dalam pengembangan solusi digital berbasis data untuk meningkatkan efisiensi operasional, otomatisasi proses, serta inovasi layanan di sektor hospitality.',
     education: 'CS16 | Universitas Gadjah Mada',
   },
-  {
-    name: 'Alvin Januar Ramadan',
-    slug: 'alvin-januar',
-    title: 'Software Engineer',
-    division: 'frontend',
-    description:
-      'Sebagai Software Engineer di Gojek, Alvin berkontribusi dalam membangun dan mengoptimalkan sistem yang mendukung layanan transportasi, pembayaran, dan logistik bagi jutaan pengguna. Karyanya memastikan layanan yang lebih cepat, aman, dan efisien di ekosistem Gojek.',
-    education: 'CS18 | Universitas Gadjah Mada',
-  },
   // MOBILE APPS
   // ----------------------------------------------------------
   // ----------------------------------------------------------
