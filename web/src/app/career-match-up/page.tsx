@@ -4,23 +4,33 @@ import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import Image from 'next/image'
 import React from 'react'
+import { cookies } from 'next/headers'
+import { getMbAttempt } from '@/lib/fetch/mb-fetch'
+import { redirect } from 'next/navigation'
 
-function careerMatchUpPage() {
+async function careerMatchUpPage() {
+  const cookieStore = await cookies()
+  const accessToken = cookieStore.get('access_token')?.value
+  const attempt = await getMbAttempt(accessToken, false)
+  if (attempt) {
+    redirect('/career-match-up/result')
+  }
+
   return (
     <>
       <div className='flex min-h-[calc(100vh-theme(spacing.48))] flex-1 flex-col-reverse items-center justify-center gap-20 lg:flex-row'>
         <div className='flex justify-start'>
-          <div className='absolute bottom-0 left-0 hidden sm:block xxl:left-36'>
+          <div className='absolute bottom-0 z-0 left-0 hidden sm:block xxl:left-36'>
             <Image
               src='/assets/Robot-Tobk-1.webp'
               alt='Robot Mascot'
               width={526}
               height={526}
-              className='w-[240px] drop-shadow-md md:w-[360px] lg:w-[480px]'
+              className='w-[240px] z-0 drop-shadow-md md:w-[360px] lg:w-[480px]'
             />
           </div>
         </div>
-        <Card className='w-full max-w-xl xl:max-w-2xl xxl:max-w-3xl bg-white shadow-lg lg:absolute lg:ml-96'>
+        <Card className='w-full max-w-xl z-10 xl:max-w-2xl xxl:max-w-3xl bg-white shadow-lg lg:absolute lg:ml-96'>
           <CardContent className='p-6'>
             <div className='mb-4 flex items-center'>
               <div className='mr-2 rounded-full bg-blue-600 p-2'>

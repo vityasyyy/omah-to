@@ -7,10 +7,7 @@ import { redirect } from 'next/navigation'
 async function Page() {
   const cookieStore = await cookies()
   const accessToken = cookieStore.get('access_token')?.value
-  const attempt = await getMbAttempt(accessToken, false)
-  if (attempt) {
-    redirect('/career-match-up/result')
-  }
+  
   try {
     const questionsData = await getMbSoal(accessToken)
     return (
