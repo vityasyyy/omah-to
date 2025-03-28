@@ -101,7 +101,7 @@ const Hero = async () => {
               className='mt-2 text-sm font-light text-balance text-neutral-700 md:mt-0 md:text-black'
             >
               Jelajahi Karir Impian di Dunia Computer Science dan Taklukkan UTBK
-              2025 Bersama Fahmi
+              2025 Bersama OmahTOBK
             </motion.p>
           </motion.div>
 
