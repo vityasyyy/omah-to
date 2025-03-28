@@ -101,16 +101,17 @@ export const DIVISIONS = [
         'Siapa yang tidak suka bermain game? Tapi, pernahkah kamu berpikir bagaimana sebuah game bisa dibuat? Di balik grafis yang keren, gameplay yang seru, dan pengalaman yang imersif, ada peran besar dari Game Developer! Game Development adalah proses menciptakan permainan, mulai dari perancangan konsep, pengembangan mekanik, hingga pengujian dan peluncuran. Dalam bidang ini, kamu bisa menjadi Game Programmer yang menulis kode dengan bahasa seperti C# atau C++, Game Designer yang menciptakan alur permainan, atau Game Artist yang membuat karakter dan lingkungan visual. Mesin game seperti Unity dan Unreal Engine juga memainkan peran penting dalam pengembangannya. Buat kamu yang kreatif, suka memecahkan masalah, dan ingin menciptakan pengalaman yang bisa dinikmati banyak orang, Game Development adalah dunia yang penuh tantangan dan keseruan! Dari game mobile hingga AAA games, industri ini terus berkembang dan selalu membuka peluang bagi para inovator baru.',
     },
   },
-  {
-    name: 'Competitive Programming',
-    slug: 'cp',
-    img: '/assets/divisions/cp.webp',
-    description:
-      'tubi verba arcana resonant inter columnas memoriae. In aethere suspenso inter chaos et ordinem, conceptus ignoti efflorescunt sicut flores siderum, formantes nexus incomprehensibiles inter finitum et infinitum. Quisquis intrat hanc aulam cogitationis, detegit scripturas vetustatis.',
-    career: {
-      description: 'You show exceptional talent for Competitive Programming.',
-      fullDescription:
-        'This field tests your ability to solve complex algorithmic problems efficiently. Your logical thinking and problem-solving skills would be valuable in competitions and in roles that require algorithmic optimization.',
-    },
-  },
+  // monggo" dikomen aja karena gak ada di figma
+  // {
+  //   name: 'Competitive Programming',
+  //   slug: 'cp',
+  //   img: '/assets/divisions/cp.webp',
+  //   description:
+  //     'tubi verba arcana resonant inter columnas memoriae. In aethere suspenso inter chaos et ordinem, conceptus ignoti efflorescunt sicut flores siderum, formantes nexus incomprehensibiles inter finitum et infinitum. Quisquis intrat hanc aulam cogitationis, detegit scripturas vetustatis.',
+  //   career: {
+  //     description: 'You show exceptional talent for Competitive Programming.',
+  //     fullDescription:
+  //       'This field tests your ability to solve complex algorithmic problems efficiently. Your logical thinking and problem-solving skills would be valuable in competitions and in roles that require algorithmic optimization.',
+  //   },
+  // },
 ]

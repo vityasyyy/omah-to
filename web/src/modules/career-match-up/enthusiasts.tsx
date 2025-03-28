@@ -6,6 +6,10 @@ import { ALUMNI } from '@/lib/helpers/alumni'
 const Enthusiasts = ({ dominantCareer = '' }: { dominantCareer: string }) => {
   const alumni = dominantCareer ? ALUMNI.filter((alumni) => alumni.division === dominantCareer.toLowerCase()) : ALUMNI
 
+  if (alumni.length === 0) {
+    return <></>
+  }
+  
   return (
     <Container className='my-20 gap-10 md:gap-16'>
       <Heading className='self-center text-center'>

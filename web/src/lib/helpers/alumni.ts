@@ -249,7 +249,7 @@ export const ALUMNI: Alumni[] = [
   },
   {
     name: 'Hafid Ambardi',
-    slug: 'placeholder',
+    slug: 'hafid-ambardi',
     title: 'Data Science & AI Enthusiast',
     division: 'dsai',
     description:

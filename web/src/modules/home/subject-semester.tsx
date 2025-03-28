@@ -45,7 +45,6 @@ const BUTTON_CONTENT_LEFT = [
       { no: '6', subject: 'Praktikum Sistem Komputer dan Jaringan', sks: '1' },
       { no: '7', subject: 'Probabilitas dan Proses Stokastika', sks: '2' },
       { no: '8', subject: 'Sistem Operasi', sks: '2' },
-      { no: '9', subject: 'Analisis Algoritma dan Kompleksitas', sks: '3' },
     ],
   },
   {
