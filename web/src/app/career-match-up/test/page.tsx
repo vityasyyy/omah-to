@@ -1,12 +1,17 @@
 import CareerMatchUpTest from '@/modules/career-match-up/career-test'
 import { cookies } from 'next/headers'
 import React from 'react'
-import { getMbSoal } from '@/lib/fetch/mb-fetch'
+import { getMbAttempt, getMbSoal } from '@/lib/fetch/mb-fetch'
+import { redirect } from 'next/navigation'
 
 async function Page() {
   const cookieStore = await cookies()
   const accessToken = cookieStore.get('access_token')?.value
-  
+  const attempt = await getMbAttempt(accessToken, false)
+  if (attempt) {
+    redirect('/career-match-up/result')
+  }
+
   try {
     const questionsData = await getMbSoal(accessToken)
     return (
