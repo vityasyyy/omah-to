@@ -30,7 +30,7 @@ const POINTS = [
     title: (
       <>
         195 Menit tanpa jeda,{" "}
-        <span className="text-primary-900 font-semibold">
+        <span className="text-primary-700 font-bold">
           Peserta hanya dapat melanjutkan subtest sesuai waktu
         </span>
       </>
@@ -49,20 +49,20 @@ const POINTS = [
     title: (
       <>
         Peserta{" "}
-        <span className="text-primary-900 font-semibold">dapat melihat hasil</span> ketika{" "}
-        <span className="text-primary-900 font-semibold">waktu sesi habis</span>
+        <span className="text-primary-700 font-bold">dapat melihat hasil</span> ketika{" "}
+        <span className="text-primary-700 font-bold">waktu sesi habis</span>
       </>
     ),
   },
   {
     icon: <CircleX className="h-4 w-4" />,
-    title: "Dilarang bekerja sama, membuka situs lain, atau pakai perangkat lain",
+    title: "Dilarang bekerja sama, membuka situs lain, atau mengakses tryout menggunakan perangkat lain",
   },
   {
     icon: <CircleX className="h-4 w-4" />,
     title: (
       <>
-        <span className="text-primary-900 font-semibold">
+        <span className="text-primary-700 font-bold">
           Dilarang keluar dari website
         </span>{" "}
         selama try-out berlangsung
