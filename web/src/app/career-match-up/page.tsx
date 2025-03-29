@@ -4,14 +4,11 @@ import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import Image from 'next/image'
 import React from 'react'
-import { cookies } from 'next/headers'
 import { getMbAttempt } from '@/lib/fetch/mb-fetch'
 import { redirect } from 'next/navigation'
 
 async function careerMatchUpPage() {
-  const cookieStore = await cookies()
-  const accessToken = cookieStore.get('access_token')?.value
-  const attempt = await getMbAttempt(accessToken, false)
+  const attempt = await getMbAttempt("", true)
   if (attempt) {
     redirect('/career-match-up/result')
   }

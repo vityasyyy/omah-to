@@ -1,8 +1,7 @@
 import CareerMatchUpTest from '@/modules/career-match-up/career-test'
 import { cookies } from 'next/headers'
 import React from 'react'
-import { getMbSoal, getMbAttempt } from '@/lib/fetch/mb-fetch'
-import { redirect } from 'next/navigation'
+import { getMbSoal } from '@/lib/fetch/mb-fetch'
 
 async function Page() {
   const cookieStore = await cookies()
