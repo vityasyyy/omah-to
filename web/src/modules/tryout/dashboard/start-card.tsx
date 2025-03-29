@@ -22,34 +22,55 @@ import { cn } from '@/lib/utils'
 
 const POINTS = [
   {
-    icon: <Layers className='h-4 w-4' />,
-    title: '7 Subtest UTBK',
+    icon: <Layers className="h-4 w-4" />,
+    title: "7 Subtest UTBK",
   },
   {
-    icon: <Clock className='h-4 w-4' />,
-    title: '195 Menit tanpa jeda',
+    icon: <Clock className="h-4 w-4" />,
+    title: (
+      <>
+        195 Menit tanpa jeda,{" "}
+        <span className="text-primary-900 font-semibold">
+          Peserta hanya dapat melanjutkan subtest sesuai waktu
+        </span>
+      </>
+    ),
   },
   {
-    icon: <Book className='h-4 w-4' />,
-    title: 'Penilaian serta kunci di akhir pengerjaan',
+    icon: <Book className="h-4 w-4" />,
+    title: "Penilaian serta kunci jawaban di akhir pengerjaan",
   },
   {
-    icon: <CircleAlert className='h-4 w-4' />,
-    title: 'Pastikan membaca soal dengan teliti',
+    icon: <CircleAlert className="h-4 w-4" />,
+    title: "Pastikan membaca soal dengan teliti",
   },
   {
-    icon: <CircleX className='h-4 w-4' />,
-    title: 'Peserta tidak bisa keluar hingga semua sesi selesai atau waktu habis',
+    icon: <CircleX className="h-4 w-4" />,
+    title: (
+      <>
+        Peserta{" "}
+        <span className="text-primary-900 font-semibold">dapat melihat hasil</span> ketika{" "}
+        <span className="text-primary-900 font-semibold">waktu sesi habis</span>
+      </>
+    ),
   },
   {
-    icon: <CircleX className='h-4 w-4' />,
-    title: 'Dilarang bekerja sama, membuka situs lain, atau pakai perangkat lain',
+    icon: <CircleX className="h-4 w-4" />,
+    title: "Dilarang bekerja sama, membuka situs lain, atau pakai perangkat lain",
   },
   {
-    icon: <CircleX className='h-4 w-4' />,
-    title: 'Tryout hanya dapat dilakukan satu kali, menggunakan hanya satu perangkat/device',
+    icon: <CircleX className="h-4 w-4" />,
+    title: (
+      <>
+        <span className="text-primary-900 font-semibold">
+          Dilarang keluar dari website
+        </span>{" "}
+        selama try-out berlangsung
+      </>
+    ),
   },
-]
+];
+
 
 const StartCard = ({ status }: { status: 'none' | 'ongoing' | 'finished' }) => {
   return (
