@@ -1,8 +1,9 @@
 'use client'
 import StyledCard from '@/components/tryout/styled-card'
 import { Button, buttonVariants } from '@/components/ui/button'
-import { Book, CircleAlert, CircleX, Clock, Layers, X } from 'lucide-react'
+import { Book, CircleAlert, CircleX, Clock, Layers, Loader2, X } from 'lucide-react'
 import Image from 'next/image'
+import { useState } from 'react'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -89,21 +90,36 @@ const StartCard = ({ status }: { status: 'none' | 'ongoing' | 'finished' }) => {
 
 const StartButton = () => {
   const router = useRouter()
+  const [isLoading, setIsLoading] = useState(false)
 
   async function handleStart() {
-    const resTest = await startTryout('', true)
-    if (!resTest) {
-      console.error('Failed to start tryout')
-      return
+    setIsLoading(true)
+    try {
+      const resTest = await startTryout('', true)
+      if (!resTest) {
+        console.error('Failed to start tryout')
+        return
+      }
+      router.push('/tryout/intro')
+    } catch (error) {
+      console.error('Error starting tryout:', error)
+    } finally {
+      setIsLoading(false)
     }
-    router.push('/tryout/intro')
   }
 
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant={`secondary`} className='mt-auto self-end px-6'>
-          Lakukan TryOut Sekarang
+        <Button variant={`secondary`} className='mt-auto self-end px-6' disabled={isLoading}>
+          {isLoading ? (
+            <>
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              Memulai...
+            </>
+          ) : (
+            'Lakukan TryOut Sekarang'
+          )}
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
@@ -123,9 +139,19 @@ const StartButton = () => {
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Kembali</AlertDialogCancel>
-          <AlertDialogAction onClick={() => handleStart()}>
-            Mulai Tryout
+          <AlertDialogCancel disabled={isLoading}>Kembali</AlertDialogCancel>
+          <AlertDialogAction 
+            onClick={() => handleStart()} 
+            disabled={isLoading}
+          >
+            {isLoading ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Memulai...
+              </>
+            ) : (
+              'Mulai Tryout'
+            )}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

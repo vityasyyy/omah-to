@@ -314,9 +314,11 @@ const AnswerCard = ({
           <AlertDialogHeader>
             <AlertDialogTitle>Waktu Habis!</AlertDialogTitle>
             <AlertDialogDescription>
-              Waktu mengerjakan sudah habis. Silahkan kumpulkan jawaban untuk
-              melanjutkan ke subtes berikutnya. Jika jawaban tidak dikumpulkan,
-              tryout akan dianggap tidak valid.
+              Waktu mengerjakan sudah habis. Silahkan kumpulkan jawaban {currentSubtest === 'subtest_pm' 
+                ? 'untuk mengakhiri tryout.' 
+                : 'untuk melanjutkan ke subtes berikutnya.'} 
+              Jika jawaban tidak dikumpulkan, tryout akan dianggap tidak valid. 
+              Tekan Tombol di bawah untuk submit jawaban, tombol wajib ditekan untuk meng-submit jawaban.
               {/* <div className='mt-2 text-center font-bold text-red-500'>
                 {formatTimeRemaining(graceTimeRemaining)}
               </div> */}
@@ -335,8 +337,9 @@ const AnswerCard = ({
                 </>
               ) : (
                 <>
-                  Lanjut Subtes Berikutnya (
-                  {formatTimeRemaining(graceTimeRemaining)})
+                  {currentSubtest === 'subtest_pm' 
+                    ? `Akhiri Tryout (${formatTimeRemaining(graceTimeRemaining)})` 
+                    : `Lanjut Subtes Berikutnya (${formatTimeRemaining(graceTimeRemaining)})`}
                   <ArrowRight className='group-hover:translate-x-1' />
                 </>
               )}
@@ -378,7 +381,7 @@ const AnswerCard = ({
                   'flex items-center justify-center gap-2'
                 )}
               >
-                Lanjut Subtes
+                {currentSubtest === 'subtest_pm' ? 'Akhiri Tryout' : 'Lanjut Subtes'}
                 <Check size={16} />
               </button>
             ) : isLastQuestion ? (
