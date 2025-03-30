@@ -1,15 +1,16 @@
 import * as motion from 'motion/react-client'
 import Link from 'next/link'
 
+import { fetchUserClient } from '@/app/fetch_user'
 import Container from '@/components/container'
+import Heading, { HeadingSpan } from '@/components/home/heading'
+import SoftCircle from '@/components/soft-circle'
 import StyledCard from '@/components/tryout/styled-card'
 import { buttonVariants } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { Book } from 'lucide-react'
+import { cookies } from 'next/headers'
 import Image from 'next/image'
-import Heading, { HeadingSpan } from '@/components/home/heading'
-import SoftCircle from '@/components/soft-circle'
-import { fetchUser } from '@/app/fetch_user'
 
 const CARD_ITEMS = [
   {
@@ -70,7 +71,9 @@ const cardContainerVariants = {
 // }
 
 const Hero = async () => {
-  const user = await fetchUser()
+  const cookieStore = await cookies()
+  const accessToken = cookieStore.get('access_token')?.value
+  const user = await fetchUserClient(accessToken)
 
   return (
     <main className='bg-white'>
