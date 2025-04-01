@@ -92,7 +92,7 @@ func CreateResetToken() (string, time.Time, error) {
 }
 
 func CreateTryoutToken(userID, attemptID int) (string, error) {
-	expirationTime := time.Now().Add(7 * 24 * 60 * time.Minute)
+	expirationTime := time.Now().Add(200 * time.Minute)
 	// Create a new token with the claims and the signing method
 	claims := TryoutTokenClaims{
 		UserID:    userID,

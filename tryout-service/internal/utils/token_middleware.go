@@ -126,7 +126,7 @@ func IssueTryOutToken(userID, attemptID int, accessToken string) (string, error)
 
 // SetTryoutTokenCookie sets the tryout token cookie
 func SetTryoutTokenCookie(c *gin.Context, tryoutToken string) error {
-	c.SetCookie("tryout_token", tryoutToken, 7*24*60*60, "/", cookieDomain, true, true)
+	c.SetCookie("tryout_token", tryoutToken, 200*60, "/", cookieDomain, true, true)
 	return nil
 }
 
