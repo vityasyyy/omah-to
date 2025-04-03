@@ -239,7 +239,7 @@ const AnswerCard = ({
       const savedAnswers = localStorage.getItem(localStorageKey)
       if (savedAnswers) setAnswers(JSON.parse(savedAnswers))
 
-      const interval = setInterval(syncWithServer, 120000) // Sync every 2 minutes
+      const interval = setInterval(syncWithServer, 210000) // Sync every 3.5 minutes
       return () => clearInterval(interval)
     } catch (error) {
       console.error('Initial load error:', error)
