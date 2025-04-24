@@ -19,6 +19,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/ulule/limiter/v3"
 	memory "github.com/ulule/limiter/v3/drivers/store/memory"
 )
@@ -84,6 +85,10 @@ func main() {
 	r.Use(utils.ReqLoggingMiddleware())
 	r.Use(securityHeadersMiddleware())
 	r.SetTrustedProxies([]string{"0.0.0.0/0"})
+
+	// Prometheus metrics endpoint
+	r.Use(utils.PrometheusMiddleware())
+	r.GET("/metrics", gin.WrapH(promhttp.Handler()))
 
 	// CORS middleware
 	r.Use(cors.New(cors.Config{

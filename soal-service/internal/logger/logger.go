@@ -1,6 +1,7 @@
 package logger
 
 import (
+	"log"
 	"os"
 	"path/filepath"
 	"runtime"
@@ -33,7 +34,7 @@ func InitLogger() {
 	}
 
 	// Check if running in Cloud Run (no need for file logging)
-	if os.Getenv("ENVIRONMENT") != "production" {
+	if os.Getenv("ENVIRONMENT") == "production" {
 		// Cloud Run detected → Log only to stdout/stderr with sampling
 		Log = zerolog.New(os.Stdout).Sample(sampler).With().
 			Timestamp().
@@ -47,15 +48,36 @@ func InitLogger() {
 			Logger()
 	} else {
 		// Local or other environments → Log to both file and stdout
-		logPath := "var/log/soal-service"
-		os.MkdirAll(logPath, os.ModePerm)
+		logPath := "/var/log/soal-service"
+		if err := os.MkdirAll(logPath, os.ModePerm); err != nil {
+			log.Printf("ERROR: Failed to create log directory '%s': %v", logPath, err)
+			return
+		}
 
-		appLogFile, _ := os.OpenFile(logPath+"/app.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
-		errorLogFile, _ := os.OpenFile(logPath+"/error.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
+		appLogFile, err := os.OpenFile(logPath+"/app.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
+		if err != nil {
+			log.Printf("ERROR: Failed to open app log file '%s': %v", logPath+"/app.log", err)
+			return
+		}
+		errorLogFile, err := os.OpenFile(logPath+"/error.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
+		if err != nil {
+			log.Printf("ERROR: Failed to open error log file '%s': %v", logPath+"/error.log", err)
+			return
+		}
 
-		multiAppWriter := zerolog.MultiLevelWriter(os.Stdout, appLogFile)
-		multiErrorWriter := zerolog.MultiLevelWriter(os.Stderr, errorLogFile)
+		var multiAppWriter, multiErrorWriter zerolog.LevelWriter
 
+		if appLogFile != nil {
+			multiAppWriter = zerolog.MultiLevelWriter(os.Stdout, appLogFile)
+		} else {
+			multiAppWriter = zerolog.MultiLevelWriter(os.Stdout)
+		}
+
+		if errorLogFile != nil {
+			multiErrorWriter = zerolog.MultiLevelWriter(os.Stdout, errorLogFile)
+		} else {
+			multiErrorWriter = zerolog.MultiLevelWriter(os.Stdout)
+		}
 		Log = zerolog.New(multiAppWriter).Sample(sampler).With().
 			Timestamp().
 			Str("service", "soal-service").

@@ -1,7 +1,9 @@
 package utils
 
 import (
+	"fmt"
 	"minat-bakat-service/internal/logger"
+	"minat-bakat-service/internal/metrics"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -22,5 +24,18 @@ func ReqLoggingMiddleware() gin.HandlerFunc {
 			Dur("duration", duration).
 			Str("ip_address", c.ClientIP()).
 			Msg("Request processed")
+	}
+}
+
+func PrometheusMiddleware() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		start := time.Now()
+		c.Next()
+		status := fmt.Sprint(c.Writer.Status())
+		path := c.FullPath()
+		method := c.Request.Method
+		duration := time.Since(start)
+		metrics.HTTPReqs.WithLabelValues(method, path, status).Inc()
+		metrics.HTTPDur.WithLabelValues(method, path).Observe(duration.Seconds())
 	}
 }
