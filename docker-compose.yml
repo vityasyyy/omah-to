@@ -11,8 +11,12 @@ services:
             - ./traefik/traefik.yml:/etc/traefik/traefik.yml:ro
             - ./traefik/dynamic:/etc/traefik/dynamic:ro
             - ./certs:/certs:ro
+            - ./traefik/logs:/var/log/traefik
         networks:
             - omahtryout-network
+        command:
+            - "--metrics.prometheus=true"
+            - "--metrics.prometheus.entrypoint=metrics"
         labels:
             - "traefik.enable=true"
             - "traefik.http.routers.dashboard.rule=Host(`proxy.omahto.localhost`)"
@@ -20,6 +24,78 @@ services:
             - "traefik.http.routers.dashboard.entrypoints=websecure"
             - "traefik.http.routers.dashboard.tls=true"
 
+    # LOKI SERVICE
+    loki:
+        image: grafana/loki:2.9.0
+        ports:
+            - "3100:3100"
+        volumes:
+            - ./loki/loki-config.yaml:/etc/loki/local-config.yaml
+            - ./loki:/loki
+        command: -config.file=/etc/loki/local-config.yaml
+        networks:
+            - omahtryout-network
+        labels:
+            - "traefik.enable=true"
+            - "traefik.http.routers.loki.rule=Host(`loki.omahto.localhost`)"
+            - "traefik.http.routers.loki.entrypoints=websecure"
+            - "traefik.http.routers.loki.tls=true"
+            - "traefik.http.services.loki.loadbalancer.server.port=3100"
+
+    promtail:
+        image: grafana/promtail:2.9.0
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
+            - ./promtail/config.yaml:/etc/promtail/config.yaml
+            - ./promtail:/etc/promtail
+            - ./traefik/logs:/var/log/traefik
+            - ./auth-service/var/log/auth-service:/var/log/auth-service
+            - ./soal-service/var/log/soal-service:/var/log/soal-service
+            - ./tryout-service/var/log/tryout-service:/var/log/tryout-service
+            - ./minat-bakat-service/var/log/minat-bakat-service:/var/log/minat-bakat-service
+        command: -config.file=/etc/promtail/config.yaml
+        networks:
+            - omahtryout-network
+        
+    # prometheus
+    prometheus:
+        image: prom/prometheus:v2.43.0
+        ports:
+            - "9090:9090"
+        volumes:
+            - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+            - ./prometheus:/prometheus
+        networks:
+            - omahtryout-network
+        labels:
+            - "traefik.enable=true"
+            - "traefik.http.routers.prometheus.rule=Host(`prometheus.omahto.localhost`)"
+            - "traefik.http.routers.prometheus.entrypoints=websecure"
+            - "traefik.http.routers.prometheus.tls=true"
+            - "traefik.http.services.prometheus.loadbalancer.server.port=9090"
+        command:
+            - '--config.file=/etc/prometheus/prometheus.yml'
+
+    grafana: 
+        image: grafana/grafana:10.2.2
+        ports:
+            - "${GRAFANA_PORT}:${GRAFANA_PORT}"
+        environment:
+            - GF_SECURITY_ADMIN_PASSWORD=admin
+            - GF_AUTH_ANONYMOUS_ENABLED=true
+            - GF_AUTH_ANONYMOUS_ORG_ROLE=Editor
+            - GF_AUTH_ANONYMOUS_ORG_ID=1
+        labels:
+            - "traefik.enable=true"
+            - "traefik.http.routers.grafana.rule=Host(`grafana.omahto.localhost`)"
+            - "traefik.http.routers.grafana.entrypoints=websecure"
+            - "traefik.http.routers.grafana.tls=true"
+            - "traefik.http.services.grafana.loadbalancer.server.port=${GRAFANA_PORT}"
+        networks:
+            - omahtryout-network
+        volumes:
+            - grafana-storage:/var/lib/grafana
+    
     # FRONTEND
     web:
         build:
@@ -60,7 +136,7 @@ services:
             timeout: 5s
             retries: 5
 
-        # API for the auth service
+    # API for the auth service
     auth-service-api:
         build: ./auth-service
         env_file:
@@ -69,6 +145,8 @@ services:
         depends_on:
             auth-service-db:
                 condition: service_healthy # Ensure DB is ready
+        volumes:
+          - ./auth-service/var/log/auth-service:/var/log/auth-service
         networks:
             - omahtryout-network
         ports:
@@ -108,6 +186,8 @@ services:
                 condition: service_healthy # Ensure DB is ready
         networks:
             - omahtryout-network
+        volumes:
+          - ./soal-service/var/log/soal-service:/var/log/soal-service
         ports:
             - ${SOAL_SERVICE_PORT}:${SOAL_SERVICE_PORT}
         labels:
@@ -145,6 +225,8 @@ services:
                 condition: service_healthy # Ensure DB is ready
         networks:
             - omahtryout-network
+        volumes:
+          - ./tryout-service/var/log/tryout-service:/var/log/tryout-service
         ports:
             - ${TRYOUT_SERVICE_PORT}:${TRYOUT_SERVICE_PORT}
         labels:
@@ -185,6 +267,8 @@ services:
                 condition: service_healthy # Ensure DB is ready
         networks:
             - omahtryout-network
+        volumes:
+          - ./minat-bakat-service/var/log/minat-bakat-service:/var/log/minat-bakat-service
         ports:
             - ${MINAT_BAKAT_SERVICE_PORT}:${MINAT_BAKAT_SERVICE_PORT}
         labels:
@@ -196,6 +280,7 @@ services:
 
 networks:
     omahtryout-network:
+        external: true
 
 # volumes for persistent data
 volumes:
@@ -203,3 +288,6 @@ volumes:
     soal-data:
     tryout-data:
     minat-bakat-data:
+    grafana-storage:
+    loki-data:
+    prometheus-data:

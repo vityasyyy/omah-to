@@ -1,0 +1,88 @@
+server:
+  http_listen_port: 9080  # Promtail metrics endpoint
+
+clients:
+  - url: http://loki:3100/loki/api/v1/push  # Loki endpoint
+
+positions:
+  filename: /tmp/positions.yaml  # Track file positions
+
+scrape_configs:
+  # Traefik Logs
+  - job_name: traefik
+    static_configs:
+      - targets: [localhost]
+        labels:
+          job: traefik
+          __path__: /var/log/traefik/*.log  # Log path
+    pipeline_stages:
+      - regex:
+          expression: '^(?P<timestamp>\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z) (?P<message>.*)$'
+      - labels:
+          timestamp:  # Extract timestamp as label
+
+  # Auth Service Logs
+  - job_name: auth-service
+    static_configs:
+      - targets: [localhost]
+        labels:
+          job: auth-service
+          __path__: /var/log/auth-service/*.log  # Log path
+    pipeline_stages:
+      - json:  # For structured logs
+          expressions:
+            level: level
+            layer: layer
+            operation: operation
+      - labels:
+          level:  # Create label from log field
+          layer:
+          operation:
+  - job_name: soal-service
+    static_configs:
+      - targets: [localhost]
+        labels:
+          job: soal-service
+          __path__: /var/log/soal-service/*.log  # Log path
+    pipeline_stages:
+      - json:  # For structured logs
+          expressions:
+            level: level
+            layer: layer
+            operation: operation
+      - labels:
+          level:  # Create label from log field
+          layer:
+          operation:
+  - job_name: tryout-service
+    static_configs:
+      - targets: [localhost]
+        labels:
+          job: tryout-service
+          __path__: /var/log/tryout-service/*.log  # Log path
+    pipeline_stages:
+      - json:  # For structured logs
+          expressions:
+            level: level
+            layer: layer
+            operation: operation
+      - labels:
+          level:  # Create label from log field
+          layer:
+          operation:
+  - job_name: mb_service
+    static_configs:
+      - targets: [localhost]
+        labels:
+          job: mb_service
+          __path__: /var/log/minat-bakat-service/*.log  # Log path
+    pipeline_stages:
+      - json:  # For structured logs
+          expressions:
+            level: level
+            layer: layer
+            operation: operation
+      - labels:
+          level:  # Create label from log field
+          layer:
+          operation:
