@@ -10,7 +10,6 @@ OmahTI Tryout Website for prospective students preparing for SNBT 2025
 - [Installation](#installation)
 - [Usage](#usage)
 - [Front End Development Setup](#front-end-development-setup) --> frontend devs must read
-- [Contributors](#contributors)
 - [Contact](#contact)
 
 ---
@@ -90,12 +89,6 @@ cd web
 pnpm install
 pnpm dev
 ```
-
----
-
-## Contributors
-
-[List of contributors here.]
 
 ---
 
