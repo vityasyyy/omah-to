@@ -1,12 +1,13 @@
 package logger
 
 import (
-	"log"
 	"os"
 	"path/filepath"
 	"runtime"
-	"time"
 
+	"context"
+
+	"github.com/gin-gonic/gin"
 	"github.com/rs/zerolog"
 )
 
@@ -14,6 +15,8 @@ var (
 	Log      zerolog.Logger
 	ErrorLog zerolog.Logger
 )
+
+const loggerKey = "request_logger"
 
 func InitLogger() {
 	// Set log level based on environment
@@ -27,115 +30,83 @@ func InitLogger() {
 	// This configuration:
 	// - Keeps the first N logs (initial burst)
 	// - After that, samples logs at the given interval (1 out of every M)
-	sampler := &zerolog.BurstSampler{
-		Burst:       5,                             // Allow first 5 messages without sampling
-		Period:      300 * time.Second,             // Reset counter every 30 seconds
-		NextSampler: &zerolog.BasicSampler{N: 100}, // After burst, sample 1 in 50 messages
-	}
+	// sampler := &zerolog.BurstSampler{
+	// 	Burst:       5,                             // Allow first 5 messages without sampling
+	// 	Period:      300 * time.Second,             // Reset counter every 30 seconds
+	// 	NextSampler: &zerolog.BasicSampler{N: 100}, // After burst, sample 1 in 50 messages
+	// }
 
 	// Check if running in Cloud Run (no need for file logging)
-	if os.Getenv("ENVIRONMENT") == "production" {
-		// Cloud Run detected → Log only to stdout/stderr with sampling
-		Log = zerolog.New(os.Stdout).Sample(sampler).With().
-			Timestamp().
-			Str("service", "minat-bakat-service").
-			Logger()
+	// Cloud Run detected → Log only to stdout/stderr with sampling
+	Log = zerolog.New(os.Stdout).With().
+		Timestamp().
+		Str("service", "mb-service").
+		Logger()
 
-		// Don't sample error logs to ensure all errors are captured
-		ErrorLog = zerolog.New(os.Stderr).With().
-			Timestamp().
-			Str("service", "minat-bakat-service").
-			Logger()
-	} else {
-		// Local or other environments → Log to both file and stdout
-		logPath := "/var/log/minat-bakat-service"
-		if err := os.MkdirAll(logPath, os.ModePerm); err != nil {
-			log.Printf("ERROR: Failed to create log directory '%s': %v", logPath, err)
-			return
-		}
-
-		appLogFile, err := os.OpenFile(logPath+"/app.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
-		if err != nil {
-			log.Printf("ERROR: Failed to open app log file '%s': %v", logPath+"/app.log", err)
-			return
-		}
-		errorLogFile, err := os.OpenFile(logPath+"/error.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
-		if err != nil {
-			log.Printf("ERROR: Failed to open error log file '%s': %v", logPath+"/error.log", err)
-			return
-		}
-
-		var multiAppWriter, multiErrorWriter zerolog.LevelWriter
-
-		if appLogFile != nil {
-			multiAppWriter = zerolog.MultiLevelWriter(os.Stdout, appLogFile)
-		} else {
-			multiAppWriter = zerolog.MultiLevelWriter(os.Stdout)
-		}
-
-		if errorLogFile != nil {
-			multiErrorWriter = zerolog.MultiLevelWriter(os.Stdout, errorLogFile)
-		} else {
-			multiErrorWriter = zerolog.MultiLevelWriter(os.Stdout)
-		}
-
-		Log = zerolog.New(multiAppWriter).Sample(sampler).With().
-			Timestamp().
-			Str("service", "minat-bakat-service").
-			Logger()
-
-		// Don't sample error logs
-		ErrorLog = zerolog.New(multiErrorWriter).With().
-			Timestamp().
-			Str("service", "minat-bakat-service").
-			Logger()
-	}
+	// Don't sample error logs to ensure all errors are captured
+	ErrorLog = zerolog.New(os.Stderr).With().
+		Timestamp().
+		Str("service", "mb-service").
+		Logger()
 }
 
-// LogDebug to create debug log with function name and line number
-func LogDebug(message string, fields ...map[string]interface{}) {
-	// Get function name, file name, and line number of the caller
+// AttachLogger stores a request-scoped logger in context (e.g., gin.Context)
+func AttachLogger(c *gin.Context, l zerolog.Logger) {
+	c.Set(loggerKey, l)
+}
+
+// FromContext retrieves a logger from context, falling back to global Log
+func FromContext(ctx context.Context) *zerolog.Logger {
+	if ginCtx, ok := ctx.(*gin.Context); ok {
+		if val, exists := ginCtx.Get(loggerKey); exists {
+			if logger, ok := val.(zerolog.Logger); ok {
+				return &logger
+			}
+		}
+	}
+	return &Log
+}
+
+// LogDebugCtx logs debug messages with context and optional fields
+func LogDebugCtx(ctx context.Context, message string, fields ...map[string]interface{}) {
 	pc, file, line, _ := runtime.Caller(1)
-	// Get function name from the program counter (if u took OS class u'll know program counter lmao)
 	funcName := runtime.FuncForPC(pc).Name()
-	// Create log event with function name, file name, line number, and log type
-	event := Log.Debug().
+
+	log := FromContext(ctx).Debug().
 		Str("function", funcName).
 		Str("file", filepath.Base(file)).
 		Int("line", line).
 		Str("log_type", "debug")
 
-	// Add fields to the log event using the addField helper function
 	if len(fields) > 0 {
 		for key, value := range fields[0] {
-			event = addField(event, key, value)
+			log = addField(log, key, value)
 		}
 	}
-	// Log the debug message
-	event.Msg(message)
+	log.Msg(message)
 }
 
-// LogError creates an error log with function name
-func LogError(err error, message string, fields ...map[string]interface{}) {
-	pc, _, _, _ := runtime.Caller(1)
+// LogErrorCtx logs error messages with context and optional fields
+func LogErrorCtx(ctx context.Context, err error, message string, fields ...map[string]interface{}) {
+	pc, file, line, _ := runtime.Caller(1)
 	funcName := runtime.FuncForPC(pc).Name()
 
-	event := ErrorLog.Error().
+	log := FromContext(ctx).Error().
 		Str("function", funcName).
+		Str("file", filepath.Base(file)).
+		Int("line", line).
 		Err(err)
 
 	if len(fields) > 0 {
 		for key, value := range fields[0] {
-			event = addField(event, key, value)
+			log = addField(log, key, value)
 		}
 	}
-	// Log the error message
-	event.Msg(message)
+	log.Msg(message)
 }
 
-// addField adds a field to the log event based on its type (we will specify the fields in the code later)
+// addField adds extra structured fields
 func addField(event *zerolog.Event, key string, value interface{}) *zerolog.Event {
-	// Switch on the type of the value and add it to the log event
 	switch v := value.(type) {
 	case string:
 		return event.Str(key, v)

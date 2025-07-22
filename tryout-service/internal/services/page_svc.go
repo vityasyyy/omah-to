@@ -11,12 +11,12 @@ import (
 )
 
 type PageService interface {
-	GetLeaderboard() ([]models.TryoutAttempt, error)
-	GetUserSubtestNilai(userId int) ([]models.UserScore, error)
-	GetScoreAndRank(userID int, paket string) (float64, int, error)
-	GetPembahasanPage(ctx context.Context, userID int, paket, accessToken string) ([]models.EnrichedUserAnswer, float64, int, []models.UserScore, error)
-	GetOngoingAttempt(userID int) (*models.TryoutAttempt, error)
-	GetFinishedAttempt(userID int) (*models.TryoutAttempt, error)
+	GetLeaderboard(c context.Context) ([]models.TryoutAttempt, error)
+	GetUserSubtestNilai(c context.Context, userId int) ([]models.UserScore, error)
+	GetScoreAndRank(c context.Context, userID int, paket string) (float64, int, error)
+	GetPembahasanPage(c context.Context, userID int, paket, accessToken string) ([]models.EnrichedUserAnswer, float64, int, []models.UserScore, error)
+	GetOngoingAttempt(c context.Context, userID int) (*models.TryoutAttempt, error)
+	GetFinishedAttempt(c context.Context, userID int) (*models.TryoutAttempt, error)
 }
 
 type pageService struct {
@@ -29,9 +29,9 @@ func NewPageService(pageRepo repositories.PageRepo, scoreService ScoreService, t
 	return &pageService{pageRepo: pageRepo, scoreService: scoreService, tryoutRepo: tryoutRepo}
 }
 
-func (s *pageService) GetPembahasanPage(ctx context.Context, userID int, paket, accessToken string) ([]models.EnrichedUserAnswer, float64, int, []models.UserScore, error) {
-	if _, err := s.tryoutRepo.GetTryoutAttemptByUserIDAndPaket(userID, paket); err != nil {
-		logger.LogError(err, "attempt on accessing pembahasan while not having a tryout", map[string]interface{}{"layer": "service", "operation": "GetPembahasanPage"})
+func (s *pageService) GetPembahasanPage(c context.Context, userID int, paket, accessToken string) ([]models.EnrichedUserAnswer, float64, int, []models.UserScore, error) {
+	if _, err := s.tryoutRepo.GetTryoutAttemptByUserIDAndPaket(c, userID, paket); err != nil {
+		logger.LogErrorCtx(c, err, "Failed to get tryout attempt by user ID and paket", map[string]interface{}{"user_id": userID, "paket": paket})
 		return nil, 0, 0, nil, err
 	}
 	var (
@@ -42,12 +42,13 @@ func (s *pageService) GetPembahasanPage(ctx context.Context, userID int, paket, 
 		userSubtestScores []models.UserScore
 	)
 
-	g, ctx := errgroup.WithContext(ctx) //use errgroup instead of waitgroup for error handling, auto goroutine cancellation when one of them fails also
+	g, ctx := errgroup.WithContext(c) //use errgroup instead of waitgroup for error handling, auto goroutine cancellation when one of them fails also
 
 	// 1. Get Rank & Average Score
 	g.Go(func() error {
-		avg, r, err := s.GetScoreAndRank(userID, paket)
+		avg, r, err := s.GetScoreAndRank(c, userID, paket)
 		if err != nil {
+			logger.LogErrorCtx(c, err, "Failed to get score and rank", map[string]interface{}{"user_id": userID, "paket": paket})
 			return err
 		}
 		// mutex when averageScore and rank are updated, to avoid being modified by other concurrent processes (do for every assigning type shit)
@@ -60,8 +61,9 @@ func (s *pageService) GetPembahasanPage(ctx context.Context, userID int, paket, 
 
 	// 2. Get User Subtest Scores
 	g.Go(func() error {
-		scores, err := s.GetUserSubtestNilai(userID)
+		scores, err := s.GetUserSubtestNilai(c, userID)
 		if err != nil {
+			logger.LogErrorCtx(c, err, "Failed to get user subtest scores", map[string]interface{}{"user_id": userID})
 			return err
 		}
 		mu.Lock()
@@ -88,14 +90,16 @@ func (s *pageService) GetPembahasanPage(ctx context.Context, userID int, paket, 
 			}
 
 			// Get user answers
-			userAnswers, err := s.pageRepo.GetUserAnswersBasedOnIDPaketAndSubtest(userID, paket, subtest)
+			userAnswers, err := s.pageRepo.GetUserAnswersBasedOnIDPaketAndSubtest(c, userID, paket, subtest)
 			if err != nil {
+				logger.LogErrorCtx(c, err, "Failed to get user answers based on id paket and subtest", map[string]interface{}{"user_id": userID, "paket": paket, "subtest": subtest})
 				return err
 			}
 
 			// Get answer keys from soal service
-			answerKeys, err := s.scoreService.GetAnswerKeyBasedOnSubtestFromSoalService(subtest, accessToken, "access")
+			answerKeys, err := s.scoreService.GetAnswerKeyBasedOnSubtestFromSoalService(c, subtest, accessToken, "access")
 			if err != nil {
+				logger.LogErrorCtx(c, err, "Failed to get answer keys from soal service", map[string]interface{}{"subtest": subtest})
 				return err
 			}
 			if ctx.Err() != nil {
@@ -162,22 +166,22 @@ func (s *pageService) GetPembahasanPage(ctx context.Context, userID int, paket, 
 	return enrichedAnswers, averageScore, rank, userSubtestScores, nil
 }
 
-func (s *pageService) GetLeaderboard() ([]models.TryoutAttempt, error) {
-	return s.pageRepo.GetTop4Leaderboard()
+func (s *pageService) GetLeaderboard(c context.Context) ([]models.TryoutAttempt, error) {
+	return s.pageRepo.GetTop4Leaderboard(c)
 }
 
-func (s *pageService) GetUserSubtestNilai(userId int) ([]models.UserScore, error) {
-	return s.pageRepo.GetAllSubtestScoreForAUser(userId)
+func (s *pageService) GetUserSubtestNilai(c context.Context, userId int) ([]models.UserScore, error) {
+	return s.pageRepo.GetAllSubtestScoreForAUser(c, userId)
 }
 
-func (s *pageService) GetScoreAndRank(userID int, paket string) (float64, int, error) {
-	return s.pageRepo.GetScoreAndRank(userID, paket)
+func (s *pageService) GetScoreAndRank(c context.Context, userID int, paket string) (float64, int, error) {
+	return s.pageRepo.GetScoreAndRank(c, userID, paket)
 }
 
-func (s *pageService) GetOngoingAttempt(userID int) (*models.TryoutAttempt, error) {
-	return s.pageRepo.GetOngoingAttemptByUserID(userID)
+func (s *pageService) GetOngoingAttempt(c context.Context, userID int) (*models.TryoutAttempt, error) {
+	return s.pageRepo.GetOngoingAttemptByUserID(c, userID)
 }
 
-func (s *pageService) GetFinishedAttempt(userID int) (*models.TryoutAttempt, error) {
-	return s.pageRepo.GetFinishedAttemptByUserID(userID)
+func (s *pageService) GetFinishedAttempt(c context.Context, userID int) (*models.TryoutAttempt, error) {
+	return s.pageRepo.GetFinishedAttemptByUserID(c, userID)
 }

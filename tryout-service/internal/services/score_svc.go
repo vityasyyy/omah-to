@@ -1,6 +1,7 @@
 package services
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"net/http"
@@ -12,8 +13,8 @@ import (
 )
 
 type ScoreService interface {
-	CalculateAndStoreScores(tx *sqlx.Tx, attemptID, userID int, tryoutToken string) error
-	GetAnswerKeyBasedOnSubtestFromSoalService(subtest, token, tokenType string) (*models.AnswerKeys, error)
+	CalculateAndStoreScores(c context.Context, tx *sqlx.Tx, attemptID, userID int, tryoutToken string) error
+	GetAnswerKeyBasedOnSubtestFromSoalService(c context.Context, subtest, token, tokenType string) (*models.AnswerKeys, error)
 	CalculateScore(userAnswers []models.UserAnswer, answerKeys *models.AnswerKeys) (totalScore float64)
 }
 
@@ -30,22 +31,22 @@ func NewScoreService(scoreRepo repositories.ScoreRepo, soalServiceURL string) Sc
 }
 
 // CalculateAndStoreScores is a function that calculates the score for each subtest and stores it in the database
-func (s *scoreService) CalculateAndStoreScores(tx *sqlx.Tx, attemptID, userID int, tryoutToken string) error {
+func (s *scoreService) CalculateAndStoreScores(c context.Context, tx *sqlx.Tx, attemptID, userID int, tryoutToken string) error {
 	subtests := []string{"subtest_pu", "subtest_ppu", "subtest_pbm", "subtest_pk", "subtest_lbi", "subtest_lbe", "subtest_pm"}
 
 	// loop through all the subtests and calculate the score for each subtest
 	for _, subtest := range subtests {
 		// get the user answers for this subtest from the user_answers table, for every subtest
-		userAnswers, err := s.scoreRepo.GetUserAnswersFromAttemptIDandSubtestTx(tx, attemptID, subtest)
+		userAnswers, err := s.scoreRepo.GetUserAnswersFromAttemptIDandSubtestTx(c, tx, attemptID, subtest)
 		if err != nil {
-			logger.LogError(err, "Failed to get user answers from attempt id and subtest", map[string]interface{}{"layer": "service", "operation": "CalculateAndStoreScores"})
+			logger.LogErrorCtx(c, err, "Failed to get user answers from attempt ID and subtest", map[string]interface{}{"attempt_id": attemptID, "subtest": subtest})
 			return err
 		}
 
 		// get the answer key for this subtest, call the soal service api
-		answerKey, err := s.GetAnswerKeyBasedOnSubtestFromSoalService(subtest, tryoutToken, "tryout")
+		answerKey, err := s.GetAnswerKeyBasedOnSubtestFromSoalService(c, subtest, tryoutToken, "tryout")
 		if err != nil {
-			logger.LogError(err, "Failed to get answer key from subtest", map[string]interface{}{"layer": "service", "operation": "CalculateAndStoreScores"})
+			logger.LogErrorCtx(c, err, "Failed to get answer key from soal service", map[string]interface{}{"subtest": subtest})
 			return err
 		}
 
@@ -53,20 +54,26 @@ func (s *scoreService) CalculateAndStoreScores(tx *sqlx.Tx, attemptID, userID in
 		score := s.CalculateScore(userAnswers, answerKey)
 
 		// store the score for this subtest
-		if err := s.scoreRepo.InsertScoreForUserAttemptIDAndSubtestTx(tx, attemptID, userID, subtest, score); err != nil {
-			logger.LogError(err, "Failed to insert score for user attempt id and subtest", map[string]interface{}{"layer": "service", "operation": "CalculateAndStoreScores"})
+		if err := s.scoreRepo.InsertScoreForUserAttemptIDAndSubtestTx(c, tx, attemptID, userID, subtest, score); err != nil {
+			logger.LogErrorCtx(c, err, "Failed to insert score for user attempt ID and subtest", map[string]interface{}{
+				"attempt_id": attemptID,
+				"user_id":    userID,
+				"subtest":    subtest,
+				"score":      score,
+			})
+
 			return err
 		}
 	}
 
-	averageScore, err := s.scoreRepo.CalculateAverageScoreForAttempt(tx, attemptID)
+	averageScore, err := s.scoreRepo.CalculateAverageScoreForAttempt(c, tx, attemptID)
 	if err != nil {
-		logger.LogError(err, "Failed to calculate average score for attempt", map[string]interface{}{"layer": "service", "operation": "CalculateAndStoreScores"})
+		logger.LogErrorCtx(c, err, "Failed to calculate average score for attempt", map[string]interface{}{"attempt_id": attemptID})
 		return err
 	}
 
-	if err := s.scoreRepo.UpdateScoreForTryOutAttempt(tx, attemptID, averageScore); err != nil {
-		logger.LogError(err, "Failed to update score for tryout attempt", map[string]interface{}{"layer": "service", "operation": "CalculateAndStoreScores"})
+	if err := s.scoreRepo.UpdateScoreForTryOutAttempt(c, tx, attemptID, averageScore); err != nil {
+		logger.LogErrorCtx(c, err, "Failed to update score for tryout attempt", map[string]interface{}{"attempt_id": attemptID})
 		return err
 	}
 
@@ -74,13 +81,13 @@ func (s *scoreService) CalculateAndStoreScores(tx *sqlx.Tx, attemptID, userID in
 }
 
 // make a function that retrieves the answer key from the soal service and the subtest, also distinguish them from the soal type and shit type shit bro
-func (s *scoreService) GetAnswerKeyBasedOnSubtestFromSoalService(subtest, token, tokenType string) (*models.AnswerKeys, error) {
+func (s *scoreService) GetAnswerKeyBasedOnSubtestFromSoalService(c context.Context, subtest, token, tokenType string) (*models.AnswerKeys, error) {
 	// NANTI PAKETNYA DYNAMIC YAA JANGAN STATIC, FORGOT BRO PLES
 	url := fmt.Sprintf("%s/soal/answer-key/paket1?subtest=%s", s.soalServiceURL, subtest)
 	// make a new request and add cookie to the header
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
-		logger.LogError(err, "Failed to create request for answer key", map[string]interface{}{"layer": "service", "operation": "fetchAnswerKeyFromQuestionsService"})
+		logger.LogErrorCtx(c, err, "Failed to create request for answer key", map[string]interface{}{"subtest": subtest})
 		return nil, err
 	}
 	switch tokenType {
@@ -90,16 +97,14 @@ func (s *scoreService) GetAnswerKeyBasedOnSubtestFromSoalService(subtest, token,
 		req.Header.Add("Cookie", fmt.Sprintf("access_token=%s", token))
 	default:
 		err := fmt.Errorf("invalid token type: %s", tokenType)
-		logger.LogError(err, "Invalid token type provided", map[string]interface{}{
-			"layer": "service", "operation": "fetchAnswerKeyFromQuestionsService",
-		})
+		logger.LogErrorCtx(c, err, "Invalid token type provided", map[string]interface{}{"subtest": subtest})
 		return nil, err
 	}
 
 	// Send the request
 	resp, err := s.httpClient.Do(req)
 	if err != nil {
-		logger.LogError(err, "Failed to send request to fetch answer key", map[string]interface{}{"layer": "service", "operation": "fetchAnswerKeyFromQuestionsService"})
+		logger.LogErrorCtx(c, err, "Failed to send request to fetch answer key", map[string]interface{}{"subtest": subtest})
 		return nil, err
 	}
 	defer resp.Body.Close()
@@ -107,23 +112,21 @@ func (s *scoreService) GetAnswerKeyBasedOnSubtestFromSoalService(subtest, token,
 	// Handle non-200 responses
 	if resp.StatusCode != http.StatusOK {
 		err := fmt.Errorf("unexpected response status: %d", resp.StatusCode)
-		logger.LogError(err, "Failed to fetch answer key", map[string]interface{}{"layer": "service", "operation": "fetchAnswerKeyFromQuestionsService"})
+		logger.LogErrorCtx(c, err, "Unexpected response status when fetching answer key", map[string]interface{}{"subtest": subtest, "status_code": resp.StatusCode})
 		return nil, err
 	}
 
 	// Parse the response body
 	var answerKey models.AnswerKeys
 	if err := json.NewDecoder(resp.Body).Decode(&answerKey); err != nil {
-		logger.LogError(err, "Failed to decode answer key response", map[string]interface{}{"layer": "service", "operation": "fetchAnswerKeyFromQuestionsService"})
+		logger.LogErrorCtx(c, err, "Failed to decode response body for answer key", map[string]interface{}{"subtest": subtest})
 		return nil, err
 	}
 
 	// Check if answerKey is empty
 	if isAnswerKeyEmpty(answerKey) {
 		err := fmt.Errorf("answer key is empty for subtest: %s", subtest)
-		logger.LogError(err, "Empty answer key received", map[string]interface{}{
-			"layer": "service", "operation": "fetchAnswerKeyFromQuestionsService",
-		})
+		logger.LogErrorCtx(c, err, "Empty answer key received", map[string]interface{}{"subtest": subtest})
 		return nil, err
 	}
 

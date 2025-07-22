@@ -1,6 +1,7 @@
 package repositories
 
 import (
+	"context"
 	"tryout-service/internal/logger"
 	"tryout-service/internal/models"
 
@@ -8,12 +9,12 @@ import (
 )
 
 type PageRepo interface {
-	GetAllSubtestScoreForAUser(userID int) ([]models.UserScore, error)
-	GetTop4Leaderboard() ([]models.TryoutAttempt, error)            // /leaderboard
-	GetScoreAndRank(userID int, paket string) (float64, int, error) // /pembahasan
-	GetUserAnswersBasedOnIDPaketAndSubtest(userID int, paket, subtest string) ([]models.UserAnswer, error)
-	GetOngoingAttemptByUserID(userID int) (*models.TryoutAttempt, error)
-	GetFinishedAttemptByUserID(userID int) (*models.TryoutAttempt, error)
+	GetAllSubtestScoreForAUser(c context.Context, userID int) ([]models.UserScore, error)
+	GetTop4Leaderboard(c context.Context) ([]models.TryoutAttempt, error)              // /leaderboard
+	GetScoreAndRank(c context.Context, userID int, paket string) (float64, int, error) // /pembahasan
+	GetUserAnswersBasedOnIDPaketAndSubtest(c context.Context, userID int, paket, subtest string) ([]models.UserAnswer, error)
+	GetOngoingAttemptByUserID(c context.Context, userID int) (*models.TryoutAttempt, error)
+	GetFinishedAttemptByUserID(c context.Context, userID int) (*models.TryoutAttempt, error)
 }
 
 type pageRepo struct {
@@ -25,31 +26,31 @@ func NewPageRepo(db *sqlx.DB) PageRepo {
 }
 
 // buat tryout homepage ama pembahasan
-func (r *pageRepo) GetAllSubtestScoreForAUser(userID int) ([]models.UserScore, error) {
+func (r *pageRepo) GetAllSubtestScoreForAUser(c context.Context, userID int) ([]models.UserScore, error) {
 	var scores []models.UserScore
 	query := `SELECT user_id, attempt_id, score, subtest FROM user_scores WHERE user_id = $1`
 	err := r.db.Select(&scores, query, userID)
 	if err != nil {
-		logger.LogError(err, "Failed to get all subtest scores for a user", map[string]interface{}{"layer": "repository", "operation": "GetAllSubtestScoreForAUser"})
+		logger.LogErrorCtx(c, err, "Failed to get all subtest scores for user", map[string]interface{}{"user_id": userID})
 		return nil, err
 	}
 	return scores, nil
 }
 
 // tryout homepage
-func (r *pageRepo) GetTop4Leaderboard() ([]models.TryoutAttempt, error) {
+func (r *pageRepo) GetTop4Leaderboard(c context.Context) ([]models.TryoutAttempt, error) {
 	var leaderboards []models.TryoutAttempt
 	query := `SELECT user_id, username, tryout_score FROM tryout_attempt WHERE status = 'finished' ORDER BY tryout_score DESC LIMIT 4`
 	err := r.db.Select(&leaderboards, query)
 	if err != nil {
-		logger.LogError(err, "Failed to get top 4 leaderboard", map[string]interface{}{"layer": "repository", "operation": "GetTop4Leaderboard"})
+		logger.LogErrorCtx(c, err, "Failed to get top 4 leaderboard")
 		return nil, err
 	}
 	return leaderboards, nil
 }
 
 // buat rank dan score di pembahasan
-func (r *pageRepo) GetScoreAndRank(userID int, paket string) (float64, int, error) {
+func (r *pageRepo) GetScoreAndRank(c context.Context, userID int, paket string) (float64, int, error) {
 	var userScore float64
 	var userRank int
 
@@ -64,7 +65,7 @@ func (r *pageRepo) GetScoreAndRank(userID int, paket string) (float64, int, erro
 
 	err := r.db.QueryRow(query, userID, paket).Scan(&userScore, &userRank)
 	if err != nil {
-		logger.LogError(err, "Failed to get score and rank", map[string]interface{}{"layer": "repository", "operation": "GetScoreAndRank"})
+		logger.LogErrorCtx(c, err, "Failed to get user score and rank", map[string]interface{}{"user_id": userID, "paket": paket})
 		return 0, 0, err
 	}
 
@@ -72,7 +73,7 @@ func (r *pageRepo) GetScoreAndRank(userID int, paket string) (float64, int, erro
 }
 
 // buat di pembahasan
-func (s *pageRepo) GetUserAnswersBasedOnIDPaketAndSubtest(userID int, paket, subtest string) ([]models.UserAnswer, error) {
+func (s *pageRepo) GetUserAnswersBasedOnIDPaketAndSubtest(c context.Context, userID int, paket, subtest string) ([]models.UserAnswer, error) {
 	query := `
 	SELECT 
 		ua.attempt_id, ua.subtest, ua.kode_soal, ua.jawaban
@@ -84,30 +85,30 @@ func (s *pageRepo) GetUserAnswersBasedOnIDPaketAndSubtest(userID int, paket, sub
 	var userAnswers []models.UserAnswer
 	err := s.db.Select(&userAnswers, query, userID, paket, subtest)
 	if err != nil {
-		logger.LogError(err, "Failed to get user answers based on id paket and subtest", map[string]interface{}{"layer": "repository", "operation": "GetUserAnswersBasedOnIDPaketAndSubtest"})
+		logger.LogErrorCtx(c, err, "Failed to get user answers based on id paket and subtest", map[string]interface{}{"user_id": userID, "paket": paket, "subtest": subtest})
 		return nil, err
 	}
 
 	return userAnswers, nil
 }
 
-func (s *pageRepo) GetOngoingAttemptByUserID(userID int) (*models.TryoutAttempt, error) {
+func (s *pageRepo) GetOngoingAttemptByUserID(c context.Context, userID int) (*models.TryoutAttempt, error) {
 	query := `SELECT * FROM tryout_attempt WHERE user_id = $1 AND status = 'ongoing'`
 	var attempt models.TryoutAttempt
 	err := s.db.Get(&attempt, query, userID)
 	if err != nil {
-		logger.LogError(err, "Failed to get ongoing attempt", map[string]interface{}{"layer": "repository", "operation": "GetOngoingAttempt"})
+		logger.LogErrorCtx(c, err, "Failed to get ongoing attempt", map[string]interface{}{"user_id": userID})
 		return nil, err
 	}
 	return &attempt, nil
 }
 
-func (s *pageRepo) GetFinishedAttemptByUserID(userID int) (*models.TryoutAttempt, error) {
+func (s *pageRepo) GetFinishedAttemptByUserID(c context.Context, userID int) (*models.TryoutAttempt, error) {
 	query := `SELECT * FROM tryout_attempt WHERE user_id = $1 AND status = 'finished'`
 	var attempt models.TryoutAttempt
 	err := s.db.Get(&attempt, query, userID)
 	if err != nil {
-		logger.LogError(err, "Failed to get finished attempt", map[string]interface{}{"layer": "repository", "operation": "GetFinishedAttempt"})
+		logger.LogErrorCtx(c, err, "Failed to get finished attempt", map[string]interface{}{"user_id": userID})
 		return nil, err
 	}
 	return &attempt, nil

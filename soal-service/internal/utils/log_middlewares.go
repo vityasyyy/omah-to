@@ -1,30 +1,37 @@
 package utils
 
 import (
+	"fmt"
 	"soal-service/internal/logger"
+	"soal-service/internal/metrics"
 	"time"
 
-	"fmt"
-	"soal-service/internal/metrics"
-
 	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
 )
 
 func ReqLoggingMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		start := time.Now()
+		requestID := uuid.New().String()
+
+		// Create a request-scoped logger
+		reqLogger := logger.Log.With().
+			Str("request_id", requestID).
+			Str("method", c.Request.Method).
+			Str("path", c.Request.URL.Path).
+			Logger()
+
+		logger.AttachLogger(c, reqLogger)
 
 		c.Next()
 
 		duration := time.Since(start)
-
-		logger.Log.Info().
-			Str("method", c.Request.Method).
-			Str("path", c.Request.URL.Path).
+		reqLogger.Info().
 			Int("status", c.Writer.Status()).
 			Dur("duration", duration).
 			Str("ip_address", c.ClientIP()).
-			Msg("Request processed")
+			Msg("Request completed")
 	}
 }
 

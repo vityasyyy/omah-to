@@ -1,6 +1,7 @@
 package services
 
 import (
+	"context"
 	"errors"
 	"minat-bakat-service/internal/logger"
 	"minat-bakat-service/internal/models"
@@ -8,8 +9,8 @@ import (
 )
 
 type MinatBakatService interface {
-	ProcessMinatBakatAnswers(userID int, answers []models.MinatBakatAnswers) (string, error)
-	GetMinatBakatAttempt(userID int) (*models.MinatBakatAttempt, error)
+	ProcessMinatBakatAnswers(c context.Context, userID int, answers []models.MinatBakatAnswers) (string, error)
+	GetMinatBakatAttempt(c context.Context, userID int) (*models.MinatBakatAttempt, error)
 }
 
 type minatBakatService struct {
@@ -20,10 +21,11 @@ func NewMinatBakatService(minatBakatRepo repositories.MbRepo) MinatBakatService 
 	return &minatBakatService{minatBakatRepo: minatBakatRepo}
 }
 
-func (s *minatBakatService) ProcessMinatBakatAnswers(userID int, answers []models.MinatBakatAnswers) (string, error) {
-	existingAttempt, _ := s.minatBakatRepo.GetMinatBakatFromUserID(userID)
+func (s *minatBakatService) ProcessMinatBakatAnswers(c context.Context, userID int, answers []models.MinatBakatAnswers) (string, error) {
+	existingAttempt, _ := s.minatBakatRepo.GetMinatBakatFromUserID(c, userID)
 	if existingAttempt != nil {
-		logger.LogError(errors.New("user already has minat bakat attempt"), "User already has minat bakat attempt", map[string]interface{}{"layer": "service", "operation": "ProcessMinatBakatAnswers"})
+		logger.LogErrorCtx(c, errors.New("user already has minat bakat attempt"), "User already has minat bakat attempt", map[string]interface{}{"user_id": userID})
+		// Return an error if the user already has a minat
 		return "", errors.New("user already has minat bakat attempt")
 	}
 	counts := make(map[string]int)
@@ -42,7 +44,7 @@ func (s *minatBakatService) ProcessMinatBakatAnswers(userID int, answers []model
 	}
 
 	if topInterest == "" {
-		logger.LogError(errors.New("failed to get top interest"), "Failed to get top interest", map[string]interface{}{"layer": "service", "operation": "ProcessMinatBakatAnswers"})
+		logger.LogErrorCtx(c, errors.New("no valid interest found"), "Failed to get top interest")
 		return "", errors.New("failed to get top interest")
 	}
 
@@ -51,19 +53,19 @@ func (s *minatBakatService) ProcessMinatBakatAnswers(userID int, answers []model
 		BakatUser: topInterest,
 	}
 
-	err := s.minatBakatRepo.StoreMinatBakat(&attempt)
+	err := s.minatBakatRepo.StoreMinatBakat(c, &attempt)
 	if err != nil {
-		logger.LogError(err, "Failed to store minat bakat", map[string]interface{}{"layer": "service", "operation": "ProcessMinatBakatAnswers"})
+		logger.LogErrorCtx(c, err, "Failed to store minat bakat attempt")
 		return "", err
 	}
 
 	return topInterest, nil
 }
 
-func (s *minatBakatService) GetMinatBakatAttempt(userID int) (*models.MinatBakatAttempt, error) {
-	attempt, err := s.minatBakatRepo.GetMinatBakatFromUserID(userID)
+func (s *minatBakatService) GetMinatBakatAttempt(c context.Context, userID int) (*models.MinatBakatAttempt, error) {
+	attempt, err := s.minatBakatRepo.GetMinatBakatFromUserID(c, userID)
 	if err != nil {
-		logger.LogError(err, "Failed to get minat bakat from user id", map[string]interface{}{"layer": "service", "operation": "GetMinatBakatAttempt"})
+		logger.LogErrorCtx(c, err, "Failed to get minat bakat attempt", map[string]interface{}{"user_id": userID})
 		return nil, err
 	}
 

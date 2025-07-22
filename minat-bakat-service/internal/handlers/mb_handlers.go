@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"minat-bakat-service/internal/logger"
 	"minat-bakat-service/internal/models"
 	"minat-bakat-service/internal/services"
 	"net/http"
@@ -25,8 +26,9 @@ func (h *MinatBakatHandler) ProcessMinatBakatHandler(c *gin.Context) {
 		return
 	}
 
-	topInterest, err := h.minatBakatService.ProcessMinatBakatAnswers(userID, answers)
+	topInterest, err := h.minatBakatService.ProcessMinatBakatAnswers(c, userID, answers)
 	if err != nil {
+		logger.LogErrorCtx(c, err, "Failed to process minat bakat answers", map[string]interface{}{"user_id": userID})
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "failed to process minat bakat answers"})
 		return
 	}
@@ -37,8 +39,9 @@ func (h *MinatBakatHandler) ProcessMinatBakatHandler(c *gin.Context) {
 func (h *MinatBakatHandler) GetMinatBakatAttemptHandler(c *gin.Context) {
 	userID := c.GetInt("user_id")
 
-	attempt, err := h.minatBakatService.GetMinatBakatAttempt(userID)
+	attempt, err := h.minatBakatService.GetMinatBakatAttempt(c, userID)
 	if err != nil {
+		logger.LogErrorCtx(c, err, "Failed to get minat bakat attempt", map[string]interface{}{"user_id": userID})
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "failed to get minat bakat attempt"})
 		return
 	}

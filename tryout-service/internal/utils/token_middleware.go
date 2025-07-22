@@ -7,6 +7,7 @@ import (
 	"io"
 	"net/http"
 	"os"
+	"tryout-service/internal/logger"
 
 	"github.com/gin-gonic/gin"
 )
@@ -17,11 +18,13 @@ func ValidateToAuthApi() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		accessToken, err := c.Cookie("access_token")
 		if err != nil {
+			logger.LogErrorCtx(c, err, "Failed to get Access token")
 			c.JSON(http.StatusUnauthorized, gin.H{"error": "Failed to get Access token"})
 			c.Abort()
 			return
 		}
 		if accessToken == "" {
+			logger.LogErrorCtx(c, nil, "Access token is required")
 			c.JSON(http.StatusUnauthorized, gin.H{"error": "Access token is required"})
 			c.Abort()
 			return
@@ -31,6 +34,7 @@ func ValidateToAuthApi() gin.HandlerFunc {
 
 		req, err := http.NewRequest("GET", authServiceURL, nil)
 		if err != nil {
+			logger.LogErrorCtx(c, err, "Failed to create request")
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create request"})
 			c.Abort()
 			return
@@ -40,12 +44,14 @@ func ValidateToAuthApi() gin.HandlerFunc {
 		client := &http.Client{}
 		response, err := client.Do(req)
 		if err != nil {
+			logger.LogErrorCtx(c, err, "Failed to send request")
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to send request"})
 			c.Abort()
 			return
 		}
 		defer response.Body.Close()
 		if response.StatusCode != http.StatusOK {
+			logger.LogErrorCtx(c, nil, "Invalid access token")
 			c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid access token"})
 			c.Abort()
 			return
@@ -53,6 +59,7 @@ func ValidateToAuthApi() gin.HandlerFunc {
 
 		body, err := io.ReadAll(response.Body)
 		if err != nil {
+			logger.LogErrorCtx(c, err, "Failed to read response body")
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to read response body"})
 			c.Abort()
 			return
@@ -64,6 +71,7 @@ func ValidateToAuthApi() gin.HandlerFunc {
 		}
 
 		if err := json.Unmarshal(body, &authResponse); err != nil {
+			logger.LogErrorCtx(c, err, "Failed to parse response body")
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to parse response body"})
 			c.Abort()
 			return
