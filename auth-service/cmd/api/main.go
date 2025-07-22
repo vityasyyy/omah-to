@@ -6,7 +6,7 @@ import (
 	"auth-service/internal/repositories"
 	"auth-service/internal/routes"
 	"auth-service/internal/services"
-	"auth-service/internal/utils"
+	pkgLog "auth-service/pkg/utils/logger"
 	"context"
 	"net/http"
 	"os"
@@ -75,12 +75,12 @@ func main() {
 	// Gin router setup
 	r := gin.New()
 	r.Use(gin.Recovery())
-	r.Use(utils.ReqLoggingMiddleware())
+	r.Use(pkgLog.ReqLoggingMiddleware())
 	r.Use(securityHeadersMiddleware())
 	r.SetTrustedProxies([]string{"0.0.0.0/0"})
 
 	// Prometheus metrics endpoint
-	r.Use(utils.PrometheusMiddleware())
+	r.Use(pkgLog.PrometheusMiddleware())
 	r.GET("/metrics", gin.WrapH(promhttp.Handler()))
 
 	// CORS middleware

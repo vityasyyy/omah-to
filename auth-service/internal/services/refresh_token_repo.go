@@ -4,16 +4,17 @@ import (
 	"auth-service/internal/logger"
 	"auth-service/internal/models"
 	"auth-service/internal/repositories"
-	"auth-service/internal/utils"
+	"auth-service/pkg/utils/jwt"
+	"context"
 	"time"
 )
 
 type RefreshTokenService interface {
-	GenerateAccessRefreshTokenPair(userID int) (string, string, error)
-	ValidateRefreshToken(refreshToken string) (string, string, error)
-	BlacklistRefreshToken(refreshToken string) error
-	BlacklistTokenOnEmail(email string) error
-	GenerateTryoutToken(userID int, attemptID int) (string, error)
+	GenerateAccessRefreshTokenPair(c context.Context, userID int) (string, string, error)
+	ValidateRefreshToken(c context.Context, refreshToken string) (string, string, error)
+	BlacklistRefreshToken(c context.Context, refreshToken string) error
+	BlacklistTokenOnEmail(c context.Context, email string) error
+	GenerateTryoutToken(c context.Context, userID int, attemptID int) (string, error)
 }
 
 type refreshTokenService struct {
@@ -25,30 +26,30 @@ func NewRefreshTokenService(refreshTokenRepo repositories.RefreshTokenRepo, auth
 	return &refreshTokenService{refreshTokenRepo: refreshTokenRepo, authRepo: authRepo}
 }
 
-func (s *refreshTokenService) GenerateAccessRefreshTokenPair(userID int) (string, string, error) {
+func (s *refreshTokenService) GenerateAccessRefreshTokenPair(c context.Context, userID int) (string, string, error) {
 	// Get user using user id so that it can be used to generate the access token
-	user, err := s.authRepo.GetUserByID(userID)
+	user, err := s.authRepo.GetUserByID(c, userID)
 	if err != nil {
-		logger.LogError(err, "Failed to get user for token pair generation", map[string]interface{}{"layer": "service", "operation": "GenerateAccessRefreshTokenPair"})
+		logger.LogErrorCtx(c, err, "Failed to get user for token pair generation", map[string]interface{}{"user_id": userID})
 		return "", "", err
 	}
 
 	// generate access token using the user that we fetched
-	accessToken, err := utils.CreateAccessToken(user.UserID, user.NamaUser, user.AsalSekolah, user.Email)
+	accessToken, err := jwt.CreateAccessToken(user.UserID, user.NamaUser, user.AsalSekolah, user.Email)
 	if err != nil {
-		logger.LogError(err, "Failed to generate access token", map[string]interface{}{"layer": "service", "operation": "GenerateAccessRefreshTokenPair"})
+		logger.LogErrorCtx(c, err, "Failed to generate access token", map[string]interface{}{"user_id": user.UserID})
 		return "", "", err
 	}
 
 	// generate opqaue refresh token and later store in the database for later check
-	refreshToken, err := utils.CreateRefreshToken()
+	refreshToken, err := jwt.CreateRefreshToken()
 	if err != nil {
-		logger.LogError(err, "Failed to generate refresh token", map[string]interface{}{"layer": "service", "operation": "GenerateAccessRefreshTokenPair"})
+		logger.LogErrorCtx(c, err, "Failed to generate refresh token", map[string]interface{}{"user_id": user.UserID})
 		return "", "", err
 	}
 
 	// store the refresh token in the database
-	err = s.refreshTokenRepo.StoreRefreshToken(&models.RefreshToken{
+	err = s.refreshTokenRepo.StoreRefreshToken(c, &models.RefreshToken{
 		UserID:            userID,
 		RefreshTokenValue: refreshToken,
 		ExpiredAt:         time.Now().Add(7 * 24 * time.Hour),
@@ -56,32 +57,32 @@ func (s *refreshTokenService) GenerateAccessRefreshTokenPair(userID int) (string
 		Revoked:           false,
 	})
 	if err != nil {
-		logger.LogError(err, "Failed to store refresh token", map[string]interface{}{"layer": "service", "operation": "GenerateAccessRefreshTokenPair"})
+		logger.LogErrorCtx(c, err, "Failed to store refresh token", map[string]interface{}{"user_id": userID, "refresh_token": refreshToken})
 		return "", "", err
 	}
 	// return the access token and refresh token for handler or auth service to send to the client
 	return accessToken, refreshToken, nil
 }
 
-func (s *refreshTokenService) ValidateRefreshToken(refreshTokenString string) (string, string, error) {
+func (s *refreshTokenService) ValidateRefreshToken(c context.Context, refreshTokenString string) (string, string, error) {
 	// find the refresh token in the database
-	refreshToken, err := s.refreshTokenRepo.FindValidRefreshToken(refreshTokenString)
+	refreshToken, err := s.refreshTokenRepo.FindValidRefreshToken(c, refreshTokenString)
 	if err != nil {
-		logger.LogError(err, "Failed to find valid refresh token", map[string]interface{}{"layer": "service", "operation": "ValidateRefreshToken"})
+		logger.LogErrorCtx(c, err, "Failed to find valid refresh token", map[string]interface{}{"refresh_token_value": refreshTokenString})
 		return "", "", err
 	}
 
 	// revoke the refresh token so that it can't be used again
-	err = s.refreshTokenRepo.RevokeRefreshToken(refreshTokenString)
+	err = s.refreshTokenRepo.RevokeRefreshToken(c, refreshTokenString)
 	if err != nil {
-		logger.LogError(err, "Failed to revoke refresh token", map[string]interface{}{"layer": "service", "operation": "ValidateRefreshToken"})
+		logger.LogErrorCtx(c, err, "Failed to revoke refresh token", map[string]interface{}{"refresh_token_value": refreshTokenString})
 		return "", "", err
 	}
 
 	// generate new token pair for the user
-	newAccessToken, newRefreshToken, err := s.GenerateAccessRefreshTokenPair(refreshToken.UserID)
+	newAccessToken, newRefreshToken, err := s.GenerateAccessRefreshTokenPair(c, refreshToken.UserID)
 	if err != nil {
-		logger.LogError(err, "Failed to generate new token pair while validating refresh token", map[string]interface{}{"layer": "service", "operation": "ValidateRefreshToken"})
+		logger.LogErrorCtx(c, err, "Failed to generate new token pair", map[string]interface{}{"user_id": refreshToken.UserID})
 		return "", "", err
 	}
 
@@ -90,43 +91,44 @@ func (s *refreshTokenService) ValidateRefreshToken(refreshTokenString string) (s
 }
 
 // sole purpose is for the logout handler to blacklist the refresh token
-func (s *refreshTokenService) BlacklistRefreshToken(refreshTokenString string) error {
+func (s *refreshTokenService) BlacklistRefreshToken(c context.Context, refreshTokenString string) error {
 	// make sure the token is valid
-	refreshToken, err := s.refreshTokenRepo.FindValidRefreshToken(refreshTokenString)
+	refreshToken, err := s.refreshTokenRepo.FindValidRefreshToken(c, refreshTokenString)
 	if err != nil {
-		logger.LogError(err, "Failed to find valid refresh token", map[string]interface{}{"layer": "service", "operation": "ValidateRefreshToken"})
+		logger.LogErrorCtx(c, err, "Failed to find valid refresh token for blacklisting", map[string]interface{}{"refresh_token_value": refreshTokenString})
 		return err
 	}
 
 	// revoke the token
-	if err := s.refreshTokenRepo.RevokeRefreshToken(refreshToken.RefreshTokenValue); err != nil {
-		logger.LogError(err, "Failed to blacklist refresh token", map[string]interface{}{"layer": "service", "operation": "BlacklistRefreshToken"})
+	if err := s.refreshTokenRepo.RevokeRefreshToken(c, refreshToken.RefreshTokenValue); err != nil {
+		logger.LogErrorCtx(c, err, "Failed to blacklist refresh token", map[string]interface{}{"refresh_token_value": refreshToken.RefreshTokenValue})
 		return err
 	}
 	return nil
 }
 
 // used when user is requesting password reset
-func (s *refreshTokenService) BlacklistTokenOnEmail(email string) error {
+func (s *refreshTokenService) BlacklistTokenOnEmail(c context.Context, email string) error {
 	// get the user using the email to get the user id
-	user, err := s.authRepo.GetUserByEmail(email)
+	user, err := s.authRepo.GetUserByEmail(c, email)
 	if err != nil {
-		logger.LogError(err, "Failed to get user for token pair generation", map[string]interface{}{"layer": "service", "operation": "BlacklistTokenOnEmail"})
+		logger.LogErrorCtx(c, err, "Failed to get user by email for blacklisting", map[string]interface{}{"email": email})
+		return err
 	}
 
 	// revoke all the refresh tokens of the user
-	if err := s.refreshTokenRepo.RevokeBasedOnUserID(user.UserID); err != nil {
-		logger.LogError(err, "Failed to blacklist refresh token", map[string]interface{}{"layer": "service", "operation": "BlacklistTokenOnEmail"})
+	if err := s.refreshTokenRepo.RevokeBasedOnUserID(c, user.UserID); err != nil {
+		logger.LogErrorCtx(c, err, "Failed to blacklist refresh token", map[string]interface{}{"user_id": user.UserID})
 		return err
 	}
 	return nil
 }
 
-func (s *refreshTokenService) GenerateTryoutToken(userID int, attemptID int) (string, error) {
+func (s *refreshTokenService) GenerateTryoutToken(c context.Context, userID int, attemptID int) (string, error) {
 	// generate tryout token
-	tryoutToken, err := utils.CreateTryoutToken(userID, attemptID)
+	tryoutToken, err := jwt.CreateTryoutToken(userID, attemptID)
 	if err != nil {
-		logger.LogError(err, "Failed to generate tryout token", map[string]interface{}{"layer": "service", "operation": "GenerateTryoutToken"})
+		logger.LogErrorCtx(c, err, "Failed to generate tryout token", map[string]interface{}{"user_id": userID, "attempt_id": attemptID})
 		return "", err
 	}
 	return tryoutToken, nil
