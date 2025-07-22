@@ -24,18 +24,9 @@ api:
 
 # Logs Configuration (Static)
 log:
-  filePath: "/var/log/traefik/traefik.log"
   level: DEBUG
 
-accessLog:
-  filePath: "/var/log/traefik/access.log"
-  format: common
-  filters:
-    statusCodes:
-      - "200-299"
-      - "300-399"
-      - "400-499"
-      - "500-599"
+accessLog: {}
 
 metrics:
   prometheus:

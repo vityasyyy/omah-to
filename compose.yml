@@ -23,6 +23,15 @@ services:
             - "traefik.http.routers.dashboard.service=api@internal"
             - "traefik.http.routers.dashboard.entrypoints=websecure"
             - "traefik.http.routers.dashboard.tls=true"
+        depends_on:
+            - loki
+            - prometheus
+            - grafana
+            - promtail
+            - auth-service-api
+            - soal-service-api
+            - tryout-service-api
+            - minat-bakat-service-api
 
     # LOKI SERVICE
     loki:
@@ -45,15 +54,10 @@ services:
     promtail:
         image: grafana/promtail:2.9.0
         volumes:
-            - /var/run/docker.sock:/var/run/docker.sock
-            - ./promtail/config.yaml:/etc/promtail/config.yaml
-            - ./promtail:/etc/promtail
-            - ./traefik/logs:/var/log/traefik
-            - ./auth-service/var/log/auth-service:/var/log/auth-service
-            - ./soal-service/var/log/soal-service:/var/log/soal-service
-            - ./tryout-service/var/log/tryout-service:/var/log/tryout-service
-            - ./minat-bakat-service/var/log/minat-bakat-service:/var/log/minat-bakat-service
-        command: -config.file=/etc/promtail/config.yaml
+            - /var/lib/docker/containers:/var/lib/docker/containers:ro
+            - /var/run/docker.sock:/var/run/docker.sock:ro
+            - ./promtail-config.yaml:/etc/promtail/promtail.yaml
+        command: -config.file=/etc/promtail/config.yml
         networks:
             - omahtryout-network
         
@@ -78,8 +82,6 @@ services:
 
     grafana: 
         image: grafana/grafana:10.2.2
-        ports:
-            - "${GRAFANA_PORT}:${GRAFANA_PORT}"
         environment:
             - GF_SECURITY_ADMIN_PASSWORD=admin
             - GF_AUTH_ANONYMOUS_ENABLED=true
@@ -90,34 +92,32 @@ services:
             - "traefik.http.routers.grafana.rule=Host(`grafana.omahto.localhost`)"
             - "traefik.http.routers.grafana.entrypoints=websecure"
             - "traefik.http.routers.grafana.tls=true"
-            - "traefik.http.services.grafana.loadbalancer.server.port=${GRAFANA_PORT}"
+            - "traefik.http.services.grafana.loadbalancer.server.port=3000"
         networks:
             - omahtryout-network
         volumes:
             - grafana-storage:/var/lib/grafana
     
     # FRONTEND
-    web:
-        build:
-            context: ./web
-            dockerfile: Dockerfile
-        ports:
-            - "${FRONTEND_PORT}:${FRONTEND_PORT}"
-        volumes:
-            - ./web:/app
-            - /app/node_modules
-            - /app/.next
-        environment:
-            - ./web/.env
-            - WATCHPACK_POLLING=true
-        networks:
-            - omahtryout-network
-        labels:
-            - "traefik.enable=true"
-            - "traefik.http.routers.web.rule=Host(`omahto.localhost`)"
-            - "traefik.http.routers.web.entrypoints=websecure"
-            - "traefik.http.routers.web.tls=true"
-            - "traefik.http.services.web.loadbalancer.server.port=${FRONTEND_PORT}"
+    # web:
+    #     build:
+    #         context: ./web
+    #         dockerfile: Dockerfile.prod
+    #     volumes:
+    #         - ./web:/app
+    #         - /app/node_modules
+    #         - /app/.next
+    #     environment:
+    #         - ./web/.env
+    #         - WATCHPACK_POLLING=true
+    #     networks:
+    #         - omahtryout-network
+    #     labels:
+    #         - "traefik.enable=true"
+    #         - "traefik.http.routers.web.rule=Host(`omahto.localhost`)"
+    #         - "traefik.http.routers.web.entrypoints=websecure"
+    #         - "traefik.http.routers.web.tls=true"
+    #         - "traefik.http.services.web.loadbalancer.server.port=${FRONTEND_PORT}"
 
     # auth service
     # Database for the auth service
@@ -149,8 +149,6 @@ services:
           - ./auth-service/var/log/auth-service:/var/log/auth-service
         networks:
             - omahtryout-network
-        ports:
-            - ${AUTH_SERVICE_PORT}:${AUTH_SERVICE_PORT}
         labels:
             - "traefik.enable=true"
             - "traefik.http.routers.auth.rule=Host(`auth.omahto.localhost`)"
@@ -188,8 +186,6 @@ services:
             - omahtryout-network
         volumes:
           - ./soal-service/var/log/soal-service:/var/log/soal-service
-        ports:
-            - ${SOAL_SERVICE_PORT}:${SOAL_SERVICE_PORT}
         labels:
             - "traefik.enable=true"
             - "traefik.http.routers.soal.rule=Host(`soal.omahto.localhost`)"
@@ -227,8 +223,6 @@ services:
             - omahtryout-network
         volumes:
           - ./tryout-service/var/log/tryout-service:/var/log/tryout-service
-        ports:
-            - ${TRYOUT_SERVICE_PORT}:${TRYOUT_SERVICE_PORT}
         labels:
             - "traefik.enable=true"
             - "traefik.http.routers.tryout.rule=Host(`tryout.omahto.localhost`)"
@@ -269,8 +263,6 @@ services:
             - omahtryout-network
         volumes:
           - ./minat-bakat-service/var/log/minat-bakat-service:/var/log/minat-bakat-service
-        ports:
-            - ${MINAT_BAKAT_SERVICE_PORT}:${MINAT_BAKAT_SERVICE_PORT}
         labels:
             - "traefik.enable=true"
             - "traefik.http.routers.mb.rule=Host(`mb.omahto.localhost`)"

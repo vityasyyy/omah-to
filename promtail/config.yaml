@@ -1,88 +1,47 @@
 server:
-  http_listen_port: 9080  # Promtail metrics endpoint
+  http_listen_port: 9080  # Promtail's own metrics endpoint
 
 clients:
-  - url: http://loki:3100/loki/api/v1/push  # Loki endpoint
+  - url: http://loki:3100/loki/api/v1/push  # Send logs to Loki
 
 positions:
-  filename: /tmp/positions.yaml  # Track file positions
+  filename: /tmp/positions.yaml  # Track log read positions
 
 scrape_configs:
-  # Traefik Logs
-  - job_name: traefik
-    static_configs:
-      - targets: [localhost]
-        labels:
-          job: traefik
-          __path__: /var/log/traefik/*.log  # Log path
-    pipeline_stages:
-      - regex:
-          expression: '^(?P<timestamp>\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z) (?P<message>.*)$'
-      - labels:
-          timestamp:  # Extract timestamp as label
+  - job_name: docker-logs
+    docker_sd_configs:
+      - host: unix:///var/run/docker.sock
+        refresh_interval: 10s
 
-  # Auth Service Logs
-  - job_name: auth-service
-    static_configs:
-      - targets: [localhost]
-        labels:
-          job: auth-service
-          __path__: /var/log/auth-service/*.log  # Log path
     pipeline_stages:
-      - json:  # For structured logs
+      - json:
           expressions:
             level: level
+            service: service
             layer: layer
             operation: operation
+            message: message
       - labels:
-          level:  # Create label from log field
+          level:
+          service:
           layer:
           operation:
-  - job_name: soal-service
-    static_configs:
-      - targets: [localhost]
-        labels:
-          job: soal-service
-          __path__: /var/log/soal-service/*.log  # Log path
-    pipeline_stages:
-      - json:  # For structured logs
-          expressions:
-            level: level
-            layer: layer
-            operation: operation
-      - labels:
-          level:  # Create label from log field
-          layer:
-          operation:
-  - job_name: tryout-service
-    static_configs:
-      - targets: [localhost]
-        labels:
-          job: tryout-service
-          __path__: /var/log/tryout-service/*.log  # Log path
-    pipeline_stages:
-      - json:  # For structured logs
-          expressions:
-            level: level
-            layer: layer
-            operation: operation
-      - labels:
-          level:  # Create label from log field
-          layer:
-          operation:
-  - job_name: mb_service
-    static_configs:
-      - targets: [localhost]
-        labels:
-          job: mb_service
-          __path__: /var/log/minat-bakat-service/*.log  # Log path
-    pipeline_stages:
-      - json:  # For structured logs
-          expressions:
-            level: level
-            layer: layer
-            operation: operation
-      - labels:
-          level:  # Create label from log field
-          layer:
-          operation:
+
+    relabel_configs:
+      # Extract container name
+      - source_labels: [__meta_docker_container_name]
+        regex: '/(.*)'
+        target_label: container
+
+      # Set job from docker compose service name
+      - source_labels: [__meta_docker_container_label_com_docker_compose_service]
+        target_label: job
+
+      # Add container ID
+      - source_labels: [__meta_docker_container_id]
+        target_label: container_id
+
+      # Map container log file path
+      - source_labels: [__meta_docker_container_id]
+        target_label: __path__
+        replacement: /var/lib/docker/containers/${1}/*.log

@@ -1,62 +1,48 @@
-# Build stage
-FROM node:23-alpine3.21 AS build
+# syntax=docker.io/docker/dockerfile:1
 
-# Set the working directory inside the container
+FROM node:23-alpine3.21 AS base
+
+# Install dependencies only when needed
+FROM base AS deps
+RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
-# Install pnpm
-RUN npm i -g pnpm
+# Install dependencies based on the preferred package manager
+COPY package.json pnpm-lock.yaml* ./
+RUN corepack enable pnpm && pnpm i --frozen-lockfile
 
-# Copy only package files for efficient caching
-COPY package.json pnpm-lock.yaml ./
-
-# Install dependencies
-RUN corepack enable && pnpm install --frozen-lockfile
-
-# Copy the rest of the frontend code
+# Rebuild the source code only when needed
+FROM base AS builder
+WORKDIR /app
+COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-# Build the application
-RUN pnpm build
+# Next.js collects completely anonymous telemetry data about general usage.
+# Learn more here: https://nextjs.org/telemetry
+# Uncomment the following line in case you want to disable telemetry during the build.
+# ENV NEXT_TELEMETRY_DISABLED=1
 
-# Production stage
-FROM node:23-alpine3.21 AS production
+RUN corepack enable pnpm && pnpm build
 
-# Set working directory
+# Production image, copy all the files and run next
+FROM base AS runner
 WORKDIR /app
 
-# Set NODE_ENV
 ENV NODE_ENV=production
+# Uncomment the following line in case you want to disable telemetry during runtime.
+# ENV NEXT_TELEMETRY_DISABLED=1
 
-# Install pnpm
-RUN npm i -g pnpm && \
-    # Create non-root user for security
-    addgroup -g 1001 -S nodejs && \
-    adduser -S nextjs -u 1001 && \
-    # Make sure the app directory is owned by the non-root user
-    chown -R nextjs:nodejs /app
+RUN corepack enable pnpm
 
-# Copy only necessary files from build stage
-COPY --from=build --chown=nextjs:nodejs /app/package.json /app/pnpm-lock.yaml ./
-COPY --from=build --chown=nextjs:nodejs /app/.next ./.next
-COPY --from=build --chown=nextjs:nodejs /app/public ./public
-COPY --from=build --chown=nextjs:nodejs /app/next.config.ts ./next.config.ts
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 nextjs
 
-# If you have environment files, copy them too
-# COPY --from=build --chown=nextjs:nodejs /app/.env.production ./
+# Copy the entire built application
+COPY --from=builder --chown=nextjs:nodejs /app ./
 
-# Install production dependencies only
-RUN corepack enable && pnpm install --frozen-lockfile --prod
-
-# Switch to non-root user
 USER nextjs
 
-# Expose the default Next.js port
-EXPOSE 3000
+ENV HOSTNAME="0.0.0.0"
 
-# Add health check
-HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \
-  CMD wget --no-verbose --tries=1 --spider http://localhost:3000/ || exit 1
-
-# Start the production server
+# Use next start instead of server.js
 CMD ["pnpm", "start"]
