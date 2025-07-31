@@ -20,6 +20,7 @@ func InitializeRoutes(r *gin.Engine, userHandler *handlers.UserHandler) {
 	// public routes
 	public := r.Group("/user")
 	{
+		public.GET("/.well-known/jwks.json", userHandler.JWKSHandler)
 		public.GET("/refresh", userHandler.RefreshTokenHandler)
 		public.POST("/register", userHandler.RegisterUserHandler)
 		public.POST("/login", userHandler.LoginUserHandler)
@@ -32,14 +33,6 @@ func InitializeRoutes(r *gin.Engine, userHandler *handlers.UserHandler) {
 	authorized.Use(jwt.ValidateAccessTokenMiddleware())
 	{
 		authorized.GET("/validateprofile", userHandler.ValidateUserAndGetInfoHandler)
-		authorized.POST("/issue-token", userHandler.IssueTryOutTokenHandler)
 		authorized.POST("/logout", userHandler.LogoutUserHandler)
-	}
-
-	// tryout routes for tryout token validation
-	tryout := r.Group("/tryout")
-	tryout.Use(jwt.ValidateTryoutTokenMiddleware())
-	{
-		tryout.GET("/validatetryout", userHandler.ValidateTryoutTokenHandler)
 	}
 }

@@ -5,7 +5,6 @@ import (
 	"tryout-service/internal/logger"
 	"tryout-service/internal/models"
 	"tryout-service/internal/services"
-	"tryout-service/internal/utils"
 
 	"github.com/gin-gonic/gin"
 )
@@ -29,16 +28,10 @@ func (h *TryoutHandler) StartAttempt(c *gin.Context) {
 		return
 	}
 	// start the attempt, making a new record in the database
-	attempt, tryoutToken, err := h.tryoutService.StartAttempt(c, userID, username, paket, accessToken)
+	attempt, err := h.tryoutService.StartAttempt(c, userID, username, paket, accessToken)
 	if err != nil {
 		logger.LogErrorCtx(c, err, "Failed to start attempt")
 		c.JSON(http.StatusInternalServerError, gin.H{"message": "Failed to start attempt", "error": err.Error()})
-		return
-	}
-	// set the tryout token to the context cookie
-	if err = utils.SetTryoutTokenCookie(c, tryoutToken); err != nil {
-		logger.LogErrorCtx(c, err, "Failed to set tryout token")
-		c.JSON(http.StatusInternalServerError, gin.H{"message": "Failed to set tryout token", "error": err.Error()})
 		return
 	}
 

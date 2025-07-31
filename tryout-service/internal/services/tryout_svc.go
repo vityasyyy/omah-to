@@ -8,11 +8,10 @@ import (
 	"tryout-service/internal/logger"
 	"tryout-service/internal/models"
 	"tryout-service/internal/repositories"
-	"tryout-service/internal/utils"
 )
 
 type TryoutService interface {
-	StartAttempt(c context.Context, userID int, username, paket, accessToken string) (attempt *models.TryoutAttempt, tryoutToken string, retErr error)
+	StartAttempt(c context.Context, userID int, username, paket, accessToken string) (attempt *models.TryoutAttempt, retErr error)
 	SyncWithDatabase(c context.Context, answers []models.AnswerPayload, attemptID int) (answersInDB []models.UserAnswer, timeLimit time.Time, err error)
 	SubmitCurrentSubtest(c context.Context, answers []models.AnswerPayload, attemptID, userID int, tryoutToken string) (updatedSubtest string, retErr error)
 	GetCurrentAttempt(c context.Context, attemptID int) (*models.TryoutAttempt, error)
@@ -27,7 +26,7 @@ func NewTryoutService(tryoutRepo repositories.TryoutRepo, scoreService ScoreServ
 	return &tryoutService{tryoutRepo: tryoutRepo, scoreService: scoreService}
 }
 
-func (s *tryoutService) StartAttempt(c context.Context, userID int, username, paket, accessToken string) (attempt *models.TryoutAttempt, tryoutToken string, retErr error) {
+func (s *tryoutService) StartAttempt(c context.Context, userID int, username, paket, accessToken string) (attempt *models.TryoutAttempt, retErr error) {
 	// sstart a transaction to the db
 	startTime := time.Now()
 	tx, err := s.tryoutRepo.BeginTransaction(c)
@@ -37,7 +36,7 @@ func (s *tryoutService) StartAttempt(c context.Context, userID int, username, pa
 			"username": username,
 			"paket":    paket,
 		})
-		return nil, "", err
+		return nil, err
 	}
 
 	// Defer rollback if error occurs, if something returns an error
@@ -57,7 +56,7 @@ func (s *tryoutService) StartAttempt(c context.Context, userID int, username, pa
 	ongoing, _ := s.tryoutRepo.GetTryoutAttemptByUserIDTx(c, tx, userID)
 	if ongoing != "" {
 		retErr = errors.New("user already has an ongoing attempt")
-		return nil, "", retErr
+		return nil, retErr
 	}
 
 	// Create new attempt object to later be saved in the database
@@ -77,20 +76,10 @@ func (s *tryoutService) StartAttempt(c context.Context, userID int, username, pa
 			"paket":    paket,
 		})
 		retErr = err
-		return nil, "", retErr
+		return nil, retErr
 	}
 
 	// Issue tryout token using the access token and attempt id and user id from create tryout attempt
-	tryoutToken, err = utils.IssueTryOutToken(userID, attempt.TryoutAttemptID, accessToken)
-	if err != nil {
-		logger.LogErrorCtx(c, err, "Failed to issue tryout token", map[string]interface{}{
-			"userID":   userID,
-			"username": username,
-			"paket":    paket,
-		})
-		retErr = err
-		return nil, "", retErr
-	}
 
 	// commit transaction if everything is successful
 	if err := tx.Commit(); err != nil {
@@ -100,10 +89,10 @@ func (s *tryoutService) StartAttempt(c context.Context, userID int, username, pa
 			"paket":    paket,
 		})
 		retErr = err
-		return nil, "", retErr
+		return nil, retErr
 	}
 
-	return attempt, tryoutToken, nil
+	return attempt, nil
 }
 
 // SyncWithDatabase is a service that syncs the answers from the user with the database

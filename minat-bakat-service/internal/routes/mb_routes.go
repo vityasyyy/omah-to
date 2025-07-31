@@ -18,7 +18,7 @@ func InitializeRoutes(r *gin.Engine, mbHandler *handlers.MinatBakatHandler) {
 	}
 
 	mb := r.Group("/minat-bakat")
-	mb.Use(utils.ValidateToAuthApi())
+	mb.Use(utils.ValidateJWT())
 	{
 		mb.POST("/process", mbHandler.ProcessMinatBakatHandler)
 		mb.GET("/attempt", mbHandler.GetMinatBakatAttemptHandler)

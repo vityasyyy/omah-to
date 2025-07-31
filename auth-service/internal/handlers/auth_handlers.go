@@ -5,6 +5,7 @@ import (
 	"auth-service/internal/models"
 	"auth-service/internal/services"
 	"auth-service/pkg/utils/cookie"
+	"auth-service/pkg/utils/jwt"
 
 	"errors"
 	"net/http"
@@ -203,34 +204,6 @@ func (h *UserHandler) ResetPasswordHandler(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"message": "Password reset successful"})
 }
 
-func (h *UserHandler) IssueTryOutTokenHandler(c *gin.Context) {
-	var IssueTryOutTokenRequest struct {
-		UserID    int `json:"user_id" binding:"required"`
-		AttemptID int `json:"attempt_id" binding:"required"`
-	}
-	// bind the json input to the IssueTryOutTokenRequest struct
-	if err := c.ShouldBindJSON(&IssueTryOutTokenRequest); err != nil {
-		logger.LogErrorCtx(c, err, "Failed to bind issue tryout token input", map[string]interface{}{"user_id": IssueTryOutTokenRequest.UserID, "attempt_id": IssueTryOutTokenRequest.AttemptID})
-		c.JSON(http.StatusBadRequest, gin.H{"message": "Invalid input", "error": err.Error()})
-		return
-	}
-
-	// generate the tryout token using the token service
-	tryoutToken, err := h.tokenService.GenerateTryoutToken(c, IssueTryOutTokenRequest.UserID, IssueTryOutTokenRequest.AttemptID)
-	if err != nil {
-		logger.LogErrorCtx(c, err, "Failed to generate tryout token", map[string]interface{}{"user_id": IssueTryOutTokenRequest.UserID, "attempt_id": IssueTryOutTokenRequest.AttemptID})
-		c.JSON(http.StatusInternalServerError, gin.H{"message": "Failed to generate tryout token", "error": err.Error()})
-		return
-	}
-
-	c.JSON(http.StatusOK, gin.H{"message": "Tryout token generated", "tryout_token": tryoutToken})
-}
-
-func (h *UserHandler) ValidateTryoutTokenHandler(c *gin.Context) {
-	// get the user info from the context middleware
-	userID, _ := c.Get("user_id")
-	attemptID, _ := c.Get("attempt_id")
-
-	// return the user info and status code 200
-	c.JSON(http.StatusOK, gin.H{"message": "Authorized and okay to proceed", "user_id": userID, "attempt_id": attemptID})
+func (h *UserHandler) JWKSHandler(c *gin.Context) {
+	c.JSON(http.StatusOK, jwt.GetJWKS())
 }

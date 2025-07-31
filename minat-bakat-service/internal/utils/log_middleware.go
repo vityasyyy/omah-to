@@ -10,10 +10,22 @@ import (
 	"github.com/google/uuid"
 )
 
+func RequestIDMiddleware() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		requestID := c.GetHeader("X-Request-ID")
+		if requestID == "" {
+			requestID = uuid.New().String() // Generate a new ID
+		}
+		c.Set("request_id", requestID)
+		c.Writer.Header().Set("X-Request-ID", requestID) // Include in response
+
+		c.Next()
+	}
+}
 func ReqLoggingMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		start := time.Now()
-		requestID := uuid.New().String()
+		requestID := c.GetString("request_id")
 
 		// Create a request-scoped logger
 		reqLogger := logger.Log.With().

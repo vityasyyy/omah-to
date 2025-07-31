@@ -1,72 +1,69 @@
 package utils
 
 import (
-	"encoding/json"
-	"fmt"
-	"io"
+	"log"
 	"net/http"
 	"os"
+	"time"
 
+	"github.com/MicahParks/keyfunc"
 	"github.com/gin-gonic/gin"
+	"github.com/golang-jwt/jwt/v4"
 )
 
-func ValidateToAuthApi() gin.HandlerFunc {
+var jwks *keyfunc.JWKS
+
+func init() {
+	// Fetch JWKS at startup
+	jwksURL := os.Getenv("JWKS_URL") // e.g., https://auth.omahto.localhost/user/.well-known/jwks.json
+	if jwksURL == "" {
+		log.Fatal("JWKS_URL not set in environment")
+	}
+
+	var err error
+	jwks, err = keyfunc.Get(jwksURL, keyfunc.Options{
+		RefreshInterval: time.Hour,
+		RefreshErrorHandler: func(err error) {
+			log.Printf("error refreshing JWKS: %v", err)
+		},
+		RefreshTimeout:    10 * time.Second,
+		RefreshUnknownKID: true,
+	})
+	if err != nil {
+		log.Fatalf("failed to load JWKS: %v", err)
+	}
+}
+
+func ValidateJWT() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		accessToken, err := c.Cookie("access_token")
-		if err != nil {
-			c.JSON(http.StatusUnauthorized, gin.H{"error": "Failed to get Access token"})
-			c.Abort()
-			return
-		}
-		if accessToken == "" {
-			c.JSON(http.StatusUnauthorized, gin.H{"error": "Access token is required"})
+		// Get token from cookie
+		tryoutToken, errTryout := c.Cookie("tryout_token")
+		accessToken, errAccess := c.Cookie("access_token")
+
+		var tokenStr string
+		if errTryout == nil && tryoutToken != "" {
+			tokenStr = tryoutToken
+		} else if errAccess == nil && accessToken != "" {
+			tokenStr = accessToken
+		} else {
+			c.JSON(http.StatusUnauthorized, gin.H{"error": "No valid authentication token found"})
 			c.Abort()
 			return
 		}
 
-		authServiceURL := os.Getenv("AUTH_SERVICE_URL") + "/auth/validateprofile"
-
-		req, err := http.NewRequest("GET", authServiceURL, nil)
-		if err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create request"})
-			c.Abort()
-			return
-		}
-		req.Header.Add("Cookie", fmt.Sprintf("access_token=%s", accessToken))
-
-		client := &http.Client{}
-		response, err := client.Do(req)
-		if err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to send request"})
-			c.Abort()
-			return
-		}
-		defer response.Body.Close()
-		if response.StatusCode != http.StatusOK {
-			c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid access token"})
+		// Parse and verify token using JWKS
+		token, err := jwt.Parse(tokenStr, jwks.Keyfunc)
+		if err != nil || !token.Valid {
+			c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid or expired token"})
 			c.Abort()
 			return
 		}
 
-		body, err := io.ReadAll(response.Body)
-		if err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to read response body"})
-			c.Abort()
-			return
+		// Optionally: store claims in context
+		if claims, ok := token.Claims.(jwt.MapClaims); ok {
+			c.Set("claims", claims)
 		}
 
-		var authResponse struct {
-			UserID   int    `json:"user_id"`
-			Username string `json:"username"`
-		}
-
-		if err := json.Unmarshal(body, &authResponse); err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to parse response body"})
-			c.Abort()
-			return
-		}
-		c.Set("user_id", authResponse.UserID)
-		c.Set("username", authResponse.Username)
 		c.Next()
 	}
 }

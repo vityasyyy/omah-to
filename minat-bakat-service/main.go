@@ -73,6 +73,7 @@ func main() {
 	// Gin router setup
 	r := gin.New()
 	r.Use(gin.Recovery())
+	r.Use(utils.RequestIDMiddleware())
 	r.Use(utils.ReqLoggingMiddleware())
 	r.Use(securityHeadersMiddleware())
 	r.SetTrustedProxies([]string{"0.0.0.0/0"})

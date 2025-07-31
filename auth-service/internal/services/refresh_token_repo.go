@@ -14,7 +14,6 @@ type RefreshTokenService interface {
 	ValidateRefreshToken(c context.Context, refreshToken string) (string, string, error)
 	BlacklistRefreshToken(c context.Context, refreshToken string) error
 	BlacklistTokenOnEmail(c context.Context, email string) error
-	GenerateTryoutToken(c context.Context, userID int, attemptID int) (string, error)
 }
 
 type refreshTokenService struct {
@@ -122,14 +121,4 @@ func (s *refreshTokenService) BlacklistTokenOnEmail(c context.Context, email str
 		return err
 	}
 	return nil
-}
-
-func (s *refreshTokenService) GenerateTryoutToken(c context.Context, userID int, attemptID int) (string, error) {
-	// generate tryout token
-	tryoutToken, err := jwt.CreateTryoutToken(userID, attemptID)
-	if err != nil {
-		logger.LogErrorCtx(c, err, "Failed to generate tryout token", map[string]interface{}{"user_id": userID, "attempt_id": attemptID})
-		return "", err
-	}
-	return tryoutToken, nil
 }

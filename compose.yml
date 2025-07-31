@@ -146,6 +146,7 @@ services:
             auth-service-db:
                 condition: service_healthy # Ensure DB is ready
         volumes:
+          - ./auth-service/keys:/home/appuser/keys:ro
           - ./auth-service/var/log/auth-service:/var/log/auth-service
         networks:
             - omahtryout-network

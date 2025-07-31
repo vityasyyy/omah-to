@@ -1,18 +1,44 @@
 package jwt
 
 import (
+	"crypto/rsa"
+	"crypto/x509"
+	"encoding/base64"
+	"encoding/hex"
+	"encoding/pem"
+	"errors"
+	"fmt"
+	"io"
+	"math/big"
 	"os"
+	"path/filepath"
+	"strings"
 	"time"
 
-	"crypto/rand"
-	"encoding/hex"
-
-	"github.com/golang-jwt/jwt/v5"
+	"github.com/golang-jwt/jwt/v4"
 )
 
-var jwtAccessSecretKey = []byte(os.Getenv("JWT_ACCESS_SECRET"))
-var jwtTryoutSecretKey = []byte(os.Getenv("JWT_TRYOUT_SECRET"))
+// ---- KEY STRUCTURES ----
+type JWK struct {
+	Kty string `json:"kty"`
+	Kid string `json:"kid"`
+	Use string `json:"use"`
+	Alg string `json:"alg"`
+	N   string `json:"n"`
+	E   string `json:"e"`
+}
 
+type JWKS struct {
+	Keys []JWK `json:"keys"`
+}
+
+var (
+	privateKeys  = make(map[string]*rsa.PrivateKey)
+	publicKeys   = make(map[string]*rsa.PublicKey)
+	currentKeyID = "key-2025-07" // Update this when rotating keys
+)
+
+// ---- CLAIMS ----
 type AccessTokenClaims struct {
 	UserID      int    `json:"user_id"`
 	Email       string `json:"email"`
@@ -21,14 +47,87 @@ type AccessTokenClaims struct {
 	jwt.RegisteredClaims
 }
 
-// for tryout service
-type TryoutTokenClaims struct {
-	UserID    int `json:"user_id"`
-	AttemptID int `json:"attempt_id"`
-	jwt.RegisteredClaims
+// ---- INIT KEYS ----
+func init() {
+	directoryName := "keys"
+	if err := loadKeys(directoryName); err != nil {
+		panic(fmt.Sprintf("failed to load keys: %v", err))
+	}
 }
 
-// Create AccessToken for the user to later be sent via cookies to the frontend (used for authentication and authorization)
+// ---- KEY LOADING ----
+func loadKeys(dir string) error {
+	files, err := os.ReadDir(dir)
+	if err != nil {
+		return err
+	}
+
+	for _, f := range files {
+		if strings.HasSuffix(f.Name(), ".pem") && !strings.HasSuffix(f.Name(), ".pub.pem") {
+			privKey, pubKey, err := loadKeyPair(filepath.Join(dir, f.Name()))
+			if err != nil {
+				return err
+			}
+			privateKeys[currentKeyID] = privKey
+			publicKeys[currentKeyID] = pubKey
+		}
+	}
+	if len(privateKeys) == 0 {
+		return errors.New("no keys loaded from directory")
+	}
+	return nil
+}
+
+func loadKeyPair(privPath string) (*rsa.PrivateKey, *rsa.PublicKey, error) {
+	privBytes, err := os.ReadFile(privPath)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	block, _ := pem.Decode(privBytes)
+	if block == nil || block.Type != "PRIVATE KEY" {
+		return nil, nil, fmt.Errorf("invalid private key")
+	}
+
+	privKey, err := x509.ParsePKCS8PrivateKey(block.Bytes)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	rsaKey, ok := privKey.(*rsa.PrivateKey)
+	if !ok {
+		return nil, nil, fmt.Errorf("not RSA private key")
+	}
+
+	pubPath := strings.TrimSuffix(privPath, ".pem") + ".pub.pem"
+	pubBytes, err := os.ReadFile(pubPath)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	block, _ = pem.Decode(pubBytes)
+	if block == nil || block.Type != "PUBLIC KEY" {
+		return nil, nil, fmt.Errorf("invalid public key")
+	}
+
+	pubKey, err := x509.ParsePKIXPublicKey(block.Bytes)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	rsaPubKey, ok := pubKey.(*rsa.PublicKey)
+	if !ok {
+		return nil, nil, fmt.Errorf("not RSA public key")
+	}
+
+	return rsaKey, rsaPubKey, nil
+}
+
+func getCurrentPrivateKey() *rsa.PrivateKey {
+	return privateKeys[currentKeyID]
+}
+
+// ---- TOKEN CREATION ----
 func CreateAccessToken(userID int, namaUser, asalSekolah, email string) (string, error) {
 	expirationTime := time.Now().Add(15 * time.Minute)
 	claims := AccessTokenClaims{
@@ -36,52 +135,50 @@ func CreateAccessToken(userID int, namaUser, asalSekolah, email string) (string,
 		Email:       email,
 		NamaUser:    namaUser,
 		AsalSekolah: asalSekolah,
-		// RegisteredClaims is a struct that contains the standard claims (exp, iat, nbf, iss, aud, sub, jti)
 		RegisteredClaims: jwt.RegisteredClaims{
 			ExpiresAt: jwt.NewNumericDate(expirationTime),
 			IssuedAt:  jwt.NewNumericDate(time.Now()),
 		},
 	}
 
-	// Create a new token with the claims and the signing method
-	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-
-	// Sign the token with the secret key
-	return token.SignedString(jwtAccessSecretKey)
+	token := jwt.NewWithClaims(jwt.SigningMethodRS256, claims)
+	token.Header["kid"] = currentKeyID
+	return token.SignedString(getCurrentPrivateKey())
 }
 
-// Create an opaque refresh token (doesn't contain any credentials, just for refreshing purpose) for the user to later be stored in the database (used for refreshing the access token)
 func CreateRefreshToken() (string, error) {
-	bytes := make([]byte, 32)  // 32 bytes = 256 bits
-	_, err := rand.Read(bytes) // generate random bytes
+	bytes := make([]byte, 32)
+	_, err := io.ReadFull(os.NewFile(uintptr(0), ""), bytes)
 	if err != nil {
 		return "", err
 	}
-	// Encode the random bytes to a hexadecimal string
 	return hex.EncodeToString(bytes), nil
 }
 
-// Validate AccessToken to check if it's valid, returns a pointer to AccessTokenClaims if valid
+// ---- TOKEN VALIDATION ----
 func ValidateAccessToken(accessToken string) (*AccessTokenClaims, error) {
-
-	// Parse the token, use the accessToken to extract the claims into the AccessTokenClaims struct, and validate the token using the secret key in our .env file
-	token, err := jwt.ParseWithClaims(accessToken, &AccessTokenClaims{}, func(token *jwt.Token) (interface{}, error) {
-		return jwtAccessSecretKey, nil // lookup function to get the secret key
+	token, err := jwt.ParseWithClaims(accessToken, &AccessTokenClaims{}, func(token *jwt.Token) (any, error) {
+		if kid, ok := token.Header["kid"].(string); ok {
+			if key, exists := publicKeys[kid]; exists {
+				return key, nil
+			}
+			return nil, fmt.Errorf("unknown kid: %s", kid)
+		}
+		return nil, fmt.Errorf("kid header missing")
 	})
 
 	if err != nil {
 		return nil, err
 	}
 
-	// Check if the extracted token can be casted to AccessTokenClaims to make "ok" true, and token.Valid is true if it's not expired and the signature is valid
 	if claims, ok := token.Claims.(*AccessTokenClaims); ok && token.Valid {
-		return claims, nil // return the claims (pointer to the AccessTokenClaims) if the token is valid
+		return claims, nil
 	}
 
-	// If the token is invalid, return nil and an error
 	return nil, jwt.ErrTokenInvalidClaims
 }
 
+// ---- PASSWORD RESET TOKEN ----
 func CreateResetToken() (string, time.Time, error) {
 	resetToken, err := CreateRefreshToken()
 	if err != nil {
@@ -91,34 +188,20 @@ func CreateResetToken() (string, time.Time, error) {
 	return resetToken, resetTokenExpiredAt, nil
 }
 
-func CreateTryoutToken(userID, attemptID int) (string, error) {
-	expirationTime := time.Now().Add(7 * 24 * 60 * time.Minute)
-	// Create a new token with the claims and the signing method
-	claims := TryoutTokenClaims{
-		UserID:    userID,
-		AttemptID: attemptID,
-		RegisteredClaims: jwt.RegisteredClaims{
-			ExpiresAt: jwt.NewNumericDate(expirationTime),
-			IssuedAt:  jwt.NewNumericDate(time.Now()),
-		},
+// ---- JWKS GENERATION ----
+func GetJWKS() JWKS {
+	keys := []JWK{}
+	for kid, pub := range publicKeys {
+		n := base64.RawURLEncoding.EncodeToString(pub.N.Bytes())
+		e := base64.RawURLEncoding.EncodeToString(big.NewInt(int64(pub.E)).Bytes())
+		keys = append(keys, JWK{
+			Kty: "RSA",
+			Kid: kid,
+			Use: "sig",
+			Alg: "RS256",
+			N:   n,
+			E:   e,
+		})
 	}
-
-	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	return token.SignedString(jwtTryoutSecretKey)
-}
-
-func ValidateTryoutToken(tryoutToken string) (*TryoutTokenClaims, error) {
-	token, err := jwt.ParseWithClaims(tryoutToken, &TryoutTokenClaims{}, func(token *jwt.Token) (interface{}, error) {
-		return jwtTryoutSecretKey, nil
-	})
-
-	if err != nil {
-		return nil, err
-	}
-
-	if claims, ok := token.Claims.(*TryoutTokenClaims); ok && token.Valid {
-		return claims, nil
-	}
-
-	return nil, jwt.ErrTokenInvalidClaims
+	return JWKS{Keys: keys}
 }

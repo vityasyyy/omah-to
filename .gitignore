@@ -32,3 +32,5 @@ coverage.out
 certs/
 
 prometheus/data/
+
+keys/

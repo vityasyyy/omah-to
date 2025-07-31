@@ -73,6 +73,7 @@ func LogDebugCtx(ctx context.Context, message string, fields ...map[string]inter
 	funcName := runtime.FuncForPC(pc).Name()
 
 	log := FromContext(ctx).Debug().
+		Str("request_id", ctx.Value("request_id").(string)).
 		Str("function", funcName).
 		Str("file", filepath.Base(file)).
 		Int("line", line).
@@ -92,6 +93,7 @@ func LogErrorCtx(ctx context.Context, err error, message string, fields ...map[s
 	funcName := runtime.FuncForPC(pc).Name()
 
 	log := FromContext(ctx).Error().
+		Str("request_id", ctx.Value("request_id").(string)).
 		Str("function", funcName).
 		Str("file", filepath.Base(file)).
 		Int("line", line).

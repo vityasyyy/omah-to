@@ -18,7 +18,7 @@ func InitializeRoutes(r *gin.Engine, soalHandler *handlers.SoalHandler) {
 	}
 
 	soal := r.Group("/soal")
-	soal.Use(utils.ValidateToAuthApi())
+	soal.Use(utils.ValidateJWT())
 	{
 		soal.GET("/:paket_soal", soalHandler.GetSoalByPaketAndSubtest)
 		soal.GET("/answer-key/:paket_soal", soalHandler.GetAnswerKeyByPaketAndSubtest)

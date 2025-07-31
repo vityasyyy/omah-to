@@ -75,6 +75,7 @@ func main() {
 	// Gin router setup
 	r := gin.New()
 	r.Use(gin.Recovery())
+	r.Use(pkgLog.RequestIDMiddleware())
 	r.Use(pkgLog.ReqLoggingMiddleware())
 	r.Use(securityHeadersMiddleware())
 	r.SetTrustedProxies([]string{"0.0.0.0/0"})
