@@ -1,6 +1,7 @@
 package jwt
 
 import (
+	"crypto/rand"
 	"crypto/rsa"
 	"crypto/x509"
 	"encoding/base64"
@@ -8,7 +9,6 @@ import (
 	"encoding/pem"
 	"errors"
 	"fmt"
-	"io"
 	"math/big"
 	"os"
 	"path/filepath"
@@ -148,7 +148,7 @@ func CreateAccessToken(userID int, namaUser, asalSekolah, email string) (string,
 
 func CreateRefreshToken() (string, error) {
 	bytes := make([]byte, 32)
-	_, err := io.ReadFull(os.NewFile(uintptr(0), ""), bytes)
+	_, err := rand.Read(bytes)
 	if err != nil {
 		return "", err
 	}
