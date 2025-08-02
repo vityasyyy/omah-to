@@ -150,6 +150,11 @@ services:
           - ./auth-service/var/log/auth-service:/var/log/auth-service
         networks:
             - omahtryout-network
+        healthcheck:
+            test: ["CMD-SHELL", "wget --spider --quiet http://localhost:8081/ping || exit 1"]
+            interval: 10s
+            timeout: 5s
+            retries: 3
         labels:
             - "traefik.enable=true"
             - "traefik.http.routers.auth.rule=Host(`auth.omahto.localhost`)"
@@ -183,6 +188,8 @@ services:
         depends_on:
             soal-service-db:
                 condition: service_healthy # Ensure DB is ready
+            auth-service-api:
+                condition: service_healthy # Ensure Auth service is ready
         networks:
             - omahtryout-network
         volumes:
@@ -220,6 +227,8 @@ services:
         depends_on:
             tryout-service-db:
                 condition: service_healthy # Ensure DB is ready
+            auth-service-api:
+                condition: service_healthy # Ensure Auth service is ready
         networks:
             - omahtryout-network
         volumes:
@@ -260,6 +269,8 @@ services:
         depends_on:
             minat-bakat-service-db:
                 condition: service_healthy # Ensure DB is ready
+            auth-service-api:
+                condition: service_healthy # Ensure Auth service is ready
         networks:
             - omahtryout-network
         volumes:
