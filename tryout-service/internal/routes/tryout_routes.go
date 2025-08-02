@@ -18,7 +18,7 @@ func InitializeRoutes(r *gin.Engine, tryoutHandler *handlers.TryoutHandler, page
 	}
 
 	tryout := r.Group("/tryout")
-	tryout.Use(utils.ValidateToAuthApi())
+	tryout.Use(utils.ValidateJWT())
 	{
 		tryout.POST("/start-attempt/:paket", tryoutHandler.StartAttempt)
 		tryout.GET("/pembahasan", pageHandler.GetPembahasanPageHandler)
@@ -28,8 +28,7 @@ func InitializeRoutes(r *gin.Engine, tryoutHandler *handlers.TryoutHandler, page
 		tryout.GET("/finished-attempt", pageHandler.GetFinishedAttemptHandler)
 	}
 
-	sync := r.Group("/sync")
-	sync.Use(utils.ValidateTryoutToken())
+	sync := tryout.Group("/sync")
 	{
 		sync.POST("", tryoutHandler.SyncHandler)
 		sync.POST("/progress", tryoutHandler.ProgressTryoutHandler)

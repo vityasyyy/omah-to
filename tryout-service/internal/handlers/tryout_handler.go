@@ -2,9 +2,9 @@ package handlers
 
 import (
 	"net/http"
+	"tryout-service/internal/logger"
 	"tryout-service/internal/models"
 	"tryout-service/internal/services"
-	"tryout-service/internal/utils"
 
 	"github.com/gin-gonic/gin"
 )
@@ -28,14 +28,11 @@ func (h *TryoutHandler) StartAttempt(c *gin.Context) {
 		return
 	}
 	// start the attempt, making a new record in the database
-	attempt, tryoutToken, err := h.tryoutService.StartAttempt(userID, username, paket, accessToken)
+	attempt, err := h.tryoutService.StartAttempt(c, userID, username, paket, accessToken)
 	if err != nil {
+		logger.LogErrorCtx(c, err, "Failed to start attempt")
 		c.JSON(http.StatusInternalServerError, gin.H{"message": "Failed to start attempt", "error": err.Error()})
 		return
-	}
-	// set the tryout token to the context cookie
-	if err = utils.SetTryoutTokenCookie(c, tryoutToken); err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"message": "Failed to set tryout token", "error": err.Error()})
 	}
 
 	c.JSON(http.StatusOK, gin.H{"message": "Successfully started attempt", "data": attempt})
@@ -49,11 +46,13 @@ func (h *TryoutHandler) SyncHandler(c *gin.Context) {
 	}
 
 	if err := c.ShouldBindJSON(&answers); err != nil {
+		logger.LogErrorCtx(c, err, "Invalid input for sync handler")
 		c.JSON(http.StatusBadRequest, gin.H{"message": "Invalid input", "error": err.Error()})
 		return
 	}
-	answersInDB, timeLimit, err := h.tryoutService.SyncWithDatabase(answers.Answers, attemptID)
+	answersInDB, timeLimit, err := h.tryoutService.SyncWithDatabase(c, answers.Answers, attemptID)
 	if err != nil {
+		logger.LogErrorCtx(c, err, "Failed to sync answers")
 		c.JSON(http.StatusInternalServerError, gin.H{"message": "Failed to sync answers", "error": err.Error()})
 		return
 	}
@@ -66,6 +65,7 @@ func (h *TryoutHandler) ProgressTryoutHandler(c *gin.Context) {
 	userID := c.GetInt("user_id")
 	tryoutToken, err := c.Cookie("tryout_token")
 	if err != nil {
+		logger.LogErrorCtx(c, err, "Failed to get tryout token")
 		c.JSON(http.StatusInternalServerError, gin.H{"message": "failed to get tryout token"})
 		return
 	}
@@ -74,12 +74,14 @@ func (h *TryoutHandler) ProgressTryoutHandler(c *gin.Context) {
 	}
 
 	if err := c.ShouldBindJSON(&answers); err != nil {
+		logger.LogErrorCtx(c, err, "Invalid input for progress handler")
 		c.JSON(http.StatusBadRequest, gin.H{"message": "Invalid input", "error": err.Error()})
 		return
 	}
 
-	updatedSubtest, err := h.tryoutService.SubmitCurrentSubtest(answers.Answers, attemptID, userID, tryoutToken)
+	updatedSubtest, err := h.tryoutService.SubmitCurrentSubtest(c, answers.Answers, attemptID, userID, tryoutToken)
 	if err != nil {
+		logger.LogErrorCtx(c, err, "Failed to submit answers")
 		c.JSON(http.StatusInternalServerError, gin.H{"message": "Failed to submit answers", "error": err.Error()})
 		return
 	}
@@ -88,8 +90,9 @@ func (h *TryoutHandler) ProgressTryoutHandler(c *gin.Context) {
 
 func (h *TryoutHandler) GetCurrentAttempt(c *gin.Context) {
 	attemptID := c.GetInt("attempt_id")
-	attempt, err := h.tryoutService.GetCurrentAttempt(attemptID)
+	attempt, err := h.tryoutService.GetCurrentAttempt(c, attemptID)
 	if err != nil {
+		logger.LogErrorCtx(c, err, "Failed to get current attempt")
 		c.JSON(http.StatusInternalServerError, gin.H{"message": "Failed to get current attempt", "error": err.Error()})
 		return
 	}

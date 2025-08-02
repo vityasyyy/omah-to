@@ -1,64 +1,69 @@
 package utils
 
 import (
-	"fmt"
+	"log"
 	"net/http"
 	"os"
+	"time"
 
+	"github.com/MicahParks/keyfunc"
 	"github.com/gin-gonic/gin"
+	"github.com/golang-jwt/jwt/v4"
 )
 
-func ValidateToAuthApi() gin.HandlerFunc {
+var jwks *keyfunc.JWKS
+
+func init() {
+	// Fetch JWKS at startup
+	jwksURL := os.Getenv("JWKS_URL") // e.g., https://auth.omahto.localhost/user/.well-known/jwks.json
+	if jwksURL == "" {
+		log.Fatal("JWKS_URL not set in environment")
+	}
+
+	var err error
+	jwks, err = keyfunc.Get(jwksURL, keyfunc.Options{
+		RefreshInterval: time.Hour,
+		RefreshErrorHandler: func(err error) {
+			log.Printf("error refreshing JWKS: %v", err)
+		},
+		RefreshTimeout:    10 * time.Second,
+		RefreshUnknownKID: true,
+	})
+	if err != nil {
+		log.Fatalf("failed to load JWKS: %v", err)
+	}
+}
+
+func ValidateJWT() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		// get the tryout token or access token from the context cookie sent by the client
+		// Get token from cookie
 		tryoutToken, errTryout := c.Cookie("tryout_token")
 		accessToken, errAccess := c.Cookie("access_token")
 
-		var authServiceURL string
-		var token string
-
-		// check if the tryout token or access token is present
+		var tokenStr string
 		if errTryout == nil && tryoutToken != "" {
-			authServiceURL = os.Getenv("AUTH_SERVICE_URL") + "/tryout/validatetryout"
-			token = tryoutToken
+			tokenStr = tryoutToken
 		} else if errAccess == nil && accessToken != "" {
-			authServiceURL = os.Getenv("AUTH_SERVICE_URL") + "/auth/validateprofile"
-			token = accessToken
+			tokenStr = accessToken
 		} else {
 			c.JSON(http.StatusUnauthorized, gin.H{"error": "No valid authentication token found"})
 			c.Abort()
 			return
 		}
 
-		// send a request to the auth service to validate the token
-		req, err := http.NewRequest("GET", authServiceURL, nil)
-		if err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create request"})
+		// Parse and verify token using JWKS
+		token, err := jwt.Parse(tokenStr, jwks.Keyfunc)
+		if err != nil || !token.Valid {
+			c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid or expired token"})
 			c.Abort()
 			return
 		}
 
-		// add a cookie to the request
-		if tryoutToken != "" {
-			req.Header.Add("Cookie", fmt.Sprintf("tryout_token=%s", token))
-		} else {
-			req.Header.Add("Cookie", fmt.Sprintf("access_token=%s", token))
+		// Optionally: store claims in context
+		if claims, ok := token.Claims.(jwt.MapClaims); ok {
+			c.Set("claims", claims)
 		}
 
-		// make a http client, send the request, and check the response
-		client := &http.Client{}
-		response, err := client.Do(req)
-		if err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to send request"})
-			c.Abort()
-			return
-		}
-		defer response.Body.Close()
-		if response.StatusCode != http.StatusOK {
-			c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid authentication token"})
-			c.Abort()
-			return
-		}
 		c.Next()
 	}
 }

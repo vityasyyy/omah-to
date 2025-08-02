@@ -6,7 +6,7 @@ import (
 	"auth-service/internal/repositories"
 	"auth-service/internal/routes"
 	"auth-service/internal/services"
-	"auth-service/internal/utils"
+	pkgLog "auth-service/pkg/utils/logger"
 	"context"
 	"net/http"
 	"os"
@@ -19,6 +19,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/ulule/limiter/v3"
 	memory "github.com/ulule/limiter/v3/drivers/store/memory"
 )
@@ -74,9 +75,14 @@ func main() {
 	// Gin router setup
 	r := gin.New()
 	r.Use(gin.Recovery())
-	r.Use(utils.ReqLoggingMiddleware())
+	r.Use(pkgLog.RequestIDMiddleware())
+	r.Use(pkgLog.ReqLoggingMiddleware())
 	r.Use(securityHeadersMiddleware())
 	r.SetTrustedProxies([]string{"0.0.0.0/0"})
+
+	// Prometheus metrics endpoint
+	r.Use(pkgLog.PrometheusMiddleware())
+	r.GET("/metrics", gin.WrapH(promhttp.Handler()))
 
 	// CORS middleware
 	r.Use(cors.New(cors.Config{

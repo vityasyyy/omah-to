@@ -48,7 +48,7 @@ RUN corepack enable && pnpm install --frozen-lockfile
 COPY . .
 
 # Expose the development server port
-EXPOSE 3000
+EXPOSE 3001
 
 # Start the dev server
 CMD ["pnpm", "dev"]

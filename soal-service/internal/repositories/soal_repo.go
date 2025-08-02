@@ -1,6 +1,7 @@
 package repositories
 
 import (
+	"context"
 	"soal-service/internal/logger"
 	"soal-service/internal/models"
 
@@ -10,9 +11,9 @@ import (
 )
 
 type SoalRepo interface {
-	GetSoalByPaketAndSubtest(paketSoal, subtest string) ([]models.SoalGabungan, error)
-	GetAnswerKeyByPaketAndSubtest(paketSoal, subtest string) (*models.AnswerKeys, error)
-	GetMinatBakatSoal() ([]models.MinatBakatGabungan, error)
+	GetSoalByPaketAndSubtest(c context.Context, paketSoal, subtest string) ([]models.SoalGabungan, error)
+	GetAnswerKeyByPaketAndSubtest(c context.Context, paketSoal, subtest string) (*models.AnswerKeys, error)
+	GetMinatBakatSoal(c context.Context) ([]models.MinatBakatGabungan, error)
 }
 
 type soalRepo struct {
@@ -23,7 +24,7 @@ func NewSoalRepo(db *sqlx.DB) SoalRepo {
 	return &soalRepo{db: db}
 }
 
-func (r *soalRepo) GetSoalByPaketAndSubtest(paketSoal, subtest string) ([]models.SoalGabungan, error) {
+func (r *soalRepo) GetSoalByPaketAndSubtest(c context.Context, paketSoal, subtest string) ([]models.SoalGabungan, error) {
 	// Map soal by kode_soal as key
 	var mappedSoal = make(map[string]*models.SoalGabungan)
 
@@ -42,7 +43,7 @@ func (r *soalRepo) GetSoalByPaketAndSubtest(paketSoal, subtest string) ([]models
 
 	rows, err := r.db.Queryx(query, paketSoal, subtest)
 	if err != nil {
-		logger.LogError(err, "Failed to query soal by paket and subtest", map[string]interface{}{"layer": "repository", "operation": "GetSoalByPaketAndSubtest"})
+		logger.LogErrorCtx(c, err, "Failed to query soal by paket and subtest", map[string]interface{}{"paket_soal": paketSoal, "subtest": subtest})
 		return nil, err
 	}
 	defer rows.Close()
@@ -60,7 +61,7 @@ func (r *soalRepo) GetSoalByPaketAndSubtest(paketSoal, subtest string) ([]models
 			&uraianID,
 		)
 		if err != nil {
-			logger.LogError(err, "Failed to scan soal by paket and subtest", map[string]interface{}{"layer": "repository", "operation": "GetSoalByPaketAndSubtest"})
+			logger.LogErrorCtx(c, err, "Failed to scan soal by paket and subtest", map[string]interface{}{"paket_soal": paketSoal, "subtest": subtest})
 			return nil, err
 		}
 
@@ -96,14 +97,11 @@ func (r *soalRepo) GetSoalByPaketAndSubtest(paketSoal, subtest string) ([]models
 	for _, soal := range mappedSoal {
 		listSoal = append(listSoal, *soal)
 	}
-
-	logger.LogDebug("Soal retrieved", map[string]interface{}{
-		"layer": "repository", "operation": "GetSoalByPaketAndSubtest", "paket_soal": paketSoal, "subtest": subtest,
-	})
+	logger.LogDebugCtx(c, "Soal retrieved successfully", map[string]interface{}{"paket_soal": paketSoal, "subtest": subtest})
 	return listSoal, nil
 }
 
-func (r *soalRepo) GetAnswerKeyByPaketAndSubtest(paketSoal, subtest string) (*models.AnswerKeys, error) {
+func (r *soalRepo) GetAnswerKeyByPaketAndSubtest(c context.Context, paketSoal, subtest string) (*models.AnswerKeys, error) {
 	answers := &models.AnswerKeys{
 		PilihanGandaAnswers: make(map[string]map[string]struct {
 			IsCorrect   bool
@@ -133,7 +131,7 @@ func (r *soalRepo) GetAnswerKeyByPaketAndSubtest(paketSoal, subtest string) (*mo
 	`
 	pgRows, err := r.db.Queryx(pgQuery, paketSoal, subtest)
 	if err != nil {
-		logger.LogError(err, "Failed to query pilihan ganda by paket and subtest", map[string]interface{}{"layer": "repository", "operation": "GetAnswerKeyByPaketAndSubtest"})
+		logger.LogErrorCtx(c, err, "Failed to query pilihan ganda by paket and subtest", map[string]interface{}{"paket_soal": paketSoal, "subtest": subtest})
 		return nil, err
 	}
 	defer pgRows.Close()
@@ -146,7 +144,7 @@ func (r *soalRepo) GetAnswerKeyByPaketAndSubtest(paketSoal, subtest string) (*mo
 		var textPilihan string
 		var pembahasan string
 		if err := pgRows.Scan(&pilihanGandaID, &isCorrect, &bobot, &kodeSoal, &pembahasan, &textPilihan); err != nil {
-			logger.LogError(err, "Failed to scan pilihan ganda by paket and subtest", map[string]interface{}{"layer": "repository", "operation": "GetAnswerKeyByPaketAndSubtest"})
+			logger.LogErrorCtx(c, err, "Failed to scan pilihan ganda by paket and subtest", map[string]interface{}{"paket_soal": paketSoal, "subtest": subtest})
 			return nil, err
 		}
 
@@ -178,7 +176,7 @@ func (r *soalRepo) GetAnswerKeyByPaketAndSubtest(paketSoal, subtest string) (*mo
 	`
 	tfRows, err := r.db.Queryx(tfQuery, paketSoal, subtest)
 	if err != nil {
-		logger.LogError(err, "Failed to query true false by paket and subtest", map[string]interface{}{"layer": "repository", "operation": "GetAnswerKeyByPaketAndSubtest"})
+		logger.LogErrorCtx(c, err, "Failed to query true false by paket and subtest", map[string]interface{}{"paket_soal": paketSoal, "subtest": subtest})
 		return nil, err
 	}
 	defer tfRows.Close()
@@ -191,7 +189,7 @@ func (r *soalRepo) GetAnswerKeyByPaketAndSubtest(paketSoal, subtest string) (*mo
 		var pembahasan string
 
 		if err := tfRows.Scan(&jawaban, &bobot, &kodeSoal, &pembahasan, &textPilihan); err != nil {
-			logger.LogError(err, "Failed to scan true false by paket and subtest", map[string]interface{}{"layer": "repository", "operation": "GetAnswerKeyByPaketAndSubtest"})
+			logger.LogErrorCtx(c, err, "Failed to scan true false by paket and subtest", map[string]interface{}{"paket_soal": paketSoal, "subtest": subtest})
 			return nil, err
 		}
 
@@ -213,7 +211,7 @@ func (r *soalRepo) GetAnswerKeyByPaketAndSubtest(paketSoal, subtest string) (*mo
 	`
 	uraianRows, err := r.db.Queryx(uraianQuery, paketSoal, subtest)
 	if err != nil {
-		logger.LogError(err, "Failed to query uraian by paket and subtest", map[string]interface{}{"layer": "repository", "operation": "GetAnswerKeyByPaketAndSubtest"})
+		logger.LogErrorCtx(c, err, "Failed to query uraian by paket and subtest", map[string]interface{}{"paket_soal": paketSoal, "subtest": subtest})
 		return nil, err
 	}
 	defer uraianRows.Close()
@@ -225,7 +223,7 @@ func (r *soalRepo) GetAnswerKeyByPaketAndSubtest(paketSoal, subtest string) (*mo
 		var pembahasan string
 
 		if err := uraianRows.Scan(&jawaban, &bobot, &kodeSoal, &pembahasan); err != nil {
-			logger.LogError(err, "Failed to scan uraian by paket and subtest", map[string]interface{}{"layer": "repository", "operation": "GetAnswerKeyByPaketAndSubtest"})
+			logger.LogErrorCtx(c, err, "Failed to scan uraian by paket and subtest", map[string]interface{}{"paket_soal": paketSoal, "subtest": subtest})
 			return nil, err
 		}
 
@@ -237,15 +235,12 @@ func (r *soalRepo) GetAnswerKeyByPaketAndSubtest(paketSoal, subtest string) (*mo
 		}{Jawaban: jawaban.String, Bobot: bobot, Pembahasan: pembahasan}
 	}
 
-	// ✅ Debugging log
-	logger.LogDebug("Answer key retrieved", map[string]interface{}{
-		"layer": "repository", "operation": "GetAnswerKeyByPaketAndSubtest", "paket_soal": paketSoal, "subtest": subtest,
-	})
+	logger.LogDebugCtx(c, "Answer keys retrieved successfully", map[string]interface{}{"paket_soal": paketSoal, "subtest": subtest})
 
 	return answers, nil
 }
 
-func (r *soalRepo) GetMinatBakatSoal() ([]models.MinatBakatGabungan, error) {
+func (r *soalRepo) GetMinatBakatSoal(c context.Context) ([]models.MinatBakatGabungan, error) {
 	var mappedSoal = make(map[string]*models.MinatBakatGabungan)
 	// query
 	query := `
@@ -258,7 +253,7 @@ func (r *soalRepo) GetMinatBakatSoal() ([]models.MinatBakatGabungan, error) {
 	// execute query
 	rows, err := r.db.Queryx(query)
 	if err != nil {
-		logger.LogError(err, "Failed to query minat bakat soal", map[string]interface{}{"layer": "repository", "operation": "GetMinatBakatSoal"})
+		logger.LogErrorCtx(c, err, "Failed to query minat bakat soal")
 		return nil, err
 	}
 	defer rows.Close()
@@ -272,7 +267,7 @@ func (r *soalRepo) GetMinatBakatSoal() ([]models.MinatBakatGabungan, error) {
 		// scan the rows, making sure the data is not nil
 		err := rows.Scan(&soalID, &textSoal, &pilihan.TextPilihan, &pilihan.Divisi, &pilihan.PilihanID)
 		if err != nil {
-			logger.LogError(err, "Failed to scan minat bakat soal", map[string]interface{}{"layer": "repository", "operation": "GetMinatBakatSoal"})
+			logger.LogErrorCtx(c, err, "Failed to scan minat bakat soal")
 			return nil, err
 		}
 

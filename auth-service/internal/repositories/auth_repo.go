@@ -5,16 +5,18 @@ import (
 	"auth-service/internal/models"
 	"time"
 
+	"context"
+
 	"github.com/jmoiron/sqlx"
 )
 
 // Must implement all methods in the interface
 type AuthRepo interface {
-	CreateUser(user *models.User) error
-	GetUserByEmail(email string) (*models.User, error)
-	GetUserByID(userID int) (*models.User, error)
-	ResetPassword(newPassword, resetToken string) error
-	RequestingPasswordReset(email, resetToken string, resetTokenExpiredAt time.Time) error
+	CreateUser(c context.Context, user *models.User) error
+	GetUserByEmail(c context.Context, email string) (*models.User, error)
+	GetUserByID(c context.Context, userID int) (*models.User, error)
+	ResetPassword(c context.Context, newPassword, resetToken string) error
+	RequestingPasswordReset(c context.Context, email, resetToken string, resetTokenExpiredAt time.Time) error
 }
 
 type authRepo struct {
@@ -28,65 +30,65 @@ func NewAuthRepo(db *sqlx.DB) AuthRepo {
 }
 
 // This function implements the CreateUser method from the AuthRepo interface, it creates a new user in the database, accepts the user models as the params, and returns an error if the query fails
-func (r *authRepo) CreateUser(user *models.User) error {
+func (r *authRepo) CreateUser(c context.Context, user *models.User) error {
 	// Define the query to insert a new user
 	query := "INSERT INTO users (email, nama_user, password, asal_sekolah) VALUES ($1, $2, $3, $4) RETURNING user_id"
 	// Execute the query and scan the result into the user struct
 	err := r.db.QueryRow(query, user.Email, user.NamaUser, user.Password, user.AsalSekolah).Scan(&user.UserID)
 	if err != nil {
 		// Log the error if the query fails
-		logger.LogError(err, "Failed to create user", map[string]interface{}{"layer": "repository", "operation": "CreateUser"})
+		logger.LogErrorCtx(c, err, "Failed to insert user")
 		return err
 	}
 	// Log the success if the query succeeds (this wont be logged in production)
-	logger.LogDebug("User created", map[string]interface{}{"layer": "repository", "operation": "CreateUser"})
+	logger.LogDebugCtx(c, "User created successfully")
 	return nil
 }
 
-func (r *authRepo) GetUserByEmail(email string) (*models.User, error) {
+func (r *authRepo) GetUserByEmail(c context.Context, email string) (*models.User, error) {
 	// Create a new user struct to store the result
 	var user models.User
 	query := "SELECT user_id, email, nama_user, asal_sekolah, password FROM users WHERE email = $1"
 	// Get the user struct from the database using the query and the username
 	err := r.db.Get(&user, query, email)
 	if err != nil {
-		logger.LogError(err, "Failed to get user", map[string]interface{}{"layer": "repository", "operation": "GetUserByEmail"})
+		logger.LogErrorCtx(c, err, "Failed to get user by email")
 		return nil, err
 	}
-	logger.LogDebug("User retrieved", map[string]interface{}{"layer": "repository", "operation": "GetUserByEmail"})
+	logger.LogDebugCtx(c, "User retrieved by email", map[string]interface{}{"email": email})
 	return &user, nil
 }
 
-func (r *authRepo) GetUserByID(userID int) (*models.User, error) {
+func (r *authRepo) GetUserByID(c context.Context, userID int) (*models.User, error) {
 	var user models.User
 	query := "SELECT user_id, email, nama_user, asal_sekolah, password FROM users WHERE user_id = $1"
 	err := r.db.Get(&user, query, userID)
 	if err != nil {
-		logger.LogError(err, "Failed to get user", map[string]interface{}{"layer": "repository", "operation": "GetUserByID"})
+		logger.LogErrorCtx(c, err, "Failed to get user by ID")
 		return nil, err
 	}
-	logger.LogDebug("User retrieved", map[string]interface{}{"layer": "repository", "operation": "GetUserByID"})
+	logger.LogDebugCtx(c, "User retrieved by ID", map[string]interface{}{"user_id": userID})
 	return &user, nil
 }
 
-func (r *authRepo) ResetPassword(newPassword, resetToken string) error {
+func (r *authRepo) ResetPassword(c context.Context, newPassword, resetToken string) error {
 	query := "UPDATE users SET password = $1, reset_token = NULL, reset_token_expired_at = NULL WHERE reset_token = $2 AND reset_token_expired_at > CURRENT_TIMESTAMP"
 	_, err := r.db.Exec(query, newPassword, resetToken)
 	if err != nil {
-		logger.LogError(err, "Failed to reset password", map[string]interface{}{"layer": "repository", "operation": "ResetPassword"})
+		logger.LogErrorCtx(c, err, "Failed to reset password", map[string]interface{}{"reset_token": resetToken})
 		return err
 	}
-	logger.LogDebug("Password reset", map[string]interface{}{"layer": "repository", "operation": "ResetPassword"})
+	logger.LogDebugCtx(c, "Password reset")
 	return nil
 }
 
-func (r *authRepo) RequestingPasswordReset(email, resetToken string, resetTokenExpiredAt time.Time) error {
+func (r *authRepo) RequestingPasswordReset(c context.Context, email, resetToken string, resetTokenExpiredAt time.Time) error {
 	query := "UPDATE users SET reset_token = $1, reset_token_expired_at = $2 WHERE email = $3"
 	_, err := r.db.Exec(query, resetToken, resetTokenExpiredAt, email)
 	if err != nil {
-		logger.LogError(err, "Failed to request password reset", map[string]interface{}{"layer": "repository", "operation": "RequestingPasswordReset"})
+		logger.LogErrorCtx(c, err, "Failed to request password reset", map[string]interface{}{"email": email, "reset_token": resetToken})
 		return err
 	}
-	logger.LogDebug("Password reset requested", map[string]interface{}{"layer": "repository", "operation": "RequestingPasswordReset"})
+	logger.LogDebugCtx(c, "Password reset requested", map[string]interface{}{"email": email, "reset_token": resetToken})
 	return nil
 }

@@ -28,3 +28,9 @@ coverage.out
 .env.*.local
 # System files
 .DS_Store
+
+certs/
+
+prometheus/data/
+
+keys/

@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"net/http"
+	"tryout-service/internal/logger"
 	"tryout-service/internal/services"
 
 	"github.com/gin-gonic/gin"
@@ -16,8 +17,9 @@ func NewPageHandler(pageService services.PageService) *PageHandler {
 }
 
 func (h *PageHandler) GetLeaderboardHandler(c *gin.Context) {
-	leaderboard, err := h.pageService.GetLeaderboard()
+	leaderboard, err := h.pageService.GetLeaderboard(c)
 	if err != nil {
+		logger.LogErrorCtx(c, err, "Failed to get leaderboard")
 		c.JSON(http.StatusInternalServerError, gin.H{"message": "Failed to get leaderboard", "error": err.Error()})
 		return
 	}
@@ -26,8 +28,9 @@ func (h *PageHandler) GetLeaderboardHandler(c *gin.Context) {
 
 func (h *PageHandler) GetUserSubtestsScore(c *gin.Context) {
 	userID := c.GetInt("user_id")
-	subtestsScore, err := h.pageService.GetUserSubtestNilai(userID)
+	subtestsScore, err := h.pageService.GetUserSubtestNilai(c, userID)
 	if err != nil {
+		logger.LogErrorCtx(c, err, "Failed to get subtest score", map[string]interface{}{"user_id": userID})
 		c.JSON(http.StatusInternalServerError, gin.H{"message": "Failed to get subtest score", "error": err.Error()})
 		return
 	}
@@ -39,6 +42,7 @@ func (h *PageHandler) GetPembahasanPageHandler(c *gin.Context) {
 	paket := c.Request.URL.Query().Get("paket")
 	accessToken, err := c.Cookie("access_token")
 	if err != nil {
+		logger.LogErrorCtx(c, err, "Failed to get access token from cookie")
 		c.JSON(http.StatusUnauthorized, gin.H{"message": "Access token is required"})
 		return
 	}
@@ -49,6 +53,11 @@ func (h *PageHandler) GetPembahasanPageHandler(c *gin.Context) {
 	// call the service to get the pembahasan page
 	enrichedAnswers, averageScores, rank, subtestsScores, err := h.pageService.GetPembahasanPage(requestContext, userID, paket, accessToken)
 	if err != nil {
+		logger.LogErrorCtx(c, err, "Failed to get pembahasan page", map[string]interface{}{
+			"user_id": userID,
+			"paket":   paket,
+			"token":   accessToken,
+		})
 		c.JSON(http.StatusInternalServerError, gin.H{"message": "Failed to get pembahasan page", "error": err.Error()})
 		return
 	}
@@ -62,12 +71,12 @@ func (h *PageHandler) GetPembahasanPageHandler(c *gin.Context) {
 
 func (h *PageHandler) GetOngoingAttemptHandler(c *gin.Context) {
 	userID := c.GetInt("user_id")
-	attempt, _ := h.pageService.GetOngoingAttempt(userID)
+	attempt, _ := h.pageService.GetOngoingAttempt(c, userID)
 	c.JSON(http.StatusOK, gin.H{"message": "Ongoing attempt retrieved successfully", "data": attempt})
 }
 
 func (h *PageHandler) GetFinishedAttemptHandler(c *gin.Context) {
 	userID := c.GetInt("user_id")
-	attempt, _ := h.pageService.GetFinishedAttempt(userID)
+	attempt, _ := h.pageService.GetFinishedAttempt(c, userID)
 	c.JSON(http.StatusOK, gin.H{"message": "Finished attempt retrieved successfully", "data": attempt})
 }
