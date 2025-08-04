@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"auth-service/internal/logger"
 	"auth-service/internal/models"
 	"auth-service/internal/services"
 	"auth-service/pkg/utils/cookie"
@@ -11,6 +10,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/vityasyyy/sharedlib/logger"
 )
 
 type UserHandler struct {
@@ -146,13 +146,20 @@ func (h *UserHandler) RefreshTokenHandler(c *gin.Context) {
 
 func (h *UserHandler) ValidateUserAndGetInfoHandler(c *gin.Context) {
 	// get the user info from the context middleware
-	userID, _ := c.Get("user_id")
-	email, _ := c.Get("email")
-	username, _ := c.Get("nama_user")
-	asalSekolah, _ := c.Get("asal_sekolah")
+	claimsVal, exists := c.Get("claims")
+	if !exists {
+		c.JSON(http.StatusInternalServerError, gin.H{"message": "Failed to get user info from context"})
+		return
+	}
+
+	claims, ok := claimsVal.(jwt.AccessTokenClaims)
+	if !ok {
+		c.JSON(http.StatusInternalServerError, gin.H{"message": "Failed to get user info from context"})
+		return
+	}
 
 	// return the user info and status code 200
-	c.JSON(http.StatusOK, gin.H{"message": "Authorized and okay to proceed", "email": email, "user_id": userID, "username": username, "asal_sekolah": asalSekolah})
+	c.JSON(http.StatusOK, gin.H{"message": "Authorized and okay to proceed", "email": claims.Email, "user_id": claims.UserID, "username": claims.NamaUser, "asal_sekolah": claims.AsalSekolah})
 }
 
 func (h *UserHandler) RequestPasswordResetHandler(c *gin.Context) {

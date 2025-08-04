@@ -1,9 +1,10 @@
 package repositories
 
 import (
-	"auth-service/internal/logger"
 	"auth-service/internal/models"
 	"time"
+
+	"github.com/vityasyyy/sharedlib/logger"
 
 	"context"
 

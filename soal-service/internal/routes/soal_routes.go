@@ -2,7 +2,8 @@ package routes
 
 import (
 	"soal-service/internal/handlers"
-	"soal-service/internal/utils"
+
+	"github.com/vityasyyy/sharedlib/jwt"
 
 	"github.com/gin-gonic/gin"
 )
@@ -18,7 +19,7 @@ func InitializeRoutes(r *gin.Engine, soalHandler *handlers.SoalHandler) {
 	}
 
 	soal := r.Group("/soal")
-	soal.Use(utils.ValidateJWT())
+	soal.Use(jwt.ValidateJWT())
 	{
 		soal.GET("/:paket_soal", soalHandler.GetSoalByPaketAndSubtest)
 		soal.GET("/answer-key/:paket_soal", soalHandler.GetAnswerKeyByPaketAndSubtest)

@@ -1,12 +1,13 @@
 package services
 
 import (
-	"auth-service/internal/logger"
 	"auth-service/internal/models"
 	"auth-service/internal/repositories"
 	"auth-service/pkg/utils/jwt"
 	"context"
 	"time"
+
+	"github.com/vityasyyy/sharedlib/logger"
 )
 
 type RefreshTokenService interface {

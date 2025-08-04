@@ -48,7 +48,7 @@ type AccessTokenClaims struct {
 }
 
 // ---- INIT KEYS ----
-func init() {
+func InitKeys() {
 	directoryName := "keys"
 	if err := loadKeys(directoryName); err != nil {
 		panic(fmt.Sprintf("failed to load keys: %v", err))

@@ -2,6 +2,7 @@ package routes
 
 import (
 	"auth-service/internal/handlers"
+
 	"auth-service/pkg/utils/jwt"
 
 	"github.com/gin-gonic/gin"

@@ -1,9 +1,10 @@
 package repositories
 
 import (
-	"auth-service/internal/logger"
 	"auth-service/internal/models"
 	"context"
+
+	"github.com/vityasyyy/sharedlib/logger"
 
 	"github.com/jmoiron/sqlx"
 )

@@ -2,7 +2,8 @@ package routes
 
 import (
 	"minat-bakat-service/internal/handlers"
-	"minat-bakat-service/internal/utils"
+
+	"github.com/vityasyyy/sharedlib/jwt"
 
 	"github.com/gin-gonic/gin"
 )
@@ -18,7 +19,7 @@ func InitializeRoutes(r *gin.Engine, mbHandler *handlers.MinatBakatHandler) {
 	}
 
 	mb := r.Group("/minat-bakat")
-	mb.Use(utils.ValidateJWT())
+	mb.Use(jwt.ValidateJWT())
 	{
 		mb.POST("/process", mbHandler.ProcessMinatBakatHandler)
 		mb.GET("/attempt", mbHandler.GetMinatBakatAttemptHandler)

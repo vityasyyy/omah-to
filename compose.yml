@@ -160,6 +160,9 @@ services:
             - "traefik.http.routers.auth.rule=Host(`auth.omahto.localhost`)"
             - "traefik.http.routers.auth.entrypoints=websecure"
             - "traefik.http.routers.auth.tls=true"
+            - "traefik.http.middlewares.secure.headers.frameDeny=true"
+            - "traefik.http.middlewares.secure.headers.contentTypeNosniff=true"
+            - "traefik.http.routers.auth.middlewares=secure@docker"
             - "traefik.http.services.auth.loadbalancer.server.port=${AUTH_SERVICE_PORT}"
 
     # Soal service
@@ -199,6 +202,9 @@ services:
             - "traefik.http.routers.soal.rule=Host(`soal.omahto.localhost`)"
             - "traefik.http.routers.soal.entrypoints=websecure"
             - "traefik.http.routers.soal.tls=true"
+            - "traefik.http.middlewares.secure.headers.frameDeny=true"
+            - "traefik.http.middlewares.secure.headers.contentTypeNosniff=true"
+            - "traefik.http.routers.soal.middlewares=secure@docker"
             - "traefik.http.services.soal.loadbalancer.server.port=${SOAL_SERVICE_PORT}"
 
     # Tryout service
@@ -238,8 +244,10 @@ services:
             - "traefik.http.routers.tryout.rule=Host(`tryout.omahto.localhost`)"
             - "traefik.http.routers.tryout.entrypoints=websecure"
             - "traefik.http.routers.tryout.tls=true"
+            - "traefik.http.middlewares.secure.headers.frameDeny=true"
+            - "traefik.http.middlewares.secure.headers.contentTypeNosniff=true"
+            - "traefik.http.routers.tryout.middlewares=secure@docker"
             - "traefik.http.services.tryout.loadbalancer.server.port=${TRYOUT_SERVICE_PORT}"
-
     # Minat bakat service
     minat-bakat-service-db:
         image: postgres:17.2-alpine
@@ -280,7 +288,10 @@ services:
             - "traefik.http.routers.mb.rule=Host(`mb.omahto.localhost`)"
             - "traefik.http.routers.mb.entrypoints=websecure"
             - "traefik.http.routers.mb.tls=true"
-            - "traefik.http.services.mb.loadbalancer.server.port=${MINAT_BAKAT_SERVICE_PORT}"
+            - "traefik.http.middlewares.secure.headers.frameDeny=true"
+            - "traefik.http.middlewares.secure.headers.contentTypeNosniff=true"
+            - "traefik.http.routers.mb.middlewares=secure@docker"
+            - "traefik.http.services.mb.loadbalancer.server.port=${MINAT_BAKAT_SERVICE_PORT}" 
 
 networks:
     omahtryout-network:

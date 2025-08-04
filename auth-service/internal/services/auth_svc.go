@@ -1,12 +1,13 @@
 package services
 
 import (
-	"auth-service/internal/logger"
 	"auth-service/internal/models"
 	"auth-service/internal/repositories"
 	"auth-service/pkg/utils/emailer"
 	"auth-service/pkg/utils/hash"
 	"auth-service/pkg/utils/jwt"
+
+	"github.com/vityasyyy/sharedlib/logger"
 
 	"context"
 	"errors"
