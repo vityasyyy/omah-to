@@ -2,7 +2,8 @@ package routes
 
 import (
 	"tryout-service/internal/handlers"
-	"tryout-service/internal/utils"
+
+	"github.com/vityasyyy/sharedlib/jwt"
 
 	"github.com/gin-gonic/gin"
 )
@@ -18,7 +19,7 @@ func InitializeRoutes(r *gin.Engine, tryoutHandler *handlers.TryoutHandler, page
 	}
 
 	tryout := r.Group("/tryout")
-	tryout.Use(utils.ValidateJWT())
+	tryout.Use(jwt.ValidateJWT())
 	{
 		tryout.POST("/start-attempt/:paket", tryoutHandler.StartAttempt)
 		tryout.GET("/pembahasan", pageHandler.GetPembahasanPageHandler)

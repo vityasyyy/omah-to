@@ -2,8 +2,9 @@ package repositories
 
 import (
 	"context"
-	"minat-bakat-service/internal/logger"
 	"minat-bakat-service/internal/models"
+
+	"github.com/vityasyyy/sharedlib/logger"
 
 	"github.com/jmoiron/sqlx"
 )

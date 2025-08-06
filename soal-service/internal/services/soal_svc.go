@@ -2,9 +2,10 @@ package services
 
 import (
 	"context"
-	"soal-service/internal/logger"
 	"soal-service/internal/models"
 	"soal-service/internal/repositories"
+
+	"github.com/vityasyyy/sharedlib/logger"
 )
 
 type SoalService interface {

@@ -2,8 +2,9 @@ package repositories
 
 import (
 	"context"
-	"tryout-service/internal/logger"
 	"tryout-service/internal/models"
+
+	"github.com/vityasyyy/sharedlib/logger"
 
 	"github.com/jmoiron/sqlx"
 )

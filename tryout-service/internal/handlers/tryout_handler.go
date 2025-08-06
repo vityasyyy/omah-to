@@ -2,9 +2,10 @@ package handlers
 
 import (
 	"net/http"
-	"tryout-service/internal/logger"
 	"tryout-service/internal/models"
 	"tryout-service/internal/services"
+
+	"github.com/vityasyyy/sharedlib/logger"
 
 	"github.com/gin-gonic/gin"
 )

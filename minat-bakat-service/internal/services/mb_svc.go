@@ -3,9 +3,10 @@ package services
 import (
 	"context"
 	"errors"
-	"minat-bakat-service/internal/logger"
 	"minat-bakat-service/internal/models"
 	"minat-bakat-service/internal/repositories"
+
+	"github.com/vityasyyy/sharedlib/logger"
 )
 
 type MinatBakatService interface {

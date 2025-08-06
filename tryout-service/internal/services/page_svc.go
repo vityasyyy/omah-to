@@ -3,9 +3,10 @@ package services
 import (
 	"context"
 	"sync"
-	"tryout-service/internal/logger"
 	"tryout-service/internal/models"
 	"tryout-service/internal/repositories"
+
+	"github.com/vityasyyy/sharedlib/logger"
 
 	"golang.org/x/sync/errgroup"
 )

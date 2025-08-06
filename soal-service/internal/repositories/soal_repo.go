@@ -2,12 +2,12 @@ package repositories
 
 import (
 	"context"
-	"soal-service/internal/logger"
 	"soal-service/internal/models"
 
 	"database/sql"
 
 	"github.com/jmoiron/sqlx"
+	"github.com/vityasyyy/sharedlib/logger"
 )
 
 type SoalRepo interface {

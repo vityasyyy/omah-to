@@ -3,8 +3,9 @@ package handlers
 import (
 	"net/http"
 
-	"soal-service/internal/logger"
 	"soal-service/internal/services"
+
+	"github.com/vityasyyy/sharedlib/logger"
 
 	"github.com/gin-gonic/gin"
 )

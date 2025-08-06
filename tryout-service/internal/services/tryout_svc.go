@@ -5,9 +5,10 @@ import (
 	"errors"
 	"fmt"
 	"time"
-	"tryout-service/internal/logger"
 	"tryout-service/internal/models"
 	"tryout-service/internal/repositories"
+
+	"github.com/vityasyyy/sharedlib/logger"
 )
 
 type TryoutService interface {

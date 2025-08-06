@@ -1,10 +1,11 @@
 package handlers
 
 import (
-	"minat-bakat-service/internal/logger"
 	"minat-bakat-service/internal/models"
 	"minat-bakat-service/internal/services"
 	"net/http"
+
+	"github.com/vityasyyy/sharedlib/logger"
 
 	"github.com/gin-gonic/gin"
 )

@@ -5,9 +5,10 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"tryout-service/internal/logger"
 	"tryout-service/internal/models"
 	"tryout-service/internal/repositories"
+
+	"github.com/vityasyyy/sharedlib/logger"
 
 	"github.com/jmoiron/sqlx"
 )
