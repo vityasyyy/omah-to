@@ -29,7 +29,7 @@ func (h *TryoutHandler) StartAttempt(c *gin.Context) {
 		return
 	}
 	// start the attempt, making a new record in the database
-	attempt, err := h.tryoutService.StartAttempt(c, userID, username, paket, accessToken)
+	attempt, err := h.tryoutService.StartAttempt(c, userID, username, paket)
 	if err != nil {
 		logger.LogErrorCtx(c, err, "Failed to start attempt")
 		c.JSON(http.StatusInternalServerError, gin.H{"message": "Failed to start attempt", "error": err.Error()})
@@ -40,7 +40,6 @@ func (h *TryoutHandler) StartAttempt(c *gin.Context) {
 }
 
 func (h *TryoutHandler) SyncHandler(c *gin.Context) {
-	attemptID := c.GetInt("attempt_id")
 	userID := c.GetInt("user_id")
 	var answers struct {
 		Answers []models.AnswerPayload `json:"answers" binding:"required,dive"`
@@ -51,23 +50,22 @@ func (h *TryoutHandler) SyncHandler(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"message": "Invalid input", "error": err.Error()})
 		return
 	}
-	answersInDB, timeLimit, err := h.tryoutService.SyncWithDatabase(c, answers.Answers, attemptID)
+	answersInDB, timeLimit, err := h.tryoutService.SyncWithDatabase(c, answers.Answers, userID)
 	if err != nil {
 		logger.LogErrorCtx(c, err, "Failed to sync answers")
 		c.JSON(http.StatusInternalServerError, gin.H{"message": "Failed to sync answers", "error": err.Error()})
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"message": "Successfully synced answers", "data": gin.H{"answers": answersInDB, "time_limit": timeLimit}, "attemptID": attemptID, "userID": userID})
+	c.JSON(http.StatusOK, gin.H{"message": "Successfully synced answers", "data": gin.H{"answers": answersInDB, "time_limit": timeLimit}, "userID": userID})
 }
 
 func (h *TryoutHandler) ProgressTryoutHandler(c *gin.Context) {
-	attemptID := c.GetInt("attempt_id")
 	userID := c.GetInt("user_id")
-	tryoutToken, err := c.Cookie("tryout_token")
-	if err != nil {
-		logger.LogErrorCtx(c, err, "Failed to get tryout token")
-		c.JSON(http.StatusInternalServerError, gin.H{"message": "failed to get tryout token"})
+	accessToken, err := c.Cookie("access_token")
+	if err != nil || accessToken == "" {
+		logger.LogErrorCtx(c, err, "Access token not found in cookie")
+		c.JSON(http.StatusUnauthorized, gin.H{"message": "Access token is required"})
 		return
 	}
 	var answers struct {
@@ -80,7 +78,7 @@ func (h *TryoutHandler) ProgressTryoutHandler(c *gin.Context) {
 		return
 	}
 
-	updatedSubtest, err := h.tryoutService.SubmitCurrentSubtest(c, answers.Answers, attemptID, userID, tryoutToken)
+	updatedSubtest, err := h.tryoutService.SubmitCurrentSubtest(c, answers.Answers, userID, accessToken)
 	if err != nil {
 		logger.LogErrorCtx(c, err, "Failed to submit answers")
 		c.JSON(http.StatusInternalServerError, gin.H{"message": "Failed to submit answers", "error": err.Error()})
@@ -90,8 +88,8 @@ func (h *TryoutHandler) ProgressTryoutHandler(c *gin.Context) {
 }
 
 func (h *TryoutHandler) GetCurrentAttempt(c *gin.Context) {
-	attemptID := c.GetInt("attempt_id")
-	attempt, err := h.tryoutService.GetCurrentAttempt(c, attemptID)
+	userID := c.GetInt("user_id")
+	attempt, err := h.tryoutService.GetCurrentAttempt(c, userID)
 	if err != nil {
 		logger.LogErrorCtx(c, err, "Failed to get current attempt")
 		c.JSON(http.StatusInternalServerError, gin.H{"message": "Failed to get current attempt", "error": err.Error()})

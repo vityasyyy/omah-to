@@ -41,21 +41,21 @@ type AnswerPayload struct {
 }
 
 type AnswerKeys struct {
-	PilihanGandaAnswers map[string]map[string]struct { // Now groups by KodeSoal
+	PilihanGandaAnswers map[string]map[string]struct {
 		IsCorrect   bool
 		Bobot       int
 		TextPilihan string
 		Pembahasan  string
 	} `json:"pilihan_ganda,omitempty"`
 
-	TrueFalseAnswers map[string]struct { // Now groups by KodeSoal
+	TrueFalseAnswers map[string]struct {
 		Jawaban     string
 		Bobot       int
 		TextPilihan string
 		Pembahasan  string
 	} `json:"true_false,omitempty"`
 
-	UraianAnswers map[string]struct { // Now groups by KodeSoal
+	UraianAnswers map[string]struct {
 		Jawaban    string
 		Bobot      int
 		Pembahasan string
@@ -71,4 +71,18 @@ type EnrichedUserAnswer struct {
 	Bobot       int    `json:"bobot"`
 	TextPilihan string `json:"text_pilihan,omitempty"` // Only for MCQ/True-False
 	Pembahasan  string `json:"pembahasan"`
+}
+
+type KafkaAnswerEvent struct {
+	AttemptID int          `json:"attempt_id"`
+	UserID    int          `json:"user_id"`
+	Subtest   string       `json:"subtest"`
+	Answers   []UserAnswer `json:"answers"` // Use the concrete UserAnswer struct
+}
+
+// KafkaScoringEvent is published when a tryout is finished and needs scoring
+type KafkaScoringEvent struct {
+	AttemptID   int    `json:"attempt_id"`
+	UserID      int    `json:"user_id"`
+	AccessToken string `json:"access_token"`
 }

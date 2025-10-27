@@ -25,7 +25,7 @@ func NewMinatBakatService(minatBakatRepo repositories.MbRepo) MinatBakatService 
 func (s *minatBakatService) ProcessMinatBakatAnswers(c context.Context, userID int, answers []models.MinatBakatAnswers) (string, error) {
 	existingAttempt, _ := s.minatBakatRepo.GetMinatBakatFromUserID(c, userID)
 	if existingAttempt != nil {
-		logger.LogErrorCtx(c, errors.New("user already has minat bakat attempt"), "User already has minat bakat attempt", map[string]interface{}{"user_id": userID})
+		logger.LogErrorCtx(c, errors.New("user already has minat bakat attempt"), "User already has minat bakat attempt", map[string]any{"user_id": userID})
 		// Return an error if the user already has a minat
 		return "", errors.New("user already has minat bakat attempt")
 	}
@@ -66,7 +66,7 @@ func (s *minatBakatService) ProcessMinatBakatAnswers(c context.Context, userID i
 func (s *minatBakatService) GetMinatBakatAttempt(c context.Context, userID int) (*models.MinatBakatAttempt, error) {
 	attempt, err := s.minatBakatRepo.GetMinatBakatFromUserID(c, userID)
 	if err != nil {
-		logger.LogErrorCtx(c, err, "Failed to get minat bakat attempt", map[string]interface{}{"user_id": userID})
+		logger.LogErrorCtx(c, err, "Failed to get minat bakat attempt", map[string]any{"user_id": userID})
 		return nil, err
 	}
 

@@ -24,7 +24,7 @@ func (h *SoalHandler) GetSoalByPaketAndSubtest(c *gin.Context) {
 
 	soalGabungans, err := h.soalService.GetSoalByPaketAndSubtest(c, paketSoal, subtest)
 	if err != nil {
-		logger.LogErrorCtx(c, err, "Failed to get soal by paket and subtest", map[string]interface{}{"paket_soal": paketSoal, "subtest": subtest})
+		logger.LogErrorCtx(c, err, "Failed to get soal by paket and subtest", map[string]any{"paket_soal": paketSoal, "subtest": subtest})
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "failed to get soal by paket and subtest"})
 		return
 	}
@@ -37,7 +37,7 @@ func (h *SoalHandler) GetAnswerKeyByPaketAndSubtest(c *gin.Context) {
 
 	answerKeys, err := h.soalService.GetAnswerKeyByPaketAndSubtest(c, paketSoal, subtest)
 	if err != nil {
-		logger.LogErrorCtx(c, err, "Failed to get answer key by paket and subtest", map[string]interface{}{"paket_soal": paketSoal, "subtest": subtest})
+		logger.LogErrorCtx(c, err, "Failed to get answer key by paket and subtest", map[string]any{"paket_soal": paketSoal, "subtest": subtest})
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "failed to get answer key by paket and subtest"})
 		return
 	}

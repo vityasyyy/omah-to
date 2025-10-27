@@ -31,7 +31,7 @@ func (h *PageHandler) GetUserSubtestsScore(c *gin.Context) {
 	userID := c.GetInt("user_id")
 	subtestsScore, err := h.pageService.GetUserSubtestNilai(c, userID)
 	if err != nil {
-		logger.LogErrorCtx(c, err, "Failed to get subtest score", map[string]interface{}{"user_id": userID})
+		logger.LogErrorCtx(c, err, "Failed to get subtest score", map[string]any{"user_id": userID})
 		c.JSON(http.StatusInternalServerError, gin.H{"message": "Failed to get subtest score", "error": err.Error()})
 		return
 	}
@@ -54,7 +54,7 @@ func (h *PageHandler) GetPembahasanPageHandler(c *gin.Context) {
 	// call the service to get the pembahasan page
 	enrichedAnswers, averageScores, rank, subtestsScores, err := h.pageService.GetPembahasanPage(requestContext, userID, paket, accessToken)
 	if err != nil {
-		logger.LogErrorCtx(c, err, "Failed to get pembahasan page", map[string]interface{}{
+		logger.LogErrorCtx(c, err, "Failed to get pembahasan page", map[string]any{
 			"user_id": userID,
 			"paket":   paket,
 			"token":   accessToken,

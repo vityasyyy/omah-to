@@ -2,7 +2,7 @@
 FROM golang:1.24.4-alpine3.21 AS builder
 
 # install git to download go dependencies
-RUN apk add --no-cache git
+RUN apk add --no-cache git build-base librdkafka-dev
 
 #make a directory in the container to store all our application and navigate into it
 WORKDIR /app/

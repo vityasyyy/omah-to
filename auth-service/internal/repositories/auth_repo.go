@@ -56,7 +56,7 @@ func (r *authRepo) GetUserByEmail(c context.Context, email string) (*models.User
 		logger.LogErrorCtx(c, err, "Failed to get user by email")
 		return nil, err
 	}
-	logger.LogDebugCtx(c, "User retrieved by email", map[string]interface{}{"email": email})
+	logger.LogDebugCtx(c, "User retrieved by email", map[string]any{"email": email})
 	return &user, nil
 }
 
@@ -68,7 +68,7 @@ func (r *authRepo) GetUserByID(c context.Context, userID int) (*models.User, err
 		logger.LogErrorCtx(c, err, "Failed to get user by ID")
 		return nil, err
 	}
-	logger.LogDebugCtx(c, "User retrieved by ID", map[string]interface{}{"user_id": userID})
+	logger.LogDebugCtx(c, "User retrieved by ID", map[string]any{"user_id": userID})
 	return &user, nil
 }
 
@@ -76,7 +76,7 @@ func (r *authRepo) ResetPassword(c context.Context, newPassword, resetToken stri
 	query := "UPDATE users SET password = $1, reset_token = NULL, reset_token_expired_at = NULL WHERE reset_token = $2 AND reset_token_expired_at > CURRENT_TIMESTAMP"
 	_, err := r.db.Exec(query, newPassword, resetToken)
 	if err != nil {
-		logger.LogErrorCtx(c, err, "Failed to reset password", map[string]interface{}{"reset_token": resetToken})
+		logger.LogErrorCtx(c, err, "Failed to reset password", map[string]any{"reset_token": resetToken})
 		return err
 	}
 	logger.LogDebugCtx(c, "Password reset")
@@ -87,9 +87,9 @@ func (r *authRepo) RequestingPasswordReset(c context.Context, email, resetToken 
 	query := "UPDATE users SET reset_token = $1, reset_token_expired_at = $2 WHERE email = $3"
 	_, err := r.db.Exec(query, resetToken, resetTokenExpiredAt, email)
 	if err != nil {
-		logger.LogErrorCtx(c, err, "Failed to request password reset", map[string]interface{}{"email": email, "reset_token": resetToken})
+		logger.LogErrorCtx(c, err, "Failed to request password reset", map[string]any{"email": email, "reset_token": resetToken})
 		return err
 	}
-	logger.LogDebugCtx(c, "Password reset requested", map[string]interface{}{"email": email, "reset_token": resetToken})
+	logger.LogDebugCtx(c, "Password reset requested", map[string]any{"email": email, "reset_token": resetToken})
 	return nil
 }

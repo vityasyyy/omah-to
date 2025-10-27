@@ -25,7 +25,7 @@ func NewSoalService(soalRepo repositories.SoalRepo) SoalService {
 func (s *soalService) GetSoalByPaketAndSubtest(c context.Context, paketSoal, subtest string) ([]models.SoalGabungan, error) {
 	soalGabungans, err := s.soalRepo.GetSoalByPaketAndSubtest(c, paketSoal, subtest)
 	if err != nil {
-		logger.LogErrorCtx(c, err, "Failed to get soal by paket and subtest", map[string]interface{}{"paket_soal": paketSoal, "subtest": subtest})
+		logger.LogErrorCtx(c, err, "Failed to get soal by paket and subtest", map[string]any{"paket_soal": paketSoal, "subtest": subtest})
 		return nil, err
 	}
 
@@ -35,7 +35,7 @@ func (s *soalService) GetSoalByPaketAndSubtest(c context.Context, paketSoal, sub
 func (s *soalService) GetAnswerKeyByPaketAndSubtest(c context.Context, paketSoal, subtest string) (*models.AnswerKeys, error) {
 	answerKeys, err := s.soalRepo.GetAnswerKeyByPaketAndSubtest(c, paketSoal, subtest)
 	if err != nil {
-		logger.LogErrorCtx(c, err, "Failed to get answer key by paket and subtest", map[string]interface{}{"paket_soal": paketSoal, "subtest": subtest})
+		logger.LogErrorCtx(c, err, "Failed to get answer key by paket and subtest", map[string]any{"paket_soal": paketSoal, "subtest": subtest})
 		return nil, err
 	}
 

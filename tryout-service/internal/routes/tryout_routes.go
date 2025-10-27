@@ -29,10 +29,10 @@ func InitializeRoutes(r *gin.Engine, tryoutHandler *handlers.TryoutHandler, page
 		tryout.GET("/finished-attempt", pageHandler.GetFinishedAttemptHandler)
 	}
 
-	sync := tryout.Group("/sync")
+	attempt := tryout.Group("/attempt")
 	{
-		sync.POST("", tryoutHandler.SyncHandler)
-		sync.POST("/progress", tryoutHandler.ProgressTryoutHandler)
-		sync.GET("/current", tryoutHandler.GetCurrentAttempt)
+		attempt.POST("/sync", tryoutHandler.SyncHandler)
+		attempt.POST("/submit", tryoutHandler.ProgressTryoutHandler)
+		attempt.GET("/status", tryoutHandler.GetCurrentAttempt)
 	}
 }

@@ -43,7 +43,7 @@ func (r *soalRepo) GetSoalByPaketAndSubtest(c context.Context, paketSoal, subtes
 
 	rows, err := r.db.Queryx(query, paketSoal, subtest)
 	if err != nil {
-		logger.LogErrorCtx(c, err, "Failed to query soal by paket and subtest", map[string]interface{}{"paket_soal": paketSoal, "subtest": subtest})
+		logger.LogErrorCtx(c, err, "Failed to query soal by paket and subtest", map[string]any{"paket_soal": paketSoal, "subtest": subtest})
 		return nil, err
 	}
 	defer rows.Close()
@@ -61,7 +61,7 @@ func (r *soalRepo) GetSoalByPaketAndSubtest(c context.Context, paketSoal, subtes
 			&uraianID,
 		)
 		if err != nil {
-			logger.LogErrorCtx(c, err, "Failed to scan soal by paket and subtest", map[string]interface{}{"paket_soal": paketSoal, "subtest": subtest})
+			logger.LogErrorCtx(c, err, "Failed to scan soal by paket and subtest", map[string]any{"paket_soal": paketSoal, "subtest": subtest})
 			return nil, err
 		}
 
@@ -97,7 +97,7 @@ func (r *soalRepo) GetSoalByPaketAndSubtest(c context.Context, paketSoal, subtes
 	for _, soal := range mappedSoal {
 		listSoal = append(listSoal, *soal)
 	}
-	logger.LogDebugCtx(c, "Soal retrieved successfully", map[string]interface{}{"paket_soal": paketSoal, "subtest": subtest})
+	logger.LogDebugCtx(c, "Soal retrieved successfully", map[string]any{"paket_soal": paketSoal, "subtest": subtest})
 	return listSoal, nil
 }
 
@@ -131,7 +131,7 @@ func (r *soalRepo) GetAnswerKeyByPaketAndSubtest(c context.Context, paketSoal, s
 	`
 	pgRows, err := r.db.Queryx(pgQuery, paketSoal, subtest)
 	if err != nil {
-		logger.LogErrorCtx(c, err, "Failed to query pilihan ganda by paket and subtest", map[string]interface{}{"paket_soal": paketSoal, "subtest": subtest})
+		logger.LogErrorCtx(c, err, "Failed to query pilihan ganda by paket and subtest", map[string]any{"paket_soal": paketSoal, "subtest": subtest})
 		return nil, err
 	}
 	defer pgRows.Close()
@@ -144,7 +144,7 @@ func (r *soalRepo) GetAnswerKeyByPaketAndSubtest(c context.Context, paketSoal, s
 		var textPilihan string
 		var pembahasan string
 		if err := pgRows.Scan(&pilihanGandaID, &isCorrect, &bobot, &kodeSoal, &pembahasan, &textPilihan); err != nil {
-			logger.LogErrorCtx(c, err, "Failed to scan pilihan ganda by paket and subtest", map[string]interface{}{"paket_soal": paketSoal, "subtest": subtest})
+			logger.LogErrorCtx(c, err, "Failed to scan pilihan ganda by paket and subtest", map[string]any{"paket_soal": paketSoal, "subtest": subtest})
 			return nil, err
 		}
 
@@ -176,7 +176,7 @@ func (r *soalRepo) GetAnswerKeyByPaketAndSubtest(c context.Context, paketSoal, s
 	`
 	tfRows, err := r.db.Queryx(tfQuery, paketSoal, subtest)
 	if err != nil {
-		logger.LogErrorCtx(c, err, "Failed to query true false by paket and subtest", map[string]interface{}{"paket_soal": paketSoal, "subtest": subtest})
+		logger.LogErrorCtx(c, err, "Failed to query true false by paket and subtest", map[string]any{"paket_soal": paketSoal, "subtest": subtest})
 		return nil, err
 	}
 	defer tfRows.Close()
@@ -189,7 +189,7 @@ func (r *soalRepo) GetAnswerKeyByPaketAndSubtest(c context.Context, paketSoal, s
 		var pembahasan string
 
 		if err := tfRows.Scan(&jawaban, &bobot, &kodeSoal, &pembahasan, &textPilihan); err != nil {
-			logger.LogErrorCtx(c, err, "Failed to scan true false by paket and subtest", map[string]interface{}{"paket_soal": paketSoal, "subtest": subtest})
+			logger.LogErrorCtx(c, err, "Failed to scan true false by paket and subtest", map[string]any{"paket_soal": paketSoal, "subtest": subtest})
 			return nil, err
 		}
 
@@ -211,7 +211,7 @@ func (r *soalRepo) GetAnswerKeyByPaketAndSubtest(c context.Context, paketSoal, s
 	`
 	uraianRows, err := r.db.Queryx(uraianQuery, paketSoal, subtest)
 	if err != nil {
-		logger.LogErrorCtx(c, err, "Failed to query uraian by paket and subtest", map[string]interface{}{"paket_soal": paketSoal, "subtest": subtest})
+		logger.LogErrorCtx(c, err, "Failed to query uraian by paket and subtest", map[string]any{"paket_soal": paketSoal, "subtest": subtest})
 		return nil, err
 	}
 	defer uraianRows.Close()
@@ -223,7 +223,7 @@ func (r *soalRepo) GetAnswerKeyByPaketAndSubtest(c context.Context, paketSoal, s
 		var pembahasan string
 
 		if err := uraianRows.Scan(&jawaban, &bobot, &kodeSoal, &pembahasan); err != nil {
-			logger.LogErrorCtx(c, err, "Failed to scan uraian by paket and subtest", map[string]interface{}{"paket_soal": paketSoal, "subtest": subtest})
+			logger.LogErrorCtx(c, err, "Failed to scan uraian by paket and subtest", map[string]any{"paket_soal": paketSoal, "subtest": subtest})
 			return nil, err
 		}
 
@@ -235,7 +235,7 @@ func (r *soalRepo) GetAnswerKeyByPaketAndSubtest(c context.Context, paketSoal, s
 		}{Jawaban: jawaban.String, Bobot: bobot, Pembahasan: pembahasan}
 	}
 
-	logger.LogDebugCtx(c, "Answer keys retrieved successfully", map[string]interface{}{"paket_soal": paketSoal, "subtest": subtest})
+	logger.LogDebugCtx(c, "Answer keys retrieved successfully", map[string]any{"paket_soal": paketSoal, "subtest": subtest})
 
 	return answers, nil
 }

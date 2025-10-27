@@ -48,7 +48,7 @@ func (r *mbRepo) GetMinatBakatFromUserID(c context.Context, userID int) (*models
 	var attempt models.MinatBakatAttempt
 	err := r.db.Get(&attempt, query, userID)
 	if err != nil {
-		logger.LogErrorCtx(c, err, "Failed to get minat bakat from user id", map[string]interface{}{"user_id": userID})
+		logger.LogErrorCtx(c, err, "Failed to get minat bakat from user id", map[string]any{"user_id": userID})
 		return nil, err
 	}
 

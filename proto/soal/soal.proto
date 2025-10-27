@@ -1,0 +1,44 @@
+syntax = "proto3";
+
+package soal;
+
+option go_package = "github.com/vityasyyy/omah-to/soal-service/internal/proto/soal";
+
+service SoalService {
+  rpc GetAnswerKey (GetAnswerKeyRequest) returns (GetAnswerKeyResponse);
+}
+
+message GetAnswerKeyRequest {
+  string paket_soal = 1;
+  string subtest = 2;
+}
+
+message GetAnswerKeyResponse {
+  map<string, PilihanGandaMap> pilihan_ganda_answers = 1;
+  map<string, TrueFalseAnswer> true_false_answers = 2;
+  map<string, UraianAnswer> uraian_answers = 3;
+}
+
+message PilihanGandaMap {
+  map<string, PilihanGandaChoice> choices = 1;
+}
+
+message PilihanGandaChoice {
+  bool is_correct = 1;
+  int32 bobot = 2;
+  string text_pilihan = 3;
+  string pembahasan = 4;
+}
+
+message TrueFalseAnswer {
+  string jawaban = 1;
+  int32 bobot = 2;
+  string text_pilihan = 3;
+  string pembahasan = 4;
+}
+
+message UraianAnswer {
+  string jawaban = 1;
+  int32 bobot = 2;
+  string pembahasan = 3;
+}

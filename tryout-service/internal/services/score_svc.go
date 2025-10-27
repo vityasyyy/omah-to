@@ -2,15 +2,16 @@ package services
 
 import (
 	"context"
-	"encoding/json"
 	"fmt"
-	"net/http"
 	"tryout-service/internal/models"
 	"tryout-service/internal/repositories"
+
+	pb "tryout-service/internal/proto/soal"
 
 	"github.com/vityasyyy/sharedlib/logger"
 
 	"github.com/jmoiron/sqlx"
+	"google.golang.org/grpc/metadata"
 )
 
 type ScoreService interface {
@@ -21,14 +22,15 @@ type ScoreService interface {
 
 // scoreService is a struct that represents the service for score, has a dependency on score repo (injected), http client, and soal service url
 type scoreService struct {
-	scoreRepo      repositories.ScoreRepo
-	httpClient     *http.Client
-	soalServiceURL string
+	scoreRepo repositories.ScoreRepo
+	// httpClient     *http.Client
+	// soalServiceURL string
+	soalClient pb.SoalServiceClient
 }
 
 // NewScoreService is a factory function that returns a new instance of score service
-func NewScoreService(scoreRepo repositories.ScoreRepo, soalServiceURL string) ScoreService {
-	return &scoreService{scoreRepo: scoreRepo, httpClient: &http.Client{}, soalServiceURL: soalServiceURL}
+func NewScoreService(scoreRepo repositories.ScoreRepo, soalClient pb.SoalServiceClient) ScoreService {
+	return &scoreService{scoreRepo: scoreRepo, soalClient: soalClient}
 }
 
 // CalculateAndStoreScores is a function that calculates the score for each subtest and stores it in the database
@@ -40,14 +42,14 @@ func (s *scoreService) CalculateAndStoreScores(c context.Context, tx *sqlx.Tx, a
 		// get the user answers for this subtest from the user_answers table, for every subtest
 		userAnswers, err := s.scoreRepo.GetUserAnswersFromAttemptIDandSubtestTx(c, tx, attemptID, subtest)
 		if err != nil {
-			logger.LogErrorCtx(c, err, "Failed to get user answers from attempt ID and subtest", map[string]interface{}{"attempt_id": attemptID, "subtest": subtest})
+			logger.LogErrorCtx(c, err, "Failed to get user answers from attempt ID and subtest", map[string]any{"attempt_id": attemptID, "subtest": subtest})
 			return err
 		}
 
 		// get the answer key for this subtest, call the soal service api
 		answerKey, err := s.GetAnswerKeyBasedOnSubtestFromSoalService(c, subtest, tryoutToken, "tryout")
 		if err != nil {
-			logger.LogErrorCtx(c, err, "Failed to get answer key from soal service", map[string]interface{}{"subtest": subtest})
+			logger.LogErrorCtx(c, err, "Failed to get answer key from soal service", map[string]any{"subtest": subtest})
 			return err
 		}
 
@@ -56,7 +58,7 @@ func (s *scoreService) CalculateAndStoreScores(c context.Context, tx *sqlx.Tx, a
 
 		// store the score for this subtest
 		if err := s.scoreRepo.InsertScoreForUserAttemptIDAndSubtestTx(c, tx, attemptID, userID, subtest, score); err != nil {
-			logger.LogErrorCtx(c, err, "Failed to insert score for user attempt ID and subtest", map[string]interface{}{
+			logger.LogErrorCtx(c, err, "Failed to insert score for user attempt ID and subtest", map[string]any{
 				"attempt_id": attemptID,
 				"user_id":    userID,
 				"subtest":    subtest,
@@ -69,12 +71,12 @@ func (s *scoreService) CalculateAndStoreScores(c context.Context, tx *sqlx.Tx, a
 
 	averageScore, err := s.scoreRepo.CalculateAverageScoreForAttempt(c, tx, attemptID)
 	if err != nil {
-		logger.LogErrorCtx(c, err, "Failed to calculate average score for attempt", map[string]interface{}{"attempt_id": attemptID})
+		logger.LogErrorCtx(c, err, "Failed to calculate average score for attempt", map[string]any{"attempt_id": attemptID})
 		return err
 	}
 
 	if err := s.scoreRepo.UpdateScoreForTryOutAttempt(c, tx, attemptID, averageScore); err != nil {
-		logger.LogErrorCtx(c, err, "Failed to update score for tryout attempt", map[string]interface{}{"attempt_id": attemptID})
+		logger.LogErrorCtx(c, err, "Failed to update score for tryout attempt", map[string]any{"attempt_id": attemptID})
 		return err
 	}
 
@@ -83,55 +85,50 @@ func (s *scoreService) CalculateAndStoreScores(c context.Context, tx *sqlx.Tx, a
 
 // make a function that retrieves the answer key from the soal service and the subtest, also distinguish them from the soal type and shit type shit bro
 func (s *scoreService) GetAnswerKeyBasedOnSubtestFromSoalService(c context.Context, subtest, token, tokenType string) (*models.AnswerKeys, error) {
-	// NANTI PAKETNYA DYNAMIC YAA JANGAN STATIC, FORGOT BRO PLES
-	url := fmt.Sprintf("%s/soal/answer-key/paket1?subtest=%s", s.soalServiceURL, subtest)
-	// make a new request and add cookie to the header
-	req, err := http.NewRequest("GET", url, nil)
-	if err != nil {
-		logger.LogErrorCtx(c, err, "Failed to create request for answer key", map[string]interface{}{"subtest": subtest})
-		return nil, err
+	// 1. Create gRPC request
+	req := &pb.GetAnswerKeyRequest{
+		PaketSoal: "paket1", // This is still hardcoded, as in your original
+		Subtest:   subtest,
 	}
+
+	// 2. Add authentication token to gRPC metadata (context)
+	var cookieName string
 	switch tokenType {
 	case "tryout":
-		req.Header.Add("Cookie", fmt.Sprintf("tryout_token=%s", token))
+		cookieName = "tryout_token"
 	case "access":
-		req.Header.Add("Cookie", fmt.Sprintf("access_token=%s", token))
+		cookieName = "access_token"
 	default:
 		err := fmt.Errorf("invalid token type: %s", tokenType)
-		logger.LogErrorCtx(c, err, "Invalid token type provided", map[string]interface{}{"subtest": subtest})
+		logger.LogErrorCtx(c, err, "Invalid token type provided", map[string]any{"subtest": subtest})
 		return nil, err
 	}
 
-	// Send the request
-	resp, err := s.httpClient.Do(req)
+	// Create context with metadata
+	md := metadata.Pairs("cookie", fmt.Sprintf("%s=%s", cookieName, token))
+	ctx := metadata.NewOutgoingContext(c, md)
+
+	// 3. Call gRPC service
+	resp, err := s.soalClient.GetAnswerKey(ctx, req)
 	if err != nil {
-		logger.LogErrorCtx(c, err, "Failed to send request to fetch answer key", map[string]interface{}{"subtest": subtest})
-		return nil, err
-	}
-	defer resp.Body.Close()
-
-	// Handle non-200 responses
-	if resp.StatusCode != http.StatusOK {
-		err := fmt.Errorf("unexpected response status: %d", resp.StatusCode)
-		logger.LogErrorCtx(c, err, "Unexpected response status when fetching answer key", map[string]interface{}{"subtest": subtest, "status_code": resp.StatusCode})
+		logger.LogErrorCtx(c, err, "gRPC call to GetAnswerKey failed", map[string]any{"subtest": subtest})
 		return nil, err
 	}
 
-	// Parse the response body
-	var answerKey models.AnswerKeys
-	if err := json.NewDecoder(resp.Body).Decode(&answerKey); err != nil {
-		logger.LogErrorCtx(c, err, "Failed to decode response body for answer key", map[string]interface{}{"subtest": subtest})
+	// 4. Convert gRPC response back to internal model
+	answerKey, err := convertToProtoModel(resp)
+	if err != nil {
+		logger.LogErrorCtx(c, err, "gRPC: failed to convert proto to model", map[string]any{"subtest": subtest})
 		return nil, err
 	}
 
-	// Check if answerKey is empty
-	if isAnswerKeyEmpty(answerKey) {
+	if isAnswerKeyEmpty(*answerKey) {
 		err := fmt.Errorf("answer key is empty for subtest: %s", subtest)
-		logger.LogErrorCtx(c, err, "Empty answer key received", map[string]interface{}{"subtest": subtest})
+		logger.LogErrorCtx(c, err, "Empty answer key received", map[string]any{"subtest": subtest})
 		return nil, err
 	}
 
-	return &answerKey, nil
+	return answerKey, nil
 }
 
 // isAnswerKeyEmpty checks if the answer key is empty
@@ -153,7 +150,7 @@ func (s *scoreService) CalculateScore(userAnswers []models.UserAnswer, answerKey
 			}
 		}
 
-		//check true false
+		// check true false
 		if tfAnswer, exists := answerKeys.TrueFalseAnswers[kodeSoal]; exists {
 			if userAnswer.Jawaban == tfAnswer.Jawaban {
 				totalScore += float64(tfAnswer.Bobot)
@@ -168,4 +165,80 @@ func (s *scoreService) CalculateScore(userAnswers []models.UserAnswer, answerKey
 		}
 	}
 	return totalScore
+}
+
+func convertToProtoModel(resp *pb.GetAnswerKeyResponse) (*models.AnswerKeys, error) {
+	keys := &models.AnswerKeys{
+		PilihanGandaAnswers: make(map[string]map[string]struct {
+			IsCorrect   bool
+			Bobot       int
+			TextPilihan string
+			Pembahasan  string
+		}),
+		TrueFalseAnswers: make(map[string]struct {
+			Jawaban     string
+			Bobot       int
+			TextPilihan string
+			Pembahasan  string
+		}),
+		UraianAnswers: make(map[string]struct {
+			Jawaban    string
+			Bobot      int
+			Pembahasan string
+		}),
+	}
+
+	// Convert Pilihan Ganda
+	for kodeSoal, grpcChoicesMap := range resp.PilihanGandaAnswers {
+		choices := make(map[string]struct {
+			IsCorrect   bool
+			Bobot       int
+			TextPilihan string
+			Pembahasan  string
+		})
+		for choiceID, choice := range grpcChoicesMap.Choices {
+			choices[choiceID] = struct {
+				IsCorrect   bool
+				Bobot       int
+				TextPilihan string
+				Pembahasan  string
+			}{
+				IsCorrect:   choice.IsCorrect,
+				Bobot:       int(choice.Bobot),
+				TextPilihan: choice.TextPilihan,
+				Pembahasan:  choice.Pembahasan,
+			}
+		}
+		keys.PilihanGandaAnswers[kodeSoal] = choices
+	}
+
+	// Convert True False
+	for kodeSoal, answer := range resp.TrueFalseAnswers {
+		keys.TrueFalseAnswers[kodeSoal] = struct {
+			Jawaban     string
+			Bobot       int
+			TextPilihan string
+			Pembahasan  string
+		}{
+			Jawaban:     answer.Jawaban,
+			Bobot:       int(answer.Bobot),
+			TextPilihan: answer.TextPilihan,
+			Pembahasan:  answer.Pembahasan,
+		}
+	}
+
+	// Convert Uraian
+	for kodeSoal, answer := range resp.UraianAnswers {
+		keys.UraianAnswers[kodeSoal] = struct {
+			Jawaban    string
+			Bobot      int
+			Pembahasan string
+		}{
+			Jawaban:    answer.Jawaban,
+			Bobot:      int(answer.Bobot),
+			Pembahasan: answer.Pembahasan,
+		}
+	}
+
+	return keys, nil
 }

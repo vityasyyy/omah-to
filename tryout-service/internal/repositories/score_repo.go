@@ -44,7 +44,7 @@ func (r *scoreRepo) InsertScoreForUserAttemptIDAndSubtestTx(c context.Context, t
 
 	_, err := tx.Exec(query, attemptID, userID, subtest, score)
 	if err != nil {
-		logger.LogErrorCtx(c, err, "Failed to insert user score", map[string]interface{}{
+		logger.LogErrorCtx(c, err, "Failed to insert user score", map[string]any{
 			"attempt_id": attemptID,
 			"user_id":    userID,
 			"subtest":    subtest,
@@ -53,7 +53,7 @@ func (r *scoreRepo) InsertScoreForUserAttemptIDAndSubtestTx(c context.Context, t
 		return err
 	}
 
-	logger.LogDebugCtx(c, "User score inserted successfully", map[string]interface{}{
+	logger.LogDebugCtx(c, "User score inserted successfully", map[string]any{
 		"attempt_id": attemptID,
 		"user_id":    userID,
 		"subtest":    subtest,
@@ -69,14 +69,14 @@ func (r *scoreRepo) GetUserAnswersFromAttemptIDandSubtestTx(c context.Context, t
 
 	err := tx.Select(&userAnswers, query, attemptID, subtest)
 	if err != nil {
-		logger.LogErrorCtx(c, err, "Failed to fetch user answers", map[string]interface{}{
+		logger.LogErrorCtx(c, err, "Failed to fetch user answers", map[string]any{
 			"attemptID": attemptID,
 			"subtest":   subtest,
 		})
 		return nil, err
 	}
 
-	logger.LogDebugCtx(c, "Fetched user answers", map[string]interface{}{
+	logger.LogDebugCtx(c, "Fetched user answers", map[string]any{
 		"attemptID":   attemptID,
 		"subtest":     subtest,
 		"answerCount": len(userAnswers),
@@ -95,14 +95,14 @@ func (r *scoreRepo) GetUserScoreFromAttemptIDAndSubtestTx(c context.Context, tx 
 	var userScore models.UserScore
 	err := tx.Get(&userScore, query, attemptID, subtest)
 	if err != nil {
-		logger.LogErrorCtx(c, err, "Failed to get user score", map[string]interface{}{
+		logger.LogErrorCtx(c, err, "Failed to get user score", map[string]any{
 			"attemptID": attemptID,
 			"subtest":   subtest,
 		})
 		return nil, err
 	}
 
-	logger.LogDebugCtx(c, "Fetched user score", map[string]interface{}{
+	logger.LogDebugCtx(c, "Fetched user score", map[string]any{
 		"attemptID": attemptID,
 		"subtest":   subtest,
 		"score":     userScore.Score,
@@ -115,7 +115,7 @@ func (r *scoreRepo) CalculateAverageScoreForAttempt(c context.Context, tx *sqlx.
 	query := `SELECT AVG(score) FROM user_scores WHERE attempt_id = $1`
 	err := tx.Get(&avgScore, query, attemptID)
 	if err != nil {
-		logger.LogErrorCtx(c, err, "Failed to calculate average score", map[string]interface{}{
+		logger.LogErrorCtx(c, err, "Failed to calculate average score", map[string]any{
 			"attemptID": attemptID,
 		})
 		return 0, err
@@ -127,7 +127,7 @@ func (r *scoreRepo) UpdateScoreForTryOutAttempt(c context.Context, tx *sqlx.Tx, 
 	query := `UPDATE tryout_attempt SET tryout_score = $1 WHERE attempt_id = $2`
 	_, err := tx.Exec(query, avgScore, attemptID)
 	if err != nil {
-		logger.LogErrorCtx(c, err, "Failed to update score for tryout attempt", map[string]interface{}{
+		logger.LogErrorCtx(c, err, "Failed to update score for tryout attempt", map[string]any{
 			"attemptID": attemptID,
 			"avgScore":  avgScore,
 		})

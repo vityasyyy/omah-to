@@ -2,37 +2,43 @@ package services
 
 import (
 	"context"
+	"encoding/json"
 	"errors"
 	"fmt"
+	"os"
 	"time"
 	"tryout-service/internal/models"
 	"tryout-service/internal/repositories"
 
+	"github.com/confluentinc/confluent-kafka-go/v2/kafka"
+	"github.com/go-redis/redis/v8"
 	"github.com/vityasyyy/sharedlib/logger"
 )
 
 type TryoutService interface {
-	StartAttempt(c context.Context, userID int, username, paket, accessToken string) (attempt *models.TryoutAttempt, retErr error)
-	SyncWithDatabase(c context.Context, answers []models.AnswerPayload, attemptID int) (answersInDB []models.UserAnswer, timeLimit time.Time, err error)
-	SubmitCurrentSubtest(c context.Context, answers []models.AnswerPayload, attemptID, userID int, tryoutToken string) (updatedSubtest string, retErr error)
-	GetCurrentAttempt(c context.Context, attemptID int) (*models.TryoutAttempt, error)
+	StartAttempt(c context.Context, userID int, username, paket string) (attempt *models.TryoutAttempt, retErr error)
+	SyncWithDatabase(c context.Context, answers []models.AnswerPayload, userID int) (answersInCache []models.UserAnswer, timeLimit time.Time, err error)
+	SubmitCurrentSubtest(c context.Context, answers []models.AnswerPayload, userID int, accessToken string) (updatedSubtest string, retErr error)
+	GetCurrentAttempt(c context.Context, userID int) (*models.TryoutAttempt, error)
 }
 
 type tryoutService struct {
-	tryoutRepo   repositories.TryoutRepo
-	scoreService ScoreService
+	tryoutRepo    repositories.TryoutRepo
+	scoreService  ScoreService
+	kafkaProducer *kafka.Producer
+	redisClient   *redis.Client
 }
 
-func NewTryoutService(tryoutRepo repositories.TryoutRepo, scoreService ScoreService) TryoutService {
-	return &tryoutService{tryoutRepo: tryoutRepo, scoreService: scoreService}
+func NewTryoutService(tryoutRepo repositories.TryoutRepo, scoreService ScoreService, kafkaProducer *kafka.Producer, redisClient *redis.Client) TryoutService {
+	return &tryoutService{tryoutRepo: tryoutRepo, scoreService: scoreService, kafkaProducer: kafkaProducer, redisClient: redisClient}
 }
 
-func (s *tryoutService) StartAttempt(c context.Context, userID int, username, paket, accessToken string) (attempt *models.TryoutAttempt, retErr error) {
+func (s *tryoutService) StartAttempt(c context.Context, userID int, username, paket string) (attempt *models.TryoutAttempt, retErr error) {
 	// sstart a transaction to the db
 	startTime := time.Now()
 	tx, err := s.tryoutRepo.BeginTransaction(c)
 	if err != nil {
-		logger.LogErrorCtx(c, err, "Failed to start transaction for starting attempt", map[string]interface{}{
+		logger.LogErrorCtx(c, err, "Failed to start transaction for starting attempt", map[string]any{
 			"userID":   userID,
 			"username": username,
 			"paket":    paket,
@@ -44,7 +50,7 @@ func (s *tryoutService) StartAttempt(c context.Context, userID int, username, pa
 	defer func() {
 		if retErr != nil {
 			if rbErr := tx.Rollback(); rbErr != nil {
-				logger.LogErrorCtx(c, rbErr, "Failed to rollback transaction after error", map[string]interface{}{
+				logger.LogErrorCtx(c, rbErr, "Failed to rollback transaction after error", map[string]any{
 					"userID":   userID,
 					"username": username,
 					"paket":    paket,
@@ -71,7 +77,7 @@ func (s *tryoutService) StartAttempt(c context.Context, userID int, username, pa
 	// Create new attempt, calling the db
 	err = s.tryoutRepo.CreateTryoutAttemptTx(c, tx, attempt)
 	if err != nil {
-		logger.LogErrorCtx(c, err, "Failed to create tryout attempt", map[string]interface{}{
+		logger.LogErrorCtx(c, err, "Failed to create tryout attempt", map[string]any{
 			"userID":   userID,
 			"username": username,
 			"paket":    paket,
@@ -84,7 +90,7 @@ func (s *tryoutService) StartAttempt(c context.Context, userID int, username, pa
 
 	// commit transaction if everything is successful
 	if err := tx.Commit(); err != nil {
-		logger.LogErrorCtx(c, err, "Failed to commit transaction after starting attempt", map[string]interface{}{
+		logger.LogErrorCtx(c, err, "Failed to commit transaction after starting attempt", map[string]any{
 			"userID":   userID,
 			"username": username,
 			"paket":    paket,
@@ -97,13 +103,12 @@ func (s *tryoutService) StartAttempt(c context.Context, userID int, username, pa
 }
 
 // SyncWithDatabase is a service that syncs the answers from the user with the database
-func (s *tryoutService) SyncWithDatabase(c context.Context, answers []models.AnswerPayload, attemptID int) (answersInDB []models.UserAnswer, timeLimit time.Time, retErr error) {
+func (s *tryoutService) SyncWithDatabase(c context.Context, answers []models.AnswerPayload, userID int) (answersInCache []models.UserAnswer, timeLimit time.Time, retErr error) {
 	var committed bool
-	// EMPTY ANSWERS ARE OKAY, BUT IF THERE ARE ANSWERS, THEY MUST BE VALID
 	// Start transaction
 	tx, err := s.tryoutRepo.BeginTransaction(c)
 	if err != nil {
-		logger.LogErrorCtx(c, err, "Failed to start transaction for syncing with database", map[string]interface{}{"attemptID": attemptID})
+		logger.LogErrorCtx(c, err, "Failed to start transaction for syncing with database", map[string]any{"userID": userID})
 		return nil, time.Time{}, err
 	}
 
@@ -114,24 +119,26 @@ func (s *tryoutService) SyncWithDatabase(c context.Context, answers []models.Ans
 		}
 		if retErr != nil {
 			if rbErr := tx.Rollback(); rbErr != nil {
-				logger.LogErrorCtx(c, rbErr, "Failed to rollback transaction after error", map[string]interface{}{
+				logger.LogErrorCtx(c, rbErr, "Failed to rollback transaction after error", map[string]any{
 					"layer":     "service",
 					"operation": "SyncWithDatabase",
-					"attemptID": attemptID,
+					"userID":    userID,
 				})
 			}
 		}
 	}()
 
 	// Get and validate current attempt within transaction
-	attempt, err := s.tryoutRepo.GetTryoutAttemptTx(c, tx, attemptID)
+	attempt, err := s.tryoutRepo.GetOngoingAttemptByUserIDTx(c, tx, userID)
 	if err != nil {
 		retErr = err
-		logger.LogErrorCtx(c, err, "Failed to get tryout attempt", map[string]interface{}{
-			"attemptID": attemptID,
+		logger.LogErrorCtx(c, err, "Failed to get tryout attempt", map[string]any{
+			"userID": userID,
 		})
 		return nil, time.Time{}, retErr
 	}
+
+	attemptID := attempt.TryoutAttemptID
 
 	if attempt.EndTime != nil {
 		retErr = errors.New("tryout attempt has ended")
@@ -150,117 +157,143 @@ func (s *tryoutService) SyncWithDatabase(c context.Context, answers []models.Ans
 	timeLimit, err = s.tryoutRepo.GetSubtestTimeTx(c, tx, attemptID, attempt.SubtestSekarang)
 	if err != nil {
 		retErr = err
-		logger.LogErrorCtx(c, err, "Failed to get time limit for subtest", map[string]interface{}{
+		logger.LogErrorCtx(c, err, "Failed to get time limit for subtest", map[string]any{
 			"attemptID": attemptID,
 			"subtest":   attempt.SubtestSekarang,
 		})
 		return nil, time.Time{}, retErr
 	}
 
-	// exceed time limit
+	// exceed time limit, let redis kafka handle it
 	if time.Now().After(timeLimit) {
-		// Delete attempt and answers if time limit has been reached
-		if err = s.tryoutRepo.DeleteAttempt(c, tx, attemptID); err != nil {
-			retErr = err
-			logger.LogErrorCtx(c, err, "Failed to delete attempt", map[string]interface{}{
-				"attemptID": attemptID,
-			})
-			return nil, time.Time{}, retErr
-		}
-		// Commit transaction so that the attempt is deleted
-		if err = tx.Commit(); err != nil {
-			retErr = err
-			logger.LogErrorCtx(c, err, "Failed to commit transaction after deleting attempt", map[string]interface{}{
-				"attemptID": attemptID,
-			})
-
-			return nil, time.Time{}, retErr
-		}
-		// set committed to true so that the defer won't rollback the transaction
-		committed = true
 		retErr = errors.New("time limit has been reached for this subtest")
 		return nil, time.Time{}, retErr
 	}
 
-	// Process and save new answers
+	kafkaAnswers := make([]models.UserAnswer, 0, len(answers))
+	redisPipe := s.redisClient.Pipeline()
+	redisKeyPrefix := fmt.Sprintf("attempt:%d:subtest:%s", attemptID, attempt.SubtestSekarang)
+	redisAnswerMapKey := fmt.Sprintf("%s:answers", redisKeyPrefix)
 	if len(answers) > 0 {
-		userAnswers := make([]models.UserAnswer, 0, len(answers))
+		redisAnswers := make(map[string]any)
 		for _, answer := range answers {
-			userAnswer := models.UserAnswer{
+			if answer.Jawaban != nil {
+				// Add to map for Redis HSet
+				redisAnswers[answer.KodeSoal] = *answer.Jawaban
+				// Add to slice for Kafka event
+				kafkaAnswers = append(kafkaAnswers, models.UserAnswer{
+					TryoutAttemptID: attemptID,
+					Subtest:         attempt.SubtestSekarang,
+					KodeSoal:        answer.KodeSoal,
+					Jawaban:         *answer.Jawaban,
+				})
+			}
+		}
+
+		if len(redisAnswers) > 0 {
+			redisPipe.HSet(c, redisAnswerMapKey, redisAnswers)
+			redisPipe.Expire(c, redisAnswerMapKey, 24*time.Hour) // Set expiration TODO should have timelimit as the expiry of th ecache
+		}
+	}
+	allRedisAnswers, err := s.redisClient.HGetAll(c, redisAnswerMapKey).Result()
+	if err != nil {
+		logger.LogErrorCtx(c, err, "Failed to get all answers from Redis", map[string]any{"attemptID": attemptID})
+		// Non-fatal, just return empty list
+	} else {
+		for k, v := range allRedisAnswers {
+			answersInCache = append(answersInCache, models.UserAnswer{
 				TryoutAttemptID: attemptID,
 				Subtest:         attempt.SubtestSekarang,
-				KodeSoal:        answer.KodeSoal,
-				Jawaban:         *answer.Jawaban,
-			}
-			userAnswers = append(userAnswers, userAnswer)
-		}
-
-		if err = s.tryoutRepo.SaveAnswersTx(c, tx, userAnswers); err != nil {
-			retErr = err
-			logger.LogErrorCtx(c, err, "Failed to save answers", map[string]interface{}{
-				"attemptID": attemptID,
+				KodeSoal:        k,
+				Jawaban:         v,
 			})
-			return nil, timeLimit, retErr
 		}
 	}
-
-	// Get updated answers within transaction
-	answersInDB, err = s.tryoutRepo.GetAnswerFromCurrentAttemptAndSubtestTx(c, tx, attemptID, attempt.SubtestSekarang)
-	if err != nil {
-		retErr = err
-		logger.LogErrorCtx(c, err, "Failed to fetch user answers", map[string]interface{}{
-			"attemptID": attemptID,
-			"subtest":   attempt.SubtestSekarang,
-		})
-		return nil, timeLimit, retErr
+	// Execute Redis pipeline
+	if _, err := redisPipe.Exec(c); err != nil {
+		// non fatal err, log but not return
+		logger.LogErrorCtx(c, err, "Failed to exec redis pipeline for sync", map[string]any{"attemptID": attemptID})
 	}
 
-	// Commit transaction
-	if err = tx.Commit(); err != nil {
-		retErr = err
-		logger.LogErrorCtx(c, err, "Failed to commit transaction after syncing with database", map[string]interface{}{
-			"attemptID": attemptID,
-		})
-		return nil, timeLimit, retErr
+	if len(kafkaAnswers) > 0 {
+		event := models.KafkaAnswerEvent{
+			AttemptID: attemptID,
+			UserID:    attempt.UserID,
+			Subtest:   attempt.SubtestSekarang,
+			Answers:   kafkaAnswers,
+		}
+		go s.publishToKafka(c, os.Getenv("KAFKA_ANSWER_TOPIC"), fmt.Sprintf("%d", attemptID), event)
 	}
-	// set committed to true so that the defer won't rollback the transaction
-	committed = true
-
-	// will return answers that are stored in the db (for sync purpose) and the time limit also for the sync purpose
-	return answersInDB, timeLimit, nil
+	return answersInCache, timeLimit, nil
 }
 
-func (s *tryoutService) SubmitCurrentSubtest(c context.Context, answers []models.AnswerPayload, attemptID, userID int, tryoutToken string) (updatedSubtest string, retErr error) {
-	// begin a transaction
+func (s *tryoutService) SubmitCurrentSubtest(c context.Context, answers []models.AnswerPayload, userID int, accessToken string) (updatedSubtest string, retErr error) {
+	// --- 1. Save final answers to Redis and publish to Kafka ---
+	// (This part is non-transactional with the DB)
+	var kafkaAnswers []models.UserAnswer
+
 	var committed bool
 	tx, err := s.tryoutRepo.BeginTransaction(c)
 	if err != nil {
-		logger.LogErrorCtx(c, err, "Failed to start transaction for submitting current subtest", map[string]interface{}{"attemptID": attemptID})
+		logger.LogErrorCtx(c, err, "Failed to start transaction for submit")
 		return "", err
 	}
-	// if something happened, rollback the transaction
 	defer func() {
-		if committed {
-			return
-		}
-		if retErr != nil && tx != nil {
-			if rbErr := tx.Rollback(); rbErr != nil {
-				logger.LogErrorCtx(c, rbErr, "Failed to rollback transaction", map[string]interface{}{
-					"attemptID": attemptID,
-				})
-			}
-			tx = nil
+		if !committed && retErr != nil {
+			tx.Rollback()
 		}
 	}()
 
-	// Get and validate current attempt
-	attempt, err := s.tryoutRepo.GetTryoutAttemptTx(c, tx, attemptID)
+	attempt, err := s.tryoutRepo.GetOngoingAttemptByUserIDTx(c, tx, userID)
 	if err != nil {
-		logger.LogErrorCtx(c, err, "Failed to get tryout attempt", map[string]interface{}{"attemptID": attemptID})
+		logger.LogErrorCtx(c, err, "Failed to get tryout attempt for submit")
+		return "", err
+	}
+	currentSubtest := attempt.SubtestSekarang
+	attemptID := attempt.TryoutAttemptID
+	// (Same Redis/Kafka logic as Sync)
+	if len(answers) > 0 {
+		redisAnswerMapKey := fmt.Sprintf("attempt:%d:subtest:%s:answers", attemptID, currentSubtest)
+		redisAnswers := make(map[string]any)
+		for _, answer := range answers {
+			if answer.Jawaban != nil {
+				redisAnswers[answer.KodeSoal] = *answer.Jawaban
+				kafkaAnswers = append(kafkaAnswers, models.UserAnswer{
+					TryoutAttemptID: attemptID,
+					Subtest:         currentSubtest,
+					KodeSoal:        answer.KodeSoal,
+					Jawaban:         *answer.Jawaban,
+				})
+			}
+		}
+		if len(redisAnswers) > 0 {
+			// Write to Redis (fire and forget, with logging)
+			if err := s.redisClient.HSet(c, redisAnswerMapKey, redisAnswers).Err(); err != nil {
+				logger.LogErrorCtx(c, err, "Failed to HSet answers on submit", map[string]any{"attemptID": attemptID})
+			}
+			s.redisClient.Expire(c, redisAnswerMapKey, 24*time.Hour)
+		}
+	}
+	// Publish to Kafka (fire and forget, with logging)
+	if len(kafkaAnswers) > 0 {
+		event := models.KafkaAnswerEvent{
+			AttemptID: attemptID,
+			UserID:    attempt.UserID,
+			Subtest:   currentSubtest,
+			Answers:   kafkaAnswers,
+		}
+		go s.publishToKafka(c, os.Getenv("KAFKA_ANSWER_TOPIC"), fmt.Sprintf("%d", attemptID), event)
+	}
+
+	// --- 2. Handle State Change in a DB Transaction ---
+	// Re-fetch attempt *inside* the transaction to lock the row
+	attempt, err = s.tryoutRepo.GetOngoingAttemptByUserIDTx(c, tx, userID)
+	if err != nil {
 		retErr = err
 		return "", retErr
 	}
 
+	attemptID = attempt.TryoutAttemptID
 	// validate the attempt
 	if attempt.EndTime != nil {
 		retErr = errors.New("tryout attempt has already ended")
@@ -272,139 +305,100 @@ func (s *tryoutService) SubmitCurrentSubtest(c context.Context, answers []models
 		return "", retErr
 	}
 
-	// Get time limit within transaction
-	timeLimit, err := s.tryoutRepo.GetSubtestTimeTx(c, tx, attemptID, attempt.SubtestSekarang)
+	// Get time limit (check again inside transaction)
+	timeLimit, err := s.tryoutRepo.GetSubtestTimeTx(c, tx, attemptID, currentSubtest)
 	if err != nil {
 		retErr = err
-		logger.LogErrorCtx(c, err, "Failed to get time limit", map[string]interface{}{
-			"attemptID": attemptID,
-			"subtest":   attempt.SubtestSekarang,
-		})
 		return "", retErr
 	}
 
-	// exceed time limit
+	// Time limit check (as before)
 	if time.Now().After(timeLimit) {
-		// Delete attempt and answers if time limit has been reached
+		// ... (delete attempt logic as before) ...
 		if err = s.tryoutRepo.DeleteAttempt(c, tx, attemptID); err != nil {
 			retErr = err
-			logger.LogErrorCtx(c, err, "Failed to delete attempt", map[string]interface{}{
-				"attemptID": attemptID,
-			})
 			return "", retErr
 		}
-		// Commit transaction so that the attempt is deleted
 		if err = tx.Commit(); err != nil {
 			retErr = err
-			logger.LogErrorCtx(c, err, "Failed to commit transaction after deleting attempt", map[string]interface{}{
-				"attemptID": attemptID,
-			})
 			return "", retErr
 		}
-		// set committed to true so that the defer won't rollback the transaction
 		committed = true
 		retErr = errors.New("time limit has been reached for this subtest")
 		return "", retErr
 	}
 
-	// Get the next subtest
-	currentSubtest := attempt.SubtestSekarang
+	// Get next subtest (as before)
 	subtests := []string{"subtest_pu", "subtest_ppu", "subtest_pbm", "subtest_pk", "subtest_lbi", "subtest_lbe", "subtest_pm"}
 	var nextSubtest *string
 	for i, sub := range subtests {
-		// If the current subtest is found and there is a next subtest, set the next subtest
 		if sub == currentSubtest && i < len(subtests)-1 {
 			nextSubtest = &subtests[i+1]
 			break
 		}
 	}
 
-	// Save final answers if any
-	if len(answers) > 0 {
-		// make a hash map of the answers, to be used for checking if the answer is valid
-		userAnswers := make([]models.UserAnswer, 0, len(answers))
-		for _, answer := range answers {
-			userAnswer := models.UserAnswer{
-				TryoutAttemptID: attemptID,
-				Subtest:         attempt.SubtestSekarang,
-				KodeSoal:        answer.KodeSoal,
-				Jawaban:         *answer.Jawaban,
-			}
-			userAnswers = append(userAnswers, userAnswer)
-		}
-		// Save the answers using the transaction
-		err = s.tryoutRepo.SaveAnswersTx(c, tx, userAnswers)
-		if err != nil {
-			logger.LogErrorCtx(c, err, "Failed to save final answers", map[string]interface{}{
-				"attemptID": attemptID,
-			})
-			retErr = err
-			return "", retErr
-		}
-	}
-
 	// if no next subtest, end the tryout
 	if nextSubtest == nil {
-		// end the tryout
-		err = s.tryoutRepo.EndTryOutTx(c, tx, attemptID)
+		err = s.tryoutRepo.EndTryOutTx(c, tx, attemptID) // Mark as 'finished'
 		if err != nil {
-			logger.LogErrorCtx(c, err, "Failed to end tryout", map[string]interface{}{
-				"attemptID": attemptID,
-			})
-			retErr = fmt.Errorf("failed to finalize tryout: %w", err)
-			return "", retErr
-		}
-		// score the tryout
-		err = s.scoreService.CalculateAndStoreScores(c, tx, attemptID, userID, tryoutToken)
-		if err != nil {
-			logger.LogErrorCtx(c, err, "Failed to calculate and store scores", map[string]interface{}{
-				"attemptID": attemptID,
-			})
 			retErr = err
 			return "", retErr
 		}
-		// commit if nothing's wrong
-		if err := tx.Commit(); err != nil {
-			logger.LogErrorCtx(c, err, "Failed to commit transaction after finalizing tryout", map[string]interface{}{
-				"attemptID": attemptID,
-			})
-			retErr = err
-			return "", retErr
-		}
-		// set committed to true so that the defer won't rollback the transaction
-		committed = true
-		tx = nil
 
-		// return final indicating a final state
+		// *** PUBLISH TO KAFKA FOR SCORING ***
+		// (Replaces direct call to scoreService)
+		scoringEvent := models.KafkaScoringEvent{
+			AttemptID:   attemptID,
+			UserID:      userID,
+			AccessToken: accessToken,
+		}
+		go s.publishToKafka(c, os.Getenv("KAFKA_SCORING_TOPIC"), fmt.Sprintf("%d", attemptID), scoringEvent)
+
+		if err := tx.Commit(); err != nil {
+			retErr = err
+			return "", retErr
+		}
+		committed = true
 		return "final", nil
 	}
 
-	// End current subtest and move to the next subtest
+	// Progress to next subtest
 	updatedSubtest, err = s.tryoutRepo.ProgressTryoutTx(c, tx, attemptID, *nextSubtest)
 	if err != nil {
-		logger.LogErrorCtx(c, err, "Failed to end subtest", map[string]interface{}{
-			"attemptID": attemptID,
-		})
 		retErr = err
 		return "", retErr
 	}
 
-	// commit the transactions if everything is successful
 	if err := tx.Commit(); err != nil {
-		logger.LogErrorCtx(c, err, "Failed to commit transaction after submitting current subtest", map[string]interface{}{
-			"attemptID": attemptID,
-		})
 		retErr = err
 		return "", retErr
 	}
-	// set committed to true so that the defer won't rollback the transaction
 	committed = true
-	tx = nil
 
-	// return updated so later the frontend can fetch the next subtest
 	return updatedSubtest, nil
 }
 
 func (s *tryoutService) GetCurrentAttempt(c context.Context, attemptID int) (*models.TryoutAttempt, error) {
 	return s.tryoutRepo.GetTryoutAttempt(c, attemptID)
+}
+
+func (s *tryoutService) publishToKafka(ctx context.Context, topic string, key string, data any) {
+	payload, err := json.Marshal(data)
+	if err != nil {
+		logger.LogErrorCtx(ctx, err, "Failed to marshal Kafka payload", map[string]any{"topic": topic})
+		return
+	}
+
+	msg := &kafka.Message{
+		TopicPartition: kafka.TopicPartition{Topic: &topic, Partition: kafka.PartitionAny},
+		Value:          payload,
+		Key:            []byte(key),
+	}
+
+	// Produce message
+	err = s.kafkaProducer.Produce(msg, nil) // nil delivery channel for fire-and-forget
+	if err != nil {
+		logger.LogErrorCtx(ctx, err, "Failed to produce Kafka message", map[string]any{"topic": topic})
+	}
 }

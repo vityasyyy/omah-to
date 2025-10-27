@@ -37,14 +37,14 @@ func (s *authService) RegisterUser(c context.Context, userFromHandlers *models.U
 	existingUser, _ := s.authRepo.GetUserByEmail(c, userFromHandlers.Email)
 
 	if existingUser != nil {
-		logger.LogErrorCtx(c, errors.New("user exists"), "User exists", map[string]interface{}{"email": userFromHandlers.Email})
+		logger.LogErrorCtx(c, errors.New("user exists"), "User exists", map[string]any{"email": userFromHandlers.Email})
 		return errors.New("user with that email already exists")
 	}
 
 	// hash the password before storing it in the database
 	hashedPassword, err := hash.HashPassword(userFromHandlers.Password)
 	if err != nil {
-		logger.LogErrorCtx(c, err, "Failed to hash password", map[string]interface{}{"email": userFromHandlers.Email})
+		logger.LogErrorCtx(c, err, "Failed to hash password", map[string]any{"email": userFromHandlers.Email})
 		return err
 	}
 	// set the user struct that is passed by the handlers password to the hashed password
@@ -52,7 +52,7 @@ func (s *authService) RegisterUser(c context.Context, userFromHandlers *models.U
 
 	// call the repo and create the user using the repo function, if the error is nil then log the error
 	if err := s.authRepo.CreateUser(c, userFromHandlers); err != nil {
-		logger.LogErrorCtx(c, err, "Failed to create user", map[string]interface{}{"email": userFromHandlers.Email})
+		logger.LogErrorCtx(c, err, "Failed to create user", map[string]any{"email": userFromHandlers.Email})
 		return err
 	}
 
@@ -63,20 +63,20 @@ func (s *authService) LoginUser(c context.Context, email, password string) (stri
 	// get the user that wants to login using the email that is passed from handler
 	userThatWantsToLogin, err := s.authRepo.GetUserByEmail(c, email)
 	if err != nil {
-		logger.LogErrorCtx(c, err, "Failed to login", map[string]interface{}{"email": email})
+		logger.LogErrorCtx(c, err, "Failed to login", map[string]any{"email": email})
 		return "", "", errors.New("invalid email or password")
 	}
 
 	// check the password that the user entered with the password in the database (check hash)
 	if !hash.CheckPasswordHash(password, userThatWantsToLogin.Password) {
-		logger.LogErrorCtx(c, err, "Failed to login", map[string]interface{}{"email": email})
+		logger.LogErrorCtx(c, err, "Failed to login", map[string]any{"email": email})
 		return "", "", errors.New("invalid email or password")
 	}
 
 	// if all is okay then generate the token pair and return it to the handler to be sent to the client
 	accessToken, refreshToken, err := s.tokenService.GenerateAccessRefreshTokenPair(c, userThatWantsToLogin.UserID)
 	if err != nil {
-		logger.LogErrorCtx(c, err, "Failed to generate token pair", map[string]interface{}{"email": email})
+		logger.LogErrorCtx(c, err, "Failed to generate token pair", map[string]any{"email": email})
 		return "", "", errors.New("failed to generate token pair")
 	}
 
@@ -88,17 +88,17 @@ func (s *authService) RequestPasswordReset(c context.Context, email string) erro
 	var g errgroup.Group
 	user, err := s.authRepo.GetUserByEmail(c, email)
 	if err != nil {
-		logger.LogErrorCtx(c, err, "Failed to get user by email", map[string]interface{}{"email": email})
+		logger.LogErrorCtx(c, err, "Failed to get user by email", map[string]any{"email": email})
 		return errors.New("failed to get user by email")
 	}
 	if user == nil {
-		logger.LogErrorCtx(c, errors.New("user not found"), "User not found", map[string]interface{}{"email": email})
+		logger.LogErrorCtx(c, errors.New("user not found"), "User not found", map[string]any{"email": email})
 		return errors.New("user not found")
 	}
 	// create the reset token and expirtion time using the utils
 	resetToken, resetTokenExpiredAt, err := jwt.CreateResetToken()
 	if err != nil {
-		logger.LogErrorCtx(c, err, "Failed to generate reset tokens", map[string]interface{}{"email": email})
+		logger.LogErrorCtx(c, err, "Failed to generate reset tokens", map[string]any{"email": email})
 		return errors.New("failed to generate reset tokens")
 	}
 	// generate resetLink using resetToken
@@ -113,7 +113,7 @@ func (s *authService) RequestPasswordReset(c context.Context, email string) erro
 	// blacklist the token that is associated with the email, so that when user is requesting password reset, the token is blacklisted
 	g.Go(func() error {
 		if err := s.tokenService.BlacklistTokenOnEmail(c, email); err != nil {
-			logger.LogErrorCtx(c, err, "Failed to blacklist token on email", map[string]interface{}{"email": email})
+			logger.LogErrorCtx(c, err, "Failed to blacklist token on email", map[string]any{"email": email})
 			return errors.New("failed to blacklist token on email")
 		}
 		return nil
@@ -122,7 +122,7 @@ func (s *authService) RequestPasswordReset(c context.Context, email string) erro
 	// call the repo and store the reset token in the database
 	g.Go(func() error {
 		if err := s.authRepo.RequestingPasswordReset(c, email, resetToken, resetTokenExpiredAt); err != nil {
-			logger.LogErrorCtx(c, err, "Failed to request password reset", map[string]interface{}{"email": email, "reset_token": resetToken})
+			logger.LogErrorCtx(c, err, "Failed to request password reset", map[string]any{"email": email, "reset_token": resetToken})
 			return errors.New("failed to request password reset")
 		}
 		return nil
@@ -131,7 +131,7 @@ func (s *authService) RequestPasswordReset(c context.Context, email string) erro
 	// email the user the reset link, using the email utils
 	g.Go(func() error {
 		if err := emailer.SendPasswordResetEmail(email, resetLink); err != nil {
-			logger.LogErrorCtx(c, err, "Failed to send password reset email", map[string]interface{}{"email": email, "reset_link": resetLink})
+			logger.LogErrorCtx(c, err, "Failed to send password reset email", map[string]any{"email": email, "reset_link": resetLink})
 			return errors.New("failed to send password reset email")
 		}
 		return nil
@@ -147,14 +147,14 @@ func (s *authService) RequestPasswordReset(c context.Context, email string) erro
 func (s *authService) ResetPassword(c context.Context, resetToken, newPassword string) error {
 	newHashedPassword, err := hash.HashPassword(newPassword)
 	if err != nil {
-		logger.LogErrorCtx(c, err, "Failed to hash password", map[string]interface{}{"reset_token": resetToken})
+		logger.LogErrorCtx(c, err, "Failed to hash password", map[string]any{"reset_token": resetToken})
 		return errors.New("failed to hash password")
 	}
 
 	// call the repo and reset the password using the reset token and the new password
 	err = s.authRepo.ResetPassword(c, newHashedPassword, resetToken)
 	if err != nil {
-		logger.LogErrorCtx(c, err, "Failed to reset password", map[string]interface{}{"reset_token": resetToken})
+		logger.LogErrorCtx(c, err, "Failed to reset password", map[string]any{"reset_token": resetToken})
 		return errors.New("failed to reset password")
 	}
 

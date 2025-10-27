@@ -31,7 +31,7 @@ func (r *refreshTokenRepo) StoreRefreshToken(c context.Context, refreshTokenStru
 		logger.LogErrorCtx(c, err, "Failed to store refresh token")
 		return err
 	}
-	logger.LogDebugCtx(c, "Refresh token stored successfully", map[string]interface{}{"user_id": refreshTokenStruct.UserID, "refresh_token_value": refreshTokenStruct.RefreshTokenValue})
+	logger.LogDebugCtx(c, "Refresh token stored successfully", map[string]any{"user_id": refreshTokenStruct.UserID, "refresh_token_value": refreshTokenStruct.RefreshTokenValue})
 	return nil
 }
 
@@ -39,10 +39,10 @@ func (r *refreshTokenRepo) RevokeRefreshToken(c context.Context, refreshTokenStr
 	query := "UPDATE refresh_tokens SET revoked = true WHERE refresh_token_value = $1 AND revoked = false AND expired_at > CURRENT_TIMESTAMP"
 	_, err := r.db.Exec(query, refreshTokenString)
 	if err != nil {
-		logger.LogErrorCtx(c, err, "Failed to revoke refresh token", map[string]interface{}{"refresh_token_value": refreshTokenString})
+		logger.LogErrorCtx(c, err, "Failed to revoke refresh token", map[string]any{"refresh_token_value": refreshTokenString})
 		return err
 	}
-	logger.LogDebugCtx(c, "Refresh token revoked successfully", map[string]interface{}{"refresh_token_value": refreshTokenString})
+	logger.LogDebugCtx(c, "Refresh token revoked successfully", map[string]any{"refresh_token_value": refreshTokenString})
 	return nil
 }
 
@@ -51,10 +51,10 @@ func (r *refreshTokenRepo) FindValidRefreshToken(c context.Context, refreshToken
 	query := "SELECT * FROM refresh_tokens WHERE refresh_token_value = $1 AND revoked = false AND expired_at > CURRENT_TIMESTAMP"
 	err := r.db.Get(&refreshToken, query, refreshTokenString)
 	if err != nil {
-		logger.LogErrorCtx(c, err, "Failed to find valid refresh token", map[string]interface{}{"refresh_token_value": refreshTokenString})
+		logger.LogErrorCtx(c, err, "Failed to find valid refresh token", map[string]any{"refresh_token_value": refreshTokenString})
 		return nil, err
 	}
-	logger.LogDebugCtx(c, "Refresh token found", map[string]interface{}{"refresh_token_value": refreshTokenString})
+	logger.LogDebugCtx(c, "Refresh token found", map[string]any{"refresh_token_value": refreshTokenString})
 	return &refreshToken, nil
 }
 
@@ -63,9 +63,9 @@ func (r *refreshTokenRepo) RevokeBasedOnUserID(c context.Context, userID int) er
 	query := "UPDATE refresh_tokens SET revoked = true WHERE user_id = $1 AND revoked = false AND expired_at > CURRENT_TIMESTAMP"
 	_, err := r.db.Exec(query, userID)
 	if err != nil {
-		logger.LogErrorCtx(c, err, "Failed to revoke refresh token", map[string]interface{}{"user_id": userID})
+		logger.LogErrorCtx(c, err, "Failed to revoke refresh token", map[string]any{"user_id": userID})
 		return err
 	}
-	logger.LogDebugCtx(c, "Refresh token revoked successfully", map[string]interface{}{"user_id": userID})
+	logger.LogDebugCtx(c, "Refresh token revoked successfully", map[string]any{"user_id": userID})
 	return nil
 }

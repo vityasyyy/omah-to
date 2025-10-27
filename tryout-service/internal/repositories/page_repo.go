@@ -32,7 +32,7 @@ func (r *pageRepo) GetAllSubtestScoreForAUser(c context.Context, userID int) ([]
 	query := `SELECT user_id, attempt_id, score, subtest FROM user_scores WHERE user_id = $1`
 	err := r.db.Select(&scores, query, userID)
 	if err != nil {
-		logger.LogErrorCtx(c, err, "Failed to get all subtest scores for user", map[string]interface{}{"user_id": userID})
+		logger.LogErrorCtx(c, err, "Failed to get all subtest scores for user", map[string]any{"user_id": userID})
 		return nil, err
 	}
 	return scores, nil
@@ -66,7 +66,7 @@ func (r *pageRepo) GetScoreAndRank(c context.Context, userID int, paket string) 
 
 	err := r.db.QueryRow(query, userID, paket).Scan(&userScore, &userRank)
 	if err != nil {
-		logger.LogErrorCtx(c, err, "Failed to get user score and rank", map[string]interface{}{"user_id": userID, "paket": paket})
+		logger.LogErrorCtx(c, err, "Failed to get user score and rank", map[string]any{"user_id": userID, "paket": paket})
 		return 0, 0, err
 	}
 
@@ -86,7 +86,7 @@ func (s *pageRepo) GetUserAnswersBasedOnIDPaketAndSubtest(c context.Context, use
 	var userAnswers []models.UserAnswer
 	err := s.db.Select(&userAnswers, query, userID, paket, subtest)
 	if err != nil {
-		logger.LogErrorCtx(c, err, "Failed to get user answers based on id paket and subtest", map[string]interface{}{"user_id": userID, "paket": paket, "subtest": subtest})
+		logger.LogErrorCtx(c, err, "Failed to get user answers based on id paket and subtest", map[string]any{"user_id": userID, "paket": paket, "subtest": subtest})
 		return nil, err
 	}
 
@@ -98,7 +98,7 @@ func (s *pageRepo) GetOngoingAttemptByUserID(c context.Context, userID int) (*mo
 	var attempt models.TryoutAttempt
 	err := s.db.Get(&attempt, query, userID)
 	if err != nil {
-		logger.LogErrorCtx(c, err, "Failed to get ongoing attempt", map[string]interface{}{"user_id": userID})
+		logger.LogErrorCtx(c, err, "Failed to get ongoing attempt", map[string]any{"user_id": userID})
 		return nil, err
 	}
 	return &attempt, nil
@@ -109,7 +109,7 @@ func (s *pageRepo) GetFinishedAttemptByUserID(c context.Context, userID int) (*m
 	var attempt models.TryoutAttempt
 	err := s.db.Get(&attempt, query, userID)
 	if err != nil {
-		logger.LogErrorCtx(c, err, "Failed to get finished attempt", map[string]interface{}{"user_id": userID})
+		logger.LogErrorCtx(c, err, "Failed to get finished attempt", map[string]any{"user_id": userID})
 		return nil, err
 	}
 	return &attempt, nil

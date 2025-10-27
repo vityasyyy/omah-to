@@ -1,23 +1,21 @@
 package server
 
 import (
+	"os"
 	"soal-service/internal/handlers"
 	"soal-service/internal/repositories"
 	"soal-service/internal/routes"
 	"soal-service/internal/services"
+	"strings"
 	"time"
-
-	"os"
 
 	"github.com/gin-gonic/gin"
 	"github.com/jmoiron/sqlx"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/vityasyyy/sharedlib/middleware"
-
-	"strings"
 )
 
-func NewRouter(db *sqlx.DB) *gin.Engine {
+func NewRouter(db *sqlx.DB) (*gin.Engine, services.SoalService) {
 	if os.Getenv("ENVIRONMENT") == "production" {
 		gin.SetMode(gin.ReleaseMode)
 	} else {
@@ -43,5 +41,5 @@ func NewRouter(db *sqlx.DB) *gin.Engine {
 	soalHandler := handlers.NewSoalHandler(soalService)
 
 	routes.InitializeRoutes(r, soalHandler)
-	return r
+	return r, soalService
 }

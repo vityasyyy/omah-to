@@ -32,7 +32,7 @@ func NewPageService(pageRepo repositories.PageRepo, scoreService ScoreService, t
 
 func (s *pageService) GetPembahasanPage(c context.Context, userID int, paket, accessToken string) ([]models.EnrichedUserAnswer, float64, int, []models.UserScore, error) {
 	if _, err := s.tryoutRepo.GetTryoutAttemptByUserIDAndPaket(c, userID, paket); err != nil {
-		logger.LogErrorCtx(c, err, "Failed to get tryout attempt by user ID and paket", map[string]interface{}{"user_id": userID, "paket": paket})
+		logger.LogErrorCtx(c, err, "Failed to get tryout attempt by user ID and paket", map[string]any{"user_id": userID, "paket": paket})
 		return nil, 0, 0, nil, err
 	}
 	var (
@@ -49,7 +49,7 @@ func (s *pageService) GetPembahasanPage(c context.Context, userID int, paket, ac
 	g.Go(func() error {
 		avg, r, err := s.GetScoreAndRank(c, userID, paket)
 		if err != nil {
-			logger.LogErrorCtx(c, err, "Failed to get score and rank", map[string]interface{}{"user_id": userID, "paket": paket})
+			logger.LogErrorCtx(c, err, "Failed to get score and rank", map[string]any{"user_id": userID, "paket": paket})
 			return err
 		}
 		// mutex when averageScore and rank are updated, to avoid being modified by other concurrent processes (do for every assigning type shit)
@@ -64,7 +64,7 @@ func (s *pageService) GetPembahasanPage(c context.Context, userID int, paket, ac
 	g.Go(func() error {
 		scores, err := s.GetUserSubtestNilai(c, userID)
 		if err != nil {
-			logger.LogErrorCtx(c, err, "Failed to get user subtest scores", map[string]interface{}{"user_id": userID})
+			logger.LogErrorCtx(c, err, "Failed to get user subtest scores", map[string]any{"user_id": userID})
 			return err
 		}
 		mu.Lock()
@@ -93,14 +93,14 @@ func (s *pageService) GetPembahasanPage(c context.Context, userID int, paket, ac
 			// Get user answers
 			userAnswers, err := s.pageRepo.GetUserAnswersBasedOnIDPaketAndSubtest(c, userID, paket, subtest)
 			if err != nil {
-				logger.LogErrorCtx(c, err, "Failed to get user answers based on id paket and subtest", map[string]interface{}{"user_id": userID, "paket": paket, "subtest": subtest})
+				logger.LogErrorCtx(c, err, "Failed to get user answers based on id paket and subtest", map[string]any{"user_id": userID, "paket": paket, "subtest": subtest})
 				return err
 			}
 
 			// Get answer keys from soal service
 			answerKeys, err := s.scoreService.GetAnswerKeyBasedOnSubtestFromSoalService(c, subtest, accessToken, "access")
 			if err != nil {
-				logger.LogErrorCtx(c, err, "Failed to get answer keys from soal service", map[string]interface{}{"subtest": subtest})
+				logger.LogErrorCtx(c, err, "Failed to get answer keys from soal service", map[string]any{"subtest": subtest})
 				return err
 			}
 			if ctx.Err() != nil {

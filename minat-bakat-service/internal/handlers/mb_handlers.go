@@ -29,7 +29,7 @@ func (h *MinatBakatHandler) ProcessMinatBakatHandler(c *gin.Context) {
 
 	topInterest, err := h.minatBakatService.ProcessMinatBakatAnswers(c, userID, answers)
 	if err != nil {
-		logger.LogErrorCtx(c, err, "Failed to process minat bakat answers", map[string]interface{}{"user_id": userID})
+		logger.LogErrorCtx(c, err, "Failed to process minat bakat answers", map[string]any{"user_id": userID})
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "failed to process minat bakat answers"})
 		return
 	}
@@ -42,7 +42,7 @@ func (h *MinatBakatHandler) GetMinatBakatAttemptHandler(c *gin.Context) {
 
 	attempt, err := h.minatBakatService.GetMinatBakatAttempt(c, userID)
 	if err != nil {
-		logger.LogErrorCtx(c, err, "Failed to get minat bakat attempt", map[string]interface{}{"user_id": userID})
+		logger.LogErrorCtx(c, err, "Failed to get minat bakat attempt", map[string]any{"user_id": userID})
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "failed to get minat bakat attempt"})
 		return
 	}

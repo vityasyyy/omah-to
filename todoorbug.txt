@@ -39,3 +39,10 @@ TODO PROD:
     -cloud run
     -rate limiter jangan lupa diganti
     -env db url nanti diganti pas deploy ke cloud run
+
+NEW ARCH (Redis + Kafka) 19-08-2025:
+- Frontend periodically calls /tryout/sync -> CacheAnswers (Redis only, no DB).
+- Per-subtest key: tryout:answers:{userID}:{subtest}.
+- On subtest submit -> service publishes AnswerBatchEvent to Kafka (includes final flag if last).
+- Consumer persists answers (DB) and when final: ends attempt + scoring.
+- Handlers/services no longer accept attemptID from client; derived via userID.
